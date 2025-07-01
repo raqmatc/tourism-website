@@ -5,47 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PayGo - حجز الفنادق</title>
 
-  <!-- Font Awesome لتحميل أيقونة الطائرة -->
+  <!-- Font Awesome للأيقونات -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f0f0f0;
       margin: 0;
       padding: 0;
       text-align: center;
+      background-color: #d3d3d3;
+      background-image: url('https://www.transparenttextures.com/patterns/travel-icons.png');
+      background-repeat: repeat;
+      background-size: 200px;
+      background-position: center;
+      background-attachment: fixed;
     }
 
-    /* الشعار */
     .logo {
       background-color: #0d47a1;
       color: white;
-      font-size: 32px;
-      font-weight: bold;
-      padding: 20px 0;
-      letter-spacing: 1px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo i {
       font-size: 28px;
-      transform: rotate(-45deg);
+      font-weight: bold;
+      padding: 18px 25px;
+      text-align: right;
+      direction: rtl;
     }
 
-    /* مربع البحث */
     .search-box {
-      background: linear-gradient(to bottom right, #2196F3, #1E88E5);
+      backdrop-filter: blur(12px);
+      background: rgba(33, 150, 243, 0.25);
       color: white;
       max-width: 500px;
       margin: 40px auto;
       padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .search-box h2 {
@@ -53,19 +49,31 @@
       font-size: 24px;
     }
 
-    input, select {
+    .input-container {
+      position: relative;
       width: 90%;
-      padding: 12px;
       margin: 10px auto;
+    }
+
+    .input-container i {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #777;
+      font-size: 16px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px 40px 12px 12px;
       font-size: 16px;
       border: none;
       border-radius: 5px;
       display: block;
+      background-color: #ffffffee;
       color: #333;
-    }
-
-    input[type="date"], input[type="text"], select {
-      background-color: #fff;
+      box-sizing: border-box;
     }
 
     button {
@@ -87,36 +95,51 @@
 </head>
 <body>
 
-  <!-- الشعار مع أيقونة طائرة -->
-  <div class="logo">
-    <i class="fas fa-plane-departure"></i>
-    PayGo
-  </div>
+  <!-- الشعار -->
+  <div class="logo">PayGo</div>
 
   <!-- مربع البحث -->
   <div class="search-box">
     <h2>ابحث عن فندق الآن</h2>
-    <input type="text" id="city" placeholder="اسم المدينة (مثال: Dubai)" required>
-    <input type="date" id="checkin" required>
-    <input type="date" id="checkout" required>
-    
-    <select id="adults" required>
-      <option value="">عدد النزلاء</option>
-      <option value="1">1 نزيل</option>
-      <option value="2">2 نزيل</option>
-      <option value="3">3 نزلاء</option>
-      <option value="4">4 نزلاء</option>
-      <option value="5">5 نزلاء</option>
-    </select>
-    
-    <select id="rooms" required>
-      <option value="">عدد الغرف</option>
-      <option value="1">1 غرفة</option>
-      <option value="2">2 غرف</option>
-      <option value="3">3 غرف</option>
-      <option value="4">4 غرف</option>
-    </select>
-    
+
+    <div class="input-container">
+      <i class="fas fa-city"></i>
+      <input type="text" id="city" class="input-field" placeholder="المدينة" required>
+    </div>
+
+    <div class="input-container">
+      <i class="fas fa-calendar-alt"></i>
+      <input type="date" id="checkin" class="input-field" required>
+    </div>
+
+    <div class="input-container">
+      <i class="fas fa-calendar-check"></i>
+      <input type="date" id="checkout" class="input-field" required>
+    </div>
+
+    <div class="input-container">
+      <i class="fas fa-user"></i>
+      <select id="adults" class="input-field" required>
+        <option value="">عدد النزلاء</option>
+        <option value="1">1 نزيل</option>
+        <option value="2" selected>2 نزيل</option>
+        <option value="3">3 نزلاء</option>
+        <option value="4">4 نزلاء</option>
+        <option value="5">5 نزلاء</option>
+      </select>
+    </div>
+
+    <div class="input-container">
+      <i class="fas fa-bed"></i>
+      <select id="rooms" class="input-field" required>
+        <option value="">عدد الغرف</option>
+        <option value="1" selected>1 غرفة</option>
+        <option value="2">2 غرف</option>
+        <option value="3">3 غرف</option>
+        <option value="4">4 غرف</option>
+      </select>
+    </div>
+
     <button onclick="searchHotels()">بحث</button>
   </div>
 
@@ -135,7 +158,7 @@
 
       const marker = "646029";
       const lang = "ar";
-      const url = `https://search.hotellook.com/?marker=${marker}&language=${lang}&currency=SAR&location=${encodeURIComponent(city)}&checkIn=${checkin}&checkOut=${checkout}&adults=${adults}&rooms=${rooms}`;
+      const url = `https://search.hotellook.com/hotels?marker=${marker}&language=${lang}&currency=SAR&location=${encodeURIComponent(city)}&checkIn=${checkin}&checkOut=${checkout}&adults=${adults}&rooms=${rooms}`;
 
       window.location.href = url;
     }
