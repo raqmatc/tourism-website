@@ -1,136 +1,59 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
- <title>السياحة العربية</title>
-  <script data-noptimize="1" data-cfasync="false" data-wpfc-render="false">
-  (function () {
-      var script = document.createElement("script");
-      script.async = 1;
-      script.src = 'https://emrldco.com/NDMxODc4.js?t=431878';
-      document.head.appendChild(script);
-  })();
-</script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <title>PayGo - حجوزات الفنادق</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #f4f6f9, #e0e7ef);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .search-box {
+      margin-top: 10vh;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .search-btn {
+      height: 100%;
+    }
+  </style>
 </head>
 <body>
-
-  <!-- رأس الصفحة -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-      <span class="navbar-brand mb-0 h1">السياحة العربية</span>
-    </div>
-  </nav>
-
-  <!-- سلايدر صور -->
-  <div id="mainCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="IMG_5650.jpeg" class="d-block w-100" alt="صحراء">
-      </div>
-      <div class="carousel-item">
-        <img src="IMG_5651.jpeg" class="d-block w-100" alt="مدينة">
-      </div>
-      <div class="carousel-item">
-        <img src="IMG_5652.jpeg" class="d-block w-100" alt="جبال">
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </button>
-  </div>
-
-  <!-- نموذج حجز الفنادق -->
-  <div class="container my-5">
-    <h3 class="text-center mb-4">ابحث عن فندق</h3>
-    <form class="row g-3 justify-content-center" onsubmit="searchHotels(event)">
-      <div class="col-md-3">
-        <label for="city" class="form-label">المدينة</label>
-        <input type="text" class="form-control" id="city" required placeholder="مثلاً: الرياض">
-      </div>
-      <div class="col-md-3">
-        <label for="checkin" class="form-label">تاريخ الوصول</label>
-        <input type="date" class="form-control" id="checkin" required>
-      </div>
-      <div class="col-md-3">
-        <label for="checkout" class="form-label">تاريخ المغادرة</label>
-        <input type="date" class="form-control" id="checkout" required>
-      </div>
-      <div class="col-md-2">
-        <label for="guests" class="form-label">عدد الأشخاص</label>
-        <input type="number" class="form-control" id="guests" value="1" min="1" required>
-      </div>
-      <div class="col-md-12 text-center">
-        <button type="submit" class="btn btn-success px-5">ابحث</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- بطاقات المدن السياحية -->
   <div class="container">
-    <h2 class="text-center mb-4">مدن سياحية</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-
-      <!-- الرياض -->
-      <div class="col">
-        <div class="card h-100">
-          <img src="IMG_5653.jpeg" class="card-img-top" alt="الرياض">
-          <div class="card-body">
-            <h5 class="card-title">الرياض</h5>
-            <p class="card-text">عاصمة المملكة العربية السعودية وتضم معالم حديثة وأسواق تراثية.</p>
-            <a href="#" class="btn btn-primary">احجز الآن</a>
-          </div>
+    <div class="search-box">
+      <h3 class="mb-4 text-center">ابحث عن أفضل عروض الفنادق حول العالم</h3>
+      <form id="hotelSearchForm" class="row g-3">
+        <div class="col-md-4">
+          <input type="text" name="city" class="form-control" placeholder="المدينة (مثال: دبي)" required>
         </div>
-      </div>
-
-      <!-- جدة -->
-      <div class="col">
-        <div class="card h-100">
-          <img src="IMG_5654.jpeg" class="card-img-top" alt="جدة">
-          <div class="card-body">
-            <h5 class="card-title">جدة</h5>
-            <p class="card-text">مدينة ساحلية عصرية تُعرف بكورنيش البحر الأحمر والأسواق القديمة.</p>
-            <a href="#" class="btn btn-primary">احجز الآن</a>
-          </div>
+        <div class="col-md-3">
+          <input type="date" name="checkin" class="form-control" required>
         </div>
-      </div>
-
-      <!-- مكة -->
-      <div class="col">
-        <div class="card h-100">
-          <img src="IMG_5655.jpeg" class="card-img-top" alt="مكة">
-          <div class="card-body">
-            <h5 class="card-title">مكة المكرمة</h5>
-            <p class="card-text">أقدس مدينة في الإسلام، تضم المسجد الحرام والكعبة المشرفة.</p>
-            <a href="#" class="btn btn-primary">احجز الآن</a>
-          </div>
+        <div class="col-md-3">
+          <input type="date" name="checkout" class="form-control" required>
         </div>
-      </div>
-
+        <div class="col-md-2 d-grid">
+          <button type="submit" class="btn btn-primary search-btn">ابحث</button>
+        </div>
+      </form>
     </div>
   </div>
 
-  <!-- Bootstrap Script -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- JavaScript لحجز الفنادق -->
   <script>
-    function searchHotels(event) {
-      event.preventDefault();
-      const city = document.getElementById("city").value;
-      const checkin = document.getElementById("checkin").value;
-      const checkout = document.getElementById("checkout").value;
-      const guests = document.getElementById("guests").value;
+    document.getElementById('hotelSearchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const city = encodeURIComponent(this.city.value.trim());
+      const checkin = this.checkin.value;
+      const checkout = this.checkout.value;
+      const marker = '646029';
 
-      const url = `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(city)}&checkin_year_month_monthday=${checkin}&checkout_year_month_monthday=${checkout}&group_adults=${guests}`;
-
-      window.open(url, '_blank');
-    }
+      const url = `https://hotels.travelpayouts.com/search/${city}?marker=${marker}&checkin_date=${checkin}&checkout_date=${checkout}`;
+      window.location.href = url;
+    });
   </script>
-
 </body>
 </html>
