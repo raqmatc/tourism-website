@@ -82,28 +82,31 @@
   </div>
 
   <script>
-    document.getElementById("hotel-search-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const dest = document.getElementById("destination").value;
-      const checkIn = document.getElementById("checkIn").value;
-      const checkOut = document.getElementById("checkOut").value;
-      const rooms = document.getElementById("rooms").value;
-      const adults = document.getElementById("adults").value;
-      const kids = document.getElementById("kids").value;
+  document.getElementById("hotel-search-form").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-      if (dest && checkIn && checkOut) {
-        const url = `https://hotels.travelpayouts.com/search/${encodeURIComponent(dest)}/?marker=646029` +
-            `&checkin_date=${checkIn}` +
-            `&checkout_date=${checkOut}` +
-            `&rooms=${rooms}` +
-            `&adults=${adults}` +
-            `&children=${kids}` +
-            `&language=ar&currency=sar`;
-        window.location.href = url;
-      } else {
-        alert("يرجى إدخال جميع البيانات.");
-      }
-    });
-  </script>
+    const dest = document.getElementById("destination").value.trim();
+    const checkIn = document.getElementById("checkIn").value;
+    const checkOut = document.getElementById("checkOut").value;
+    const rooms = document.getElementById("rooms").value;
+    const adults = document.getElementById("adults").value;
+    const kids = document.getElementById("kids").value;
+
+    if (!dest || !checkIn || !checkOut) {
+      return alert("يرجى إدخال جميع البيانات.");
+    }
+
+    const url = `https://hotels.travelpayouts.com/search/${encodeURIComponent(dest)}/?marker=646029` +
+                `&checkin_date=${checkIn}` +
+                `&checkout_date=${checkOut}` +
+                `&rooms=${rooms}` +
+                `&adults=${adults}` +
+                `&children=${kids}` +
+                `&language=ar&currency=sar`;
+
+    console.log("🔗 Redirect URL:", url);  // *DEBUG* هذا الذي نحتاجه الآن
+    window.location.href = url;
+  });
+</script>
 </body>
 </html>
