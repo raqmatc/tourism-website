@@ -92,7 +92,12 @@
       const kids = document.getElementById("kids").value;
 
       if (dest && checkIn && checkOut) {
-        const url = `https://hotels.travelpayouts.com/?marker=646029&language=ar&currency=sar&checkIn=${checkIn}&checkOut=${checkOut}&city=${encodeURIComponent(dest)}&adults=${adults}&children=${kids}&rooms=${rooms}`;
+        const url = `https://hotels.travelpayouts.com/search/${encodeURIComponent(dest)}/?marker=646029` +
+            `&checkin_date=${checkIn}` +
+            `&checkout_date=${checkOut}` +
+            `&rooms=${rooms}` +
+            `&adults=${adults}` +
+            `&children=${kids}`;
         window.location.href = url;
       } else {
         alert("يرجى إدخال جميع البيانات.");
