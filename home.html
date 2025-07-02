@@ -7,7 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(to bottom, #004e92, #000428); /* خلفية تدرج أزرق مثل الصورة */
+      background: linear-gradient(to bottom, #004e92, #000428);
       font-family: 'Cairo', sans-serif;
       direction: rtl;
       color: #fff;
@@ -58,6 +58,7 @@
       padding: 10px;
       text-align: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      height: 100%;
     }
 
     .destination-card img {
@@ -74,10 +75,10 @@
 </head>
 <body>
 
-  <!-- الشريط العلوي -->
+  <!-- الشريط العلوي مع الشعار -->
   <nav class="navbar">
     <a class="navbar-brand" href="#">
-      <img src="https://i.imgur.com/eo0zNBO.png" alt="Paygo Logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/PayGo_logo.png/320px-PayGo_logo.png" alt="Paygo Logo">
     </a>
   </nav>
 
@@ -112,25 +113,33 @@
   <!-- الوجهات -->
   <div class="container destinations">
     <div class="row g-3">
-      <div class="col-6 col-md-4">
+      <!-- الصف الأول -->
+      <div class="col-6">
         <div class="destination-card">
           <img src="https://source.unsplash.com/300x200/?dubai" alt="دبي">
           <h5>دبي</h5>
         </div>
       </div>
-      <div class="col-6 col-md-4">
+      <div class="col-6">
         <div class="destination-card">
           <img src="https://source.unsplash.com/300x200/?cairo" alt="القاهرة">
           <h5>القاهرة</h5>
         </div>
       </div>
-      <div class="col-6 col-md-4">
+
+      <!-- الصف الثاني -->
+      <div class="col-6">
         <div class="destination-card">
           <img src="https://source.unsplash.com/300x200/?istanbul" alt="إسطنبول">
           <h5>إسطنبول</h5>
         </div>
       </div>
-      <!-- أضف المزيد حسب الرغبة -->
+      <div class="col-6">
+        <div class="destination-card">
+          <img src="https://source.unsplash.com/300x200/?riyadh" alt="الرياض">
+          <h5>الرياض</h5>
+        </div>
+      </div>
     </div>
   </div>
 
