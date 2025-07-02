@@ -3,207 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PayGo - حجز الفنادق</title>
-
-  <!-- Font Awesome للأيقونات -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <title>PayGo - السياحة حول العالم</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+      background-color: #f8f9fa;
+    }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+      color: white;
       text-align: center;
-      background-color: #d3d3d3;
-      background-image: url('https://www.transparenttextures.com/patterns/travel-icons.png');
-      background-repeat: repeat;
-      background-size: 200px;
-      background-position: center;
-      background-attachment: fixed;
-      transition: background 0.5s ease, color 0.5s ease;
+      padding: 100px 20px;
     }
-
-    /* زر الوضع الليلي */
-    .mode-toggle {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: none;
-      border: none;
-      font-size: 22px;
-      cursor: pointer;
-      color: #0d47a1;
-      transition: color 0.3s ease;
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
     }
-
-    .search-box {
-      backdrop-filter: blur(12px);
-      background: rgba(33, 150, 243, 0.25);
-      color: white;
-      max-width: 500px;
-      margin: 70px auto;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      transition: background 0.5s ease;
-    }
-
-    .search-box h2 {
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-
-    .input-container {
-      position: relative;
-      width: 90%;
-      margin: 12px auto;
-    }
-
-    .input-container i {
-      position: absolute;
-      top: 50%;
-      left: 15px;
-      transform: translateY(-50%);
-      color: #555;
-      font-size: 16px;
-    }
-
-    .input-field {
-      width: 100%;
-      padding: 14px 40px 14px 12px;
-      font-size: 17px;
-      border: none;
-      border-radius: 8px;
-      display: block;
-      background-color: #ffffffee;
-      color: #333;
-      box-sizing: border-box;
-      transition: background 0.5s ease, color 0.5s ease;
-    }
-
-    button {
-      width: 94%;
-      padding: 14px;
-      margin-top: 25px;
-      background-color: #0d47a1;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #08306b;
-    }
-
-    /* الوضع الليلي */
-    body.dark {
-      background-color: #1b1b1b;
-      background-image: none;
-      color: white;
-    }
-
-    body.dark .mode-toggle {
-      color: #fdd835;
-    }
-
-    body.dark .search-box {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    body.dark .input-field {
-      background-color: #2c2c2c;
-      color: white;
-    }
-
-    body.dark .input-container i {
-      color: #ccc;
+    .destination img {
+      height: 200px;
+      object-fit: cover;
     }
   </style>
 </head>
 <body>
 
-  <!-- زر التبديل -->
-  <button class="mode-toggle" onclick="toggleMode()" title="تبديل الوضع">
-    <i id="mode-icon" class="fas fa-moon"></i>
-  </button>
-
-  <!-- مربع البحث -->
-  <div class="search-box">
-    <h2>ابحث عن فندق الآن</h2>
-
-    <div class="input-container">
-      <i class="fas fa-city"></i>
-      <input type="text" id="city" class="input-field" placeholder="المدينة" required>
+  <!-- شريط الترويسة -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">PayGo</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </div>
+  </nav>
 
-    <div class="input-container">
-      <i class="fas fa-calendar-alt"></i>
-      <input type="date" id="checkin" class="input-field" required>
+  <!-- القسم الرئيسي -->
+  <section class="hero">
+    <h1>اكتشف أجمل الوجهات حول العالم</h1>
+    <p>استعد لمغامرات لا تُنسى في أجمل الأماكن السياحية!</p>
+  </section>
+
+  <!-- قسم الوجهات -->
+  <div class="container my-5">
+    <h2 class="text-center mb-4">أفضل الوجهات السياحية</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card destination">
+          <img src="https://images.unsplash.com/photo-1505765050516-f72dcac9c60b" class="card-img-top" alt="باريس">
+          <div class="card-body">
+            <h5 class="card-title">باريس، فرنسا</h5>
+            <p class="card-text">مدينة الحب والأضواء، ببرج إيفل والمقاهي الساحرة.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card destination">
+          <img src="https://images.unsplash.com/photo-1549887534-17353c133bc6" class="card-img-top" alt="طوكيو">
+          <div class="card-body">
+            <h5 class="card-title">طوكيو، اليابان</h5>
+            <p class="card-text">مزيج بين التكنولوجيا الحديثة والتقاليد اليابانية العريقة.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card destination">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" class="card-img-top" alt="دبي">
+          <div class="card-body">
+            <h5 class="card-title">دبي، الإمارات</h5>
+            <p class="card-text">ناطحات سحاب فاخرة وصحراء مدهشة وتجربة تسوق عالمية.</p>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="input-container">
-      <i class="fas fa-calendar-check"></i>
-      <input type="date" id="checkout" class="input-field" required>
-    </div>
-
-    <div class="input-container">
-      <i class="fas fa-user"></i>
-      <select id="adults" class="input-field" required>
-        <option value="">عدد النزلاء</option>
-        <option value="1">1 نزيل</option>
-        <option value="2" selected>2 نزيل</option>
-        <option value="3">3 نزلاء</option>
-        <option value="4">4 نزلاء</option>
-        <option value="5">5 نزلاء</option>
-      </select>
-    </div>
-
-    <div class="input-container">
-      <i class="fas fa-bed"></i>
-      <select id="rooms" class="input-field" required>
-        <option value="">عدد الغرف</option>
-        <option value="1" selected>1 غرفة</option>
-        <option value="2">2 غرف</option>
-        <option value="3">3 غرف</option>
-        <option value="4">4 غرف</option>
-      </select>
-    </div>
-
-    <button onclick="searchHotels()">بحث</button>
   </div>
 
-  <script>
-    function toggleMode() {
-      const body = document.body;
-      const icon = document.getElementById('mode-icon');
-      body.classList.toggle('dark');
-      icon.classList.toggle('fa-moon');
-      icon.classList.toggle('fa-sun');
-    }
+  <!-- التذييل -->
+  <footer class="bg-dark text-white text-center py-3">
+    جميع الحقوق محفوظة &copy; 2025 PayGo
+  </footer>
 
-    function searchHotels() {
-      const city = document.getElementById("city").value.trim();
-      const checkin = document.getElementById("checkin").value;
-      const checkout = document.getElementById("checkout").value;
-      const adults = document.getElementById("adults").value;
-      const rooms = document.getElementById("rooms").value;
-
-      if (!city || !checkin || !checkout || !adults || !rooms) {
-        alert("يرجى ملء جميع الحقول");
-        return;
-      }
-
-      const marker = "646029";
-      const lang = "ar";
-      const url = `https://search.hotellook.com/hotels?marker=${marker}&language=${lang}&currency=SAR&location=${encodeURIComponent(city)}&checkIn=${checkin}&checkOut=${checkout}&adults=${adults}&rooms=${rooms}`;
-
-      window.location.href = url;
-    }
-  </script>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
