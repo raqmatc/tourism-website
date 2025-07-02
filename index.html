@@ -32,23 +32,29 @@
 </head>
 <body>
 
-  <!-- فيديو المقدمة -->
+  <!-- فيديو المقدمة المعدل -->
   <video autoplay muted playsinline id="introVideo">
-    <source src="intro.mp4" type="video/mp4">
+    <source src="Paras.mp4" type="video/mp4">
     متصفحك لا يدعم تشغيل الفيديو.
   </video>
 
   <script>
     const video = document.getElementById("introVideo");
 
-    video.addEventListener('ended', () => {
-      // بدء التلاشي
-      video.classList.add('fade-out');
+    video.addEventListener('loadedmetadata', () => {
+      const fadeStartTime = video.duration - 2; // بدء التلاشي قبل النهاية بـثانيتين
 
-      // الانتقال بعد انتهاء التلاشي (2 ثانية)
-      setTimeout(() => {
-        window.location.href = "home.html";
-      }, 2000);
+      const checkFade = () => {
+        if (video.currentTime >= fadeStartTime) {
+          video.classList.add('fade-out');
+          setTimeout(() => {
+            window.location.href = "home.html";
+          }, 2000);
+          video.removeEventListener('timeupdate', checkFade);
+        }
+      };
+
+      video.addEventListener('timeupdate', checkFade);
     });
   </script>
 
