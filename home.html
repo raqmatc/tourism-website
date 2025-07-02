@@ -32,29 +32,38 @@
     }
 
     .hotel-search {
-      background: #fff;
-      max-width: 95%;
-      width: 700px;
+      width: 95%;
+      max-width: 700px;
       margin: 20px auto;
+      background: #fff;
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-sizing: border-box;
       direction: rtl;
+    }
+
+    .search-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .input-group {
       position: relative;
     }
 
-    .search-input {
-      position: relative;
-      margin-bottom: 15px;
-    }
-    .search-input input {
+    .input-group input {
       width: 100%;
       padding: 12px 45px 12px 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
+      box-sizing: border-box;
+      text-align: right;
     }
-    .search-input .icon {
+
+    .input-group .icon {
       position: absolute;
       right: 12px;
       top: 50%;
@@ -63,62 +72,26 @@
       color: #007bff;
     }
 
-    .date-boxes {
+    .row-flex {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       gap: 10px;
-      margin-bottom: 15px;
     }
-    .date-field {
-      flex: 1;
-    }
-    .date-field label {
+
+    .input-block label {
       display: block;
       margin-bottom: 5px;
-      color: #333;
       font-weight: bold;
+      color: #333;
     }
-    .date-field input {
+
+    .input-block input {
       width: 100%;
       padding: 10px;
+      font-size: 15px;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 15px;
-    }
-
-    .room-info {
-      position: relative;
-      margin-bottom: 20px;
-    }
-    .room-info input {
-      width: 100%;
-      padding: 12px 45px 12px 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-      cursor: pointer;
-    }
-    .room-info .icon {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 18px;
-      color: #007bff;
-    }
-
-    .search-btn {
-      width: 100%;
-      padding: 14px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    .search-btn:hover {
-      background-color: #0056b3;
+      box-sizing: border-box;
     }
 
     .popup-box {
@@ -130,19 +103,24 @@
       top: 105%;
       right: 0;
       width: 100%;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       z-index: 10;
       display: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      text-align: center;
+      box-sizing: border-box;
     }
+
     .popup-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
     }
+
     .popup-row span {
       width: 70px;
     }
+
     .popup-row button {
       padding: 5px 12px;
       font-size: 18px;
@@ -152,21 +130,27 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    .popup-row button:hover {
-      background-color: #0056b3;
-    }
+
     .popup-done {
       width: 100%;
       padding: 10px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
       background-color: #28a745;
       color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
     }
-    .popup-done:hover {
-      background-color: #218838;
+
+    .search-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
     }
 
     .destinations {
@@ -176,6 +160,7 @@
       padding: 20px;
       gap: 20px;
     }
+
     .card {
       background: white;
       border-radius: 8px;
@@ -184,19 +169,23 @@
       overflow: hidden;
       text-align: center;
     }
+
     .card img {
       width: 100%;
       height: 180px;
       object-fit: cover;
     }
+
     .card h3 {
       margin: 10px 0;
       color: #333;
     }
+
     .card p {
       padding: 0 15px 10px;
       color: #555;
     }
+
     .card button {
       margin-bottom: 15px;
       padding: 10px 20px;
@@ -206,6 +195,7 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
     .card button:hover {
       background-color: #0056b3;
     }
@@ -216,54 +206,54 @@
     <img src="paygs.png" alt="PayGo Logo">
   </header>
 
-  <!-- مربع البحث -->
   <div class="hotel-search">
-    <div class="search-input">
-      <input type="text" placeholder="إلى أين تريد أن تذهب؟">
-      <span class="icon">🔍</span>
-    </div>
-
-    <div class="date-boxes">
-      <div class="date-field">
-        <label>الوصول</label>
-        <input type="date">
+    <form class="search-form">
+      <div class="input-group">
+        <input type="text" placeholder="إلى أين تريد أن تذهب؟" />
+        <span class="icon">🔍</span>
       </div>
-      <div class="date-field">
-        <label>المغادرة</label>
-        <input type="date">
-      </div>
-    </div>
 
-    <div class="room-info">
-      <span class="icon">👤</span>
-      <input type="text" id="roomText" readonly value="1 غرفة، 2 بالغون، 0 أطفال" onclick="togglePopup()">
-      <div id="popup" class="popup-box">
-        <div class="popup-row">
-          <span>الغرف</span>
-          <button onclick="changeValue('rooms', -1)">−</button>
-          <span id="rooms">1</span>
-          <button onclick="changeValue('rooms', 1)">+</button>
+      <div class="row-flex">
+        <div class="input-block">
+          <label>الوصول</label>
+          <input type="date" />
         </div>
-        <div class="popup-row">
-          <span>البالغون</span>
-          <button onclick="changeValue('adults', -1)">−</button>
-          <span id="adults">2</span>
-          <button onclick="changeValue('adults', 1)">+</button>
+        <div class="input-block">
+          <label>المغادرة</label>
+          <input type="date" />
         </div>
-        <div class="popup-row">
-          <span>الأطفال</span>
-          <button onclick="changeValue('children', -1)">−</button>
-          <span id="children">0</span>
-          <button onclick="changeValue('children', 1)">+</button>
-        </div>
-        <button class="popup-done" onclick="updateRoomText()">تم</button>
       </div>
-    </div>
 
-    <button class="search-btn">ابحث</button>
+      <div class="input-group room-info">
+        <span class="icon">👤</span>
+        <input type="text" id="roomText" readonly value="1 غرفة، 2 بالغون، 0 أطفال" onclick="togglePopup()" />
+        <div id="popup" class="popup-box">
+          <div class="popup-row">
+            <span>الغرف</span>
+            <button type="button" onclick="changeValue('rooms', -1)">−</button>
+            <span id="rooms">1</span>
+            <button type="button" onclick="changeValue('rooms', 1)">+</button>
+          </div>
+          <div class="popup-row">
+            <span>البالغون</span>
+            <button type="button" onclick="changeValue('adults', -1)">−</button>
+            <span id="adults">2</span>
+            <button type="button" onclick="changeValue('adults', 1)">+</button>
+          </div>
+          <div class="popup-row">
+            <span>الأطفال</span>
+            <button type="button" onclick="changeValue('children', -1)">−</button>
+            <span id="children">0</span>
+            <button type="button" onclick="changeValue('children', 1)">+</button>
+          </div>
+          <button type="button" class="popup-done" onclick="updateRoomText()">تم</button>
+        </div>
+      </div>
+
+      <button type="submit" class="search-btn">ابحث</button>
+    </form>
   </div>
 
-  <!-- الوجهات -->
   <div class="destinations">
     <div class="card"><img src="https://source.unsplash.com/300x180/?paris"><h3>باريس</h3><p>عاصمة النور والجمال، تشتهر ببرج إيفل والمتاحف.</p><button onclick="location.href='paris.html'">تفاصيل</button></div>
     <div class="card"><img src="https://source.unsplash.com/300x180/?dubai"><h3>دبي</h3><p>مدينة المستقبل، ناطحات سحاب وتسوق عالمي.</p><button onclick="location.href='dubai.html'">تفاصيل</button></div>
