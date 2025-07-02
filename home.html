@@ -18,10 +18,12 @@
     }
     header {
       background-color: #333;
-      color: white;
       padding: 20px;
       text-align: center;
-      font-size: 24px;
+    }
+    header .logo {
+      max-height: 50px;
+      object-fit: contain;
     }
     .destinations {
       display: flex;
@@ -66,7 +68,10 @@
   </style>
 </head>
 <body>
-  <header>أفضل الوجهات حول العالم</header>
+  <header>
+    <img src="paygo.png" alt="PayGo Logo" class="logo">
+  </header>
+
   <div class="destinations">
     <div class="card"><img src="https://source.unsplash.com/300x180/?paris"><h3>باريس</h3><p>عاصمة النور والجمال، تشتهر ببرج إيفل والمتاحف.</p><button onclick="location.href='paris.html'">تفاصيل</button></div>
     <div class="card"><img src="https://source.unsplash.com/300x180/?dubai"><h3>دبي</h3><p>مدينة المستقبل، ناطحات سحاب وتسوق عالمي.</p><button onclick="location.href='dubai.html'">تفاصيل</button></div>
