@@ -1,16 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<style>
-  body {
-    opacity: 0;
-    transition: opacity 2s ease;
-  }
-  body.fade-in {
-    opacity: 1;
-  }
-</style>
   <meta charset="UTF-8">
   <title>أفضل الوجهات - PayGo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +10,11 @@
       background: #f4f4f4;
       margin: 0;
       padding: 0;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+    body.fade-in {
+      opacity: 1;
     }
     header {
       background-color: #333;
@@ -83,11 +78,12 @@
     <div class="card"><img src="https://source.unsplash.com/300x180/?barcelona"><h3>برشلونة</h3><p>مدينة فنية على البحر الأبيض المتوسط.</p><button onclick="location.href='barcelona.html'">تفاصيل</button></div>
     <div class="card"><img src="https://source.unsplash.com/300x180/?cairo"><h3>القاهرة</h3><p>المدينة الفرعونية القديمة والأهرامات.</p><button onclick="location.href='cairo.html'">تفاصيل</button></div>
     <div class="card"><img src="https://source.unsplash.com/300x180/?bali"><h3>بالي</h3><p>جزيرة الأحلام، شواطئ ساحرة وطبيعة خلابة.</p><button onclick="location.href='bali.html'">تفاصيل</button></div>
- </div>
+  </div>
+
   <script>
-  window.addEventListener('load', () => {
-    document.body.classList.add('fade-in');
-  });
-</script>
+    window.addEventListener('load', () => {
+      document.body.classList.add('fade-in');
+    });
+  </script>
 </body>
 </html>
