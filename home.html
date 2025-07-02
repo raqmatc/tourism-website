@@ -16,6 +16,7 @@
     body.fade-in {
       opacity: 1;
     }
+
     header {
       background-color: #333;
       height: 80px;
@@ -32,27 +33,30 @@
 
     .hotel-search {
       background: #fff;
-      max-width: 700px;
+      max-width: 95%;
+      width: 700px;
       margin: 20px auto;
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       direction: rtl;
+      position: relative;
     }
+
     .search-input {
       position: relative;
       margin-bottom: 15px;
     }
     .search-input input {
       width: 100%;
-      padding: 12px 40px 12px 12px;
+      padding: 12px 45px 12px 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
     }
     .search-input .icon {
       position: absolute;
-      left: 12px;
+      right: 12px;
       top: 50%;
       transform: translateY(-50%);
       font-size: 18px;
@@ -61,19 +65,20 @@
 
     .date-boxes {
       display: flex;
+      justify-content: space-between;
       gap: 10px;
       margin-bottom: 15px;
     }
-    .date-boxes div {
+    .date-field {
       flex: 1;
     }
-    .date-boxes label {
+    .date-field label {
       display: block;
       margin-bottom: 5px;
       color: #333;
       font-weight: bold;
     }
-    .date-boxes input {
+    .date-field input {
       width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
@@ -87,14 +92,15 @@
     }
     .room-info input {
       width: 100%;
-      padding: 12px 40px 12px 12px;
+      padding: 12px 45px 12px 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 15px;
+      cursor: pointer;
     }
     .room-info .icon {
       position: absolute;
-      left: 12px;
+      right: 12px;
       top: 50%;
       transform: translateY(-50%);
       font-size: 18px;
@@ -113,6 +119,54 @@
     }
     .search-btn:hover {
       background-color: #0056b3;
+    }
+
+    .popup-box {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      position: absolute;
+      top: 105%;
+      right: 0;
+      width: 100%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 10;
+      display: none;
+    }
+    .popup-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .popup-row span {
+      width: 70px;
+    }
+    .popup-row button {
+      padding: 5px 12px;
+      font-size: 18px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .popup-row button:hover {
+      background-color: #0056b3;
+    }
+    .popup-done {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+    .popup-done:hover {
+      background-color: #218838;
     }
 
     .destinations {
@@ -170,19 +224,40 @@
     </div>
 
     <div class="date-boxes">
-      <div>
+      <div class="date-field">
         <label>الوصول</label>
         <input type="date">
       </div>
-      <div>
+      <div class="date-field">
         <label>المغادرة</label>
         <input type="date">
       </div>
     </div>
 
     <div class="room-info">
-      <input type="text" readonly value="1 غرفة، 2 بالغون، 0 أطفال">
       <span class="icon">👤</span>
+      <input type="text" id="roomText" readonly value="1 غرفة، 2 بالغون، 0 أطفال" onclick="togglePopup()">
+      <div id="popup" class="popup-box">
+        <div class="popup-row">
+          <span>الغرف</span>
+          <button onclick="changeValue('rooms', -1)">−</button>
+          <span id="rooms">1</span>
+          <button onclick="changeValue('rooms', 1)">+</button>
+        </div>
+        <div class="popup-row">
+          <span>البالغون</span>
+          <button onclick="changeValue('adults', -1)">−</button>
+          <span id="adults">2</span>
+          <button onclick="changeValue('adults', 1)">+</button>
+        </div>
+        <div class="popup-row">
+          <span>الأطفال</span>
+          <button onclick="changeValue('children', -1)">−</button>
+          <span id="children">0</span>
+          <button onclick="changeValue('children', 1)">+</button>
+        </div>
+        <button class="popup-done" onclick="updateRoomText()">تم</button>
+      </div>
     </div>
 
     <button class="search-btn">ابحث</button>
@@ -205,6 +280,42 @@
   <script>
     window.addEventListener('load', () => {
       document.body.classList.add('fade-in');
+    });
+
+    let rooms = 1;
+    let adults = 2;
+    let children = 0;
+
+    function togglePopup() {
+      const popup = document.getElementById('popup');
+      popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function changeValue(type, delta) {
+      if (type === 'rooms') {
+        rooms = Math.max(1, rooms + delta);
+        document.getElementById('rooms').textContent = rooms;
+      } else if (type === 'adults') {
+        adults = Math.max(1, adults + delta);
+        document.getElementById('adults').textContent = adults;
+      } else if (type === 'children') {
+        children = Math.max(0, children + delta);
+        document.getElementById('children').textContent = children;
+      }
+    }
+
+    function updateRoomText() {
+      const text = `${rooms} غرفة، ${adults} بالغون، ${children} أطفال`;
+      document.getElementById('roomText').value = text;
+      togglePopup();
+    }
+
+    window.addEventListener('click', function(e) {
+      const popup = document.getElementById('popup');
+      const input = document.getElementById('roomText');
+      if (!popup.contains(e.target) && e.target !== input) {
+        popup.style.display = 'none';
+      }
     });
   </script>
 </body>
