@@ -15,9 +15,8 @@
       padding: 0;
     }
 
-    /* الشريط العلوي */
     .navbar {
-      background-color: #ccc;
+      background-color: #444;
       padding: 15px 0;
       display: flex;
       justify-content: center;
@@ -75,23 +74,30 @@
     .destination-card h5 {
       margin-top: 10px;
     }
+
+    /* الشريط السفلي */
+    .footer {
+      background-color: #444;
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- الشريط العلوي مع شعار في المنتصف -->
+  <!-- الشريط العلوي -->
   <div class="navbar">
     <img src="paygs.png" alt="Paygo Logo">
   </div>
 
   <!-- نموذج البحث -->
   <div class="search-box">
-    <!-- المدينة -->
     <div class="mb-3">
       <input type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" />
     </div>
 
-    <!-- التواريخ -->
     <div class="d-flex gap-2 mb-3">
       <div class="flex-fill">
         <label class="form-label">الوصول</label>
@@ -103,19 +109,16 @@
       </div>
     </div>
 
-    <!-- الغرف والضيوف -->
     <div class="mb-3">
       <input type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly />
     </div>
 
-    <!-- زر البحث -->
     <button class="btn btn-primary w-100">ابحث</button>
   </div>
 
   <!-- الوجهات -->
   <div class="container destinations">
     <div class="row g-3">
-      <!-- الصف الأول -->
       <div class="col-6">
         <div class="destination-card">
           <img src="https://source.unsplash.com/300x200/?dubai" alt="دبي">
@@ -128,8 +131,6 @@
           <h5>القاهرة</h5>
         </div>
       </div>
-
-      <!-- الصف الثاني -->
       <div class="col-6">
         <div class="destination-card">
           <img src="https://source.unsplash.com/300x200/?istanbul" alt="إسطنبول">
@@ -143,6 +144,11 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- الشريط السفلي -->
+  <div class="footer">
+    جميع الحقوق محفوظة © Paygo 2025
   </div>
 
 </body>
