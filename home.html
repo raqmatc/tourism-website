@@ -10,48 +10,30 @@
       background: #f4f4f4;
       margin: 0;
       padding: 0;
-      opacity: 0;
-      transition: opacity 2s ease;
-    }
-    body.fade-in {
-      opacity: 1;
     }
 
     header {
-      background-color: #333;
-      height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background-color: #222;
+      padding: 15px 0;
+      text-align: center;
     }
 
     header img {
-      height: 70px;
-      width: auto;
-      object-fit: contain;
-      display: block;
+      height: 60px;
     }
 
-    .hotel-search {
-      width: 95%;
-      max-width: 700px;
-      margin: 20px auto;
-      background: #fff;
-      border-radius: 12px;
+    .booking-box {
+      background: white;
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      box-sizing: border-box;
-      direction: rtl;
-    }
-
-    .search-form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+      max-width: 600px;
+      margin: 20px auto;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     .input-group {
       position: relative;
+      margin-bottom: 15px;
     }
 
     .input-group input {
@@ -59,84 +41,48 @@
       padding: 12px 45px 12px 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 15px;
       box-sizing: border-box;
       text-align: right;
-      color: #777;
     }
 
     .input-group .icon {
       position: absolute;
-      right: 12px;
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
       font-size: 18px;
-      color: #007bff;
+      color: #aaa;
     }
 
-    .row-flex {
+    .row {
       display: flex;
-      flex-direction: column;
       gap: 10px;
+      margin-bottom: 15px;
     }
 
-    .popup-box {
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 15px;
-      position: absolute;
-      top: 105%;
-      right: 0;
-      width: 100%;
-      z-index: 10;
-      display: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      text-align: center;
-      box-sizing: border-box;
+    .row .input-group {
+      flex: 1;
+      margin-bottom: 0;
     }
 
-    .popup-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .popup-row span {
-      width: 70px;
-    }
-
-    .popup-row button {
-      padding: 5px 12px;
-      font-size: 18px;
-      border: none;
-      background-color: #007bff;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .popup-done {
-      width: 100%;
-      padding: 10px;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
+    .room-info {
+      position: relative;
     }
 
     .search-btn {
       width: 100%;
-      padding: 14px;
-      background-color: #007bff;
+      padding: 12px;
+      font-size: 18px;
+      background: #007bff;
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 18px;
       cursor: pointer;
+    }
+
+    .search-btn:hover {
+      background: #0056b3;
     }
 
     .destinations {
@@ -151,7 +97,7 @@
       background: white;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 300px;
+      width: 280px;
       overflow: hidden;
       text-align: center;
     }
@@ -188,116 +134,48 @@
   </style>
 </head>
 <body>
-  <header>
-    <img src="paygs.png" alt="PayGo Logo">
-  </header>
 
-  <div class="hotel-search">
-    <form class="search-form">
-      <div class="input-group">
-        <input type="text" placeholder="إلى أين تريد أن تذهب؟" />
-        <span class="icon">🔍</span>
-      </div>
+<header>
+  <img src="paygs.png" alt="PayGo Logo">
+</header>
 
-      <div class="row-flex">
-        <div class="input-group">
-          <input type="date" id="checkin">
-          <span class="icon">📅</span>
-        </div>
-        <div class="input-group">
-          <input type="date" id="checkout">
-          <span class="icon">📅</span>
-        </div>
-      </div>
-
-      <div class="input-group room-info">
-        <span class="icon">👤</span>
-        <input type="text" id="roomText" readonly value="1 غرفة، 2 بالغون، 0 أطفال" onclick="togglePopup()" />
-        <div id="popup" class="popup-box">
-          <div class="popup-row">
-            <span>الغرف</span>
-            <button type="button" onclick="changeValue('rooms', -1)">−</button>
-            <span id="rooms">1</span>
-            <button type="button" onclick="changeValue('rooms', 1)">+</button>
-          </div>
-          <div class="popup-row">
-            <span>البالغون</span>
-            <button type="button" onclick="changeValue('adults', -1)">−</button>
-            <span id="adults">2</span>
-            <button type="button" onclick="changeValue('adults', 1)">+</button>
-          </div>
-          <div class="popup-row">
-            <span>الأطفال</span>
-            <button type="button" onclick="changeValue('children', -1)">−</button>
-            <span id="children">0</span>
-            <button type="button" onclick="changeValue('children', 1)">+</button>
-          </div>
-          <button type="button" class="popup-done" onclick="updateRoomText()">تم</button>
-        </div>
-      </div>
-
-      <button type="submit" class="search-btn">ابحث</button>
-    </form>
+<div class="booking-box">
+  <div class="input-group">
+    <input type="text" placeholder="إلى أين تريد أن تذهب؟">
+    <span class="icon">🔍</span>
   </div>
 
-  <div class="destinations">
-    <div class="card"><img src="https://source.unsplash.com/300x180/?paris"><h3>باريس</h3><p>عاصمة النور والجمال، تشتهر ببرج إيفل والمتاحف.</p><button onclick="location.href='paris.html'">تفاصيل</button></div>
-    <div class="card"><img src="https://source.unsplash.com/300x180/?dubai"><h3>دبي</h3><p>مدينة المستقبل، ناطحات سحاب وتسوق عالمي.</p><button onclick="location.href='dubai.html'">تفاصيل</button></div>
-    <div class="card"><img src="https://source.unsplash.com/300x180/?tokyo"><h3>طوكيو</h3><p>مدينة حديثة بثقافة يابانية تقليدية مدهشة.</p><button onclick="location.href='tokyo.html'">تفاصيل</button></div>
-    <div class="card"><img src="https://source.unsplash.com/300x180/?newyork"><h3>نيويورك</h3><p>المدينة التي لا تنام، معالم عالمية وأسواق.</p><button onclick="location.href='newyork.html'">تفاصيل</button></div>
-    <div class="card"><img src="https://source.unsplash.com/300x180/?rome"><h3>روما</h3><p>عاصمة التاريخ الإيطالي، الكولوسيوم والآثار.</p><button onclick="location.href='rome.html'">تفاصيل</button></div>
-    <div class="card"><img src="https://source.unsplash.com/300x180/?istanbul"><h3>إسطنبول</h3><p>مدينة عريقة بين آسيا وأوروبا.</p><button onclick="location.href='istanbul.html'">تفاصيل</button></div>
-    <div class="card"><img src="https://source.unsplash.com/300x180/?london"><h3>لندن</h3><p>عاصمة المملكة المتحدة، تاريخ وحداثة.</p><button onclick="location.href='london.html'">تفاصيل</button></div>
-    <div class="card"><img src="https://source.unsplash.com/300x180/?barcelona"><h3>برشلونة</h3><p>مدينة فنية على البحر الأبيض المتوسط.</p><button onclick="location.href='barcelona.html'">تفاصيل</button></div>
-    <div class="card"><img src="https://source.unsplash.com/300x180/?cairo"><h3>القاهرة</h3><p>المدينة الفرعونية القديمة والأهرامات.</p><button onclick="location.href='cairo.html'">تفاصيل</button></div>
-    <div class="card"><img src="https://source.unsplash.com/300x180/?bali"><h3>بالي</h3><p>جزيرة الأحلام، شواطئ ساحرة وطبيعة خلابة.</p><button onclick="location.href='bali.html'">تفاصيل</button></div>
+  <div class="row">
+    <div class="input-group">
+      <input type="date" id="checkin">
+      <span class="icon">📅</span>
+    </div>
+    <div class="input-group">
+      <input type="date" id="checkout">
+      <span class="icon">📅</span>
+    </div>
   </div>
 
-  <script>
-    window.addEventListener('load', () => {
-      document.body.classList.add('fade-in');
+  <div class="input-group room-info">
+    <input type="text" readonly value="1 غرفة، 2 بالغون، 0 أطفال">
+    <span class="icon">👤</span>
+  </div>
 
-      // إعداد تاريخ اليوم داخل مربعي الوصول والمغادرة
-      const today = new Date().toISOString().split("T")[0];
-      document.getElementById("checkin").value = today;
-      document.getElementById("checkout").value = today;
-    });
+  <button class="search-btn">ابحث</button>
+</div>
 
-    let rooms = 1;
-    let adults = 2;
-    let children = 0;
+<div class="destinations">
+  <div class="card"><img src="https://source.unsplash.com/300x180/?paris"><h3>باريس</h3><p>عاصمة النور والجمال، تشتهر ببرج إيفل والمتاحف.</p><button onclick="location.href='paris.html'">تفاصيل</button></div>
+  <div class="card"><img src="https://source.unsplash.com/300x180/?dubai"><h3>دبي</h3><p>مدينة المستقبل، ناطحات سحاب وتسوق عالمي.</p><button onclick="location.href='dubai.html'">تفاصيل</button></div>
+  <div class="card"><img src="https://source.unsplash.com/300x180/?tokyo"><h3>طوكيو</h3><p>مدينة حديثة بثقافة يابانية تقليدية مدهشة.</p><button onclick="location.href='tokyo.html'">تفاصيل</button></div>
+  <div class="card"><img src="https://source.unsplash.com/300x180/?rome"><h3>روما</h3><p>تاريخ عريق وآثار لا مثيل لها.</p><button onclick="location.href='rome.html'">تفاصيل</button></div>
+</div>
 
-    function togglePopup() {
-      const popup = document.getElementById('popup');
-      popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
-    }
+<script>
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("checkin").value = today;
+  document.getElementById("checkout").value = today;
+</script>
 
-    function changeValue(type, delta) {
-      if (type === 'rooms') {
-        rooms = Math.max(1, rooms + delta);
-        document.getElementById('rooms').textContent = rooms;
-      } else if (type === 'adults') {
-        adults = Math.max(1, adults + delta);
-        document.getElementById('adults').textContent = adults;
-      } else if (type === 'children') {
-        children = Math.max(0, children + delta);
-        document.getElementById('children').textContent = children;
-      }
-    }
-
-    function updateRoomText() {
-      const text = `${rooms} غرفة، ${adults} بالغون، ${children} أطفال`;
-      document.getElementById('roomText').value = text;
-      togglePopup();
-    }
-
-    window.addEventListener('click', function(e) {
-      const popup = document.getElementById('popup');
-      const input = document.getElementById('roomText');
-      if (!popup.contains(e.target) && e.target !== input) {
-        popup.style.display = 'none';
-      }
-    });
-  </script>
 </body>
 </html>
