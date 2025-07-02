@@ -3,89 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PayGo - أفضل الوجهات</title>
+  <title>PayGo - ترحيب سياحي</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
   <style>
-    body {
-      background-color: #f8f9fa;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .hero {
-      background: url('https://chat.openai.com/_assets/beach-suitcase-clean.webp') center/cover no-repeat;
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       color: white;
       text-align: center;
-      padding: 80px 20px;
-      position: relative;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+      z-index: 1;
     }
 
-    .hero h1 {
-      font-size: 2.2rem;
-      font-weight: bold;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+    .overlay h1 {
+      font-size: 3rem;
     }
 
-    .destination img {
-      height: 200px;
-      object-fit: cover;
+    .overlay p {
+      font-size: 1.2rem;
     }
   </style>
 </head>
 <body>
 
-  <!-- شريط الترويسة -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">PayGo</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </nav>
+  <!-- الخلفية بالفيديو -->
+  <video autoplay muted loop playsinline class="video-bg">
+    <source src="intro.mp4" type="video/mp4">
+    متصفحك لا يدعم تشغيل الفيديو.
+  </video>
 
-  <!-- القسم الرئيسي -->
-  <section class="hero">
-    <h1>اكتشف أفضل الوجهات السياحية</h1>
-  </section>
-
-  <!-- قسم الوجهات -->
-  <div class="container my-5">
-    <h2 class="text-center mb-4">أفضل الوجهات السياحية</h2>
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card destination">
-          <img src="https://images.unsplash.com/photo-1505765050516-f72dcac9c60b" class="card-img-top" alt="باريس">
-          <div class="card-body">
-            <h5 class="card-title">باريس، فرنسا</h5>
-            <p class="card-text">مدينة الحب والأضواء، ببرج إيفل والمقاهي الساحرة.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card destination">
-          <img src="https://images.unsplash.com/photo-1549887534-17353c133bc6" class="card-img-top" alt="طوكيو">
-          <div class="card-body">
-            <h5 class="card-title">طوكيو، اليابان</h5>
-            <p class="card-text">مزيج بين التكنولوجيا الحديثة والتقاليد اليابانية العريقة.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card destination">
-          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" class="card-img-top" alt="دبي">
-          <div class="card-body">
-            <h5 class="card-title">دبي، الإمارات</h5>
-            <p class="card-text">ناطحات سحاب فاخرة وصحراء مدهشة وتجربة تسوق عالمية.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+  <!-- النص فوق الفيديو -->
+  <div class="overlay">
+    <h1>مرحباً بك في PayGo</h1>
+    <p>اكتشف أجمل الوجهات السياحية</p>
   </div>
 
-  <!-- التذييل -->
-  <footer class="bg-dark text-white text-center py-3">
-    جميع الحقوق محفوظة &copy; 2025 PayGo
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
