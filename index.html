@@ -15,6 +15,8 @@
       overflow: hidden;
       background: black;
     }
+
+    /* الفيديو */
     video {
       position: fixed;
       top: 0;
@@ -22,34 +24,83 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: 0;
       transition: opacity 2s ease;
+      z-index: 1;
     }
     .fade-out {
       opacity: 0;
+    }
+
+    /* كلمة PayGo */
+    #maskText {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      background: black;
+      color: white;
+      font-size: 10vw;
+      font-weight: bold;
+      font-family: 'Arial Black', sans-serif;
+      mix-blend-mode: screen;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    #maskText.show {
+      opacity: 1;
+    }
+
+    /* الخلفية: home.html */
+    #homeFrame {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      z-index: 0;
     }
   </style>
 </head>
 <body>
 
-  <!-- فيديو المقدمة المعدل -->
+  <!-- صفحة home مخفية في الخلف -->
+  <iframe id="homeFrame" src="home.html"></iframe>
+
+  <!-- فيديو المقدمة -->
   <video autoplay muted playsinline id="introVideo">
     <source src="Paras.mp4" type="video/mp4">
     متصفحك لا يدعم تشغيل الفيديو.
   </video>
 
+  <!-- كلمة PayGo المفرغة -->
+  <div id="maskText">PayGo</div>
+
   <script>
     const video = document.getElementById("introVideo");
+    const maskText = document.getElementById("maskText");
 
     video.addEventListener('loadedmetadata', () => {
-      const fadeStartTime = video.duration - 2; // بدء التلاشي قبل النهاية بـثانيتين
+      const fadeStartTime = video.duration - 2; // قبل النهاية بـ 2 ثانية
 
       const checkFade = () => {
         if (video.currentTime >= fadeStartTime) {
+          // إظهار كلمة PayGo
+          maskText.classList.add('show');
+
+          // تلاشي الفيديو
           video.classList.add('fade-out');
+
+          // حذف الفيديو نهائيًا بعد التلاشي
           setTimeout(() => {
-            window.location.href = "home.html";
+            video.remove();
           }, 2000);
+
           video.removeEventListener('timeupdate', checkFade);
         }
       };
