@@ -23,12 +23,16 @@
       height: 100%;
       object-fit: cover;
       z-index: 0;
+      transition: opacity 2s ease;
+    }
+    .fade-out {
+      opacity: 0;
     }
   </style>
 </head>
 <body>
 
-  <!-- فيديو المقدمة بدون نص -->
+  <!-- فيديو المقدمة -->
   <video autoplay muted playsinline id="introVideo">
     <source src="intro.mp4" type="video/mp4">
     متصفحك لا يدعم تشغيل الفيديو.
@@ -36,8 +40,15 @@
 
   <script>
     const video = document.getElementById("introVideo");
+
     video.addEventListener('ended', () => {
-      window.location.href = "home.html"; // غيّر هذا حسب اسم صفحتك الرئيسية
+      // بدء التلاشي
+      video.classList.add('fade-out');
+
+      // الانتقال بعد انتهاء التلاشي (2 ثانية)
+      setTimeout(() => {
+        window.location.href = "home.html";
+      }, 2000);
     });
   </script>
 
