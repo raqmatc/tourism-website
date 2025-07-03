@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="16x16" href="apple-touch-icon.png">
 
-  <!-- Bootstrap RTL -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
 
   <style>
@@ -60,6 +59,7 @@
     }
 
     .search-box input,
+    .search-box select,
     .search-box button {
       height: 45px;
       border-radius: 8px;
@@ -143,28 +143,43 @@
   <!-- المحتوى الرئيسي -->
   <div class="main-content">
 
-    <!-- نموذج البحث -->
+    <!-- مربع الحجز -->
     <div class="search-box">
-      <div class="mb-3">
-        <input type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" />
-      </div>
-
-      <div class="d-flex gap-2 mb-3">
-        <div class="flex-fill">
-          <label class="form-label">الوصول</label>
-          <input type="text" class="form-control" value="الثلاثاء، 2 يوليو" readonly />
+      <form id="hotel-search-form">
+        <div class="mb-3">
+          <label class="form-label">المدينة</label>
+          <select id="city" class="form-control" required>
+            <option value="">اختر المدينة</option>
+            <option value="Dubai">دبي</option>
+            <option value="Cairo">القاهرة</option>
+            <option value="Istanbul">إسطنبول</option>
+            <option value="Bangkok">تايلاند</option>
+          </select>
         </div>
-        <div class="flex-fill">
-          <label class="form-label">المغادرة</label>
-          <input type="text" class="form-control" value="الأربعاء، 3 يوليو" readonly />
+
+        <div class="d-flex gap-2 mb-3">
+          <div class="flex-fill">
+            <label class="form-label">الوصول</label>
+            <input type="date" id="checkin" class="form-control" required />
+          </div>
+          <div class="flex-fill">
+            <label class="form-label">المغادرة</label>
+            <input type="date" id="checkout" class="form-control" required />
+          </div>
         </div>
-      </div>
 
-      <div class="mb-3">
-        <input type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly />
-      </div>
+        <div class="mb-3">
+          <label class="form-label">عدد الغرف والضيوف</label>
+          <select id="rooms-guests" class="form-control" required>
+            <option value="1,2,0">1 غرفة، 2 بالغون، 0 أطفال</option>
+            <option value="1,1,0">1 غرفة، 1 بالغ، 0 أطفال</option>
+            <option value="2,4,1">2 غرف، 4 بالغون، 1 طفل</option>
+            <option value="3,6,2">3 غرف، 6 بالغون، 2 أطفال</option>
+          </select>
+        </div>
 
-      <button class="btn btn-primary w-100">ابحث</button>
+        <button type="submit" class="btn btn-primary w-100">ابحث</button>
+      </form>
     </div>
 
     <!-- الوجهات -->
@@ -220,5 +235,31 @@
     جميع الحقوق محفوظة © Paygo 2025
   </div>
 
+  <!-- JavaScript لحجز الفنادق -->
+  <script>
+    document.getElementById("hotel-search-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const city = document.getElementById("city").value;
+      const checkin = document.getElementById("checkin").value;
+      const checkout = document.getElementById("checkout").value;
+
+      const roomData = document.getElementById("rooms-guests").value.split(",");
+      const rooms = roomData[0];
+      const adults = roomData[1];
+      const children = roomData[2];
+
+      const marker = "646029";
+
+      if (!city || !checkin || !checkout) {
+        alert("يرجى تعبئة جميع الحقول");
+        return;
+      }
+
+      const url = `https://search.hotellook.com/?marker=${marker}&location=${encodeURIComponent(city)}&checkIn=${checkin}&checkOut=${checkout}&adults=${adults}&children=${children}&rooms=${rooms}`;
+
+      window.location.href = url;
+    });
+  </script>
 </body>
 </html>
