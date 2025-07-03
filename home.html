@@ -3,163 +3,116 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Paygo - حجز الفنادق</title>
-
-  <!-- أيقونة التطبيق للهاتف -->
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" type="image/png" sizes="32x32" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="apple-touch-icon.png">
-
-  <!-- Bootstrap RTL -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-
+  <title>Paygo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
   <style>
     body {
-      background: #ffffff;
-      font-family: 'Cairo', sans-serif;
-      direction: rtl;
-      color: #000;
-      margin: 0;
-      padding: 0;
+      background-color: #ffffff;
+      font-family: 'Tahoma', sans-serif;
     }
 
     .navbar {
-      background-color: #222;
-      padding: 10px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background-color: #1e1e1e;
     }
 
-    .navbar img {
-      height: 70px;
+    .navbar-brand {
+      font-size: 26px;
+      font-weight: bold;
+      color: white !important;
     }
 
     .search-box {
-      background: #fff;
-      color: #000;
+      background-color: white;
+      border-radius: 10px;
       padding: 20px;
-      border-radius: 12px;
-      max-width: 520px;
       margin: 20px auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .form-label {
-      font-size: 13px;
-      color: #444;
-      margin-bottom: 4px;
+    .form-control {
+      margin-bottom: 10px;
     }
 
-    .search-box input,
-    .search-box button {
-      height: 45px;
-      border-radius: 8px;
-    }
-
-    .destinations {
-      margin-top: 40px;
-      padding: 20px;
-    }
-
-    .destination-card {
-      background: #fff;
-      color: #000;
-      border-radius: 12px;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      height: 100%;
-    }
-
-    .destination-card img {
+    .btn-primary {
       width: 100%;
-      border-radius: 8px;
+    }
+
+    .city-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      padding: 20px;
+      margin-bottom: 80px; /* مسافة إضافية لتجنب التداخل مع الشريط السفلي */
+    }
+
+    .city-card {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      background-color: #fff;
+    }
+
+    .city-card img {
+      width: 100%;
       height: 120px;
       object-fit: cover;
     }
 
-    .destination-card h5 {
-      margin-top: 10px;
+    .city-card p {
+      margin: 10px 0;
+      font-weight: bold;
     }
 
-    .footer {
-      background-color: #222;
-      color: #fff;
+    footer {
+      padding: 20px 0;
+      background-color: #1e1e1e;
+      color: white;
       text-align: center;
-      padding: 14px;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
-      z-index: 999;
     }
   </style>
 </head>
 <body>
 
-  <!-- الشريط العلوي -->
-  <div class="navbar">
-    <img src="paygs.png" alt="Paygo Logo">
-  </div>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand mx-auto" href="#">Paygo</a>
+    </div>
+  </nav>
 
-  <!-- نموذج البحث -->
   <div class="search-box">
-    <div class="mb-3">
-      <input type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" />
+    <input type="text" class="form-control" placeholder="المدينة">
+    <div class="d-flex justify-content-between">
+      <input type="date" class="form-control me-2" value="2025-07-02">
+      <input type="date" class="form-control ms-2" value="2025-07-03">
     </div>
-
-    <div class="d-flex gap-2 mb-3">
-      <div class="flex-fill">
-        <label class="form-label">الوصول</label>
-        <input type="text" class="form-control" value="الثلاثاء، 2 يوليو" readonly />
-      </div>
-      <div class="flex-fill">
-        <label class="form-label">المغادرة</label>
-        <input type="text" class="form-control" value="الأربعاء، 3 يوليو" readonly />
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <input type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly />
-    </div>
-
-    <button class="btn btn-primary w-100">ابحث</button>
+    <input type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly>
+    <button class="btn btn-primary mt-2">ابحث</button>
   </div>
 
-  <!-- الوجهات -->
-  <div class="container destinations">
-    <div class="row g-3">
-      <div class="col-6">
-        <div class="destination-card">
-          <img src="dubai.png" alt="دبي">
-          <h5>دبي</h5>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="destination-card">
-          <img src="qairo.png" alt="القاهرة">
-          <h5>القاهرة</h5>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="destination-card">
-          <img src="istanbul.png" alt="إسطنبول">
-          <h5>إسطنبول</h5>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="destination-card">
-          <img src="thailand.png" alt="تايلاند">
-          <h5>تايلاند</h5>
-        </div>
-      </div>
+  <div class="city-grid">
+    <div class="city-card">
+      <img src="images/qairo.png" alt="القاهرة">
+      <p>القاهرة</p>
+    </div>
+    <div class="city-card">
+      <img src="images/dubai.png" alt="دبي">
+      <p>دبي</p>
+    </div>
+    <div class="city-card">
+      <img src="images/thailand.png" alt="تايلاند">
+      <p>تايلاند</p>
+    </div>
+    <div class="city-card">
+      <img src="images/istanbul.png" alt="اسطنبول">
+      <p>اسطنبول</p>
     </div>
   </div>
 
-  <!-- الشريط السفلي -->
-  <div class="footer">
-    جميع الحقوق محفوظة © Paygo 2025
-  </div>
+  <footer>
+    <p>جميع الحقوق محفوظة © Paygo 2025</p>
+  </footer>
 
 </body>
 </html>
