@@ -31,6 +31,9 @@
 
     .main-content {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     /* الشريط العلوي */
@@ -69,7 +72,6 @@
     }
 
     .destinations {
-      margin-top: 40px;
       padding: 20px;
     }
 
@@ -100,7 +102,7 @@
       position: relative;
       background-color: #f8f8f8;
       border-radius: 10px;
-      margin: 20px 0;
+      margin: 10px 0 20px;
     }
 
     .slider-track {
@@ -128,7 +130,7 @@
         transform: translateX(0);
       }
       100% {
-        transform: translateX(-400vw); /* 4 شرائح بعرض الشاشة */
+        transform: translateX(-400vw);
       }
     }
 
@@ -152,66 +154,74 @@
   <div class="main-content">
 
     <!-- نموذج البحث -->
-    <div class="search-box">
-      <div class="mb-3">
-        <input type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" />
-      </div>
-
-      <div class="d-flex gap-2 mb-3">
-        <div class="flex-fill">
-          <label class="form-label">الوصول</label>
-          <input type="text" class="form-control" value="الثلاثاء، 2 يوليو" readonly />
+    <div>
+      <div class="search-box">
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" />
         </div>
-        <div class="flex-fill">
-          <label class="form-label">المغادرة</label>
-          <input type="text" class="form-control" value="الأربعاء، 3 يوليو" readonly />
-        </div>
-      </div>
 
-      <div class="mb-3">
-        <input type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly />
-      </div>
-
-      <button class="btn btn-primary w-100">ابحث</button>
-    </div>
-
-    <!-- الوجهات -->
-    <div class="container destinations">
-      <div class="row g-3">
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="dubai.png" alt="دبي">
-            <h5>دبي</h5>
+        <div class="d-flex gap-2 mb-3">
+          <div class="flex-fill">
+            <label class="form-label">الوصول</label>
+            <input type="text" class="form-control" value="الثلاثاء، 2 يوليو" readonly />
+          </div>
+          <div class="flex-fill">
+            <label class="form-label">المغادرة</label>
+            <input type="text" class="form-control" value="الأربعاء، 3 يوليو" readonly />
           </div>
         </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="qairo.png" alt="القاهرة">
-            <h5>القاهرة</h5>
-          </div>
+
+        <div class="mb-3">
+          <input type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly />
         </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="istanbul.png" alt="إسطنبول">
-            <h5>إسطنبول</h5>
+
+        <button class="btn btn-primary w-100">ابحث</button>
+      </div>
+
+      <!-- الوجهات -->
+      <div class="container destinations">
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="destination-card">
+              <img src="dubai.png" alt="دبي">
+              <h5>دبي</h5>
+            </div>
           </div>
-        </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="thailand.png" alt="تايلاند">
-            <h5>تايلاند</h5>
+          <div class="col-6">
+            <div class="destination-card">
+              <img src="qairo.png" alt="القاهرة">
+              <h5>القاهرة</h5>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="destination-card">
+              <img src="istanbul.png" alt="إسطنبول">
+              <h5>إسطنبول</h5>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="destination-card">
+              <img src="thailand.png" alt="تايلاند">
+              <h5>تايلاند</h5>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- سلايدر عروض السفر -->
-    <div class="travel-offers">
-      <div class="slider-track">
-        <div class="slide"><img src="offer1.jpg" alt="عرض 1"></div>
-        <div class="slide"><img src="offer2.jpg" alt="عرض 2"></div>
-        <div class="slide"><img src="offer3.jpg" alt="عرض 3"></div>
-        <div class="slide"><img src="offer4.jpg" alt="عرض 4"></div>
+      <!-- عنوان العروض -->
+      <div class="d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
+        <h5 class="mb-0">عروض السفر الحصرية</h5>
+        <a href="offers.html" class="text-decoration-none text-primary small">جميع العروض</a>
+      </div>
+
+      <!-- سلايدر العروض -->
+      <div class="travel-offers">
+        <div class="slider-track">
+          <div class="slide"><img src="offer1.jpg" alt="عرض 1"></div>
+          <div class="slide"><img src="offer2.jpg" alt="عرض 2"></div>
+          <div class="slide"><img src="offer3.jpg" alt="عرض 3"></div>
+          <div class="slide"><img src="offer4.jpg" alt="عرض 4"></div>
+        </div>
       </div>
     </div>
 
