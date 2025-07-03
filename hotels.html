@@ -1,47 +1,41 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>نتائج الفنادق - Paygo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-
   <style>
     body {
-      background-color: #f7f7f7;
+      background-color: #f5f5f5;
       font-family: 'Cairo', sans-serif;
     }
-
-    .hotel-card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-
-    .hotel-card h5 {
-      margin-bottom: 5px;
-    }
-
-    .hotel-card p {
-      margin: 0;
-      font-size: 14px;
-      color: #555;
-    }
-
     .header {
       background-color: #222;
       color: #fff;
       padding: 15px;
       text-align: center;
     }
-
-    .city-name {
+    .city-title {
+      margin: 20px;
       text-align: center;
       font-weight: bold;
-      margin: 20px 0;
       font-size: 20px;
+    }
+    .hotel-card {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .hotel-card h5 {
+      margin-bottom: 5px;
+    }
+    .hotel-card p {
+      margin: 0;
+      font-size: 14px;
+      color: #444;
     }
   </style>
 </head>
@@ -51,19 +45,18 @@
     <h4>نتائج الفنادق</h4>
   </div>
 
-  <div class="city-name" id="cityDisplay">...</div>
+  <div class="city-title" id="cityTitle">...</div>
 
-  <div class="container mt-2" id="hotels-container">
-    <p>جاري تحميل الفنادق...</p>
+  <div class="container" id="hotelResults">
+    <p class="text-center">جاري تحميل الفنادق...</p>
   </div>
 
   <script>
     const apiKey = "UspRLCHI82AtaL2AsflFSLYxrRh0asMB";
     const apiSecret = "R1ZGO9tgOA4P5EPJ";
-    let accessToken = "";
 
     async function getAccessToken() {
-      const response = await fetch("https://test.api.amadeus.com/v1/security/oauth2/token", {
+      const res = await fetch("https://test.api.amadeus.com/v1/security/oauth2/token", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
@@ -72,97 +65,87 @@
           client_secret: apiSecret
         })
       });
-
-      const data = await response.json();
-      accessToken = data.access_token;
-      return accessToken;
+      const data = await res.json();
+      return data.access_token;
     }
 
-    function getQueryParams() {
-      const params = new URLSearchParams(window.location.search);
+    async function getIATACode(cityName, token) {
+      const res = await fetch(`https://test.api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=${cityName}&view=FULL`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.data && data.data.length > 0) {
+        return {
+          iata: data.data[0].iataCode,
+          arabicName: data.data[0].address.cityName || data.data[0].name
+        };
+      } else {
+        throw new Error("لم يتم العثور على رمز المدينة");
+      }
+    }
+
+    async function getHotels(iataCode, checkin, checkout, adults, token) {
+      const url = `https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=${iataCode}&checkInDate=${checkin}&checkOutDate=${checkout}&adults=${adults}`;
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      return data.data || [];
+    }
+
+    function getParams() {
+      const p = new URLSearchParams(location.search);
       return {
-        city: params.get("city"),
-        checkin: params.get("checkin"),
-        checkout: params.get("checkout"),
-        rooms: params.get("rooms") || "1",
-        adults: params.get("adults") || "2",
-        children: params.get("children") || "0"
+        city: p.get("city"),
+        checkin: p.get("checkin"),
+        checkout: p.get("checkout"),
+        rooms: p.get("rooms") || "1",
+        adults: p.get("adults") || "2",
+        children: p.get("children") || "0"
       };
     }
 
-    async function getCityInfo(cityName) {
-      const response = await fetch(`https://test.api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=${encodeURIComponent(cityName)}&view=FULL`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
-
-      const data = await response.json();
-      if (data && data.data && data.data.length > 0) {
-        const cityData = data.data[0];
-        return {
-          iataCode: cityData.iataCode,
-          arabicName: cityData.address.cityName || cityData.name
-        };
-      } else {
-        throw new Error("لم يتم العثور على المدينة");
-      }
-    }
-
-    async function searchHotels(iataCode, checkin, checkout, adults) {
-      const response = await fetch(`https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=${iataCode}&checkInDate=${checkin}&checkOutDate=${checkout}&adults=${adults}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
-      return await response.json();
-    }
-
-    function renderHotels(hotels, rooms, adults, children) {
-      const container = document.getElementById("hotels-container");
+    function renderHotels(hotels, info) {
+      const container = document.getElementById("hotelResults");
       container.innerHTML = "";
-
       if (hotels.length === 0) {
-        container.innerHTML = "<p>لم يتم العثور على فنادق.</p>";
+        container.innerHTML = "<p class='text-center'>لم يتم العثور على فنادق.</p>";
         return;
       }
 
-      hotels.forEach(hotel => {
-        const name = hotel.hotel.name || "فندق غير معروف";
-        const address = hotel.hotel.address?.lines?.join(", ") || "بدون عنوان";
-        const price = hotel.offers[0]?.price?.total || "غير متوفر";
-        const currency = hotel.offers[0]?.price?.currency || "USD";
+      hotels.forEach(h => {
+        const name = h.hotel.name || "اسم غير متوفر";
+        const address = h.hotel.address?.lines?.join(", ") || "لا يوجد عنوان";
+        const price = h.offers[0]?.price?.total || "غير متوفر";
+        const currency = h.offers[0]?.price?.currency || "USD";
 
-        const card = document.createElement("div");
-        card.className = "hotel-card";
-        card.innerHTML = `
+        const div = document.createElement("div");
+        div.className = "hotel-card";
+        div.innerHTML = `
           <h5>${name}</h5>
           <p>العنوان: ${address}</p>
           <p>السعر: ${price} ${currency}</p>
-          <p>عدد الغرف: ${rooms} | البالغون: ${adults} | الأطفال: ${children}</p>
+          <p>الغرف: ${info.rooms} | البالغون: ${info.adults} | الأطفال: ${info.children}</p>
         `;
-        container.appendChild(card);
+        container.appendChild(div);
       });
     }
 
-    async function loadHotels() {
-      const { city, checkin, checkout, rooms, adults, children } = getQueryParams();
-      const cityDisplay = document.getElementById("cityDisplay");
-
+    async function init() {
+      const info = getParams();
       try {
-        await getAccessToken();
-        const cityInfo = await getCityInfo(city);
-        cityDisplay.textContent = `المدينة: ${cityInfo.arabicName}`;
-        const result = await searchHotels(cityInfo.iataCode, checkin, checkout, adults);
-        const hotels = result.data || [];
-        renderHotels(hotels, rooms, adults, children);
+        const token = await getAccessToken();
+        const cityInfo = await getIATACode(info.city, token);
+        document.getElementById("cityTitle").textContent = "المدينة: " + cityInfo.arabicName;
+        const hotels = await getHotels(cityInfo.iata, info.checkin, info.checkout, info.adults, token);
+        renderHotels(hotels, info);
       } catch (err) {
         console.error(err);
-        document.getElementById("hotels-container").innerHTML = "<p>حدث خطأ أثناء تحميل الفنادق.</p>";
+        document.getElementById("hotelResults").innerHTML = "<p class='text-danger text-center'>حدث خطأ أثناء تحميل الفنادق.</p>";
       }
     }
 
-    loadHotels();
+    init();
   </script>
 
 </body>
