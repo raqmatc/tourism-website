@@ -4,152 +4,129 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Paygo - حجز الفنادق</title>
-
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" type="image/png" sizes="32x32" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="apple-touch-icon.png">
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-
   <style>
-    html, body {
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      display: flex;
-      flex-direction: column;
       font-family: 'Cairo', sans-serif;
-      background: #ffffff;
       direction: rtl;
-      color: #000;
+      background: #f4f4f4;
     }
-
-    .main-content {
-      flex: 1;
-    }
-
-    .navbar {
-      background-color: #222;
-      height: 60px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .navbar img {
-      height: 50px;
-    }
-
     .search-box {
       background: #fff;
       padding: 20px;
       border-radius: 12px;
-      max-width: 520px;
-      margin: 30px auto;
+      max-width: 600px;
+      margin: 40px auto;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      position: relative;
     }
-
     .form-label {
-      font-size: 13px;
+      font-size: 14px;
       color: #444;
-      margin-bottom: 4px;
     }
-
-    .search-box input,
-    .search-box select,
-    .search-box button {
-      height: 45px;
+    input, select {
       border-radius: 8px;
+      margin-bottom: 10px;
     }
-
-    .footer {
-      background-color: #222;
-      color: #fff;
-      text-align: center;
-      padding: 12px;
+    .suggestions {
+      border: 1px solid #ccc;
+      max-height: 150px;
+      overflow-y: auto;
+      background-color: white;
+      position: absolute;
+      width: 100%;
+      top: 105px;
+      z-index: 1000;
+      border-radius: 5px;
+    }
+    .suggestions div {
+      padding: 10px;
+      cursor: pointer;
+    }
+    .suggestions div:hover {
+      background-color: #f0f0f0;
     }
   </style>
 </head>
 <body>
 
-  <!-- الشريط العلوي -->
-  <div class="navbar">
-    <img src="paygs.png" alt="Paygo Logo">
-  </div>
+<div class="search-box">
+  <form id="searchForm">
+    <label class="form-label">المدينة</label>
+    <input type="text" id="cityInput" class="form-control" placeholder="أدخل المدينة" autocomplete="off" required>
+    <div id="suggestions" class="suggestions"></div>
 
-  <!-- المحتوى الرئيسي -->
-  <div class="main-content">
+    <label class="form-label">الوصول</label>
+    <input type="date" id="checkIn" class="form-control" required>
 
-    <!-- نموذج حجز شبيه Wego -->
-    <div class="search-box">
-      <form id="wego-search-form">
-        <div class="mb-3">
-          <label class="form-label">المدينة</label>
-          <select id="wego-city" class="form-control" required>
-            <option value="">اختر المدينة</option>
-            <option value="Dubai">دبي</option>
-            <option value="Cairo">القاهرة</option>
-            <option value="Istanbul">إسطنبول</option>
-            <option value="Bangkok">تايلاند</option>
-          </select>
-        </div>
+    <label class="form-label">المغادرة</label>
+    <input type="date" id="checkOut" class="form-control" required>
 
-        <div class="d-flex gap-2 mb-3">
-          <div class="flex-fill">
-            <label class="form-label">الوصول</label>
-            <input type="date" id="wego-checkin" class="form-control" required />
-          </div>
-          <div class="flex-fill">
-            <label class="form-label">المغادرة</label>
-            <input type="date" id="wego-checkout" class="form-control" required />
-          </div>
-        </div>
+    <button type="submit" class="btn btn-primary w-100 mt-3">ابحث</button>
+  </form>
+</div>
 
-        <div class="mb-3">
-          <label class="form-label">عدد الغرف والضيوف</label>
-          <select id="wego-guests" class="form-control" required>
-            <option value="1-2-0">1 غرفة، 2 بالغون، 0 أطفال</option>
-            <option value="1-1-0">1 غرفة، 1 بالغ، 0 أطفال</option>
-            <option value="2-4-1">2 غرف، 4 بالغون، 1 طفل</option>
-            <option value="3-6-2">3 غرف، 6 بالغون، 2 أطفال</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary w-100">ابحث</button>
-      </form>
-    </div>
-
-  </div>
-
-  <!-- الشريط السفلي -->
-  <div class="footer">
-    جميع الحقوق محفوظة © Paygo 2025
-  </div>
-
-  <!-- JavaScript لإنشاء رابط الحجز -->
-  <script>
-    document.getElementById("wego-search-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const city = document.getElementById("wego-city").value;
-      const checkin = document.getElementById("wego-checkin").value;
-      const checkout = document.getElementById("wego-checkout").value;
-      const [rooms, adults, children] = document.getElementById("wego-guests").value.split("-");
-
-      if (!city || !checkin || !checkout) {
-        alert("يرجى تعبئة جميع الحقول");
-        return;
-      }
-
-      const marker = "646029";
-      const url = `https://search.hotellook.com/?marker=${marker}&location=${encodeURIComponent(city)}&checkIn=${checkin}&checkOut=${checkout}&adults=${adults}&children=${children}&rooms=${rooms}`;
-
-      window.location.href = url;
+<script>
+  let token = "";
+  async function fetchToken() {
+    const res = await fetch("https://test.api.amadeus.com/v1/security/oauth2/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: "grant_type=client_credentials&client_id=UspRLCHI82AtaL2AsflFSLYxrRh0asMB&client_secret=R1ZGO9tgOA4P5EPJ"
     });
-  </script>
+    const data = await res.json();
+    token = data.access_token;
+  }
+
+  async function fetchCities(query) {
+    if (!token) await fetchToken();
+    const res = await fetch(`https://test.api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=${query}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    const data = await res.json();
+    return data.data || [];
+  }
+
+  const cityInput = document.getElementById("cityInput");
+  const suggestionsDiv = document.getElementById("suggestions");
+
+  cityInput.addEventListener("input", async () => {
+    const query = cityInput.value;
+    if (query.length < 2) {
+      suggestionsDiv.innerHTML = "";
+      return;
+    }
+    const results = await fetchCities(query);
+    suggestionsDiv.innerHTML = results.map(city => `<div data-code="${city.iataCode}">${city.name}</div>`).join("");
+  });
+
+  suggestionsDiv.addEventListener("click", (e) => {
+    if (e.target.dataset.code) {
+      cityInput.value = e.target.innerText;
+      cityInput.setAttribute("data-code", e.target.dataset.code);
+      suggestionsDiv.innerHTML = "";
+    }
+  });
+
+  document.getElementById("searchForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const city = cityInput.getAttribute("data-code");
+    const checkIn = document.getElementById("checkIn").value;
+    const checkOut = document.getElementById("checkOut").value;
+
+    if (!city || !checkIn || !checkOut) {
+      alert("يرجى إدخال جميع البيانات");
+      return;
+    }
+
+    // توجيه إلى صفحة الفنادق مع البيانات
+    window.location.href = `hotels.html?city=${city}&checkIn=${checkIn}&checkOut=${checkOut}`;
+  });
+</script>
 
 </body>
 </html>
