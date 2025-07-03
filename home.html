@@ -1,239 +1,208 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Paygo - حجز الفنادق</title>
-
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" type="image/png" sizes="32x32" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="apple-touch-icon.png">
-
-  <!-- Bootstrap RTL -->
+  <meta charset="UTF-8">
+  <title>نتائج الفنادق - Paygo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
 
   <style>
-    html, body {
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      display: flex;
-      flex-direction: column;
+      background-color: #f7f7f7;
       font-family: 'Cairo', sans-serif;
-      background: #ffffff;
-      direction: rtl;
-      color: #000;
     }
 
-    .main-content {
-      flex: 1;
-    }
-
-    .navbar {
-      background-color: #222;
-      height: 60px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .navbar img {
-      height: 50px;
-    }
-
-    .search-box {
+    .hotel-card {
       background: #fff;
-      padding: 20px;
       border-radius: 12px;
-      max-width: 520px;
-      margin: 30px auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 15px;
+      margin-bottom: 20px;
     }
 
-    .form-label {
-      font-size: 13px;
-      color: #444;
-      margin-bottom: 4px;
+    .hotel-card h5 {
+      margin-bottom: 5px;
     }
 
-    .search-box input,
-    .search-box button {
-      height: 45px;
-      border-radius: 8px;
+    .hotel-card p {
+      margin: 0;
+      font-size: 14px;
+      color: #555;
     }
 
-    .destinations {
-      padding: 20px;
-    }
-
-    .destination-card {
-      background: #fff;
-      color: #000;
-      border-radius: 12px;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      height: 100%;
-    }
-
-    .destination-card img {
-      width: 100%;
-      border-radius: 8px;
-      height: 120px;
-      object-fit: cover;
-    }
-
-    .destination-card h5 {
-      margin-top: 10px;
-    }
-
-    .travel-offers {
-      overflow: hidden;
-      background-color: #f8f8f8;
-      border-radius: 10px;
-      margin: 0 0 20px 0;
-    }
-
-    .slider-track {
-      display: flex;
-      animation: scrollSlider 20s linear infinite;
-      width: fit-content;
-    }
-
-    .slide {
-      flex: 0 0 100vw;
-      height: 160px;
-      overflow: hidden;
-    }
-
-    .slide img {
-      width: 100vw;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    @keyframes scrollSlider {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-400vw);
-      }
-    }
-
-    .footer {
+    .header {
       background-color: #222;
       color: #fff;
+      padding: 15px;
       text-align: center;
-      padding: 12px;
+    }
+
+    .filters {
+      background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px 10px 0 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
 
-  <!-- الشريط العلوي -->
-  <div class="navbar">
-    <img src="paygs.png" alt="Paygo Logo">
+  <div class="header">
+    <h4>نتائج الفنادق</h4>
   </div>
 
-  <!-- المحتوى الرئيسي -->
-  <div class="main-content">
-
-    <!-- نموذج البحث -->
-    <div class="search-box">
-      <div class="mb-3">
-        <input type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" />
+  <!-- الفلاتر -->
+  <div class="filters">
+    <div class="row g-2">
+      <div class="col-6 col-md-3">
+        <label>الحد الأدنى للسعر</label>
+        <input type="number" id="minPrice" class="form-control" placeholder="مثال: 100">
       </div>
-
-      <div class="d-flex gap-2 mb-3">
-        <div class="flex-fill">
-          <label class="form-label">الوصول</label>
-          <input type="text" class="form-control" value="الثلاثاء، 2 يوليو" readonly />
-        </div>
-        <div class="flex-fill">
-          <label class="form-label">المغادرة</label>
-          <input type="text" class="form-control" value="الأربعاء، 3 يوليو" readonly />
-        </div>
+      <div class="col-6 col-md-3">
+        <label>الحد الأعلى للسعر</label>
+        <input type="number" id="maxPrice" class="form-control" placeholder="مثال: 500">
       </div>
-
-      <div class="mb-3">
-        <input type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly />
+      <div class="col-6 col-md-3">
+        <label>عدد النجوم</label>
+        <select id="stars" class="form-control">
+          <option value="">الكل</option>
+          <option value="5">5 نجوم</option>
+          <option value="4">4 نجوم</option>
+          <option value="3">3 نجوم</option>
+        </select>
       </div>
-
-      <button id="searchBtn" class="btn btn-primary w-100">ابحث</button>
-
-      <script>
-        document.getElementById('searchBtn').addEventListener('click', function () {
-          const city = document.querySelector('.search-box input[type="text"]').value.trim();
-          const checkIn = document.querySelectorAll('.search-box input[type="text"]')[1].value;
-          const checkOut = document.querySelectorAll('.search-box input[type="text"]')[2].value;
-
-          if (city) {
-            const url = `hotels.html?city=${encodeURIComponent(city)}&checkin=${encodeURIComponent(checkIn)}&checkout=${encodeURIComponent(checkOut)}`;
-            window.location.href = url;
-          } else {
-            alert("يرجى إدخال اسم المدينة.");
-          }
-        });
-      </script>
-    </div>
-
-    <!-- الوجهات -->
-    <div class="container destinations">
-      <div class="row g-3">
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="dubai.png" alt="دبي">
-            <h5>دبي</h5>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="qairo.png" alt="القاهرة">
-            <h5>القاهرة</h5>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="istanbul.png" alt="إسطنبول">
-            <h5>إسطنبول</h5>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="thailand.png" alt="تايلاند">
-            <h5>تايلاند</h5>
-          </div>
-        </div>
+      <div class="col-6 col-md-3 d-flex align-items-end">
+        <button class="btn btn-primary w-100" onclick="applyFilters()">تصفية</button>
       </div>
     </div>
-
-    <!-- عنوان العروض -->
-    <div class="d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
-      <h5 class="mb-0">عروض السفر الحصرية</h5>
-      <a href="offers.html" class="text-decoration-none text-primary small">جميع العروض</a>
-    </div>
-
-    <!-- سلايدر العروض -->
-    <div class="travel-offers">
-      <div class="slider-track">
-        <div class="slide"><img src="offer1.jpg" alt="عرض 1"></div>
-        <div class="slide"><img src="offer2.jpg" alt="عرض 2"></div>
-        <div class="slide"><img src="offer3.jpg" alt="عرض 3"></div>
-        <div class="slide"><img src="offer4.jpg" alt="عرض 4"></div>
-      </div>
-    </div>
-
   </div>
 
-  <!-- الشريط السفلي -->
-  <div class="footer">
-    جميع الحقوق محفوظة © Paygo 2025
+  <!-- النتائج -->
+  <div class="container mt-4" id="hotels-container">
+    <p>جاري تحميل الفنادق...</p>
   </div>
+
+  <script>
+    const apiKey = "UspRLCHI82AtaL2AsflFSLYxrRh0asMB";
+    const apiSecret = "R1ZGO9tgOA4P5EPJ";
+    let allHotels = []; // لتخزين كل الفنادق بدون تصفية
+
+    async function getAccessToken() {
+      const response = await fetch("https://test.api.amadeus.com/v1/security/oauth2/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          grant_type: "client_credentials",
+          client_id: apiKey,
+          client_secret: apiSecret
+        })
+      });
+      const data = await response.json();
+      return data.access_token;
+    }
+
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        city: params.get("city"),
+        checkin: params.get("checkin"),
+        checkout: params.get("checkout"),
+        rooms: params.get("rooms") || "1",
+        adults: params.get("adults") || "2",
+        children: params.get("children") || "0"
+      };
+    }
+
+    async function searchHotels(token, cityCode, checkin, checkout, adults) {
+      const url = `https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=${cityCode}&checkInDate=${checkin}&checkOutDate=${checkout}&adults=${adults}`;
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      return await response.json();
+    }
+
+    async function getCityCode(cityName, token) {
+      const response = await fetch(`https://test.api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=${encodeURIComponent(cityName)}&view=FULL`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await response.json();
+      if (data && data.data && data.data.length > 0) {
+        return data.data[0].iataCode;
+      } else {
+        throw new Error("لم يتم العثور على المدينة");
+      }
+    }
+
+    function renderHotels(hotels, rooms, adults, children) {
+      const container = document.getElementById("hotels-container");
+      container.innerHTML = "";
+
+      if (hotels.length === 0) {
+        container.innerHTML = "<p>لم يتم العثور على فنادق تطابق الفلاتر.</p>";
+        return;
+      }
+
+      hotels.forEach(hotel => {
+        const name = hotel.hotel.name || "فندق غير معروف";
+        const address = hotel.hotel.address?.lines?.join(", ") || "بدون عنوان";
+        const price = hotel.offers[0]?.price?.total || "غير متوفر";
+        const currency = hotel.offers[0]?.price?.currency || "USD";
+        const rating = hotel.hotel.rating || "غير معروف";
+
+        const card = document.createElement("div");
+        card.className = "hotel-card";
+        card.innerHTML = `
+          <h5>${name}</h5>
+          <p>العنوان: ${address}</p>
+          <p>السعر: ${price} ${currency}</p>
+          <p>عدد الغرف: ${rooms} | البالغون: ${adults} | الأطفال: ${children}</p>
+          <p>التقييم: ${rating} نجوم</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function applyFilters() {
+      const min = parseFloat(document.getElementById('minPrice').value) || 0;
+      const max = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+      const stars = document.getElementById('stars').value;
+
+      const filtered = allHotels.filter(hotel => {
+        const offer = hotel.offers[0];
+        const price = parseFloat(offer?.price?.total || 0);
+        const rating = hotel.hotel.rating || "";
+
+        return price >= min && price <= max && (stars === "" || rating == stars);
+      });
+
+      const { rooms, adults, children } = getQueryParams();
+      renderHotels(filtered, rooms, adults, children);
+    }
+
+    async function showHotels() {
+      const { city, checkin, checkout, rooms, adults, children } = getQueryParams();
+      const container = document.getElementById("hotels-container");
+
+      try {
+        const token = await getAccessToken();
+        const cityCode = await getCityCode(city, token);
+        const result = await searchHotels(token, cityCode, checkin, checkout, adults);
+
+        if (result.data && result.data.length > 0) {
+          allHotels = result.data;
+          renderHotels(allHotels, rooms, adults, children);
+        } else {
+          container.innerHTML = "<p>لم يتم العثور على فنادق</p>";
+        }
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = "<p>حدث خطأ أثناء تحميل البيانات</p>";
+      }
+    }
+
+    showHotels();
+  </script>
 
 </body>
 </html>
