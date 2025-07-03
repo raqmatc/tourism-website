@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Paygo - حجز الفنادق</title>
 
-  <!-- دعم أيقونة الشاشة الرئيسية للآيفون -->
   <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
   <link rel="icon" type="image/png" sizes="32x32" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="16x16" href="apple-touch-icon.png">
@@ -31,12 +30,8 @@
 
     .main-content {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
-    /* الشريط العلوي */
     .navbar {
       background-color: #222;
       height: 60px;
@@ -51,7 +46,6 @@
 
     .search-box {
       background: #fff;
-      color: #000;
       padding: 20px;
       border-radius: 12px;
       max-width: 520px;
@@ -96,13 +90,11 @@
       margin-top: 10px;
     }
 
-    /* سلايدر العروض */
     .travel-offers {
       overflow: hidden;
-      position: relative;
       background-color: #f8f8f8;
       border-radius: 10px;
-      margin: 10px 0 20px;
+      margin: 0 0 20px 0;
     }
 
     .slider-track {
@@ -114,7 +106,6 @@
     .slide {
       flex: 0 0 100vw;
       height: 160px;
-      position: relative;
       overflow: hidden;
     }
 
@@ -134,7 +125,6 @@
       }
     }
 
-    /* الشريط السفلي */
     .footer {
       background-color: #222;
       color: #fff;
@@ -154,74 +144,72 @@
   <div class="main-content">
 
     <!-- نموذج البحث -->
-    <div>
-      <div class="search-box">
-        <div class="mb-3">
-          <input type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" />
-        </div>
-
-        <div class="d-flex gap-2 mb-3">
-          <div class="flex-fill">
-            <label class="form-label">الوصول</label>
-            <input type="text" class="form-control" value="الثلاثاء، 2 يوليو" readonly />
-          </div>
-          <div class="flex-fill">
-            <label class="form-label">المغادرة</label>
-            <input type="text" class="form-control" value="الأربعاء، 3 يوليو" readonly />
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <input type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly />
-        </div>
-
-        <button class="btn btn-primary w-100">ابحث</button>
+    <div class="search-box">
+      <div class="mb-3">
+        <input type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" />
       </div>
 
-      <!-- الوجهات -->
-      <div class="container destinations">
-        <div class="row g-3">
-          <div class="col-6">
-            <div class="destination-card">
-              <img src="dubai.png" alt="دبي">
-              <h5>دبي</h5>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="destination-card">
-              <img src="qairo.png" alt="القاهرة">
-              <h5>القاهرة</h5>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="destination-card">
-              <img src="istanbul.png" alt="إسطنبول">
-              <h5>إسطنبول</h5>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="destination-card">
-              <img src="thailand.png" alt="تايلاند">
-              <h5>تايلاند</h5>
-            </div>
-          </div>
+      <div class="d-flex gap-2 mb-3">
+        <div class="flex-fill">
+          <label class="form-label">الوصول</label>
+          <input type="text" class="form-control" value="الثلاثاء، 2 يوليو" readonly />
+        </div>
+        <div class="flex-fill">
+          <label class="form-label">المغادرة</label>
+          <input type="text" class="form-control" value="الأربعاء، 3 يوليو" readonly />
         </div>
       </div>
 
-      <!-- عنوان العروض -->
-      <div class="d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
-        <h5 class="mb-0">عروض السفر الحصرية</h5>
-        <a href="offers.html" class="text-decoration-none text-primary small">جميع العروض</a>
+      <div class="mb-3">
+        <input type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly />
       </div>
 
-      <!-- سلايدر العروض -->
-      <div class="travel-offers">
-        <div class="slider-track">
-          <div class="slide"><img src="offer1.jpg" alt="عرض 1"></div>
-          <div class="slide"><img src="offer2.jpg" alt="عرض 2"></div>
-          <div class="slide"><img src="offer3.jpg" alt="عرض 3"></div>
-          <div class="slide"><img src="offer4.jpg" alt="عرض 4"></div>
+      <button class="btn btn-primary w-100">ابحث</button>
+    </div>
+
+    <!-- الوجهات -->
+    <div class="container destinations">
+      <div class="row g-3">
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="dubai.png" alt="دبي">
+            <h5>دبي</h5>
+          </div>
         </div>
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="qairo.png" alt="القاهرة">
+            <h5>القاهرة</h5>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="istanbul.png" alt="إسطنبول">
+            <h5>إسطنبول</h5>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="thailand.png" alt="تايلاند">
+            <h5>تايلاند</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- عنوان العروض -->
+    <div class="d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
+      <h5 class="mb-0">عروض السفر الحصرية</h5>
+      <a href="offers.html" class="text-decoration-none text-primary small">جميع العروض</a>
+    </div>
+
+    <!-- سلايدر العروض -->
+    <div class="travel-offers">
+      <div class="slider-track">
+        <div class="slide"><img src="offer1.jpg" alt="عرض 1"></div>
+        <div class="slide"><img src="offer2.jpg" alt="عرض 2"></div>
+        <div class="slide"><img src="offer3.jpg" alt="عرض 3"></div>
+        <div class="slide"><img src="offer4.jpg" alt="عرض 4"></div>
       </div>
     </div>
 
