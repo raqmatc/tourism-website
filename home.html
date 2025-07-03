@@ -100,40 +100,35 @@
       position: relative;
       background-color: #f8f8f8;
       border-radius: 10px;
-      margin: 20px;
+      margin: 20px 0;
     }
 
     .slider-track {
       display: flex;
-      animation: scrollSlider 25s linear infinite;
-      direction: rtl;
-      gap: 10px;
-      padding: 10px 0;
+      animation: scrollSlider 20s linear infinite;
+      width: fit-content;
     }
 
     .slide {
-      flex: 0 0 auto;
-      width: 200px;
-      height: 120px;
-      border-radius: 8px;
+      flex: 0 0 100vw;
+      height: 160px;
+      position: relative;
       overflow: hidden;
-      background: #eee;
     }
 
     .slide img {
-      width: 100%;
+      width: 100vw;
       height: 100%;
       object-fit: cover;
       display: block;
-      border-radius: 8px;
     }
 
     @keyframes scrollSlider {
       0% {
-        transform: translateX(100%);
+        transform: translateX(0);
       }
       100% {
-        transform: translateX(-100%);
+        transform: translateX(-400vw); /* 4 شرائح بعرض الشاشة */
       }
     }
 
@@ -217,7 +212,6 @@
         <div class="slide"><img src="offer2.jpg" alt="عرض 2"></div>
         <div class="slide"><img src="offer3.jpg" alt="عرض 3"></div>
         <div class="slide"><img src="offer4.jpg" alt="عرض 4"></div>
-        <div class="slide"><img src="offer1.jpg" alt="عرض 5"></div>
       </div>
     </div>
 
