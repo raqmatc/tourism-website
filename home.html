@@ -164,7 +164,22 @@
         <input type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly />
       </div>
 
-      <button class="btn btn-primary w-100">ابحث</button>
+      <button id="searchBtn" class="btn btn-primary w-100">ابحث</button>
+
+      <script>
+        document.getElementById('searchBtn').addEventListener('click', function () {
+          const city = document.querySelector('.search-box input[type="text"]').value.trim();
+          const checkIn = document.querySelectorAll('.search-box input[type="text"]')[1].value;
+          const checkOut = document.querySelectorAll('.search-box input[type="text"]')[2].value;
+
+          if (city) {
+            const url = `hotels.html?city=${encodeURIComponent(city)}&checkin=${encodeURIComponent(checkIn)}&checkout=${encodeURIComponent(checkOut)}`;
+            window.location.href = url;
+          } else {
+            alert("يرجى إدخال اسم المدينة.");
+          }
+        });
+      </script>
     </div>
 
     <!-- الوجهات -->
