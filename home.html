@@ -65,66 +65,6 @@
       border-radius: 8px;
     }
 
-    .destinations {
-      padding: 20px;
-    }
-
-    .destination-card {
-      background: #fff;
-      color: #000;
-      border-radius: 12px;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      height: 100%;
-    }
-
-    .destination-card img {
-      width: 100%;
-      border-radius: 8px;
-      height: 120px;
-      object-fit: cover;
-    }
-
-    .destination-card h5 {
-      margin-top: 10px;
-    }
-
-    .travel-offers {
-      overflow: hidden;
-      background-color: #f8f8f8;
-      border-radius: 10px;
-      margin: 0 0 20px 0;
-    }
-
-    .slider-track {
-      display: flex;
-      animation: scrollSlider 20s linear infinite;
-      width: fit-content;
-    }
-
-    .slide {
-      flex: 0 0 100vw;
-      height: 160px;
-      overflow: hidden;
-    }
-
-    .slide img {
-      width: 100vw;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    @keyframes scrollSlider {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-400vw);
-      }
-    }
-
     .footer {
       background-color: #222;
       color: #fff;
@@ -143,12 +83,12 @@
   <!-- المحتوى الرئيسي -->
   <div class="main-content">
 
-    <!-- مربع الحجز -->
+    <!-- نموذج حجز شبيه Wego -->
     <div class="search-box">
-      <form id="hotel-search-form">
+      <form id="wego-search-form">
         <div class="mb-3">
           <label class="form-label">المدينة</label>
-          <select id="city" class="form-control" required>
+          <select id="wego-city" class="form-control" required>
             <option value="">اختر المدينة</option>
             <option value="Dubai">دبي</option>
             <option value="Cairo">القاهرة</option>
@@ -160,72 +100,26 @@
         <div class="d-flex gap-2 mb-3">
           <div class="flex-fill">
             <label class="form-label">الوصول</label>
-            <input type="date" id="checkin" class="form-control" required />
+            <input type="date" id="wego-checkin" class="form-control" required />
           </div>
           <div class="flex-fill">
             <label class="form-label">المغادرة</label>
-            <input type="date" id="checkout" class="form-control" required />
+            <input type="date" id="wego-checkout" class="form-control" required />
           </div>
         </div>
 
         <div class="mb-3">
           <label class="form-label">عدد الغرف والضيوف</label>
-          <select id="rooms-guests" class="form-control" required>
-            <option value="1,2,0">1 غرفة، 2 بالغون، 0 أطفال</option>
-            <option value="1,1,0">1 غرفة، 1 بالغ، 0 أطفال</option>
-            <option value="2,4,1">2 غرف، 4 بالغون، 1 طفل</option>
-            <option value="3,6,2">3 غرف، 6 بالغون، 2 أطفال</option>
+          <select id="wego-guests" class="form-control" required>
+            <option value="1-2-0">1 غرفة، 2 بالغون، 0 أطفال</option>
+            <option value="1-1-0">1 غرفة، 1 بالغ، 0 أطفال</option>
+            <option value="2-4-1">2 غرف، 4 بالغون، 1 طفل</option>
+            <option value="3-6-2">3 غرف، 6 بالغون، 2 أطفال</option>
           </select>
         </div>
 
         <button type="submit" class="btn btn-primary w-100">ابحث</button>
       </form>
-    </div>
-
-    <!-- الوجهات -->
-    <div class="container destinations">
-      <div class="row g-3">
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="dubai.png" alt="دبي">
-            <h5>دبي</h5>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="qairo.png" alt="القاهرة">
-            <h5>القاهرة</h5>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="istanbul.png" alt="إسطنبول">
-            <h5>إسطنبول</h5>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="thailand.png" alt="تايلاند">
-            <h5>تايلاند</h5>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- عنوان العروض -->
-    <div class="d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
-      <h5 class="mb-0">عروض السفر الحصرية</h5>
-      <a href="offers.html" class="text-decoration-none text-primary small">جميع العروض</a>
-    </div>
-
-    <!-- سلايدر العروض -->
-    <div class="travel-offers">
-      <div class="slider-track">
-        <div class="slide"><img src="offer1.jpg" alt="عرض 1"></div>
-        <div class="slide"><img src="offer2.jpg" alt="عرض 2"></div>
-        <div class="slide"><img src="offer3.jpg" alt="عرض 3"></div>
-        <div class="slide"><img src="offer4.jpg" alt="عرض 4"></div>
-      </div>
     </div>
 
   </div>
@@ -235,31 +129,27 @@
     جميع الحقوق محفوظة © Paygo 2025
   </div>
 
-  <!-- JavaScript لحجز الفنادق -->
+  <!-- JavaScript لإنشاء رابط الحجز -->
   <script>
-    document.getElementById("hotel-search-form").addEventListener("submit", function (e) {
+    document.getElementById("wego-search-form").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      const city = document.getElementById("city").value;
-      const checkin = document.getElementById("checkin").value;
-      const checkout = document.getElementById("checkout").value;
-
-      const roomData = document.getElementById("rooms-guests").value.split(",");
-      const rooms = roomData[0];
-      const adults = roomData[1];
-      const children = roomData[2];
-
-      const marker = "646029";
+      const city = document.getElementById("wego-city").value;
+      const checkin = document.getElementById("wego-checkin").value;
+      const checkout = document.getElementById("wego-checkout").value;
+      const [rooms, adults, children] = document.getElementById("wego-guests").value.split("-");
 
       if (!city || !checkin || !checkout) {
         alert("يرجى تعبئة جميع الحقول");
         return;
       }
 
+      const marker = "646029";
       const url = `https://search.hotellook.com/?marker=${marker}&location=${encodeURIComponent(city)}&checkIn=${checkin}&checkOut=${checkout}&adults=${adults}&children=${children}&rooms=${rooms}`;
 
       window.location.href = url;
     });
   </script>
+
 </body>
 </html>
