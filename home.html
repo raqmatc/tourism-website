@@ -49,7 +49,6 @@
       max-width: 520px;
       margin: 30px auto;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      position: relative;
     }
 
     .form-label {
@@ -62,26 +61,6 @@
     .search-box button {
       height: 45px;
       border-radius: 8px;
-    }
-
-    .autocomplete-suggestions {
-      position: absolute;
-      background: #fff;
-      border: 1px solid #ccc;
-      max-height: 200px;
-      overflow-y: auto;
-      z-index: 10;
-      width: 100%;
-      top: 70px;
-    }
-
-    .autocomplete-suggestions div {
-      padding: 8px;
-      cursor: pointer;
-    }
-
-    .autocomplete-suggestions div:hover {
-      background-color: #f0f0f0;
     }
 
     .destinations {
@@ -136,8 +115,12 @@
     }
 
     @keyframes scrollSlider {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-400vw); }
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-400vw);
+      }
     }
 
     .footer {
@@ -160,19 +143,18 @@
 
     <!-- نموذج البحث -->
     <div class="search-box">
-      <div class="mb-3 position-relative">
-        <input id="city" type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" autocomplete="off" />
-        <div id="suggestions" class="autocomplete-suggestions"></div>
+      <div class="mb-3">
+        <input id="city" type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" />
       </div>
 
       <div class="d-flex gap-2 mb-3">
         <div class="flex-fill">
           <label class="form-label">الوصول</label>
-          <input id="checkin" type="date" class="form-control" />
+          <input id="checkin" type="text" class="form-control" placeholder="تاريخ الوصول" readonly onclick="pickDate('checkin')" />
         </div>
         <div class="flex-fill">
           <label class="form-label">المغادرة</label>
-          <input id="checkout" type="date" class="form-control" />
+          <input id="checkout" type="text" class="form-control" placeholder="تاريخ المغادرة" readonly onclick="pickDate('checkout')" />
         </div>
       </div>
 
@@ -198,51 +180,6 @@
       <button id="searchBtn" class="btn btn-primary w-100">ابحث</button>
 
       <script>
-        const apiKey = "UspRLCHI82AtaL2AsflFSLYxrRh0asMB";
-        const apiSecret = "R1ZGO9tgOA4P5EPJ";
-        let accessToken = "";
-
-        async function getAccessToken() {
-          const res = await fetch("https://test.api.amadeus.com/v1/security/oauth2/token", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              grant_type: "client_credentials",
-              client_id: apiKey,
-              client_secret: apiSecret
-            })
-          });
-          const data = await res.json();
-          accessToken = data.access_token;
-        }
-
-        async function fetchSuggestions(query) {
-          const res = await fetch(`https://test.api.amadeus.com/v1/reference-data/locations?subType=CITY&keyword=${encodeURIComponent(query)}&view=FULL`, {
-            headers: { Authorization: `Bearer ${accessToken}` }
-          });
-          const data = await res.json();
-          return data.data?.map(item => item.address.cityName) || [];
-        }
-
-        document.getElementById("city").addEventListener("input", async function () {
-          const value = this.value;
-          const suggestionsBox = document.getElementById("suggestions");
-          suggestionsBox.innerHTML = "";
-
-          if (value.length < 2) return;
-
-          const suggestions = await fetchSuggestions(value);
-          suggestions.forEach(city => {
-            const div = document.createElement("div");
-            div.textContent = city;
-            div.onclick = () => {
-              document.getElementById("city").value = city;
-              suggestionsBox.innerHTML = "";
-            };
-            suggestionsBox.appendChild(div);
-          });
-        });
-
         function toggleGuestBox() {
           const box = document.getElementById('guestBox');
           box.style.display = box.style.display === 'none' ? 'block' : 'none';
@@ -252,9 +189,16 @@
           const rooms = document.getElementById('roomCount').value;
           const adults = document.getElementById('adultCount').value;
           const children = document.getElementById('childCount').value;
+
           const display = `${rooms} غرفة، ${adults} بالغون، ${children} أطفال`;
           document.getElementById('guestsDisplay').value = display;
           toggleGuestBox();
+        }
+
+        function pickDate(id) {
+          const current = new Date().toISOString().split("T")[0];
+          const date = prompt("اختر التاريخ (YYYY-MM-DD):", current);
+          if (date) document.getElementById(id).value = date;
         }
 
         document.getElementById('searchBtn').addEventListener('click', function () {
@@ -272,24 +216,40 @@
             alert("يرجى ملء جميع الحقول.");
           }
         });
-
-        // الحصول على التوكن عند بداية الصفحة
-        getAccessToken();
       </script>
     </div>
-
-    <!-- الوجهات + العروض (كما في النسخة السابقة) -->
 
     <!-- الوجهات -->
     <div class="container destinations">
       <div class="row g-3">
-        <div class="col-6"><div class="destination-card"><img src="dubai.png" alt="دبي"><h5>دبي</h5></div></div>
-        <div class="col-6"><div class="destination-card"><img src="qairo.png" alt="القاهرة"><h5>القاهرة</h5></div></div>
-        <div class="col-6"><div class="destination-card"><img src="istanbul.png" alt="إسطنبول"><h5>إسطنبول</h5></div></div>
-        <div class="col-6"><div class="destination-card"><img src="thailand.png" alt="تايلاند"><h5>تايلاند</h5></div></div>
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="dubai.png" alt="دبي">
+            <h5>دبي</h5>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="qairo.png" alt="القاهرة">
+            <h5>القاهرة</h5>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="istanbul.png" alt="إسطنبول">
+            <h5>إسطنبول</h5>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="thailand.png" alt="تايلاند">
+            <h5>تايلاند</h5>
+          </div>
+        </div>
       </div>
     </div>
 
+    <!-- العروض -->
     <div class="d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
       <h5 class="mb-0">عروض السفر الحصرية</h5>
       <a href="offers.html" class="text-decoration-none text-primary small">جميع العروض</a>
@@ -306,6 +266,10 @@
 
   </div>
 
-  <div class="footer">جميع الحقوق محفوظة © Paygo 2025</div>
+  <!-- الشريط السفلي -->
+  <div class="footer">
+    جميع الحقوق محفوظة © Paygo 2025
+  </div>
+
 </body>
 </html>
