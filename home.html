@@ -1,28 +1,275 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مربع حجز الفنادق</title>
-    <style>
-        body { font-family: Arial, sans-serif; direction: rtl; text-align: right; background-color: #f4f4f4; margin: 0; padding: 20px; }
-        .search-box { max-width: 600px; margin: 20px auto; padding: 20px; background: white; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        .search-box input, .search-box button { margin: 10px 0; padding: 10px; width: 100%; border: 1px solid #ccc; border-radius: 4px; }
-        .search-box button { background-color: #007bff; color: white; border: none; cursor: pointer; }
-        .search-box button:hover { background-color: #0056b3; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paygo - حجز الفنادق</title>
+
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" type="image/png" sizes="32x32" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="apple-touch-icon.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+
+  <style>
+    html, body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Cairo', sans-serif;
+      background: #ffffff;
+      direction: rtl;
+      color: #000;
+    }
+
+    .main-content {
+      flex: 1;
+    }
+
+    .navbar {
+      background-color: #222;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .navbar img {
+      height: 50px;
+    }
+
+    .search-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 520px;
+      margin: 30px auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .form-label {
+      font-size: 13px;
+      color: #444;
+      margin-bottom: 4px;
+    }
+
+    .search-box input,
+    .search-box button {
+      height: 45px;
+      border-radius: 8px;
+    }
+
+    .destinations {
+      padding: 20px;
+    }
+
+    .destination-card {
+      background: #fff;
+      color: #000;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      height: 100%;
+    }
+
+    .destination-card img {
+      width: 100%;
+      border-radius: 8px;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .destination-card h5 {
+      margin-top: 10px;
+    }
+
+    .travel-offers {
+      overflow: hidden;
+      background-color: #f8f8f8;
+      border-radius: 10px;
+      margin: 0 0 20px 0;
+    }
+
+    .slider-track {
+      display: flex;
+      animation: scrollSlider 20s linear infinite;
+      width: fit-content;
+    }
+
+    .slide {
+      flex: 0 0 100vw;
+      height: 160px;
+      overflow: hidden;
+    }
+
+    .slide img {
+      width: 100vw;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @keyframes scrollSlider {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-400vw);
+      }
+    }
+
+    .footer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+    }
+  </style>
 </head>
 <body>
+
+  <!-- الشريط العلوي -->
+  <div class="navbar">
+    <img src="paygs.png" alt="Paygo Logo">
+  </div>
+
+  <!-- المحتوى الرئيسي -->
+  <div class="main-content">
+
+    <!-- نموذج البحث -->
     <div class="search-box">
-        <h2>ابحث عن فندق</h2>
-        <input type="text" id="city" placeholder="أدخل المدينة">
-        <input type="date" id="checkIn">
-        <input type="date" id="checkOut">
-        <input type="number" id="rooms" placeholder="عدد الغرف" min="1" value="1">
-        <input type="number" id="guests" placeholder="عدد النزلاء" min="1" value="1">
-        <button id="searchButton">ابحث الآن</button>
+      <div class="mb-3">
+        <input id="city" type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" />
+      </div>
+
+      <div class="d-flex gap-2 mb-3">
+        <div class="flex-fill">
+          <label class="form-label">الوصول</label>
+          <input id="checkin" type="text" class="form-control" placeholder="تاريخ الوصول" readonly onclick="pickDate('checkin')" />
+        </div>
+        <div class="flex-fill">
+          <label class="form-label">المغادرة</label>
+          <input id="checkout" type="text" class="form-control" placeholder="تاريخ المغادرة" readonly onclick="pickDate('checkout')" />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <input id="guestsDisplay" type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly onclick="toggleGuestBox()" />
+        <div id="guestBox" class="bg-light p-3 mt-2 rounded border" style="display:none;">
+          <div class="mb-2">
+            <label>الغرف:</label>
+            <input id="roomCount" type="number" class="form-control" value="1" min="1">
+          </div>
+          <div class="mb-2">
+            <label>البالغون:</label>
+            <input id="adultCount" type="number" class="form-control" value="2" min="1">
+          </div>
+          <div class="mb-2">
+            <label>الأطفال:</label>
+            <input id="childCount" type="number" class="form-control" value="0" min="0">
+          </div>
+          <button class="btn btn-sm btn-primary mt-2 w-100" onclick="updateGuestDisplay()">تم</button>
+        </div>
+      </div>
+
+      <button id="searchBtn" class="btn btn-primary w-100">ابحث</button>
+
+      <script>
+        function toggleGuestBox() {
+          const box = document.getElementById('guestBox');
+          box.style.display = box.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function updateGuestDisplay() {
+          const rooms = document.getElementById('roomCount').value;
+          const adults = document.getElementById('adultCount').value;
+          const children = document.getElementById('childCount').value;
+
+          const display = `${rooms} غرفة، ${adults} بالغون، ${children} أطفال`;
+          document.getElementById('guestsDisplay').value = display;
+          toggleGuestBox();
+        }
+
+        function pickDate(id) {
+          const current = new Date().toISOString().split("T")[0];
+          const date = prompt("اختر التاريخ (YYYY-MM-DD):", current);
+          if (date) document.getElementById(id).value = date;
+        }
+
+        document.getElementById('searchBtn').addEventListener('click', function () {
+          const city = document.getElementById('city').value.trim();
+          const checkIn = document.getElementById('checkin').value;
+          const checkOut = document.getElementById('checkout').value;
+          const rooms = document.getElementById('roomCount').value;
+          const adults = document.getElementById('adultCount').value;
+          const children = document.getElementById('childCount').value;
+
+          if (city && checkIn && checkOut) {
+            const url = `hotels.html?city=${encodeURIComponent(city)}&checkin=${encodeURIComponent(checkIn)}&checkout=${encodeURIComponent(checkOut)}&rooms=${rooms}&adults=${adults}&children=${children}`;
+            window.location.href = url;
+          } else {
+            alert("يرجى ملء جميع الحقول.");
+          }
+        });
+      </script>
     </div>
 
-    <script src="script.js"></script>
+    <!-- الوجهات -->
+    <div class="container destinations">
+      <div class="row g-3">
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="dubai.png" alt="دبي">
+            <h5>دبي</h5>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="qairo.png" alt="القاهرة">
+            <h5>القاهرة</h5>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="istanbul.png" alt="إسطنبول">
+            <h5>إسطنبول</h5>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="thailand.png" alt="تايلاند">
+            <h5>تايلاند</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- العروض -->
+    <div class="d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
+      <h5 class="mb-0">عروض السفر الحصرية</h5>
+      <a href="offers.html" class="text-decoration-none text-primary small">جميع العروض</a>
+    </div>
+
+    <div class="travel-offers">
+      <div class="slider-track">
+        <div class="slide"><img src="offer1.jpg" alt="عرض 1"></div>
+        <div class="slide"><img src="offer2.jpg" alt="عرض 2"></div>
+        <div class="slide"><img src="offer3.jpg" alt="عرض 3"></div>
+        <div class="slide"><img src="offer4.jpg" alt="عرض 4"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- الشريط السفلي -->
+  <div class="footer">
+    جميع الحقوق محفوظة © Paygo 2025
+  </div>
+
 </body>
 </html>
