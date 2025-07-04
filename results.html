@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>نتائج البحث</title>
+    <style>
+        body { font-family: Arial, sans-serif; direction: rtl; text-align: right; margin: 20px; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h2 id="resultCity"></h2>
+    <ul id="hotelList"></ul>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const city = urlParams.get('city');
+        document.getElementById('resultCity').innerText = `نتائج البحث في ${city}`;
+
+        // هنا نحتاج نضيف طلب لجلب بيانات الفنادق من API لاحقًا
+        const hotelList = document.getElementById('hotelList');
+        hotelList.innerHTML = '<li>النتائج قيد التحميل... (تحتاج تكامل إضافي)</li>';
+    </script>
+</body>
+</html>
