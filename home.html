@@ -109,34 +109,51 @@
       padding: 12px;
     }
 
-    /* مستطيلات الإعلانات */
+    /* مستطيلات الإعلانات بالطائرة */
     #ad-slider {
       position: relative;
       height: 150px;
-      border-radius: 12px;
       overflow: hidden;
+      border-radius: 12px;
     }
 
     .ad-slide {
       position: absolute;
       top: 0;
-      left: 0;
+      height: 150px;
       width: 100%;
       opacity: 0;
-      transition: opacity 2s ease-in-out;
+      transform: translateX(-100%);
+      transition: transform 2s ease-in-out, opacity 1s ease-in-out;
     }
 
     .ad-slide.active {
       opacity: 1;
+      transform: translateX(0%);
       z-index: 1;
     }
 
-    .fade img {
+    .ad-slide img {
       width: 100%;
-      height: 150px;
+      height: 100%;
       object-fit: cover;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .airplane {
+      position: absolute;
+      top: 50%;
+      left: -60px;
+      width: 60px;
+      height: auto;
+      transform: translateY(-50%);
+      transition: left 2s ease-in-out;
+      z-index: 2;
+    }
+
+    .ad-slide.active .airplane {
+      left: 100%;
     }
   </style>
 </head>
@@ -153,96 +170,101 @@
     <!-- إعلانات سياحية متغيرة -->
     <div class="container my-4">
       <div id="ad-slider">
-        <div class="ad-slide fade active">
+        <div class="ad-slide active">
           <img src="ad1.jpg" alt="إعلان 1">
+          <img src="airplane.png" class="airplane" alt="طائرة">
         </div>
-        <div class="ad-slide fade">
+        <div class="ad-slide">
           <img src="ad2.png" alt="إعلان 2">
+          <img src="airplane.png" class="airplane" alt="طائرة">
         </div>
-        <div class="ad-slide fade">
+        <div class="ad-slide">
           <img src="ad3.png" alt="إعلان 3">
+          <img src="airplane.png" class="airplane" alt="طائرة">
         </div>
       </div>
     </div>
-<!-- ساعات عالمية -->
-<div class="container my-5">
-  <div class="row text-center g-4">
-    <div class="col-4">
-      <div class="clock-circle" id="clock-ny"></div>
-      <div class="city-label">نيويورك</div>
-    </div>
-    <div class="col-4">
-      <div class="clock-circle" id="clock-london"></div>
-      <div class="city-label">لندن</div>
-    </div>
-    <div class="col-4">
-      <div class="clock-circle" id="clock-tokyo"></div>
-      <div class="city-label">طوكيو</div>
-    </div>
-    <div class="col-4">
-      <div class="clock-circle" id="clock-dubai"></div>
-      <div class="city-label">دبي</div>
-    </div>
-    <div class="col-4">
-      <div class="clock-circle" id="clock-paris"></div>
-      <div class="city-label">باريس</div>
-    </div>
-    <div class="col-4">
-      <div class="clock-circle" id="clock-sydney"></div>
-      <div class="city-label">سيدني</div>
-    </div>
-  </div>
-</div>
 
-<style>
-  .clock-circle {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto;
-    border: 4px solid #aaa;
-    border-radius: 50%;
-    background: #fff;
-    color: #000;
-    font-size: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: monospace;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  }
+    <!-- ساعات عالمية -->
+    <div class="container my-5">
+      <div class="row text-center g-4">
+        <div class="col-4">
+          <div class="clock-circle" id="clock-ny"></div>
+          <div class="city-label">نيويورك</div>
+        </div>
+        <div class="col-4">
+          <div class="clock-circle" id="clock-london"></div>
+          <div class="city-label">لندن</div>
+        </div>
+        <div class="col-4">
+          <div class="clock-circle" id="clock-tokyo"></div>
+          <div class="city-label">طوكيو</div>
+        </div>
+        <div class="col-4">
+          <div class="clock-circle" id="clock-dubai"></div>
+          <div class="city-label">الرياض</div>
+        </div>
+        <div class="col-4">
+          <div class="clock-circle" id="clock-paris"></div>
+          <div class="city-label">باريس</div>
+        </div>
+        <div class="col-4">
+          <div class="clock-circle" id="clock-sydney"></div>
+          <div class="city-label">سيدني</div>
+        </div>
+      </div>
+    </div>
 
-  .city-label {
-    margin-top: 10px;
-    font-size: 15px;
-    color: #ccc;
-  }
-</style>
+    <style>
+      .clock-circle {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        border: 4px solid #aaa;
+        border-radius: 50%;
+        background: #fff;
+        color: #000;
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: monospace;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      }
 
-<script>
-  const clocks = [
-    { id: 'clock-ny', zone: 'America/New_York' },
-    { id: 'clock-london', zone: 'Europe/London' },
-    { id: 'clock-tokyo', zone: 'Asia/Tokyo' },
-    { id: 'clock-dubai', zone: 'Asia/Dubai' },
-    { id: 'clock-paris', zone: 'Europe/Paris' },
-    { id: 'clock-sydney', zone: 'Australia/Sydney' }
-  ];
+      .city-label {
+        margin-top: 10px;
+        font-size: 15px;
+        color: #ccc;
+      }
+    </style>
 
-  function updateClocks() {
-    clocks.forEach(clock => {
-      const time = new Date().toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-        timeZone: clock.zone
-      });
-      document.getElementById(clock.id).textContent = time;
-    });
-  }
+    <script>
+      const clocks = [
+        { id: 'clock-ny', zone: 'America/New_York' },
+        { id: 'clock-london', zone: 'Europe/London' },
+        { id: 'clock-tokyo', zone: 'Asia/Tokyo' },
+        { id: 'clock-dubai', zone: 'Asia/Riyadh' },
+        { id: 'clock-paris', zone: 'Europe/Paris' },
+        { id: 'clock-sydney', zone: 'Australia/Sydney' }
+      ];
 
-  updateClocks();
-  setInterval(updateClocks, 60000);
-</script>
+      function updateClocks() {
+        clocks.forEach(clock => {
+          const time = new Date().toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+            timeZone: clock.zone
+          });
+          document.getElementById(clock.id).textContent = time;
+        });
+      }
+
+      updateClocks();
+      setInterval(updateClocks, 60000);
+    </script>
+
     <!-- الوجهات -->
     <div class="container destinations">
       <div class="row g-3">
@@ -307,5 +329,6 @@
 
     setInterval(showNextAd, 10000);
   </script>
+
 </body>
 </html>
