@@ -109,28 +109,39 @@
       padding: 12px;
     }
 
-    /* مستطيلات الإعلانات بالطائرة */
+    /* مستطيلات الإعلانات بحركة طي الصفحة والطائرة */
     #ad-slider {
       position: relative;
       height: 150px;
       overflow: hidden;
       border-radius: 12px;
+      background: #000;
     }
 
     .ad-slide {
       position: absolute;
       top: 0;
-      height: 150px;
+      left: 0;
       width: 100%;
+      height: 100%;
+      transform-origin: left center;
+      transform: rotateY(0deg);
       opacity: 0;
-      transform: translateX(-100%);
-      transition: transform 2s ease-in-out, opacity 1s ease-in-out;
+      z-index: 0;
+      backface-visibility: hidden;
+      transition: transform 2s ease-in-out, opacity 0.5s ease-in-out;
     }
 
     .ad-slide.active {
       opacity: 1;
-      transform: translateX(0%);
+      z-index: 2;
+      transform: rotateY(0deg);
+    }
+
+    .ad-slide.outgoing {
       z-index: 1;
+      transform: rotateY(-90deg);
+      opacity: 0;
     }
 
     .ad-slide img {
@@ -138,21 +149,19 @@
       height: 100%;
       object-fit: cover;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
     .airplane {
       position: absolute;
       top: 50%;
-      left: -60px;
-      width: 60px;
-      height: auto;
+      left: -40px;
+      width: 40px;
       transform: translateY(-50%);
+      z-index: 5;
       transition: left 2s ease-in-out;
-      z-index: 2;
     }
 
-    .ad-slide.active .airplane {
+    .airplane.move {
       left: 100%;
     }
   </style>
@@ -170,17 +179,15 @@
     <!-- إعلانات سياحية متغيرة -->
     <div class="container my-4">
       <div id="ad-slider">
+        <img src="airplane.png" class="airplane" id="ad-plane" alt="طائرة">
         <div class="ad-slide active">
           <img src="ad1.jpg" alt="إعلان 1">
-          <img src="airplane.png" class="airplane" alt="طائرة">
         </div>
         <div class="ad-slide">
           <img src="ad2.png" alt="إعلان 2">
-          <img src="airplane.png" class="airplane" alt="طائرة">
         </div>
         <div class="ad-slide">
           <img src="ad3.png" alt="إعلان 3">
-          <img src="airplane.png" class="airplane" alt="طائرة">
         </div>
       </div>
     </div>
@@ -188,30 +195,12 @@
     <!-- ساعات عالمية -->
     <div class="container my-5">
       <div class="row text-center g-4">
-        <div class="col-4">
-          <div class="clock-circle" id="clock-ny"></div>
-          <div class="city-label">نيويورك</div>
-        </div>
-        <div class="col-4">
-          <div class="clock-circle" id="clock-london"></div>
-          <div class="city-label">لندن</div>
-        </div>
-        <div class="col-4">
-          <div class="clock-circle" id="clock-tokyo"></div>
-          <div class="city-label">طوكيو</div>
-        </div>
-        <div class="col-4">
-          <div class="clock-circle" id="clock-dubai"></div>
-          <div class="city-label">الرياض</div>
-        </div>
-        <div class="col-4">
-          <div class="clock-circle" id="clock-paris"></div>
-          <div class="city-label">باريس</div>
-        </div>
-        <div class="col-4">
-          <div class="clock-circle" id="clock-sydney"></div>
-          <div class="city-label">سيدني</div>
-        </div>
+        <div class="col-4"><div class="clock-circle" id="clock-ny"></div><div class="city-label">نيويورك</div></div>
+        <div class="col-4"><div class="clock-circle" id="clock-london"></div><div class="city-label">لندن</div></div>
+        <div class="col-4"><div class="clock-circle" id="clock-tokyo"></div><div class="city-label">طوكيو</div></div>
+        <div class="col-4"><div class="clock-circle" id="clock-dubai"></div><div class="city-label">الرياض</div></div>
+        <div class="col-4"><div class="clock-circle" id="clock-paris"></div><div class="city-label">باريس</div></div>
+        <div class="col-4"><div class="clock-circle" id="clock-sydney"></div><div class="city-label">سيدني</div></div>
       </div>
     </div>
 
@@ -268,30 +257,10 @@
     <!-- الوجهات -->
     <div class="container destinations">
       <div class="row g-3">
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="qairo.png" alt="القاهرة">
-            <h5>القاهرة</h5>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="dubai.png" alt="دبي">
-            <h5>دبي</h5>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="thailand.png" alt="تايلاند">
-            <h5>تايلاند</h5>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="destination-card">
-            <img src="istanbul.png" alt="إسطنبول">
-            <h5>إسطنبول</h5>
-          </div>
-        </div>
+        <div class="col-6"><div class="destination-card"><img src="qairo.png" alt="القاهرة"><h5>القاهرة</h5></div></div>
+        <div class="col-6"><div class="destination-card"><img src="dubai.png" alt="دبي"><h5>دبي</h5></div></div>
+        <div class="col-6"><div class="destination-card"><img src="thailand.png" alt="تايلاند"><h5>تايلاند</h5></div></div>
+        <div class="col-6"><div class="destination-card"><img src="istanbul.png" alt="إسطنبول"><h5>إسطنبول</h5></div></div>
       </div>
     </div>
 
@@ -320,15 +289,28 @@
   <script>
     let adIndex = 0;
     const ads = document.querySelectorAll('.ad-slide');
+    const airplane = document.getElementById('ad-plane');
 
     function showNextAd() {
-      ads[adIndex].classList.remove('active');
+      const currentAd = ads[adIndex];
+      currentAd.classList.remove('active');
+      currentAd.classList.add('outgoing');
+
       adIndex = (adIndex + 1) % ads.length;
-      ads[adIndex].classList.add('active');
+      const nextAd = ads[adIndex];
+      nextAd.classList.remove('outgoing');
+      nextAd.classList.add('active');
+
+      airplane.classList.remove('move');
+      void airplane.offsetWidth;
+      airplane.classList.add('move');
+
+      setTimeout(() => {
+        currentAd.classList.remove('outgoing');
+      }, 2000);
     }
 
-    setInterval(showNextAd, 10000);
+    setInterval(showNextAd, 8000);
   </script>
-
 </body>
 </html>
