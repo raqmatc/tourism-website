@@ -42,27 +42,6 @@
       height: 50px;
     }
 
-    .search-box {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 520px;
-      margin: 30px auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    .form-label {
-      font-size: 13px;
-      color: #444;
-      margin-bottom: 4px;
-    }
-
-    .search-box input,
-    .search-box button {
-      height: 45px;
-      border-radius: 8px;
-    }
-
     .destinations {
       padding: 20px;
     }
@@ -129,6 +108,36 @@
       text-align: center;
       padding: 12px;
     }
+
+    /* إعلان متغير */
+    #ad-slider {
+      position: relative;
+      height: 200px;
+      max-width: 720px;
+      margin: 30px auto;
+    }
+
+    .ad-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+
+    .ad-slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .fade img {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body>
@@ -141,82 +150,17 @@
   <!-- المحتوى الرئيسي -->
   <div class="main-content">
 
-    <!-- نموذج البحث -->
-    <div class="search-box">
-      <div class="mb-3">
-        <input id="city" type="text" class="form-control" placeholder="إلى أين تريد أن تذهب؟" />
+    <!-- إعلانات سياحية متغيرة -->
+    <div id="ad-slider" class="container my-4">
+      <div class="ad-slide fade active">
+        <img src="ad1.jpg" alt="إعلان 1">
       </div>
-
-      <div class="d-flex gap-2 mb-3">
-        <div class="flex-fill">
-          <label class="form-label">الوصول</label>
-          <input id="checkin" type="text" class="form-control" placeholder="تاريخ الوصول" readonly onclick="pickDate('checkin')" />
-        </div>
-        <div class="flex-fill">
-          <label class="form-label">المغادرة</label>
-          <input id="checkout" type="text" class="form-control" placeholder="تاريخ المغادرة" readonly onclick="pickDate('checkout')" />
-        </div>
+      <div class="ad-slide fade">
+        <img src="ad2.jpg" alt="إعلان 2">
       </div>
-
-      <div class="mb-3">
-        <input id="guestsDisplay" type="text" class="form-control" value="1 غرفة، 2 بالغون، 0 أطفال" readonly onclick="toggleGuestBox()" />
-        <div id="guestBox" class="bg-light p-3 mt-2 rounded border" style="display:none;">
-          <div class="mb-2">
-            <label>الغرف:</label>
-            <input id="roomCount" type="number" class="form-control" value="1" min="1">
-          </div>
-          <div class="mb-2">
-            <label>البالغون:</label>
-            <input id="adultCount" type="number" class="form-control" value="2" min="1">
-          </div>
-          <div class="mb-2">
-            <label>الأطفال:</label>
-            <input id="childCount" type="number" class="form-control" value="0" min="0">
-          </div>
-          <button class="btn btn-sm btn-primary mt-2 w-100" onclick="updateGuestDisplay()">تم</button>
-        </div>
+      <div class="ad-slide fade">
+        <img src="ad3.jpg" alt="إعلان 3">
       </div>
-
-      <button id="searchBtn" class="btn btn-primary w-100">ابحث</button>
-
-      <script>
-        function toggleGuestBox() {
-          const box = document.getElementById('guestBox');
-          box.style.display = box.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function updateGuestDisplay() {
-          const rooms = document.getElementById('roomCount').value;
-          const adults = document.getElementById('adultCount').value;
-          const children = document.getElementById('childCount').value;
-
-          const display = `${rooms} غرفة، ${adults} بالغون، ${children} أطفال`;
-          document.getElementById('guestsDisplay').value = display;
-          toggleGuestBox();
-        }
-
-        function pickDate(id) {
-          const current = new Date().toISOString().split("T")[0];
-          const date = prompt("اختر التاريخ (YYYY-MM-DD):", current);
-          if (date) document.getElementById(id).value = date;
-        }
-
-        document.getElementById('searchBtn').addEventListener('click', function () {
-          const city = document.getElementById('city').value.trim();
-          const checkIn = document.getElementById('checkin').value;
-          const checkOut = document.getElementById('checkout').value;
-          const rooms = document.getElementById('roomCount').value;
-          const adults = document.getElementById('adultCount').value;
-          const children = document.getElementById('childCount').value;
-
-          if (city && checkIn && checkOut) {
-            const url = `hotels.html?city=${encodeURIComponent(city)}&checkin=${encodeURIComponent(checkIn)}&checkout=${encodeURIComponent(checkOut)}&rooms=${rooms}&adults=${adults}&children=${children}`;
-            window.location.href = url;
-          } else {
-            alert("يرجى ملء جميع الحقول.");
-          }
-        });
-      </script>
     </div>
 
     <!-- الوجهات -->
@@ -271,5 +215,17 @@
     جميع الحقوق محفوظة © Paygo 2025
   </div>
 
+  <script>
+    let adIndex = 0;
+    const ads = document.querySelectorAll('.ad-slide');
+
+    function showNextAd() {
+      ads[adIndex].classList.remove('active');
+      adIndex = (adIndex + 1) % ads.length;
+      ads[adIndex].classList.add('active');
+    }
+
+    setInterval(showNextAd, 10000);
+  </script>
 </body>
 </html>
