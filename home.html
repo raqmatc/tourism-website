@@ -21,9 +21,9 @@
       display: flex;
       flex-direction: column;
       font-family: 'Cairo', sans-serif;
-      background: #ffffff;
+      background: #000;
       direction: rtl;
-      color: #000;
+      color: #fff;
     }
 
     .main-content {
@@ -47,12 +47,12 @@
     }
 
     .destination-card {
-      background: #fff;
-      color: #000;
+      background: #1a1a1a;
+      color: #fff;
       border-radius: 12px;
       padding: 10px;
       text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
       height: 100%;
     }
 
@@ -69,7 +69,7 @@
 
     .travel-offers {
       overflow: hidden;
-      background-color: #f8f8f8;
+      background-color: #111;
       border-radius: 10px;
       margin: 0 0 20px 0;
     }
@@ -109,12 +109,12 @@
       padding: 12px;
     }
 
-    /* إعلان متغير */
+    /* مستطيلات الإعلانات */
     #ad-slider {
       position: relative;
       height: 200px;
-      max-width: 720px;
-      margin: 30px auto;
+      border-radius: 12px;
+      overflow: hidden;
     }
 
     .ad-slide {
@@ -132,11 +132,11 @@
     }
 
     .fade img {
-      height: 200px;
       width: 100%;
+      height: 200px;
       object-fit: cover;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
   </style>
 </head>
@@ -151,15 +151,17 @@
   <div class="main-content">
 
     <!-- إعلانات سياحية متغيرة -->
-    <div id="ad-slider" class="container my-4">
-      <div class="ad-slide fade active">
-        <img src="ad1.png" alt="إعلان 1">
-      </div>
-      <div class="ad-slide fade">
-        <img src="ad2.png" alt="إعلان 2">
-      </div>
-      <div class="ad-slide fade">
-        <img src="ad3.png" alt="إعلان 3">
+    <div class="container my-4">
+      <div id="ad-slider">
+        <div class="ad-slide fade active">
+          <img src="ad1.png" alt="إعلان 1">
+        </div>
+        <div class="ad-slide fade">
+          <img src="ad2.png" alt="إعلان 2">
+        </div>
+        <div class="ad-slide fade">
+          <img src="ad3.png" alt="إعلان 3">
+        </div>
       </div>
     </div>
 
@@ -168,26 +170,26 @@
       <div class="row g-3">
         <div class="col-6">
           <div class="destination-card">
-            <img src="dubai.png" alt="دبي">
-            <h5>دبي</h5>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="destination-card">
             <img src="qairo.png" alt="القاهرة">
             <h5>القاهرة</h5>
           </div>
         </div>
         <div class="col-6">
           <div class="destination-card">
-            <img src="istanbul.png" alt="إسطنبول">
-            <h5>إسطنبول</h5>
+            <img src="dubai.png" alt="دبي">
+            <h5>دبي</h5>
           </div>
         </div>
         <div class="col-6">
           <div class="destination-card">
             <img src="thailand.png" alt="تايلاند">
             <h5>تايلاند</h5>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="destination-card">
+            <img src="istanbul.png" alt="إسطنبول">
+            <h5>إسطنبول</h5>
           </div>
         </div>
       </div>
