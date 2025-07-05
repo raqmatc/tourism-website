@@ -109,60 +109,29 @@
       padding: 12px;
     }
 
-    /* مستطيلات الإعلانات بحركة طي الصفحة والطائرة */
+    /* مستطيلات الإعلانات بحركة انزلاق */
     #ad-slider {
       position: relative;
       height: 150px;
       overflow: hidden;
       border-radius: 12px;
-      background: #000;
+    }
+
+    .ad-wrapper {
+      display: flex;
+      transition: transform 1s ease-in-out;
+      width: 300%;
     }
 
     .ad-slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      transform-origin: left center;
-      transform: rotateY(0deg);
-      opacity: 0;
-      z-index: 0;
-      backface-visibility: hidden;
-      transition: transform 2s ease-in-out, opacity 0.5s ease-in-out;
-    }
-
-    .ad-slide.active {
-      opacity: 1;
-      z-index: 2;
-      transform: rotateY(0deg);
-    }
-
-    .ad-slide.outgoing {
-      z-index: 1;
-      transform: rotateY(-90deg);
-      opacity: 0;
+      flex: 0 0 100%;
     }
 
     .ad-slide img {
       width: 100%;
-      height: 100%;
+      height: 150px;
       object-fit: cover;
       border-radius: 12px;
-    }
-
-    .airplane {
-      position: absolute;
-      top: 50%;
-      left: -40px;
-      width: 40px;
-      transform: translateY(-50%);
-      z-index: 5;
-      transition: left 2s ease-in-out;
-    }
-
-    .airplane.move {
-      left: 100%;
     }
   </style>
 </head>
@@ -176,18 +145,13 @@
   <!-- المحتوى الرئيسي -->
   <div class="main-content">
 
-    <!-- إعلانات سياحية متغيرة -->
+    <!-- إعلانات تنزلق من اليسار لليمين -->
     <div class="container my-4">
       <div id="ad-slider">
-        <img src="airplane.png" class="airplane" id="ad-plane" alt="طائرة">
-        <div class="ad-slide active">
-          <img src="ad1.jpg" alt="إعلان 1">
-        </div>
-        <div class="ad-slide">
-          <img src="ad2.png" alt="إعلان 2">
-        </div>
-        <div class="ad-slide">
-          <img src="ad3.png" alt="إعلان 3">
+        <div class="ad-wrapper" id="adWrapper">
+          <div class="ad-slide"><img src="ad1.jpg" alt="إعلان 1"></div>
+          <div class="ad-slide"><img src="ad2.png" alt="إعلان 2"></div>
+          <div class="ad-slide"><img src="ad3.png" alt="إعلان 3"></div>
         </div>
       </div>
     </div>
@@ -287,30 +251,16 @@
   </div>
 
   <script>
-    let adIndex = 0;
-    const ads = document.querySelectorAll('.ad-slide');
-    const airplane = document.getElementById('ad-plane');
+    let currentIndex = 0;
+    const adWrapper = document.getElementById('adWrapper');
+    const slides = document.querySelectorAll('.ad-slide');
 
-    function showNextAd() {
-      const currentAd = ads[adIndex];
-      currentAd.classList.remove('active');
-      currentAd.classList.add('outgoing');
-
-      adIndex = (adIndex + 1) % ads.length;
-      const nextAd = ads[adIndex];
-      nextAd.classList.remove('outgoing');
-      nextAd.classList.add('active');
-
-      airplane.classList.remove('move');
-      void airplane.offsetWidth;
-      airplane.classList.add('move');
-
-      setTimeout(() => {
-        currentAd.classList.remove('outgoing');
-      }, 2000);
+    function showNextSlide() {
+      currentIndex = (currentIndex + 1) % slides.length;
+      adWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
 
-    setInterval(showNextAd, 8000);
+    setInterval(showNextSlide, 10000); // كل 10 ثوانٍ
   </script>
 </body>
 </html>
