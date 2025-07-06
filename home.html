@@ -138,33 +138,16 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
-    /* الساعات الدائرية المتحركة */
-    .clock-container-animate {
-      overflow: hidden;
-      padding: 20px 0;
-      background: transparent;
-      direction: rtl;
-    }
-
-    .clock-track-animate {
-      display: flex;
-      width: max-content;
-      animation: scrollClocksReverse 35s linear infinite;
-    }
-
-    .clock-item {
-      margin: 0 25px;
-    }
-
+    /* الساعات الدائرية الثابتة */
     .clock-circle {
-      width: 90px;
-      height: 90px;
-      margin: auto;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
       border: 4px solid #aaa;
       border-radius: 50%;
       background: #fff;
       color: #000;
-      font-size: 18px;
+      font-size: 16px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -173,14 +156,9 @@
     }
 
     .city-label {
-      margin-top: 8px;
-      font-size: 14px;
-      color: #000;
-    }
-
-    @keyframes scrollClocksReverse {
-      0% { transform: translateX(-50%); }
-      100% { transform: translateX(0); }
+      margin-top: 10px;
+      font-size: 15px;
+      color: #000; /* اللون الأسود */
     }
   </style>
 </head>
@@ -203,22 +181,33 @@
       </div>
     </div>
 
-    <!-- الساعات المتحركة -->
-    <div class="clock-container-animate">
-      <div class="clock-track-animate">
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-ny"></div><div class="city-label">نيويورك</div></div>
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-london"></div><div class="city-label">لندن</div></div>
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-tokyo"></div><div class="city-label">طوكيو</div></div>
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-dubai"></div><div class="city-label">دبي</div></div>
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-paris"></div><div class="city-label">باريس</div></div>
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-sydney"></div><div class="city-label">سيدني</div></div>
-        <!-- تكرار -->
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-ny2"></div><div class="city-label">نيويورك</div></div>
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-london2"></div><div class="city-label">لندن</div></div>
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-tokyo2"></div><div class="city-label">طوكيو</div></div>
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-dubai2"></div><div class="city-label">دبي</div></div>
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-paris2"></div><div class="city-label">باريس</div></div>
-        <div class="clock-item text-center"><div class="clock-circle" id="clock-sydney2"></div><div class="city-label">سيدني</div></div>
+    <!-- ساعات عالمية ثابتة -->
+    <div class="container my-5">
+      <div class="row text-center g-4">
+        <div class="col-4">
+          <div class="clock-circle" id="clock-ny"></div>
+          <div class="city-label">نيويورك</div>
+        </div>
+        <div class="col-4">
+          <div class="clock-circle" id="clock-london"></div>
+          <div class="city-label">لندن</div>
+        </div>
+        <div class="col-4">
+          <div class="clock-circle" id="clock-tokyo"></div>
+          <div class="city-label">طوكيو</div>
+        </div>
+        <div class="col-4">
+          <div class="clock-circle" id="clock-dubai"></div>
+          <div class="city-label">دبي</div>
+        </div>
+        <div class="col-4">
+          <div class="clock-circle" id="clock-paris"></div>
+          <div class="city-label">باريس</div>
+        </div>
+        <div class="col-4">
+          <div class="clock-circle" id="clock-sydney"></div>
+          <div class="city-label">سيدني</div>
+        </div>
       </div>
     </div>
 
@@ -255,6 +244,7 @@
   </div>
 
   <script>
+    // تغيير الإعلانات
     let adIndex = 0;
     const ads = document.querySelectorAll('.ad-slide');
     function showNextAd() {
@@ -264,32 +254,28 @@
     }
     setInterval(showNextAd, 10000);
 
-    function updateClocks() {
-      const zones = {
-        'clock-ny': 'America/New_York',
-        'clock-london': 'Europe/London',
-        'clock-tokyo': 'Asia/Tokyo',
-        'clock-dubai': 'Asia/Dubai',
-        'clock-paris': 'Europe/Paris',
-        'clock-sydney': 'Australia/Sydney',
-        'clock-ny2': 'America/New_York',
-        'clock-london2': 'Europe/London',
-        'clock-tokyo2': 'Asia/Tokyo',
-        'clock-dubai2': 'Asia/Dubai',
-        'clock-paris2': 'Europe/Paris',
-        'clock-sydney2': 'Australia/Sydney'
-      };
+    // تحديث الساعات
+    const clocks = [
+      { id: 'clock-ny', zone: 'America/New_York' },
+      { id: 'clock-london', zone: 'Europe/London' },
+      { id: 'clock-tokyo', zone: 'Asia/Tokyo' },
+      { id: 'clock-dubai', zone: 'Asia/Dubai' },
+      { id: 'clock-paris', zone: 'Europe/Paris' },
+      { id: 'clock-sydney', zone: 'Australia/Sydney' }
+    ];
 
-      for (const id in zones) {
+    function updateClocks() {
+      clocks.forEach(clock => {
         const time = new Date().toLocaleTimeString('en-US', {
           hour: '2-digit',
           minute: '2-digit',
           hour12: false,
-          timeZone: zones[id]
+          timeZone: clock.zone
         });
-        document.getElementById(id).textContent = time;
-      }
+        document.getElementById(clock.id).textContent = time;
+      });
     }
+
     updateClocks();
     setInterval(updateClocks, 60000);
   </script>
