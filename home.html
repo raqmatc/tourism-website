@@ -182,34 +182,22 @@
     </div>
 
     <!-- ساعات عالمية ثابتة -->
-    <div class="container my-5">
-      <div class="row text-center g-4">
-        <div class="col-4">
-          <div class="clock-circle" id="clock-ny"></div>
-          <div class="city-label">نيويورك</div>
-        </div>
-        <div class="col-4">
-          <div class="clock-circle" id="clock-london"></div>
-          <div class="city-label">لندن</div>
-        </div>
-        <div class="col-4">
-          <div class="clock-circle" id="clock-tokyo"></div>
-          <div class="city-label">طوكيو</div>
-        </div>
-        <div class="col-4">
-          <div class="clock-circle" id="clock-dubai"></div>
-          <div class="city-label">دبي</div>
-        </div>
-        <div class="col-4">
-          <div class="clock-circle" id="clock-paris"></div>
-          <div class="city-label">باريس</div>
-        </div>
-        <div class="col-4">
-          <div class="clock-circle" id="clock-sydney"></div>
-          <div class="city-label">سيدني</div>
-        </div>
-      </div>
+<div class="container my-5">
+  <div class="row text-center g-4 justify-content-center">
+    <div class="col-4">
+      <div class="clock-circle" id="clock-london"></div>
+      <div class="city-label">لندن</div>
     </div>
+    <div class="col-4">
+      <div class="clock-circle" id="clock-tokyo"></div>
+      <div class="city-label">طوكيو</div>
+    </div>
+    <div class="col-4">
+      <div class="clock-circle" id="clock-riyadh"></div>
+      <div class="city-label">الرياض</div>
+    </div>
+  </div>
+</div>
 
     <!-- الوجهات -->
     <div class="container destinations">
@@ -255,14 +243,11 @@
     setInterval(showNextAd, 10000);
 
     // تحديث الساعات
-    const clocks = [
-      { id: 'clock-ny', zone: 'America/New_York' },
-      { id: 'clock-london', zone: 'Europe/London' },
-      { id: 'clock-tokyo', zone: 'Asia/Tokyo' },
-      { id: 'clock-dubai', zone: 'Asia/Dubai' },
-      { id: 'clock-paris', zone: 'Europe/Paris' },
-      { id: 'clock-sydney', zone: 'Australia/Sydney' }
-    ];
+const clocks = [
+  { id: 'clock-london', zone: 'Europe/London' },
+  { id: 'clock-tokyo', zone: 'Asia/Tokyo' },
+  { id: 'clock-riyadh', zone: 'Asia/Riyadh' }
+];
 
     function updateClocks() {
       clocks.forEach(clock => {
