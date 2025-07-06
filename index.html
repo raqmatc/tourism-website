@@ -31,6 +31,32 @@
       opacity: 0;
     }
 
+    /* الشعار */
+    #logoOverlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 2s ease;
+      pointer-events: none;
+    }
+
+    #logoOverlay img {
+      max-width: 80%;
+      max-height: 80%;
+    }
+
+    .show-logo {
+      opacity: 1;
+    }
+
     /* الخلفية: home.html */
     #homeFrame {
       position: fixed;
@@ -54,20 +80,32 @@
     متصفحك لا يدعم تشغيل الفيديو.
   </video>
 
+  <!-- الشعار -->
+  <div id="logoOverlay">
+    <img src="paygs.gif" alt="PayGo Logo">
+  </div>
+
   <script>
     const video = document.getElementById("introVideo");
+    const logo = document.getElementById("logoOverlay");
 
     video.addEventListener('loadedmetadata', () => {
-      const fadeStartTime = video.duration - 2; // قبل النهاية بـ 2 ثانية
+      // وقت عرض الشعار بعد بدء الفيديو (مثلاً بعد 1.5 ثانية)
+      setTimeout(() => {
+        logo.classList.add('show-logo');
+      }, 1500);
+
+      const fadeStartTime = video.duration - 2;
 
       const checkFade = () => {
         if (video.currentTime >= fadeStartTime) {
           // تلاشي الفيديو
           video.classList.add('fade-out');
 
-          // حذف الفيديو بعد التلاشي
+          // إزالة الفيديو والشعار بعد التلاشي
           setTimeout(() => {
             video.remove();
+            logo.remove();
           }, 2000);
 
           video.removeEventListener('timeupdate', checkFade);
