@@ -16,7 +16,6 @@
       background: black;
     }
 
-    /* الفيديو */
     video {
       position: fixed;
       top: 0;
@@ -31,7 +30,6 @@
       opacity: 0;
     }
 
-    /* الشعار */
     #logoOverlay {
       position: fixed;
       top: 50%;
@@ -56,31 +54,15 @@
     .show-logo {
       opacity: 1;
     }
-
-    /* الخلفية: home.html */
-    #homeFrame {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      border: none;
-      z-index: 0;
-    }
   </style>
 </head>
 <body>
 
-  <!-- صفحة home مخفية في الخلف -->
-  <iframe id="homeFrame" src="home.html"></iframe>
-
-  <!-- فيديو المقدمة -->
   <video autoplay muted playsinline id="introVideo">
     <source src="Paras.mp4" type="video/mp4">
     متصفحك لا يدعم تشغيل الفيديو.
   </video>
 
-  <!-- الشعار -->
   <div id="logoOverlay">
     <img src="paygs.gif" alt="PayGo Logo">
   </div>
@@ -90,7 +72,6 @@
     const logo = document.getElementById("logoOverlay");
 
     video.addEventListener('loadedmetadata', () => {
-      // وقت عرض الشعار بعد بدء الفيديو (مثلاً بعد 1.5 ثانية)
       setTimeout(() => {
         logo.classList.add('show-logo');
       }, 1500);
@@ -99,13 +80,11 @@
 
       const checkFade = () => {
         if (video.currentTime >= fadeStartTime) {
-          // تلاشي الفيديو
           video.classList.add('fade-out');
+          logo.classList.remove('show-logo');
 
-          // إزالة الفيديو والشعار بعد التلاشي
           setTimeout(() => {
-            video.remove();
-            logo.remove();
+            window.location.href = "home.html";
           }, 2000);
 
           video.removeEventListener('timeupdate', checkFade);
