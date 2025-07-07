@@ -139,52 +139,56 @@
 
     /* الجمل التسويقية */
     .marketing-box {
-      background-color: #f9f4ea;
-      border-radius: 20px;
-      padding: 20px;
-      margin: 30px auto 10px auto;
-      max-width: 900px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
+  background-color: #f9f4ea;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 30px auto 10px auto;
+  max-width: 900px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* مسافة صغيرة بين الجمل */
+}
 
-    .marketing-feature {
-      display: flex;
-      align-items: flex-start;
-      padding: 0px 24px;
-      padding-left: 32px;
-      line-height: 1.7;
-      word-break: break-word;
-    }
+.marketing-feature {
+  display: flex;
+  align-items: flex-start;
+  padding: 0 24px;
+  padding-left: 32px;
+  line-height: 1.7;
+  word-break: break-word;
+  margin-bottom: 0; /* إزالة المسافة السفلية */
+}
 
-    .marketing-feature
-      not(:last-child) {
-    }
+.marketing-feature:not(:last-child) {
+  margin-bottom: 0;
+}
 
-    .marketing-feature .icon {
-      flex-shrink: 0;
-      margin-left: 15px;
-      margin-right: 10px;
-      width: 36px;
-      height: 36px;
-    }
+.marketing-feature .icon {
+  flex-shrink: 0;
+  margin-left: 15px;
+  margin-right: 10px;
+  width: 36px;
+  height: 36px;
+}
 
-    .marketing-feature .text {
-      flex: 1;
-      text-align: right;
-    }
+.marketing-feature .text {
+  flex: 1;
+  text-align: right;
+}
 
-    .marketing-feature .text h5 {
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #222;
-    }
+.marketing-feature .text h5 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #222;
+}
 
-    .marketing-feature .text p {
-      font-size: 0.95rem;
-      line-height: 1.5;
-      color: #444;
-      margin-top: 0;
-    }
+.marketing-feature .text p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #444;
+  margin-top: 0;
+}
   </style>
 </head>
 <body>
