@@ -1,98 +1,358 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PayGo - Intro</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paygo - حجز الفنادق</title>
+
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" type="image/png" sizes="32x32" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="apple-touch-icon.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+
   <style>
-    * {
+    html, body {
+      min-height: 100vh;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    html, body {
-      height: 100%;
-      overflow: hidden;
-      background: black;
     }
 
-    video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: opacity 2s ease;
-      z-index: 1;
-    }
-    .fade-out {
-      opacity: 0;
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Cairo', sans-serif;
+      background: #FFFAFA;
+      direction: rtl;
+      color: #000;
     }
 
-    #logoOverlay {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100vw;
-      height: 100vh;
+    .main-content {
+      flex: 1;
+    }
+
+    .navbar {
+      background-color: #222;
+      height: 60px;
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 2;
+    }
+
+    .navbar img {
+      height: 54px;
+      width: auto;
+      display: block;
+      align-self: center;
+      object-fit: contain;
+    }
+
+    .destinations {
+      padding: 20px;
+    }
+
+    .destination-card {
+      background: #1a1a1a;
+      color: #fff;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      height: 100%;
+    }
+
+    .destination-card img {
+      width: 100%;
+      border-radius: 8px;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .destination-card h5 {
+      margin-top: 10px;
+    }
+
+    .travel-offers {
+      overflow: hidden;
+      background-color: #111;
+      border-radius: 10px;
+      margin: 0 0 20px 0;
+    }
+
+    .slider-track {
+      display: flex;
+      animation: scrollSlider 20s linear infinite;
+      width: fit-content;
+    }
+
+    .slide {
+      flex: 0 0 100vw;
+      height: 160px;
+      overflow: hidden;
+    }
+
+    .slide img {
+      width: 100vw;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @keyframes scrollSlider {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-400vw); }
+    }
+
+    .footer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+    }
+
+    #ad-slider {
+      position: relative;
+      height: 150px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .ad-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
       opacity: 0;
-      transition: opacity 2s ease;
-      pointer-events: none;
+      transition: opacity 2s ease-in-out;
     }
 
-    #logoOverlay img {
-      max-width: 80%;
-      max-height: 80%;
-    }
-
-    .show-logo {
+    .ad-slide.active {
       opacity: 1;
+      z-index: 1;
     }
+
+    .fade img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* الساعات الدائرية الثابتة */
+    .clock-circle {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  border: 4px solid #aaa;
+  border-radius: 50%;
+  background: #fff; /* خلفية بيضاء */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  transform: rotate(0deg);
+  background: #333; /* أسود دخاني */
+  border-radius: 2px;
+}
+
+.hour {
+  width: 4px;
+  height: 25px;
+}
+
+.minute {
+  width: 3px;
+  height: 35px;
+}
+
+.second {
+  width: 2px;
+  height: 40px;
+}
+
+.clock-circle .number {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 10px;
+  color: #333;
+}
+
+.clock-circle .number span {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
   </style>
 </head>
 <body>
 
-  <video autoplay muted playsinline id="introVideo">
-    <source src="Paras.mp4" type="video/mp4">
-    متصفحك لا يدعم تشغيل الفيديو.
-  </video>
+  <!-- الشريط العلوي -->
+  <div class="navbar">
+    <img src="paygs.gif" alt="Paygo Logo">
+  </div>
 
-  <div id="logoOverlay">
-    <img src="paygs.gif" alt="PayGo Logo">
+  <!-- المحتوى الرئيسي -->
+  <div class="main-content">
+
+    <!-- إعلانات سياحية متغيرة -->
+    <div class="container my-4">
+      <div id="ad-slider">
+        <div class="ad-slide fade active"><img src="ad1.png" alt="إعلان 1"></div>
+        <div class="ad-slide fade"><img src="ad2.png" alt="إعلان 2"></div>
+        <div class="ad-slide fade"><img src="ad3.png" alt="إعلان 3"></div>
+      </div>
+    </div>
+
+    <!-- ساعات عالمية بعقارب مع أرقام -->
+<div class="container my-5">
+  <div class="row text-center g-4 justify-content-center">
+    <!-- لندن -->
+    <div class="col-4">
+      <div class="clock-circle" id="clock-london">
+        <div class="number">
+          <span style="top: 10%; left: 50%;">12</span>
+          <span style="top: 20%; left: 75%;">1</span>
+          <span style="top: 35%; left: 90%;">2</span>
+          <span style="top: 50%; left: 95%;">3</span>
+          <span style="top: 65%; left: 90%;">4</span>
+          <span style="top: 80%; left: 75%;">5</span>
+          <span style="top: 90%; left: 50%;">6</span>
+          <span style="top: 80%; left: 25%;">7</span>
+          <span style="top: 65%; left: 10%;">8</span>
+          <span style="top: 50%; left: 5%;">9</span>
+          <span style="top: 35%; left: 10%;">10</span>
+          <span style="top: 20%; left: 25%;">11</span>
+        </div>
+        <div class="hand hour" id="hour-london"></div>
+        <div class="hand minute" id="minute-london"></div>
+        <div class="hand second" id="second-london"></div>
+      </div>
+      <div class="city-label">لندن</div>
+    </div>
+
+    <!-- طوكيو -->
+    <div class="col-4">
+      <div class="clock-circle" id="clock-tokyo">
+        <div class="number">
+          <span style="top: 10%; left: 50%;">12</span>
+          <span style="top: 20%; left: 75%;">1</span>
+          <span style="top: 35%; left: 90%;">2</span>
+          <span style="top: 50%; left: 95%;">3</span>
+          <span style="top: 65%; left: 90%;">4</span>
+          <span style="top: 80%; left: 75%;">5</span>
+          <span style="top: 90%; left: 50%;">6</span>
+          <span style="top: 80%; left: 25%;">7</span>
+          <span style="top: 65%; left: 10%;">8</span>
+          <span style="top: 50%; left: 5%;">9</span>
+          <span style="top: 35%; left: 10%;">10</span>
+          <span style="top: 20%; left: 25%;">11</span>
+        </div>
+        <div class="hand hour" id="hour-tokyo"></div>
+        <div class="hand minute" id="minute-tokyo"></div>
+        <div class="hand second" id="second-tokyo"></div>
+      </div>
+      <div class="city-label">طوكيو</div>
+    </div>
+
+    <!-- الرياض -->
+    <div class="col-4">
+      <div class="clock-circle" id="clock-riyadh">
+        <div class="number">
+          <span style="top: 10%; left: 50%;">12</span>
+          <span style="top: 20%; left: 75%;">1</span>
+          <span style="top: 35%; left: 90%;">2</span>
+          <span style="top: 50%; left: 95%;">3</span>
+          <span style="top: 65%; left: 90%;">4</span>
+          <span style="top: 80%; left: 75%;">5</span>
+          <span style="top: 90%; left: 50%;">6</span>
+          <span style="top: 80%; left: 25%;">7</span>
+          <span style="top: 65%; left: 10%;">8</span>
+          <span style="top: 50%; left: 5%;">9</span>
+          <span style="top: 35%; left: 10%;">10</span>
+          <span style="top: 20%; left: 25%;">11</span>
+        </div>
+        <div class="hand hour" id="hour-riyadh"></div>
+        <div class="hand minute" id="minute-riyadh"></div>
+        <div class="hand second" id="second-riyadh"></div>
+      </div>
+      <div class="city-label">الرياض</div>
+    </div>
+  </div>
+</div>
+
+    <!-- الوجهات -->
+    <div class="container destinations">
+      <div class="row g-3">
+        <div class="col-6"><div class="destination-card"><img src="qairo.png"><h5>القاهرة</h5></div></div>
+        <div class="col-6"><div class="destination-card"><img src="dubai.png"><h5>دبي</h5></div></div>
+        <div class="col-6"><div class="destination-card"><img src="thailand.png"><h5>تايلاند</h5></div></div>
+        <div class="col-6"><div class="destination-card"><img src="istanbul.png"><h5>إسطنبول</h5></div></div>
+      </div>
+    </div>
+
+    <!-- العروض -->
+    <div class="d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
+      <h5 class="mb-0">عروض السفر الحصرية</h5>
+      <a href="offers.html" class="text-decoration-none text-primary small">جميع العروض</a>
+    </div>
+
+    <div class="travel-offers">
+      <div class="slider-track">
+        <div class="slide"><img src="offer1.jpg"></div>
+        <div class="slide"><img src="offer2.jpg"></div>
+        <div class="slide"><img src="offer3.jpg"></div>
+        <div class="slide"><img src="offer4.jpg"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- الشريط السفلي -->
+  <div class="footer">
+    جميع الحقوق محفوظة © Paygo 2025
   </div>
 
   <script>
-    const video = document.getElementById("introVideo");
-    const logo = document.getElementById("logoOverlay");
+    // تغيير الإعلانات
+    let adIndex = 0;
+    const ads = document.querySelectorAll('.ad-slide');
+    function showNextAd() {
+      ads[adIndex].classList.remove('active');
+      adIndex = (adIndex + 1) % ads.length;
+      ads[adIndex].classList.add('active');
+    }
+    setInterval(showNextAd, 10000);
 
-    video.addEventListener('loadedmetadata', () => {
-      setTimeout(() => {
-        logo.classList.add('show-logo');
-      }, 1500);
+    // تحديث الساعات بالعقارب
+const clocks = [
+  { city: 'london', zone: 'Europe/London' },
+  { city: 'tokyo', zone: 'Asia/Tokyo' },
+  { city: 'riyadh', zone: 'Asia/Riyadh' }
+];
 
-      const fadeStartTime = video.duration - 2;
+function updateAnalogClocks() {
+  clocks.forEach(clock => {
+    const now = new Date().toLocaleString("en-US", { timeZone: clock.zone });
+    const time = new Date(now);
 
-      const checkFade = () => {
-        if (video.currentTime >= fadeStartTime) {
-          video.classList.add('fade-out');
-          logo.classList.remove('show-logo');
+    const hourDeg = (time.getHours() % 12) * 30 + time.getMinutes() * 0.5;
+    const minuteDeg = time.getMinutes() * 6;
+    const secondDeg = time.getSeconds() * 6;
 
-          setTimeout(() => {
-            window.location.href = "home.html";
-          }, 2000);
+    document.getElementById(`hour-${clock.city}`).style.transform = `rotate(${hourDeg}deg)`;
+    document.getElementById(`minute-${clock.city}`).style.transform = `rotate(${minuteDeg}deg)`;
+    document.getElementById(`second-${clock.city}`).style.transform = `rotate(${secondDeg}deg)`;
+  });
+}
 
-          video.removeEventListener('timeupdate', checkFade);
-        }
-      };
-
-      video.addEventListener('timeupdate', checkFade);
-    });
+updateAnalogClocks();
+setInterval(updateAnalogClocks, 1000);
   </script>
 
 </body>
