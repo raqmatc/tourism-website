@@ -26,6 +26,20 @@
       color: #000;
     }
 
+    /* خلفية شفافة */
+    .background-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('SA.jpg') no-repeat center center fixed;
+      background-size: cover;
+      opacity: 0.1;
+      z-index: -1;
+      pointer-events: none;
+    }
+
     .main-content {
       flex: 1;
     }
@@ -138,59 +152,59 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
-    /* الساعات الدائرية الثابتة */
     .clock-circle {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto;
-  border: 4px solid #aaa;
-  border-radius: 50%;
-  background: #fff; /* خلفية بيضاء */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-}
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+      border: 4px solid #aaa;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
 
-.hand {
-  position: absolute;
-  bottom: 50%;
-  left: 50%;
-  transform-origin: bottom center;
-  transform: rotate(0deg);
-  background: #333; /* أسود دخاني */
-  border-radius: 2px;
-}
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: rotate(0deg);
+      background: #333;
+      border-radius: 2px;
+    }
 
-.hour {
-  width: 4px;
-  height: 25px;
-}
+    .hour {
+      width: 4px;
+      height: 25px;
+    }
 
-.minute {
-  width: 3px;
-  height: 35px;
-}
+    .minute {
+      width: 3px;
+      height: 35px;
+    }
 
-.second {
-  width: 2px;
-  height: 40px;
-}
+    .second {
+      width: 2px;
+      height: 40px;
+    }
 
-.clock-circle .number {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  font-size: 10px;
-  color: #333;
-}
+    .clock-circle .number {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-size: 10px;
+      color: #333;
+    }
 
-.clock-circle .number span {
-  position: absolute;
-  transform: translate(-50%, -50%);
-}
+    .clock-circle .number span {
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
   </style>
 </head>
 <body>
+  <div class="background-overlay"></div>
 
   <!-- الشريط العلوي -->
   <div class="navbar">
@@ -210,81 +224,82 @@
     </div>
 
     <!-- ساعات عالمية بعقارب مع أرقام -->
-<div class="container my-5">
-  <div class="row text-center g-4 justify-content-center">
-    <!-- لندن -->
-    <div class="col-4">
-      <div class="clock-circle" id="clock-london">
-        <div class="number">
-          <span style="top: 10%; left: 50%;">12</span>
-          <span style="top: 20%; left: 75%;">1</span>
-          <span style="top: 35%; left: 90%;">2</span>
-          <span style="top: 50%; left: 95%;">3</span>
-          <span style="top: 65%; left: 90%;">4</span>
-          <span style="top: 80%; left: 75%;">5</span>
-          <span style="top: 90%; left: 50%;">6</span>
-          <span style="top: 80%; left: 25%;">7</span>
-          <span style="top: 65%; left: 10%;">8</span>
-          <span style="top: 50%; left: 5%;">9</span>
-          <span style="top: 35%; left: 10%;">10</span>
-          <span style="top: 20%; left: 25%;">11</span>
-        </div>
-        <div class="hand hour" id="hour-london"></div>
-        <div class="hand minute" id="minute-london"></div>
-        <div class="hand second" id="second-london"></div>
-      </div>
-      <div class="city-label">لندن</div>
-    </div>
+    <div class="container my-5">
+      <div class="row text-center g-4 justify-content-center">
 
-    <!-- طوكيو -->
-    <div class="col-4">
-      <div class="clock-circle" id="clock-tokyo">
-        <div class="number">
-          <span style="top: 10%; left: 50%;">12</span>
-          <span style="top: 20%; left: 75%;">1</span>
-          <span style="top: 35%; left: 90%;">2</span>
-          <span style="top: 50%; left: 95%;">3</span>
-          <span style="top: 65%; left: 90%;">4</span>
-          <span style="top: 80%; left: 75%;">5</span>
-          <span style="top: 90%; left: 50%;">6</span>
-          <span style="top: 80%; left: 25%;">7</span>
-          <span style="top: 65%; left: 10%;">8</span>
-          <span style="top: 50%; left: 5%;">9</span>
-          <span style="top: 35%; left: 10%;">10</span>
-          <span style="top: 20%; left: 25%;">11</span>
+        <!-- لندن -->
+        <div class="col-4">
+          <div class="clock-circle" id="clock-london">
+            <div class="number">
+              <span style="top: 10%; left: 50%;">12</span>
+              <span style="top: 20%; left: 75%;">1</span>
+              <span style="top: 35%; left: 90%;">2</span>
+              <span style="top: 50%; left: 95%;">3</span>
+              <span style="top: 65%; left: 90%;">4</span>
+              <span style="top: 80%; left: 75%;">5</span>
+              <span style="top: 90%; left: 50%;">6</span>
+              <span style="top: 80%; left: 25%;">7</span>
+              <span style="top: 65%; left: 10%;">8</span>
+              <span style="top: 50%; left: 5%;">9</span>
+              <span style="top: 35%; left: 10%;">10</span>
+              <span style="top: 20%; left: 25%;">11</span>
+            </div>
+            <div class="hand hour" id="hour-london"></div>
+            <div class="hand minute" id="minute-london"></div>
+            <div class="hand second" id="second-london"></div>
+          </div>
+          <div class="city-label">لندن</div>
         </div>
-        <div class="hand hour" id="hour-tokyo"></div>
-        <div class="hand minute" id="minute-tokyo"></div>
-        <div class="hand second" id="second-tokyo"></div>
-      </div>
-      <div class="city-label">طوكيو</div>
-    </div>
 
-    <!-- الرياض -->
-    <div class="col-4">
-      <div class="clock-circle" id="clock-riyadh">
-        <div class="number">
-          <span style="top: 10%; left: 50%;">12</span>
-          <span style="top: 20%; left: 75%;">1</span>
-          <span style="top: 35%; left: 90%;">2</span>
-          <span style="top: 50%; left: 95%;">3</span>
-          <span style="top: 65%; left: 90%;">4</span>
-          <span style="top: 80%; left: 75%;">5</span>
-          <span style="top: 90%; left: 50%;">6</span>
-          <span style="top: 80%; left: 25%;">7</span>
-          <span style="top: 65%; left: 10%;">8</span>
-          <span style="top: 50%; left: 5%;">9</span>
-          <span style="top: 35%; left: 10%;">10</span>
-          <span style="top: 20%; left: 25%;">11</span>
+        <!-- طوكيو -->
+        <div class="col-4">
+          <div class="clock-circle" id="clock-tokyo">
+            <div class="number">
+              <span style="top: 10%; left: 50%;">12</span>
+              <span style="top: 20%; left: 75%;">1</span>
+              <span style="top: 35%; left: 90%;">2</span>
+              <span style="top: 50%; left: 95%;">3</span>
+              <span style="top: 65%; left: 90%;">4</span>
+              <span style="top: 80%; left: 75%;">5</span>
+              <span style="top: 90%; left: 50%;">6</span>
+              <span style="top: 80%; left: 25%;">7</span>
+              <span style="top: 65%; left: 10%;">8</span>
+              <span style="top: 50%; left: 5%;">9</span>
+              <span style="top: 35%; left: 10%;">10</span>
+              <span style="top: 20%; left: 25%;">11</span>
+            </div>
+            <div class="hand hour" id="hour-tokyo"></div>
+            <div class="hand minute" id="minute-tokyo"></div>
+            <div class="hand second" id="second-tokyo"></div>
+          </div>
+          <div class="city-label">طوكيو</div>
         </div>
-        <div class="hand hour" id="hour-riyadh"></div>
-        <div class="hand minute" id="minute-riyadh"></div>
-        <div class="hand second" id="second-riyadh"></div>
+
+        <!-- الرياض -->
+        <div class="col-4">
+          <div class="clock-circle" id="clock-riyadh">
+            <div class="number">
+              <span style="top: 10%; left: 50%;">12</span>
+              <span style="top: 20%; left: 75%;">1</span>
+              <span style="top: 35%; left: 90%;">2</span>
+              <span style="top: 50%; left: 95%;">3</span>
+              <span style="top: 65%; left: 90%;">4</span>
+              <span style="top: 80%; left: 75%;">5</span>
+              <span style="top: 90%; left: 50%;">6</span>
+              <span style="top: 80%; left: 25%;">7</span>
+              <span style="top: 65%; left: 10%;">8</span>
+              <span style="top: 50%; left: 5%;">9</span>
+              <span style="top: 35%; left: 10%;">10</span>
+              <span style="top: 20%; left: 25%;">11</span>
+            </div>
+            <div class="hand hour" id="hour-riyadh"></div>
+            <div class="hand minute" id="minute-riyadh"></div>
+            <div class="hand second" id="second-riyadh"></div>
+          </div>
+          <div class="city-label">الرياض</div>
+        </div>
       </div>
-      <div class="city-label">الرياض</div>
     </div>
-  </div>
-</div>
 
     <!-- الوجهات -->
     <div class="container destinations">
@@ -296,13 +311,14 @@
       </div>
     </div>
 
+  </div>
+
   <!-- الشريط السفلي -->
   <div class="footer">
     جميع الحقوق محفوظة © Paygo 2025
   </div>
 
   <script>
-    // تغيير الإعلانات
     let adIndex = 0;
     const ads = document.querySelectorAll('.ad-slide');
     function showNextAd() {
@@ -312,31 +328,28 @@
     }
     setInterval(showNextAd, 10000);
 
-    // تحديث الساعات بالعقارب
-const clocks = [
-  { city: 'london', zone: 'Europe/London' },
-  { city: 'tokyo', zone: 'Asia/Tokyo' },
-  { city: 'riyadh', zone: 'Asia/Riyadh' }
-];
+    const clocks = [
+      { city: 'london', zone: 'Europe/London' },
+      { city: 'tokyo', zone: 'Asia/Tokyo' },
+      { city: 'riyadh', zone: 'Asia/Riyadh' }
+    ];
 
-function updateAnalogClocks() {
-  clocks.forEach(clock => {
-    const now = new Date().toLocaleString("en-US", { timeZone: clock.zone });
-    const time = new Date(now);
+    function updateAnalogClocks() {
+      clocks.forEach(clock => {
+        const now = new Date().toLocaleString("en-US", { timeZone: clock.zone });
+        const time = new Date(now);
+        const hourDeg = (time.getHours() % 12) * 30 + time.getMinutes() * 0.5;
+        const minuteDeg = time.getMinutes() * 6;
+        const secondDeg = time.getSeconds() * 6;
 
-    const hourDeg = (time.getHours() % 12) * 30 + time.getMinutes() * 0.5;
-    const minuteDeg = time.getMinutes() * 6;
-    const secondDeg = time.getSeconds() * 6;
+        document.getElementById(`hour-${clock.city}`).style.transform = `rotate(${hourDeg}deg)`;
+        document.getElementById(`minute-${clock.city}`).style.transform = `rotate(${minuteDeg}deg)`;
+        document.getElementById(`second-${clock.city}`).style.transform = `rotate(${secondDeg}deg)`;
+      });
+    }
 
-    document.getElementById(`hour-${clock.city}`).style.transform = `rotate(${hourDeg}deg)`;
-    document.getElementById(`minute-${clock.city}`).style.transform = `rotate(${minuteDeg}deg)`;
-    document.getElementById(`second-${clock.city}`).style.transform = `rotate(${secondDeg}deg)`;
-  });
-}
-
-updateAnalogClocks();
-setInterval(updateAnalogClocks, 1000);
+    updateAnalogClocks();
+    setInterval(updateAnalogClocks, 1000);
   </script>
-
 </body>
 </html>
