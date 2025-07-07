@@ -147,54 +147,47 @@
     }
 
     /* مربع الجمل التسويقية */
-    .marketing-box {
-      background-color: #9E6FA9;
-      padding: 30px 20px;
-      margin: 30px auto;
-      border-radius: 16px;
-    }
+    <style>
+.marketing-box {
+  background-color: #f9f4ea; /* بيج ناعم */
+  border-radius: 20px;
+  padding: 20px;
+  margin: 30px auto;
+  max-width: 900px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
 
-    .marketing-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 15px;
-      margin-bottom: 30px;
-    }
+.marketing-feature {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
 
-    .marketing-item img {
-      width: 48px;
-      height: 48px;
-      flex-shrink: 0;
-      margin-left: 10px;
-    }
+.marketing-feature .icon {
+  flex-shrink: 0;
+  margin-left: 15px;
+  width: 36px;
+  height: 36px;
+}
 
-    .marketing-text h5 {
-      font-size: 1.6rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
+.marketing-feature .text {
+  flex: 1;
+}
 
-    .marketing-text p {
-      font-size: 1.1rem;
-      margin: 0;
-    }
+.marketing-feature .text h5 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #222;
+}
 
-    @media (max-width: 576px) {
-      .marketing-text h5 {
-        font-size: 1.3rem;
-      }
-
-      .marketing-text p {
-        font-size: 1rem;
-      }
-
-      .marketing-item img {
-        width: 40px;
-        height: 40px;
-      }
-    }
-  </style>
+.marketing-feature .text p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #444;
+  margin: 0;
+}
+</style>
 </head>
 <body>
 
@@ -291,27 +284,26 @@
 </div>
 
 <!-- مربع الجمل التسويقية -->
-<div class="container marketing-box" style="background-color: #fdf6e3; border-radius: 16px; padding: 30px;">
-  <div class="marketing-item d-flex align-items-start mb-4">
-    <img src="icon1.png" alt="Icon 1" class="ms-3" style="width: 40px;">
-    <div>
-      <h5 style="font-size: 1.6rem;">استكشف العالم من مكانك</h5>
+
+<div class="marketing-box">
+  <div class="marketing-feature">
+    <img src="icons/1.svg" class="icon">
+    <div class="text">
+      <h5>استكشف العالم من مكانك</h5>
       <p>اكتشف أفضل المدن السياحية والفنادق والمطاعم المختارة بعناية من كل قارة.</p>
     </div>
   </div>
-
-  <div class="marketing-item d-flex align-items-start mb-4">
-    <img src="icon2.png" alt="Icon 2" class="ms-3" style="width: 40px;">
-    <div>
-      <h5 style="font-size: 1.6rem;">سافر بعقلك أولاً... ثم قرر!</h5>
+  <div class="marketing-feature">
+    <img src="icons/2.svg" class="icon">
+    <div class="text">
+      <h5>سافر بعقلك أولاً... ثم قرر!</h5>
       <p>شاهد صور الوجهات، تعرف على أبرز المعالم، وتصفح تقييمات الفنادق والمطاعم بدون عناء.</p>
     </div>
   </div>
-
-  <div class="marketing-item d-flex align-items-start">
-    <img src="icon3.png" alt="Icon 3" class="ms-3" style="width: 40px;">
-    <div>
-      <h5 style="font-size: 1.6rem;">كل ما تحتاجه قبل السفر</h5>
+  <div class="marketing-feature">
+    <img src="icons/3.svg" class="icon">
+    <div class="text">
+      <h5>كل ما تحتاجه قبل السفر</h5>
       <p>دليلك الكامل لأجمل الوجهات، مع معلومات مفصلة تساعدك في التخطيط لرحلتك بثقة.</p>
     </div>
   </div>
