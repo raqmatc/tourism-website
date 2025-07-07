@@ -11,19 +11,23 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
 
   <style>
-    @font-face {
-      font-family: 'Hacen';
-      src: url('hacen.ttf') format('truetype');
-    }
-
     html, body {
       min-height: 100vh;
       margin: 0;
       padding: 0;
-      background-color: #f2f2f2;
-      font-family: 'Hacen', sans-serif;
+      background-color: #fdf6e3; /* خلفية رملية */
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: 'Cairo', sans-serif;
       direction: rtl;
       color: #000;
+    }
+
+    .main-content {
+      flex: 1;
     }
 
     .navbar {
@@ -40,96 +44,8 @@
       object-fit: contain;
     }
 
-    .main-content {
-      flex: 1;
-    }
-
-    .footer {
-      background-color: #222;
-      color: #fff;
-      text-align: center;
-      padding: 12px;
-    }
-
-    /* ساعات */
-    .clock-circle {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      margin: 0 auto;
-      border: 4px solid #aaa;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-    }
-
-    .hand {
-      position: absolute;
-      bottom: 50%;
-      left: 50%;
-      transform-origin: bottom center;
-      transform: rotate(0deg);
-      background: #333;
-      border-radius: 2px;
-    }
-
-    .hour { width: 4px; height: 25px; }
-    .minute { width: 3px; height: 35px; }
-    .second { width: 2px; height: 40px; }
-
-    .clock-circle .number {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      font-size: 10px;
-      color: #333;
-    }
-
-    .clock-circle .number span {
-      position: absolute;
-      transform: translate(-50%, -50%);
-    }
-
-    .city-label {
-      text-align: center;
-      margin-top: 8px;
-      font-weight: bold;
-    }
-
-    /* التسويق */
-    .marketing-box {
-      padding: 25px 20px;
-      border-radius: 12px;
-    }
-
-    .marketing-item {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .marketing-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .marketing-item img {
-      width: 40px;
-      height: 40px;
-      flex-shrink: 0;
-    }
-
-    .marketing-text h5 {
-      font-size: 18px;
-      margin-bottom: 5px;
-      white-space: nowrap;
-    }
-
-    .marketing-text p {
-      margin: 0;
-      font-size: 14px;
-      color: #333;
+    .destinations {
+      padding: 20px;
     }
 
     .destination-card {
@@ -152,96 +68,231 @@
     .destination-card h5 {
       margin-top: 10px;
     }
+
+    .footer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 12px;
+    }
+
+    /* إعلانات */
+    #ad-slider {
+      position: relative;
+      height: 150px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 20px auto;
+    }
+
+    .ad-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+
+    .ad-slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .fade img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* ساعات */
+    .clock-circle {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+      border: 4px solid #aaa;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      background: #333;
+      border-radius: 2px;
+    }
+
+    .hour { width: 4px; height: 25px; }
+    .minute { width: 3px; height: 35px; }
+    .second { width: 2px; height: 40px; }
+
+    .clock-circle .number {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      font-size: 10px;
+      color: #333;
+    }
+
+    .clock-circle .number span {
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
+
+    /* مربع الجمل التسويقية */
+    .marketing-box {
+      background-color: #fdf6e3;
+      padding: 30px 20px;
+      margin: 30px auto;
+      border-radius: 16px;
+    }
+
+    .marketing-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .marketing-item img {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      margin-left: 10px;
+    }
+
+    .marketing-text h5 {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .marketing-text p {
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    @media (max-width: 576px) {
+      .marketing-text h5 {
+        font-size: 1.3rem;
+      }
+
+      .marketing-text p {
+        font-size: 1rem;
+      }
+
+      .marketing-item img {
+        width: 40px;
+        height: 40px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- الشريط العلوي -->
   <div class="navbar">
     <img src="paygs.gif" alt="Paygo Logo">
   </div>
 
-  <!-- المحتوى الرئيسي -->
-  <div class="main-content container py-4">
+  <div class="main-content">
+
+    <!-- الإعلانات -->
+    <div class="container">
+      <div id="ad-slider">
+        <div class="ad-slide fade active"><img src="ad1.png" alt="إعلان 1"></div>
+        <div class="ad-slide fade"><img src="ad2.png" alt="إعلان 2"></div>
+        <div class="ad-slide fade"><img src="ad3.png" alt="إعلان 3"></div>
+      </div>
+    </div>
 
     <!-- الساعات -->
-    <div class="row text-center g-4 justify-content-center">
-
-      <!-- لندن -->
-      <div class="col-4">
-        <div class="clock-circle" id="clock-london">
-          <div class="number">
-            <span style="top: 10%; left: 50%;">12</span>
-            <span style="top: 20%; left: 75%;">1</span>
-            <span style="top: 35%; left: 90%;">2</span>
-            <span style="top: 50%; left: 95%;">3</span>
-            <span style="top: 65%; left: 90%;">4</span>
-            <span style="top: 80%; left: 75%;">5</span>
-            <span style="top: 90%; left: 50%;">6</span>
-            <span style="top: 80%; left: 25%;">7</span>
-            <span style="top: 65%; left: 10%;">8</span>
-            <span style="top: 50%; left: 5%;">9</span>
-            <span style="top: 35%; left: 10%;">10</span>
-            <span style="top: 20%; left: 25%;">11</span>
+    <div class="container my-5">
+      <div class="row text-center g-4 justify-content-center">
+        <!-- لندن -->
+        <div class="col-4">
+          <div class="clock-circle" id="clock-london">
+            <div class="number">
+              <span style="top:10%; left:50%;">12</span>
+              <span style="top:20%; left:75%;">1</span>
+              <span style="top:35%; left:90%;">2</span>
+              <span style="top:50%; left:95%;">3</span>
+              <span style="top:65%; left:90%;">4</span>
+              <span style="top:80%; left:75%;">5</span>
+              <span style="top:90%; left:50%;">6</span>
+              <span style="top:80%; left:25%;">7</span>
+              <span style="top:65%; left:10%;">8</span>
+              <span style="top:50%; left:5%;">9</span>
+              <span style="top:35%; left:10%;">10</span>
+              <span style="top:20%; left:25%;">11</span>
+            </div>
+            <div class="hand hour" id="hour-london"></div>
+            <div class="hand minute" id="minute-london"></div>
+            <div class="hand second" id="second-london"></div>
           </div>
-          <div class="hand hour" id="hour-london"></div>
-          <div class="hand minute" id="minute-london"></div>
-          <div class="hand second" id="second-london"></div>
+          <div class="city-label">لندن</div>
         </div>
-        <div class="city-label">لندن</div>
-      </div>
 
-      <!-- طوكيو -->
-      <div class="col-4">
-        <div class="clock-circle" id="clock-tokyo">
-          <div class="number">...</div>
-          <div class="hand hour" id="hour-tokyo"></div>
-          <div class="hand minute" id="minute-tokyo"></div>
-          <div class="hand second" id="second-tokyo"></div>
+        <!-- طوكيو -->
+        <div class="col-4">
+          <div class="clock-circle" id="clock-tokyo">
+            <div class="number">
+              <span style="top:10%; left:50%;">12</span>
+              <!-- باقي الأرقام مثل لندن -->
+            </div>
+            <div class="hand hour" id="hour-tokyo"></div>
+            <div class="hand minute" id="minute-tokyo"></div>
+            <div class="hand second" id="second-tokyo"></div>
+          </div>
+          <div class="city-label">طوكيو</div>
         </div>
-        <div class="city-label">طوكيو</div>
-      </div>
 
-      <!-- الرياض -->
-      <div class="col-4">
-        <div class="clock-circle" id="clock-riyadh">
-          <div class="number">...</div>
-          <div class="hand hour" id="hour-riyadh"></div>
-          <div class="hand minute" id="minute-riyadh"></div>
-          <div class="hand second" id="second-riyadh"></div>
+        <!-- الرياض -->
+        <div class="col-4">
+          <div class="clock-circle" id="clock-riyadh">
+            <div class="number">
+              <span style="top:10%; left:50%;">12</span>
+              <!-- باقي الأرقام مثل لندن -->
+            </div>
+            <div class="hand hour" id="hour-riyadh"></div>
+            <div class="hand minute" id="minute-riyadh"></div>
+            <div class="hand second" id="second-riyadh"></div>
+          </div>
+          <div class="city-label">الرياض</div>
         </div>
-        <div class="city-label">الرياض</div>
       </div>
     </div>
 
     <!-- الجمل التسويقية -->
-    <div class="container my-4">
-      <div class="marketing-box">
-
-        <div class="marketing-item">
-          <img src="icon1.png" alt="icon1">
-          <div class="marketing-text">
-            <h5><strong>استكشف العالم من مكانك</strong></h5>
-            <p>اكتشف أفضل المدن السياحية والفنادق والمطاعم المختارة بعناية من كل قارة.</p>
-          </div>
+    <div class="container marketing-box">
+      <div class="marketing-item">
+        <img src="icon1.png" alt="Icon 1">
+        <div class="marketing-text">
+          <h5>استكشف العالم من مكانك</h5>
+          <p>اكتشف أفضل المدن السياحية والفنادق والمطاعم المختارة بعناية من كل قارة.</p>
         </div>
+      </div>
 
-        <div class="marketing-item">
-          <img src="icon2.png" alt="icon2">
-          <div class="marketing-text">
-            <h5><strong>سافر بعقلك أولاً… ثم قرر!</strong></h5>
-            <p>شاهد صور الوجهات، تعرف على أبرز المعالم، وتصفح تقييمات الفنادق والمطاعم بدون عناء.</p>
-          </div>
+      <div class="marketing-item">
+        <img src="icon2.png" alt="Icon 2">
+        <div class="marketing-text">
+          <h5>سافر بعقلك أولاً… ثم قرر!</h5>
+          <p>شاهد صور الوجهات، تعرف على أبرز المعالم، وتصفح تقييمات الفنادق والمطاعم بدون عناء.</p>
         </div>
+      </div>
 
-        <div class="marketing-item">
-          <img src="icon3.png" alt="icon3">
-          <div class="marketing-text">
-            <h5><strong>كل ما تحتاجه قبل السفر</strong></h5>
-            <p>دليلك الكامل لأجمل الوجهات، مع معلومات مفصلة تساعدك في التخطيط لرحلتك بثقة.</p>
-          </div>
+      <div class="marketing-item">
+        <img src="icon3.png" alt="Icon 3">
+        <div class="marketing-text">
+          <h5>كل ما تحتاجه قبل السفر</h5>
+          <p>دليلك الكامل لأجمل الوجهات، مع معلومات مفصلة تساعدك في التخطيط لرحلتك بثقة.</p>
         </div>
-
       </div>
     </div>
 
@@ -250,18 +301,27 @@
       <div class="row g-3">
         <div class="col-6"><div class="destination-card"><img src="qairo.png"><h5>القاهرة</h5></div></div>
         <div class="col-6"><div class="destination-card"><img src="dubai.png"><h5>دبي</h5></div></div>
+        <div class="col-6"><div class="destination-card"><img src="thailand.png"><h5>تايلاند</h5></div></div>
+        <div class="col-6"><div class="destination-card"><img src="istanbul.png"><h5>إسطنبول</h5></div></div>
       </div>
     </div>
 
   </div>
 
-  <!-- الشريط السفلي -->
   <div class="footer">
     جميع الحقوق محفوظة © Paygo 2025
   </div>
 
-  <!-- JavaScript للساعات -->
   <script>
+    let adIndex = 0;
+    const ads = document.querySelectorAll('.ad-slide');
+    function showNextAd() {
+      ads[adIndex].classList.remove('active');
+      adIndex = (adIndex + 1) % ads.length;
+      ads[adIndex].classList.add('active');
+    }
+    setInterval(showNextAd, 10000);
+
     const clocks = [
       { city: 'london', zone: 'Europe/London' },
       { city: 'tokyo', zone: 'Asia/Tokyo' },
@@ -285,5 +345,6 @@
     updateAnalogClocks();
     setInterval(updateAnalogClocks, 1000);
   </script>
+
 </body>
 </html>
