@@ -249,7 +249,7 @@
 
   .slider-title {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
     margin: 0;
   }
@@ -268,8 +268,9 @@
   .destination-slider {
     overflow-x: auto;
     white-space: nowrap;
-    padding: 5px 10px;
     scroll-behavior: smooth;
+    padding: 5px 10px;
+    animation: slide 60s linear infinite;
   }
 
   .destination-card {
@@ -293,7 +294,7 @@
     object-fit: cover;
   }
 
-  .destination-card .card-body {
+  .card-body {
     padding: 8px;
     text-align: center;
     font-size: 14px;
@@ -301,31 +302,83 @@
 </style>
 
 <!-- سلايدر 1: وجهات آسيا -->
-<div class="container">
+<div>
   <div class="slider-header">
-  <h5 class="slider-title">وجهات آسيا</h5>
-  <div class="see-more"><a href="#">المزيد</a></div>
+    <h5 class="slider-title">وجهات آسيا</h5>
+    <div class="see-more"><a href="#">المزيد</a></div>
+  </div>
+  <div class="destination-slider">
+    <div class="destination-card"><img src="images/asia1.jpg" alt=""><div class="card-body">بانكوك</div></div>
+    <div class="destination-card"><img src="images/asia2.jpg" alt=""><div class="card-body">كوالالمبور</div></div>
+    <div class="destination-card"><img src="images/asia3.jpg" alt=""><div class="card-body">طوكيو</div></div>
+    <div class="destination-card"><img src="images/asia4.jpg" alt=""><div class="card-body">بالي</div></div>
+    <div class="destination-card"><img src="images/asia5.jpg" alt=""><div class="card-body">سيؤول</div></div>
+    <div class="destination-card"><img src="images/asia6.jpg" alt=""><div class="card-body">مانيلا</div></div>
+    <div class="destination-card"><img src="images/asia7.jpg" alt=""><div class="card-body">هونغ كونغ</div></div>
+    <div class="destination-card"><img src="images/asia8.jpg" alt=""><div class="card-body">سنغافورة</div></div>
+    <div class="destination-card"><img src="images/asia9.jpg" alt=""><div class="card-body">هانوي</div></div>
+    <div class="destination-card"><img src="images/asia10.jpg" alt=""><div class="card-body">دبي</div></div>
+  </div>
 </div>
 
 <!-- سلايدر 2: وجهات أوروبا -->
-<div class="container">
+<div>
   <div class="slider-header">
-  <h5 class="slider-title">وجهات أوروبا</h5>
-  <div class="see-more"><a href="#">المزيد</a></div>
+    <h5 class="slider-title">وجهات أوروبا</h5>
+    <div class="see-more"><a href="#">المزيد</a></div>
+  </div>
+  <div class="destination-slider">
+    <div class="destination-card"><img src="images/europe1.jpg" alt=""><div class="card-body">باريس</div></div>
+    <div class="destination-card"><img src="images/europe2.jpg" alt=""><div class="card-body">لندن</div></div>
+    <div class="destination-card"><img src="images/europe3.jpg" alt=""><div class="card-body">روما</div></div>
+    <div class="destination-card"><img src="images/europe4.jpg" alt=""><div class="card-body">برشلونة</div></div>
+    <div class="destination-card"><img src="images/europe5.jpg" alt=""><div class="card-body">أمستردام</div></div>
+    <div class="destination-card"><img src="images/europe6.jpg" alt=""><div class="card-body">فيينا</div></div>
+    <div class="destination-card"><img src="images/europe7.jpg" alt=""><div class="card-body">ميونخ</div></div>
+    <div class="destination-card"><img src="images/europe8.jpg" alt=""><div class="card-body">برلين</div></div>
+    <div class="destination-card"><img src="images/europe9.jpg" alt=""><div class="card-body">لشبونة</div></div>
+    <div class="destination-card"><img src="images/europe10.jpg" alt=""><div class="card-body">اسطنبول</div></div>
+  </div>
 </div>
 
 <!-- سلايدر 3: وجهات أفريقيا -->
-<div class="container">
+<div>
   <div class="slider-header">
-  <h5 class="slider-title">وجهات أفريقيا</h5>
-  <div class="see-more"><a href="#">المزيد</a></div>
+    <h5 class="slider-title">وجهات أفريقيا</h5>
+    <div class="see-more"><a href="#">المزيد</a></div>
+  </div>
+  <div class="destination-slider">
+    <div class="destination-card"><img src="images/africa1.jpg" alt=""><div class="card-body">كيب تاون</div></div>
+    <div class="destination-card"><img src="images/africa2.jpg" alt=""><div class="card-body">مراكش</div></div>
+    <div class="destination-card"><img src="images/africa3.jpg" alt=""><div class="card-body">القاهرة</div></div>
+    <div class="destination-card"><img src="images/africa4.jpg" alt=""><div class="card-body">تونس</div></div>
+    <div class="destination-card"><img src="images/africa5.jpg" alt=""><div class="card-body">داكار</div></div>
+    <div class="destination-card"><img src="images/africa6.jpg" alt=""><div class="card-body">الخرطوم</div></div>
+    <div class="destination-card"><img src="images/africa7.jpg" alt=""><div class="card-body">الدار البيضاء</div></div>
+    <div class="destination-card"><img src="images/africa8.jpg" alt=""><div class="card-body">جوهانسبرغ</div></div>
+    <div class="destination-card"><img src="images/africa9.jpg" alt=""><div class="card-body">أبيدجان</div></div>
+    <div class="destination-card"><img src="images/africa10.jpg" alt=""><div class="card-body">لاجوس</div></div>
+  </div>
 </div>
 
 <!-- سلايدر 4: بقية العالم -->
-<div class="container">
+<div>
   <div class="slider-header">
-  <h5 class="slider-title">بقية العالم</h5>
-  <div class="see-more"><a href="#">المزيد</a></div>
+    <h5 class="slider-title">بقية العالم</h5>
+    <div class="see-more"><a href="#">المزيد</a></div>
+  </div>
+  <div class="destination-slider">
+    <div class="destination-card"><img src="images/world1.jpg" alt=""><div class="card-body">نيويورك</div></div>
+    <div class="destination-card"><img src="images/world2.jpg" alt=""><div class="card-body">ريو دي جانيرو</div></div>
+    <div class="destination-card"><img src="images/world3.jpg" alt=""><div class="card-body">تورنتو</div></div>
+    <div class="destination-card"><img src="images/world4.jpg" alt=""><div class="card-body">بوينس آيرس</div></div>
+    <div class="destination-card"><img src="images/world5.jpg" alt=""><div class="card-body">لوس أنجلوس</div></div>
+    <div class="destination-card"><img src="images/world6.jpg" alt=""><div class="card-body">سيدني</div></div>
+    <div class="destination-card"><img src="images/world7.jpg" alt=""><div class="card-body">ملبورن</div></div>
+    <div class="destination-card"><img src="images/world8.jpg" alt=""><div class="card-body">شيكاغو</div></div>
+    <div class="destination-card"><img src="images/world9.jpg" alt=""><div class="card-body">سان فرانسيسكو</div></div>
+    <div class="destination-card"><img src="images/world10.jpg" alt=""><div class="card-body">ميامي</div></div>
+  </div>
 </div>
 
 
