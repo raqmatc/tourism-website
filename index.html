@@ -240,17 +240,35 @@
 
 <!-- سلايدر وجهات -->
 <style>
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px 5px;
+  }
+
   .slider-title {
     font-weight: bold;
-    font-size: 16px; /* خط أصغر */
-    margin: 10px 20px 5px; /* تقليل المسافة بين السلايدرات */
+    font-size: 14px;
     color: #333;
+    margin: 0;
+  }
+
+  .see-more a {
+    color: #007bff;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  .see-more a:hover {
+    text-decoration: underline;
   }
 
   .destination-slider {
     overflow-x: auto;
     white-space: nowrap;
-    padding: 5px 10px; /* تقليل المسافات العلوية */
+    padding: 5px 10px;
     scroll-behavior: smooth;
   }
 
@@ -280,75 +298,33 @@
     text-align: center;
     font-size: 14px;
   }
-
-  .see-more {
-    text-align: left;
-    padding: 5px 20px;
-    margin-bottom: 15px;
-  }
-
-  .see-more a {
-    color: #007bff;
-    font-weight: bold;
-    font-size: 14px;
-    text-decoration: none;
-  }
-
-  .see-more a:hover {
-    text-decoration: underline;
-  }
 </style>
 
 <!-- سلايدر 1: وجهات آسيا -->
 <div class="container">
-  <div class="slider-title">وجهات آسيا</div>
-  <div class="destination-slider">
-    <!-- كرر هذه البطاقة 10 مرات مع صور مختلفة -->
-    <div class="destination-card">
-      <img src="images/asia1.jpg" alt="وجهة آسيوية">
-      <div class="card-body">بانكوك</div>
-    </div>
-    <!-- ... نسخ لباقي الوجهات ... -->
-  </div>
+  <div class="slider-header">
+  <h5 class="slider-title">وجهات آسيا</h5>
   <div class="see-more"><a href="#">المزيد</a></div>
 </div>
 
 <!-- سلايدر 2: وجهات أوروبا -->
 <div class="container">
-  <div class="slider-title">وجهات أوروبا</div>
-  <div class="destination-slider">
-    <div class="destination-card">
-      <img src="images/europe1.jpg" alt="وجهة أوروبية">
-      <div class="card-body">باريس</div>
-    </div>
-    <!-- ... نسخ لباقي الوجهات ... -->
-  </div>
+  <div class="slider-header">
+  <h5 class="slider-title">وجهات أوروبا</h5>
   <div class="see-more"><a href="#">المزيد</a></div>
 </div>
 
 <!-- سلايدر 3: وجهات أفريقيا -->
 <div class="container">
-  <div class="slider-title">وجهات أفريقيا</div>
-  <div class="destination-slider">
-    <div class="destination-card">
-      <img src="images/africa1.jpg" alt="وجهة أفريقية">
-      <div class="card-body">كيب تاون</div>
-    </div>
-    <!-- ... نسخ لباقي الوجهات ... -->
-  </div>
+  <div class="slider-header">
+  <h5 class="slider-title">وجهات أفريقيا</h5>
   <div class="see-more"><a href="#">المزيد</a></div>
 </div>
 
 <!-- سلايدر 4: بقية العالم -->
 <div class="container">
-  <div class="slider-title">بقية العالم</div>
-  <div class="destination-slider">
-    <div class="destination-card">
-      <img src="images/world1.jpg" alt="وجهة عالمية">
-      <div class="card-body">ريو دي جانيرو</div>
-    </div>
-    <!-- ... نسخ لباقي الوجهات ... -->
-  </div>
+  <div class="slider-header">
+  <h5 class="slider-title">بقية العالم</h5>
   <div class="see-more"><a href="#">المزيد</a></div>
 </div>
 
