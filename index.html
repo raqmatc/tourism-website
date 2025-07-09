@@ -238,6 +238,116 @@
       </div>
     </div>
 
+<!-- سلايدر وجهات -->
+<style>
+  .destination-slider {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 0;
+    scroll-behavior: smooth;
+  }
+
+  .destination-card {
+    display: inline-block;
+    width: 200px;
+    margin: 0 10px;
+    vertical-align: top;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+
+  .destination-card:hover {
+    transform: scale(1.05);
+  }
+
+  .destination-card img {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .destination-card .card-body {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .slider-title {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 20px 0 10px;
+    color: #333;
+  }
+
+  .see-more {
+    text-align: left;
+    margin-top: 10px;
+  }
+
+  .see-more a {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .see-more a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<!-- سلايدر 1: وجهات آسيا -->
+<div class="container">
+  <div class="slider-title">وجهات آسيا</div>
+  <div class="destination-slider">
+    <!-- كرر هذه البطاقة 10 مرات مع صور مختلفة -->
+    <div class="destination-card">
+      <img src="images/asia1.jpg" alt="وجهة آسيوية">
+      <div class="card-body">بانكوك</div>
+    </div>
+    <!-- ... نسخ لباقي الوجهات ... -->
+  </div>
+  <div class="see-more"><a href="#">المزيد</a></div>
+</div>
+
+<!-- سلايدر 2: وجهات أوروبا -->
+<div class="container">
+  <div class="slider-title">وجهات أوروبا</div>
+  <div class="destination-slider">
+    <div class="destination-card">
+      <img src="images/europe1.jpg" alt="وجهة أوروبية">
+      <div class="card-body">باريس</div>
+    </div>
+    <!-- ... نسخ لباقي الوجهات ... -->
+  </div>
+  <div class="see-more"><a href="#">المزيد</a></div>
+</div>
+
+<!-- سلايدر 3: وجهات أفريقيا -->
+<div class="container">
+  <div class="slider-title">وجهات أفريقيا</div>
+  <div class="destination-slider">
+    <div class="destination-card">
+      <img src="images/africa1.jpg" alt="وجهة أفريقية">
+      <div class="card-body">كيب تاون</div>
+    </div>
+    <!-- ... نسخ لباقي الوجهات ... -->
+  </div>
+  <div class="see-more"><a href="#">المزيد</a></div>
+</div>
+
+<!-- سلايدر 4: بقية العالم -->
+<div class="container">
+  <div class="slider-title">بقية العالم</div>
+  <div class="destination-slider">
+    <div class="destination-card">
+      <img src="images/world1.jpg" alt="وجهة عالمية">
+      <div class="card-body">ريو دي جانيرو</div>
+    </div>
+    <!-- ... نسخ لباقي الوجهات ... -->
+  </div>
+  <div class="see-more"><a href="#">المزيد</a></div>
+</div>
+
     <!-- الوجهات -->
     <div class="container destinations">
       <div class="row g-3">
