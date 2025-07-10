@@ -75,8 +75,8 @@
     .nav-link {
       color: #fff !important;
       margin-left: 0;
-      padding: 5px 10px;
-      display: block; /* لضمان العناصر تحت بعضها */
+      padding: 8px 10px; /* زيادة المسافة قليلاً بين الكلمات */
+      display: block;
     }
 
     .nav-link:hover {
@@ -85,11 +85,14 @@
 
     .navbar-collapse {
       flex-direction: column; /* جعل القائمة الرئيسية عمودية */
+      min-height: 300px; /* جعل الشريط المنسدل طويلًا نوعًا ما */
+      padding: 10px;
+      position: relative; /* لضبط الزر داخل القائمة */
     }
 
     .dropdown-toggle::after {
-      margin-left: 0; /* ضبط موضع السهم */
-      margin-right: 5px; /* إبقاء السهم بجانب النص */
+      margin-left: 0;
+      margin-right: 5px;
     }
 
     .dropdown-menu {
@@ -387,7 +390,7 @@
         background-color: #222;
         position: absolute;
         top: 60px;
-        left: 0; /* فتح القائمة من الجهة اليمنى مع RTL */
+        left: 0;
         width: 200px;
         padding: 10px;
         border-radius: 5px 0 5px 5px;
@@ -404,13 +407,14 @@
       height: 40px;
       font-size: 1.2rem;
       border: none;
-      background-color: #fff;
+      background-color: #222;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 1002;
+      color: white; /* لون الشمس والهلال أبيض */
     }
   </style>
 </head>
@@ -421,7 +425,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav" style="order: 3;">
-      <ul class="nav flex-column"> <!-- flex-column لجعل العناصر عمودية -->
+      <ul class="nav flex-column">
         <li class="nav-item">
           <a class="nav-link active" href="#">الرئيسية</a>
         </li>
@@ -455,8 +459,8 @@
           </ul>
         </li>
       </ul>
+      <button id="theme-toggle" class="btn">🌞</button> <!-- زر تبديل الوضع في أسفل القائمة -->
     </div>
-    <button id="theme-toggle" class="btn">🌞</button> <!-- زر تبديل الوضع -->
   </div>
 
   <div class="main-content">
