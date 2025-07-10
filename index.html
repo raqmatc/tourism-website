@@ -46,6 +46,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 0 20px;
+      position: relative;
+      z-index: 1000; /* لضمان أن الشريط العلوي فوق الإعلانات */
     }
 
     .navbar img {
@@ -61,6 +63,7 @@
       font-size: 1.5rem;
       color: #fff;
       cursor: pointer;
+      order: 2; /* لتحريك الزر إلى الجهة اليمنى */
     }
 
     .navbar-toggler-icon {
@@ -80,10 +83,13 @@
 
     .dropdown-menu {
       background-color: #333;
+      min-width: 200px; /* ضبط عرض القائمة */
     }
 
     .dropdown-item {
       color: #fff;
+      display: block; /* لضمان أن الخيارات تكون تحت بعضها */
+      padding: 5px 20px; /* تحسين المسافة داخل الخيارات */
     }
 
     .dropdown-item:hover {
@@ -129,6 +135,7 @@
       border-radius: 12px;
       overflow: hidden;
       margin: 20px auto;
+      z-index: 1; /* لضمان أن الإعلانات خلف الشريط */
     }
 
     .ad-slide {
@@ -230,7 +237,7 @@
     .marketing-feature .text {
       flex: 1;
       text-align: right;
-      text-align: justify; /* النصوص متوازية الاسطر */
+      text-align: justify;
     }
 
     .marketing-feature .text h5 {
@@ -373,6 +380,7 @@
         width: 200px;
         padding: 10px;
         border-radius: 5px;
+        z-index: 1001; /* لضمان أن القائمة فوق الإعلانات */
       }
       .nav-link {
         margin-left: 0;
@@ -383,11 +391,11 @@
 </head>
 <body class="light-mode">
   <div class="navbar">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <img src="paygs.gif" alt="Paygo Logo" style="order: 1;"> <!-- الشعار في الجهة اليسرى -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="order: 3;"> <!-- الزر في الجهة اليمنى -->
       <span class="navbar-toggler-icon"></span>
     </button>
-    <img src="paygs.gif" alt="Paygo Logo">
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse" id="navbarNav" style="order: 2;">
       <ul class="nav">
         <li class="nav-item">
           <a class="nav-link active" href="#">الرئيسية</a>
