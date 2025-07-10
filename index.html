@@ -47,7 +47,7 @@
       align-items: center;
       padding: 0 20px;
       position: relative;
-      z-index: 1000; /* لضمان أن الشريط العلوي فوق الإعلانات */
+      z-index: 1000;
     }
 
     .navbar img {
@@ -63,7 +63,7 @@
       font-size: 1.5rem;
       color: #fff;
       cursor: pointer;
-      order: 2; /* لتحريك الزر إلى الجهة اليمنى */
+      order: 2;
     }
 
     .navbar-toggler-icon {
@@ -74,22 +74,33 @@
 
     .nav-link {
       color: #fff !important;
-      margin-left: 15px;
+      margin-left: 0;
+      padding: 5px 10px;
+      display: block; /* لضمان العناصر تحت بعضها */
     }
 
     .nav-link:hover {
       color: #007bff !important;
     }
 
+    .navbar-collapse {
+      flex-direction: column; /* جعل القائمة الرئيسية عمودية */
+    }
+
+    .dropdown-toggle::after {
+      margin-left: 0; /* ضبط موضع السهم */
+      margin-right: 5px; /* إبقاء السهم بجانب النص */
+    }
+
     .dropdown-menu {
       background-color: #333;
-      min-width: 200px; /* ضبط عرض القائمة */
+      min-width: 200px;
     }
 
     .dropdown-item {
       color: #fff;
-      display: block; /* لضمان أن الخيارات تكون تحت بعضها */
-      padding: 5px 20px; /* تحسين المسافة داخل الخيارات */
+      display: block;
+      padding: 5px 20px;
     }
 
     .dropdown-item:hover {
@@ -135,7 +146,7 @@
       border-radius: 12px;
       overflow: hidden;
       margin: 20px auto;
-      z-index: 1; /* لضمان أن الإعلانات خلف الشريط */
+      z-index: 1;
     }
 
     .ad-slide {
@@ -376,27 +387,41 @@
         background-color: #222;
         position: absolute;
         top: 60px;
-        right: 0;
+        left: 0; /* فتح القائمة من الجهة اليمنى مع RTL */
         width: 200px;
         padding: 10px;
-        border-radius: 5px;
-        z-index: 1001; /* لضمان أن القائمة فوق الإعلانات */
+        border-radius: 5px 0 5px 5px;
+        z-index: 1001;
       }
-      .nav-link {
-        margin-left: 0;
-        padding: 5px 10px;
-      }
+    }
+
+    /* زر تبديل الوضع */
+    #theme-toggle {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+      border: none;
+      background-color: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1002;
     }
   </style>
 </head>
 <body class="light-mode">
   <div class="navbar">
-    <img src="paygs.gif" alt="Paygo Logo" style="order: 1;"> <!-- الشعار في الجهة اليسرى -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="order: 3;"> <!-- الزر في الجهة اليمنى -->
+    <img src="paygs.gif" alt="Paygo Logo" style="order: 1;">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="order: 2;">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav" style="order: 2;">
-      <ul class="nav">
+    <div class="collapse navbar-collapse" id="navbarNav" style="order: 3;">
+      <ul class="nav flex-column"> <!-- flex-column لجعل العناصر عمودية -->
         <li class="nav-item">
           <a class="nav-link active" href="#">الرئيسية</a>
         </li>
@@ -429,11 +454,9 @@
             <li><a class="dropdown-item" href="#" onclick="changeLanguage('en')">English</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <button id="theme-toggle" class="btn btn-outline-light">تبديل الوضع</button>
-        </li>
       </ul>
     </div>
+    <button id="theme-toggle" class="btn">🌞</button> <!-- زر تبديل الوضع -->
   </div>
 
   <div class="main-content">
@@ -565,21 +588,15 @@
     themeToggle.addEventListener('click', () => {
       document.body.classList.toggle('light-mode');
       document.body.classList.toggle('dark-mode');
-      if (document.body.classList.contains('dark-mode')) {
-        themeToggle.textContent = 'تبديل إلى النهاري';
-      } else {
-        themeToggle.textContent = 'تبديل إلى المسائي';
-      }
+      themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌙' : '🌞';
     });
 
     // تغيير اللغة (مثال بسيط، يمكن تطويره)
     function changeLanguage(lang) {
       if (lang === 'en') {
         alert('Switching to English (Feature to be implemented)');
-        // أضف هنا المنطق لتغيير اللغة إلى الإنجليزية
       } else {
         alert('اللغة العربية مفعلة بالفعل');
-        // اللغة العربية هي الافتراضية
       }
     }
 
