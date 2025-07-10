@@ -160,7 +160,7 @@
       align-items: flex-start;
       padding: 0 24px;
       line-height: 1.7;
-      word-break: break-word;
+      word-wrap: break-word; /* لضمان الانتقال إلى السطر الجديد */
       margin-bottom: 0;
       padding-top: 0;
       padding-bottom: 0;
@@ -168,17 +168,17 @@
 
     .marketing-feature .icon {
       flex-shrink: 0;
-      margin-right: 20px; /* مسافة بين الأيقونة وحافة اليمين */
+      margin-left: 20px; /* إبعاد الأيقونة عن الحافة اليمنى قليلاً نحو اليمين */
       width: 36px;
       height: 36px;
-      order: 2; /* نقل الأيقونة إلى اليمين */
+      order: 2; /* إبقاء الأيقونة في اليمين */
     }
 
     .marketing-feature .text {
       flex: 1;
       text-align: right;
-      margin-right: 20px; /* إبعاد النص عن حافة اليمين */
-      max-width: calc(100% - 56px); /* تقليل عرض النص للسماح بالانتقال إلى السطر */
+      margin-right: 20px; /* إبعاد النص عن الحافة اليمنى */
+      text-align: justify; /* جعل النصوص متوازية الاسطر */
     }
 
     .marketing-feature .text h5 {
