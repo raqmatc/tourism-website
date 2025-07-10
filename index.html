@@ -21,7 +21,7 @@
       margin: 0;
       padding: 0;
       background-color: #f5f5f5;
-      font-family: 'Cairo', sans-serif; /* الخط الافتراضي للموقع */
+      font-family: 'Cairo', sans-serif;
       color: #000;
     }
 
@@ -159,7 +159,6 @@
       display: flex;
       align-items: flex-start;
       padding: 0 24px;
-      padding-left: 32px;
       line-height: 1.7;
       word-break: break-word;
       margin-bottom: 0;
@@ -167,21 +166,19 @@
       padding-bottom: 0;
     }
 
-    .marketing-feature:not(:last-child) {
-      margin-bottom: 0;
-    }
-
     .marketing-feature .icon {
       flex-shrink: 0;
-      margin-left: 15px;
-      margin-right: 10px;
+      margin-right: 20px; /* مسافة بين الأيقونة وحافة اليمين */
       width: 36px;
       height: 36px;
+      order: 2; /* نقل الأيقونة إلى اليمين */
     }
 
     .marketing-feature .text {
       flex: 1;
       text-align: right;
+      margin-right: 20px; /* إبعاد النص عن حافة اليمين */
+      max-width: calc(100% - 56px); /* تقليل عرض النص للسماح بالانتقال إلى السطر */
     }
 
     .marketing-feature .text h5 {
