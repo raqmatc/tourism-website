@@ -239,68 +239,68 @@
     </div>
 
 <!-- سلايدر وجهات -->
-<style>
-  .slider-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px 5px;
-  }
+  <style>
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px 5px;
+    }
 
-  .slider-title {
-    font-weight: bold;
-    font-size: 16px;
-    color: #333;
-    margin: 0;
-  }
+    .slider-title {
+      font-weight: bold;
+      font-size: 16px;
+      color: #333;
+      margin: 0;
+    }
 
-  .see-more a {
-    color: #007bff;
-    font-weight: bold;
-    font-size: 14px;
-    text-decoration: none;
-  }
+    .see-more a {
+      color: #007bff;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+    }
 
-  .see-more a:hover {
-    text-decoration: underline;
-  }
+    .see-more a:hover {
+      text-decoration: underline;
+    }
 
-  .destination-slider {
-    overflow-x: auto;
-    white-space: nowrap;
-    scroll-behavior: smooth;
-    padding: 5px 10px;
-    animation: slide 60s linear infinite;
-  }
+    .destination-slider {
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-behavior: smooth;
+      padding: 5px 10px;
+      animation: slide 60s linear infinite;
+    }
 
-  .destination-card {
-  display: inline-block;
-  width: 250px; /* أو القيمة التي اخترتها */
-  height: 200px; /* زيادة الارتفاع هنا */
-  margin: 0 5px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
-}
+    .destination-card {
+      display: inline-block;
+      width: 250px;
+      height: 200px;
+      margin: 0 5px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
 
-  .destination-card:hover {
-    transform: scale(1.05);
-  }
+    .destination-card:hover {
+      transform: scale(1.05);
+    }
 
-  .destination-card img {
-    width: 250%;
-    height: 150px;
-    border-radius: 10px 10px 0 0;
-    object-fit: cover;
-  }
+    .destination-card img {
+      width: 100%; /* ✅ هذا هو التعديل المهم */
+      height: 150px;
+      border-radius: 10px 10px 0 0;
+      object-fit: cover;
+    }
 
-  .card-body {
-    padding: 8px;
-    text-align: center;
-    font-size: 14px;
-  }
-</style>
+    .card-body {
+      padding: 8px;
+      text-align: center;
+      font-size: 14px;
+    }
+  </style>
 
 <!-- سلايدر 1: وجهات آسيا -->
 <div>
@@ -309,7 +309,7 @@
     <div class="see-more"><a href="#">المزيد</a></div>
   </div>
   <div class="destination-slider">
-    <div class="destination-card"><img src="images/asia1.jpg" alt=""><div class="card-body">بانكوك</div></div>
+    <div class="destination-card"><img src="asia1.png" alt=""><div class="card-body">بانكوك</div></div>
     <div class="destination-card"><img src="images/asia2.jpg" alt=""><div class="card-body">كوالالمبور</div></div>
     <div class="destination-card"><img src="images/asia3.jpg" alt=""><div class="card-body">طوكيو</div></div>
     <div class="destination-card"><img src="images/asia4.jpg" alt=""><div class="card-body">بالي</div></div>
