@@ -75,8 +75,9 @@
     .nav-link {
       color: #fff !important;
       margin-left: 0;
-      padding: 8px 10px; /* زيادة المسافة قليلاً بين الكلمات */
+      padding: 8px 10px;
       display: block;
+      position: relative;
     }
 
     .nav-link:hover {
@@ -84,31 +85,41 @@
     }
 
     .navbar-collapse {
-      flex-direction: column; /* جعل القائمة الرئيسية عمودية */
-      min-height: 300px; /* جعل الشريط المنسدل طويلًا نوعًا ما */
+      flex-direction: column;
+      min-height: 300px;
       padding: 10px;
-      position: relative; /* لضبط الزر داخل القائمة */
+      position: relative;
     }
 
-    .dropdown-toggle::after {
-      margin-left: 0;
+    /* تعديل القوائم المنسدلة */
+    .nav-item .sub-menu {
+      display: none;
+      list-style: none;
+      padding: 0;
+      margin: 0 0 8px 20px; /* زحزحة قليلة لليمين */
+    }
+
+    .nav-item .sub-menu li {
+      padding: 5px 0;
+    }
+
+    .nav-item .sub-menu a {
+      color: #fff;
+      text-decoration: none;
+      display: block;
+    }
+
+    .nav-item .sub-menu a:hover {
+      color: #007bff;
+    }
+
+    .nav-link.toggle::after {
+      content: " ▾"; /* سهم للأسفل */
       margin-right: 5px;
     }
 
-    .dropdown-menu {
-      background-color: #333;
-      min-width: 200px;
-    }
-
-    .dropdown-item {
-      color: #fff;
-      display: block;
-      padding: 5px 20px;
-    }
-
-    .dropdown-item:hover {
-      background-color: #444;
-      color: #007bff;
+    .nav-link.toggle.active::after {
+      content: " ▴"; /* سهم للأعلى عند النشط */
     }
 
     .destinations {
@@ -414,7 +425,7 @@
       align-items: center;
       justify-content: center;
       z-index: 1002;
-      color: white; /* لون الشمس والهلال أبيض */
+      color: white;
     }
   </style>
 </head>
@@ -429,15 +440,13 @@
         <li class="nav-item">
           <a class="nav-link active" href="#">الرئيسية</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            وجهات سياحية
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#asia">وجهات آسيا</a></li>
-            <li><a class="dropdown-item" href="#europe">وجهات أوروبا</a></li>
-            <li><a class="dropdown-item" href="#africa">وجهات أفريقيا</a></li>
-            <li><a class="dropdown-item" href="#world">بقية العالم</a></li>
+        <li class="nav-item">
+          <a class="nav-link toggle" href="#" onclick="toggleSubMenu(event, 'destinations')">وجهات سياحية</a>
+          <ul class="sub-menu" id="destinations">
+            <li><a href="#asia">وجهات آسيا</a></li>
+            <li><a href="#europe">وجهات أوروبا</a></li>
+            <li><a href="#africa">وجهات أفريقيا</a></li>
+            <li><a href="#world">بقية العالم</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -449,17 +458,15 @@
         <li class="nav-item">
           <a class="nav-link" href="#">اتصل بنا</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            اللغة
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" onclick="changeLanguage('ar')">العربية</a></li>
-            <li><a class="dropdown-item" href="#" onclick="changeLanguage('en')">English</a></li>
+        <li class="nav-item">
+          <a class="nav-link toggle" href="#" onclick="toggleSubMenu(event, 'languages')">اللغة</a>
+          <ul class="sub-menu" id="languages">
+            <li><a href="#" onclick="changeLanguage('ar')">العربية</a></li>
+            <li><a href="#" onclick="changeLanguage('en')">English</a></li>
           </ul>
         </li>
       </ul>
-      <button id="theme-toggle" class="btn">🌞</button> <!-- زر تبديل الوضع في أسفل القائمة -->
+      <button id="theme-toggle" class="btn">🌞</button>
     </div>
   </div>
 
@@ -526,7 +533,7 @@
             <div class="see-more"><a href="#">المزيد</a></div>
           </div>
           <div class="destination-slider">
-            <div class="destination-card"><img src="baris.jpg" alt="باريس"><div class="card-body cairo-bold">باريس</div></div>
+            <div class="card-body cairo-bold"><img src="baris.jpg" alt="باريس"><div class="card-body cairo-bold">باريس</div></div>
             <div class="destination-card"><img src="london.jpg" alt="لندن"><div class="card-body cairo-bold">لندن</div></div>
             <div class="destination-card"><img src="roma.jpg" alt="روما"><div class="card-body cairo-bold">روما</div></div>
             <div class="destination-card"><img src="viena.jpg" alt="فيينا"><div class="card-body cairo-bold">فيينا</div></div>
@@ -601,6 +608,28 @@
         alert('Switching to English (Feature to be implemented)');
       } else {
         alert('اللغة العربية مفعلة بالفعل');
+      }
+    }
+
+    // وظيفة لتبديل القوائم المنسدلة
+    function toggleSubMenu(event, menuId) {
+      event.preventDefault();
+      const menu = document.getElementById(menuId);
+      const toggle = event.target;
+      const isActive = toggle.classList.contains('active');
+
+      // إخفاء جميع القوائم المنسدلة
+      document.querySelectorAll('.sub-menu').forEach(subMenu => {
+        subMenu.style.display = 'none';
+      });
+      document.querySelectorAll('.nav-link.toggle').forEach(link => {
+        link.classList.remove('active');
+      });
+
+      // إظهار/إخفاء القائمة المحددة
+      if (!isActive) {
+        menu.style.display = 'block';
+        toggle.classList.add('active');
       }
     }
 
