@@ -159,25 +159,29 @@
       display: flex;
       align-items: flex-start;
       padding: 0 24px;
+      padding-left: 32px;
       line-height: 1.7;
-      word-wrap: break-word; /* لضمان الانتقال إلى السطر الجديد */
+      word-break: break-word;
       margin-bottom: 0;
       padding-top: 0;
       padding-bottom: 0;
     }
 
+    .marketing-feature:not(:last-child) {
+      margin-bottom: 0;
+    }
+
     .marketing-feature .icon {
       flex-shrink: 0;
-      margin-right: 20px; /* إبعاد الأيقونة عن الحافة اليمنى قليلاً نحو اليمين */
+      margin-left: 15px;
+      margin-right: 10px;
       width: 36px;
       height: 36px;
-      order: 2; /* إبقاء الأيقونة في اليمين كما كانت */
     }
 
     .marketing-feature .text {
       flex: 1;
       text-align: right;
-      margin-right: 60px; /* إبعاد النص عن الحافة اليمنى للسماح للأيقونة بالظهور قليلاً نحو اليمين */
       text-align: justify; /* جعل النصوص متوازية الاسطر */
     }
 
