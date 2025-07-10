@@ -22,7 +22,7 @@
       padding: 0;
       font-family: 'Cairo', sans-serif;
       color: #000;
-      transition: all 0.3s ease; /* لتسهيل الانتقال بين الوضعين */
+      transition: all 0.3s ease;
     }
 
     body.light-mode {
@@ -52,6 +52,21 @@
       height: 54px;
       width: auto;
       object-fit: contain;
+    }
+
+    .navbar-toggler {
+      border: none;
+      background: none;
+      padding: 0;
+      font-size: 1.5rem;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .navbar-toggler-icon {
+      width: 1.5em;
+      height: 1.5em;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
 
     .nav-link {
@@ -347,48 +362,70 @@
     body.dark-mode #ad-slider {
       box-shadow: 0 4px 10px rgba(255,255,255,0.2);
     }
+
+    /* تصميم متجاوب للقائمة */
+    @media (max-width: 992px) {
+      .navbar-collapse {
+        background-color: #222;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .nav-link {
+        margin-left: 0;
+        padding: 5px 10px;
+      }
+    }
   </style>
 </head>
 <body class="light-mode">
   <div class="navbar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <img src="paygs.gif" alt="Paygo Logo">
-    <ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link active" href="#">الرئيسية</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          وجهات سياحية
-        </a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#asia">وجهات آسيا</a></li>
-          <li><a class="dropdown-item" href="#europe">وجهات أوروبا</a></li>
-          <li><a class="dropdown-item" href="#africa">وجهات أفريقيا</a></li>
-          <li><a class="dropdown-item" href="#world">بقية العالم</a></li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">المدونة</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">حولنا</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">اتصل بنا</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          اللغة
-        </a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#" onclick="changeLanguage('ar')">العربية</a></li>
-          <li><a class="dropdown-item" href="#" onclick="changeLanguage('en')">English</a></li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <button id="theme-toggle" class="btn btn-outline-light">تبديل الوضع</button>
-      </li>
-    </ul>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">الرئيسية</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            وجهات سياحية
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#asia">وجهات آسيا</a></li>
+            <li><a class="dropdown-item" href="#europe">وجهات أوروبا</a></li>
+            <li><a class="dropdown-item" href="#africa">وجهات أفريقيا</a></li>
+            <li><a class="dropdown-item" href="#world">بقية العالم</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">المدونة</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">حولنا</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">اتصل بنا</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            اللغة
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" onclick="changeLanguage('ar')">العربية</a></li>
+            <li><a class="dropdown-item" href="#" onclick="changeLanguage('en')">English</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <button id="theme-toggle" class="btn btn-outline-light">تبديل الوضع</button>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <div class="main-content">
