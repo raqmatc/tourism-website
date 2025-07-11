@@ -60,14 +60,14 @@
       border: none;
       background: none;
       padding: 0;
-      font-size: 1rem; /* تقليل الحجم */
+      font-size: 1rem;
       color: #fff;
       cursor: pointer;
       order: 2;
     }
 
     .navbar-toggler-icon {
-      width: 1em; /* تقليل الحجم */
+      width: 1em;
       height: 1em;
       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' d='M2 5h16M2 10h16M2 15h16'/%3e%3c/svg%3e");
     }
@@ -86,14 +86,14 @@
 
     .navbar-collapse {
       flex-direction: column;
-      min-height: 400px; /* زيادة الطول */
+      min-height: 400px;
       padding: 15px;
       position: absolute;
       top: 60px;
       left: 0;
-      width: 100%; /* تمتد عبر الصفحة */
+      width: 100%;
       background-color: #222;
-      transition: opacity 0.3s ease; /* تأثير التلاشي */
+      transition: opacity 0.3s ease;
       opacity: 1;
       z-index: 1001;
     }
@@ -109,7 +109,7 @@
       list-style: none;
       padding: 0 0 0 20px;
       margin: 0;
-      transition: opacity 0.3s ease; /* تأثير التلاشي */
+      transition: opacity 0.3s ease;
       opacity: 0;
     }
 
@@ -185,7 +185,7 @@
     body.dark-mode #ad-slider { box-shadow: 0 4px 10px rgba(255,255,255,0.2); }
     @media (max-width: 992px) {
       .navbar-collapse {
-        width: 100%; /* تمتد عبر الصفحة في الوضع المتجاوب */
+        width: 100%;
         left: 0;
         padding: 15px;
         border-radius: 0;
@@ -262,36 +262,11 @@
 
     <div class="container my-5">
       <div class="row text-center g-4 justify-con">
-        <!-- الجمل التسويقية -->
-        <div class="marketing-box">
-          <div class="marketing-feature">
-            <img src="icon1.png" class="icon">
-            <div class="text">
-              <h5 class="cairo-bold">استكشف العالم من مكانك</h5>
-              <p class="cairo-regular">اكتشف أفضل المدن السياحية والفنادق والمطاعم المختارة بعناية من كل قارة.</p>
-            </div>
-          </div>
-          <div class="marketing-feature">
-            <img src="icon2.png" class="icon">
-            <div class="text">
-              <h5 class="cairo-bold">سافر بعقلك أولاً... ثم قرر!</h5>
-              <p class="cairo-regular">شاهد صور الوجهات، تعرف على أبرز المعالم، وتصفح تقييمات الفنادق والمطاعم بدون عناء.</p>
-            </div>
-          </div>
-          <div class="marketing-feature">
-            <img src="icon3.png" class="icon">
-            <div class="text">
-              <h5 class="cairo-bold">كل ما تحتاجه قبل السفر</h5>
-              <p class="cairo-regular">دليلك الكامل لأجمل الوجهات، مع معلومات مفصلة تساعدك في التخطيط لرحلتك بثقة.</p>
-            </div>
-          </div>
-        </div>
-
         <!-- سلايدر 1: وجهات آسيا -->
         <div id="asia">
           <div class="slider-header">
             <h5 class="slider-title cairo-bold">وجهات آسيا</h5>
-            <div class="see-more"><a href="#">المزيد</a></div>
+            <div class="see-more"><a href="asia.html">المزيد</a></div>
           </div>
           <div class="destination-slider">
             <div class="destination-card"><img src="bangkok.jpg" alt="بانكوك"><div class="card-body cairo-bold">بانكوك</div></div>
@@ -317,13 +292,6 @@
             <div class="destination-card"><img src="baris.jpg" alt="باريس"><div class="card-body cairo-bold">باريس</div></div>
             <div class="destination-card"><img src="london.jpg" alt="لندن"><div class="card-body cairo-bold">لندن</div></div>
             <div class="destination-card"><img src="roma.jpg" alt="روما"><div class="card-body cairo-bold">روما</div></div>
-            <div class="destination-card"><img src="viena.jpg" alt="فيينا"><div class="card-body cairo-bold">فيينا</div></div>
-            <div class="destination-card"><img src="amstrdam.jpg" alt="أمستردام"><div class="card-body cairo-bold">أمستردام</div></div>
-            <div class="destination-card"><img src="istanbol.jpg" alt="إسطنبول"><div class="card-body cairo-bold">إسطنبول</div></div>
-            <div class="destination-card"><img src="athina.jpg" alt="أثينا"><div class="card-body cairo-bold">أثينا</div></div>
-            <div class="destination-card"><img src="madrid.jpg" alt="مدريد"><div class="card-body cairo-bold">مدريد</div></div>
-            <div class="destination-card"><img src="tblisi.jpg" alt="تبليسي"><div class="card-body cairo-bold">تبليسي</div></div>
-            <div class="destination-card"><img src="bern.jpg" alt="بيرن"><div class="card-body cairo-bold">بيرن</div></div>
           </div>
         </div>
 
@@ -336,14 +304,6 @@
           <div class="destination-slider">
             <div class="destination-card"><img src="qairo.jpg" alt="القاهرة"><div class="card-body cairo-bold">القاهرة</div></div>
             <div class="destination-card"><img src="keep.jpg" alt="كيب تاون"><div class="card-body cairo-bold">كيب تاون</div></div>
-            <div class="destination-card"><img src="aldar.jpg" alt="الدار البيضاء"><div class="card-body cairo-bold">الدار البيضاء</div></div>
-            <div class="destination-card"><img src="morish.jpg" alt="موريشيوس"><div class="card-body cairo-bold">موريشيوس</div></div>
-            <div class="destination-card"><img src="mdgsh.jpg" alt="مدغشقر"><div class="card-body cairo-bold">مدغشقر</div></div>
-            <div class="destination-card"><img src="sishl.jpg" alt="سيشل"><div class="card-body cairo-bold">سيشل</div></div>
-            <div class="destination-card"><img src="marakish.jpg" alt="مراكش"><div class="card-body cairo-bold">مراكش</div></div>
-            <div class="destination-card"><img src="iskandria.jpg" alt="الإسكندرية"><div class="card-body cairo-bold">الإسكندرية</div></div>
-            <div class="destination-card"><img src="aqadir.jpg" alt="أغادير"><div class="card-body cairo-bold">أغادير</div></div>
-            <div class="destination-card"><img src="sharm.jpg" alt="شرم الشيخ"><div class="card-body cairo-bold">شرم الشيخ</div></div>
           </div>
         </div>
 
@@ -356,14 +316,6 @@
           <div class="destination-slider">
             <div class="destination-card"><img src="newiork.jpg" alt="نيويورك"><div class="card-body cairo-bold">نيويورك</div></div>
             <div class="destination-card"><img src="riode.jpg" alt="ريو دي جانيرو"><div class="card-body cairo-bold">ريو دي جانيرو</div></div>
-            <div class="destination-card"><img src="sedni.jpg" alt="سيدني"><div class="card-body cairo-bold">سيدني</div></div>
-            <div class="destination-card"><img src="otaoa.jpg" alt="أوتاوا"><div class="card-body cairo-bold">أوتاوا</div></div>
-            <div class="destination-card"><img src="losangles.jpg" alt="لوس أنجلوس"><div class="card-body cairo-bold">لوس أنجلوس</div></div>
-            <div class="destination-card"><img src="mosco.jpg" alt="موسكو"><div class="card-body cairo-bold">موسكو</div></div>
-            <div class="destination-card"><img src="saobaolo.jpg" alt="ساو باولو"><div class="card-body cairo-bold">ساو باولو</div></div>
-            <div class="destination-card"><img src="lema.jpg" alt="ليما"><div class="card-body cairo-bold">ليما</div></div>
-            <div class="destination-card"><img src="mxeco.jpg" alt="ميكسيكو"><div class="card-body cairo-bold">ميكسيكو</div></div>
-            <div class="destination-card"><img src="boins.jpg" alt="بوينس آيرس"><div class="card-body cairo-bold">بوينس آيرس</div></div>
           </div>
         </div>
       </div>
@@ -383,7 +335,7 @@
       themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌙' : '🌞';
     });
 
-    // تغيير اللغة (مثال بسيط، يمكن تطويره)
+    // تغيير اللغة
     function changeLanguage(lang) {
       if (lang === 'en') {
         alert('Switching to English (Feature to be implemented)');
@@ -399,30 +351,28 @@
       const toggle = event.target;
       const isActive = toggle.classList.contains('active');
 
-      // إخفاء جميع القوائم المنسدلة
       document.querySelectorAll('.sub-menu').forEach(subMenu => {
         subMenu.classList.remove('active');
         subMenu.style.opacity = '0';
         setTimeout(() => {
           if (!subMenu.classList.contains('active')) subMenu.style.display = 'none';
-        }, 300); // يتطابق مع زمن التلاشي
+        }, 300);
       });
       document.querySelectorAll('.nav-link.toggle').forEach(link => {
         link.classList.remove('active');
       });
 
-      // إظهار/إخفاء القائمة المحددة
       if (!isActive) {
         menu.style.display = 'block';
         setTimeout(() => {
           menu.classList.add('active');
           menu.style.opacity = '1';
-        }, 10); // تأخير صغير للسماح بتطبيق التلاشي
+        }, 10);
         toggle.classList.add('active');
       }
     }
 
-    // إخفاء القائمة المنسدلة عند الضغط في أي مكان على الصفحة
+    // إخفاء القائمة المنسدلة عند الضغط في أي مكان
     document.addEventListener('click', (event) => {
       const navbarCollapse = document.getElementById('navbarNav');
       const toggler = document.querySelector('.navbar-toggler');
@@ -450,29 +400,6 @@
       ads[adIndex].classList.add('active');
     }
     setInterval(showNextAd, 10000);
-
-    const clocks = [
-      { city: 'london', zone: 'Europe/London' },
-      { city: 'tokyo', zone: 'Asia/Tokyo' },
-      { city: 'riyadh', zone: 'Asia/Riyadh' }
-    ];
-
-    function updateAnalogClocks() {
-      clocks.forEach(clock => {
-        const now = new Date().toLocaleString("en-US", { timeZone: clock.zone });
-        const time = new Date(now);
-        const hourDeg = (time.getHours() % 12) * 30 + time.getMinutes() * 0.5;
-        const minuteDeg = time.getMinutes() * 6;
-        const secondDeg = time.getSeconds() * 6;
-
-        document.getElementById(`hour-${clock.city}`).style.transform = `rotate(${hourDeg}deg)`;
-        document.getElementById(`minute-${clock.city}`).style.transform = `rotate(${minuteDeg}deg)`;
-        document.getElementById(`second-${clock.city}`).style.transform = `rotate(${secondDeg}deg)`;
-      });
-    }
-
-    updateAnalogClocks();
-    setInterval(updateAnalogClocks, 1000);
   </script>
 </body>
 </html>
