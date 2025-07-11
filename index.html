@@ -15,6 +15,9 @@
   <link rel="icon" type="image/png" sizes="16x16" href="apple-touch-icon.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
 
+  <!-- تعليق حول مساحة أسماء SVG بناءً على المستند -->
+  <!-- SVG namespace: http://www.w3.org/2000/svg is defined by W3C SVG 1.0 and updated in SVG 1.1, 1.2, and 2.0. See https://www.w3.org/TR/SVG/ for the latest spec. Last modified: 2025/03/14 23:44:06 -->
+
   <style>
     html, body {
       min-height: 100vh;
@@ -224,7 +227,7 @@
         <li class="nav-item">
           <a class="nav-link toggle" href="#" onclick="toggleSubMenu(event, 'destinations')">وجهات سياحية</a>
           <ul class="sub-menu" id="destinations">
-            <li><a href="#asia">وجهات آسيا</a></li>
+            <li><a href="asia.html">وجهات آسيا</a></li>
             <li><a href="#europe">وجهات أوروبا</a></li>
             <li><a href="#africa">وجهات أفريقيا</a></li>
             <li><a href="#world">بقية العالم</a></li>
@@ -262,6 +265,31 @@
 
     <div class="container my-5">
       <div class="row text-center g-4 justify-con">
+        <!-- مربع الجمل التسويقية -->
+        <div class="marketing-box">
+          <div class="marketing-feature">
+            <img src="icon1.png" class="icon">
+            <div class="text">
+              <h5 class="cairo-bold">استكشف العالم من مكانك</h5>
+              <p class="cairo-regular">اكتشف أفضل المدن السياحية والفنادق والمطاعم المختارة بعناية من كل قارة.</p>
+            </div>
+          </div>
+          <div class="marketing-feature">
+            <img src="icon2.png" class="icon">
+            <div class="text">
+              <h5 class="cairo-bold">سافر بعقلك أولاً... ثم قرر!</h5>
+              <p class="cairo-regular">شاهد صور الوجهات، تعرف على أبرز المعالم، وتصفح تقييمات الفنادق والمطاعم بدون عناء.</p>
+            </div>
+          </div>
+          <div class="marketing-feature">
+            <img src="icon3.png" class="icon">
+            <div class="text">
+              <h5 class="cairo-bold">كل ما تحتاجه قبل السفر</h5>
+              <p class="cairo-regular">دليلك الكامل لأجمل الوجهات، مع معلومات مفصلة تساعدك في التخطيط لرحلتك بثقة.</p>
+            </div>
+          </div>
+        </div>
+
         <!-- سلايدر 1: وجهات آسيا -->
         <div id="asia">
           <div class="slider-header">
@@ -292,6 +320,13 @@
             <div class="destination-card"><img src="baris.jpg" alt="باريس"><div class="card-body cairo-bold">باريس</div></div>
             <div class="destination-card"><img src="london.jpg" alt="لندن"><div class="card-body cairo-bold">لندن</div></div>
             <div class="destination-card"><img src="roma.jpg" alt="روما"><div class="card-body cairo-bold">روما</div></div>
+            <div class="destination-card"><img src="viena.jpg" alt="فيينا"><div class="card-body cairo-bold">فيينا</div></div>
+            <div class="destination-card"><img src="amstrdam.jpg" alt="أمستردام"><div class="card-body cairo-bold">أمستردام</div></div>
+            <div class="destination-card"><img src="istanbol.jpg" alt="إسطنبول"><div class="card-body cairo-bold">إسطنبول</div></div>
+            <div class="destination-card"><img src="athina.jpg" alt="أثينا"><div class="card-body cairo-bold">أثينا</div></div>
+            <div class="destination-card"><img src="madrid.jpg" alt="مدريد"><div class="card-body cairo-bold">مدريد</div></div>
+            <div class="destination-card"><img src="tblisi.jpg" alt="تبليسي"><div class="card-body cairo-bold">تبليسي</div></div>
+            <div class="destination-card"><img src="bern.jpg" alt="بيرن"><div class="card-body cairo-bold">بيرن</div></div>
           </div>
         </div>
 
@@ -304,6 +339,14 @@
           <div class="destination-slider">
             <div class="destination-card"><img src="qairo.jpg" alt="القاهرة"><div class="card-body cairo-bold">القاهرة</div></div>
             <div class="destination-card"><img src="keep.jpg" alt="كيب تاون"><div class="card-body cairo-bold">كيب تاون</div></div>
+            <div class="destination-card"><img src="aldar.jpg" alt="الدار البيضاء"><div class="card-body cairo-bold">الدار البيضاء</div></div>
+            <div class="destination-card"><img src="morish.jpg" alt="موريشيوس"><div class="card-body cairo-bold">موريشيوس</div></div>
+            <div class="destination-card"><img src="mdgsh.jpg" alt="مدغشقر"><div class="card-body cairo-bold">مدغشقر</div></div>
+            <div class="destination-card"><img src="sishl.jpg" alt="سيشل"><div class="card-body cairo-bold">سيشل</div></div>
+            <div class="destination-card"><img src="marakish.jpg" alt="مراكش"><div class="card-body cairo-bold">مراكش</div></div>
+            <div class="destination-card"><img src="iskandria.jpg" alt="الإسكندرية"><div class="card-body cairo-bold">الإسكندرية</div></div>
+            <div class="destination-card"><img src="aqadir.jpg" alt="أغادير"><div class="card-body cairo-bold">أغادير</div></div>
+            <div class="destination-card"><img src="sharm.jpg" alt="شرم الشيخ"><div class="card-body cairo-bold">شرم الشيخ</div></div>
           </div>
         </div>
 
@@ -316,6 +359,14 @@
           <div class="destination-slider">
             <div class="destination-card"><img src="newiork.jpg" alt="نيويورك"><div class="card-body cairo-bold">نيويورك</div></div>
             <div class="destination-card"><img src="riode.jpg" alt="ريو دي جانيرو"><div class="card-body cairo-bold">ريو دي جانيرو</div></div>
+            <div class="destination-card"><img src="sedni.jpg" alt="سيدني"><div class="card-body cairo-bold">سيدني</div></div>
+            <div class="destination-card"><img src="otaoa.jpg" alt="أوتاوا"><div class="card-body cairo-bold">أوتاوا</div></div>
+            <div class="destination-card"><img src="losangles.jpg" alt="لوس أنجلوس"><div class="card-body cairo-bold">لوس أنجلوس</div></div>
+            <div class="destination-card"><img src="mosco.jpg" alt="موسكو"><div class="card-body cairo-bold">موسكو</div></div>
+            <div class="destination-card"><img src="saobaolo.jpg" alt="ساو باولو"><div class="card-body cairo-bold">ساو باولو</div></div>
+            <div class="destination-card"><img src="lema.jpg" alt="ليما"><div class="card-body cairo-bold">ليما</div></div>
+            <div class="destination-card"><img src="mxeco.jpg" alt="ميكسيكو"><div class="card-body cairo-bold">ميكسيكو</div></div>
+            <div class="destination-card"><img src="boins.jpg" alt="بوينس آيرس"><div class="card-body cairo-bold">بوينس آيرس</div></div>
           </div>
         </div>
       </div>
