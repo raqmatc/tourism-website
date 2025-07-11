@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>أفضل الوجهات في آسيا</title>
+
+  <!-- إضافة خط Cairo من Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .destinations-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .destination-card {
+      background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .destination-card:hover {
+      transform: scale(1.05);
+    }
+
+    .destination-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .destination-card p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 10px 0;
+      color: #222;
+    }
+
+    @media (max-width: 768px) {
+      .destinations-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>أفضل الوجهات في آسيا</h1>
+
+  <div class="destinations-grid">
+    <div class="destination-card">
+      <img src="bangkok.jpg" alt="بانكوك">
+      <p>بانكوك</p>
+    </div>
+    <div class="destination-card">
+      <img src="riyadh.jpg" alt="الرياض">
+      <p>الرياض</p>
+    </div>
+    <div class="destination-card">
+      <img src="maldiv.jpg" alt="مالديف">
+      <p>مالديف</p>
+    </div>
+    <div class="destination-card">
+      <img src="dubai.jpg" alt="دبي">
+      <p>دبي</p>
+    </div>
+    <div class="destination-card">
+      <img src="kuala.jpg" alt="كوالالمبور">
+      <p>كوالالمبور</p>
+    </div>
+    <div class="destination-card">
+      <img src="singa.jpg" alt="سنغافورة">
+      <p>سنغافورة</p>
+    </div>
+    <div class="destination-card">
+      <img src="manila.jpg" alt="مانيلا">
+      <p>مانيلا</p>
+    </div>
+    <div class="destination-card">
+      <img src="tokio.jpg" alt="طوكيو">
+      <p>طوكيو</p>
+    </div>
+    <div class="destination-card">
+      <img src="bali.jpg" alt="بالي">
+      <p>بالي</p>
+    </div>
+    <div class="destination-card">
+      <img src="hanoi.jpg" alt="هانوي">
+      <p>هانوي</p>
+    </div>
+  </div>
+</body>
+</html>
