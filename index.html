@@ -422,6 +422,26 @@
       }
     }
 
+    // إخفاء القائمة المنسدلة عند الضغط في أي مكان على الصفحة
+    document.addEventListener('click', (event) => {
+      const navbarCollapse = document.getElementById('navbarNav');
+      const toggler = document.querySelector('.navbar-toggler');
+      if (!navbarCollapse.contains(event.target) && !toggler.contains(event.target)) {
+        const collapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+        collapse.hide();
+        document.querySelectorAll('.sub-menu').forEach(subMenu => {
+          subMenu.classList.remove('active');
+          subMenu.style.opacity = '0';
+          setTimeout(() => {
+            if (!subMenu.classList.contains('active')) subMenu.style.display = 'none';
+          }, 300);
+        });
+        document.querySelectorAll('.nav-link.toggle').forEach(link => {
+          link.classList.remove('active');
+        });
+      }
+    });
+
     let adIndex = 0;
     const ads = document.querySelectorAll('.ad-slide');
     function showNextAd() {
