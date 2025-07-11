@@ -96,7 +96,7 @@
       transition: opacity 0.3s ease;
       opacity: 1;
       z-index: 1001;
-      display: block; /* تفعيل القائمة المنسدلة افتراضيًا */
+      display: block;
     }
 
     .navbar-collapse.collapsing {
@@ -143,6 +143,12 @@
     }
 
     .destinations { padding: 20px; }
+    .destination-pair {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
     .destination-card {
       background: #2a2a2a;
       color: #fff;
@@ -150,17 +156,14 @@
       padding: 10px;
       text-align: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      height: 100%;
-      display: inline-block;
-      width: 100%;
-      max-width: 250px;
-      margin: 5px;
+      width: 48%; /* لضمان صورتين بجانب بعضهما */
+      max-width: 200px; /* تصغير الحجم ليناسب الجوال */
     }
 
     .destination-card img {
       width: 100%;
+      height: auto; /* لضمان ظهور الصورة كاملة */
       border-radius: 8px;
-      height: 150px;
       object-fit: cover;
     }
 
@@ -179,18 +182,19 @@
 
     body.dark-mode .destination-card { background: #444; }
     body.dark-mode .city-name { color: #ddd; }
+
     @media (max-width: 768px) {
-      .destination-slider {
-        overflow-x: auto;
-        white-space: nowrap;
-        scroll-behavior: smooth;
-        padding: 5px 10px;
+      .destination-pair {
+        flex-direction: column;
+        align-items: center;
       }
       .destination-card {
-        width: 40%;
-        margin: 5px;
+        width: 80%; /* تقليل الحجم على الجوال */
+        max-width: 150px;
+        margin-bottom: 10px;
       }
     }
+
     #theme-toggle {
       position: absolute;
       bottom: 10px;
@@ -219,7 +223,7 @@
     <div class="collapse navbar-collapse" id="navbarNav" style="order: 3;">
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link" href="index.html">الرئيسية</a> <!-- رابط إلى index.html -->
+          <a class="nav-link" href="index.html">الرئيسية</a>
         </li>
         <li class="nav-item">
           <a class="nav-link toggle active" href="#" onclick="toggleSubMenu(event, 'destinations')">وجهات سياحية</a>
@@ -263,17 +267,27 @@
             <h5 class="slider-title cairo-bold">وجهات آسيا</h5>
             <div class="see-more"><a href="#">المزيد</a></div>
           </div>
-          <div class="destination-slider">
-            <div class="destination-card"><img src="bangkok.jpg" alt="بانكوك"><div class="city-name cairo-bold">بانكوك</div></div>
-            <div class="destination-card"><img src="riyadh.jpg" alt="الرياض"><div class="city-name cairo-bold">الرياض</div></div>
-            <div class="destination-card"><img src="maldiv.jpg" alt="مالديف"><div class="city-name cairo-bold">مالديف</div></div>
-            <div class="destination-card"><img src="dubai.jpg" alt="دبي"><div class="city-name cairo-bold">دبي</div></div>
-            <div class="destination-card"><img src="kuala.jpg" alt="كوالالمبور"><div class="city-name cairo-bold">كوالالمبور</div></div>
-            <div class="destination-card"><img src="singa.jpg" alt="سنغافورة"><div class="city-name cairo-bold">سنغافورة</div></div>
-            <div class="destination-card"><img src="manila.jpg" alt="مانيلا"><div class="city-name cairo-bold">مانيلا</div></div>
-            <div class="destination-card"><img src="tokio.jpg" alt="طوكيو"><div class="city-name cairo-bold">طوكيو</div></div>
-            <div class="destination-card"><img src="bali.jpg" alt="بالي"><div class="city-name cairo-bold">بالي</div></div>
-            <div class="destination-card"><img src="hanoi.jpg" alt="هانوي"><div class="city-name cairo-bold">هانوي</div></div>
+          <div class="destinations">
+            <div class="destination-pair">
+              <div class="destination-card"><img src="bangkok.jpg" alt="بانكوك"><div class="city-name cairo-bold">بانكوك</div></div>
+              <div class="destination-card"><img src="riyadh.jpg" alt="الرياض"><div class="city-name cairo-bold">الرياض</div></div>
+            </div>
+            <div class="destination-pair">
+              <div class="destination-card"><img src="maldiv.jpg" alt="مالديف"><div class="city-name cairo-bold">مالديف</div></div>
+              <div class="destination-card"><img src="dubai.jpg" alt="دبي"><div class="city-name cairo-bold">دبي</div></div>
+            </div>
+            <div class="destination-pair">
+              <div class="destination-card"><img src="kuala.jpg" alt="كوالالمبور"><div class="city-name cairo-bold">كوالالمبور</div></div>
+              <div class="destination-card"><img src="singa.jpg" alt="سنغافورة"><div class="city-name cairo-bold">سنغافورة</div></div>
+            </div>
+            <div class="destination-pair">
+              <div class="destination-card"><img src="manila.jpg" alt="مانيلا"><div class="city-name cairo-bold">مانيلا</div></div>
+              <div class="destination-card"><img src="tokio.jpg" alt="طوكيو"><div class="city-name cairo-bold">طوكيو</div></div>
+            </div>
+            <div class="destination-pair">
+              <div class="destination-card"><img src="bali.jpg" alt="بالي"><div class="city-name cairo-bold">بالي</div></div>
+              <div class="destination-card"><img src="hanoi.jpg" alt="هانوي"><div class="city-name cairo-bold">هانوي</div></div>
+            </div>
           </div>
         </div>
       </div>
@@ -295,3 +309,60 @@
 
     // تغيير اللغة
     function changeLanguage(lang) {
+      if (lang === 'en') {
+        alert('Switching to English (Feature to be implemented)');
+      } else {
+        alert('اللغة العربية مفعلة بالفعل');
+      }
+    }
+
+    // وظيفة لتبديل القوائم المنسدلة مع تأثير التلاشي
+    function toggleSubMenu(event, menuId) {
+      event.preventDefault();
+      const menu = document.getElementById(menuId);
+      const toggle = event.target;
+      const isActive = toggle.classList.contains('active');
+
+      document.querySelectorAll('.sub-menu').forEach(subMenu => {
+        subMenu.classList.remove('active');
+        subMenu.style.opacity = '0';
+        setTimeout(() => {
+          if (!subMenu.classList.contains('active')) subMenu.style.display = 'none';
+        }, 300);
+      });
+      document.querySelectorAll('.nav-link.toggle').forEach(link => {
+        link.classList.remove('active');
+      });
+
+      if (!isActive) {
+        menu.style.display = 'block';
+        setTimeout(() => {
+          menu.classList.add('active');
+          menu.style.opacity = '1';
+        }, 10);
+        toggle.classList.add('active');
+      }
+    }
+
+    // إخفاء القائمة المنسدلة عند الضغط في أي مكان
+    document.addEventListener('click', (event) => {
+      const navbarCollapse = document.getElementById('navbarNav');
+      const toggler = document.querySelector('.navbar-toggler');
+      if (!navbarCollapse.contains(event.target) && !toggler.contains(event.target)) {
+        const collapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+        collapse.hide();
+        document.querySelectorAll('.sub-menu').forEach(subMenu => {
+          subMenu.classList.remove('active');
+          subMenu.style.opacity = '0';
+          setTimeout(() => {
+            if (!subMenu.classList.contains('active')) subMenu.style.display = 'none';
+          }, 300);
+        });
+        document.querySelectorAll('.nav-link.toggle').forEach(link => {
+          link.classList.remove('active');
+        });
+      }
+    });
+  </script>
+</body>
+</html>
