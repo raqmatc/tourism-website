@@ -19,199 +19,250 @@
   <!-- SVG namespace: http://www.w3.org/2000/svg is defined by W3C SVG 1.0 and updated in SVG 1.1, 1.2, and 2.0. See https://www.w3.org/TR/SVG/ for the latest spec. Last modified: 2025/03/14 23:44:06 -->
 
   <style>
-    html, body {
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      font-family: 'Cairo', sans-serif;
-      color: #000;
-      transition: all 0.3s ease;
-    }
+  html, body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+    color: #000;
+    transition: all 0.3s ease;
+  }
 
-    body.light-mode {
-      background-color: #f5f5f5;
-      color: #000;
-    }
+  body.light-mode {
+    background-color: #f5f5f5;
+    color: #000;
+  }
 
-    body.dark-mode {
-      background-color: #222;
-      color: #fff;
-    }
+  body.dark-mode {
+    background-color: #222;
+    color: #fff;
+  }
 
-    .main-content {
-      flex: 1;
-    }
+  .main-content {
+    flex: 1;
+  }
 
-    .navbar {
-      background-color: #222;
-      height: 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
-      position: relative;
-      z-index: 1000;
-    }
+  .navbar {
+    background-color: #222;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1000;
+  }
 
-    .navbar img {
-      height: 54px;
-      width: auto;
-      object-fit: contain;
-    }
+  .navbar img {
+    height: 54px;
+    width: auto;
+    object-fit: contain;
+  }
 
-    .navbar-toggler {
-      border: none;
-      background: none;
-      padding: 0;
-      font-size: 1rem;
-      color: #fff;
-      cursor: pointer;
-      order: 2;
-    }
+  .navbar-toggler {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+    order: 2;
+  }
 
-    .navbar-toggler-icon {
-      width: 1em;
-      height: 1em;
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' d='M2 5h16M2 10h16M2 15h16'/%3e%3c/svg%3e");
-    }
+  .navbar-toggler-icon {
+    width: 1em;
+    height: 1em;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' d='M2 5h16M2 10h16M2 15h16'/%3e%3c/svg%3e");
+  }
 
-    .nav-link {
-      color: #fff !important;
-      margin-left: 0;
-      padding: 10px 15px;
-      display: block;
-      position: relative;
-    }
+  .nav-link {
+    color: #fff !important;
+    margin-left: 0;
+    padding: 10px 15px;
+    display: block;
+    position: relative;
+  }
 
-    .nav-link:hover {
-      color: #007bff !important;
-    }
+  .nav-link:hover {
+    color: #007bff !important;
+  }
 
+  .navbar-collapse {
+    flex-direction: column;
+    min-height: 400px;
+    padding: 15px;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #222;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+    z-index: 1001;
+  }
+
+  .navbar-collapse.collapsing {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .nav-item .sub-menu {
+    display: none;
+    list-style: none;
+    padding: 0 0 0 20px;
+    margin: 0;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  .nav-item .sub-menu.active {
+    display: block;
+    opacity: 1;
+  }
+
+  .nav-item .sub-menu li {
+    padding: 8px 0;
+  }
+
+  .nav-item .sub-menu a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+  }
+
+  .nav-item .sub-menu a:hover {
+    color: #007bff;
+  }
+
+  .nav-link.toggle::after {
+    content: " ▾";
+    margin-right: 5px;
+  }
+
+  .nav-link.toggle.active::after {
+    content: " ▴";
+  }
+
+  .destinations { padding: 20px; }
+  .destination-card { background: #2a2a2a; color: #fff; border-radius: 12px; padding: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3); height: 100%; }
+  .destination-card img { width: 100%; border-radius: 8px; height: 120px; object-fit: cover; }
+  .destination-card h5 { margin-top: 10px; }
+  .footer { background-color: #222; color: #fff; text-align: center; padding: 12px; }
+  #ad-slider { position: relative; height: 150px; border-radius: 12px; overflow: hidden; margin: 20px auto; z-index: 1; }
+  .ad-slide { position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity 2s ease-in-out; }
+  .ad-slide.active { opacity: 1; z-index: 1; }
+  .fade img { width: 100%; height: 150px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  .clock-circle { position: relative; width: 100px; height: 100px; margin: 0 auto; border: 4px solid #aaa; border-radius: 50%; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+  .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; background: #333; border-radius: 2px; }
+  .hour { width: 4px; height: 25px; }
+  .minute { width: 3px; height: 35px; }
+  .second { width: 2px; height: 40px; }
+  .clock-circle .number { position: absolute; width: 100%; height: 100%; font-size: 10px; color: #333; }
+  .clock-circle .number span { position: absolute; transform: translate(-50%, -50%); }
+
+  /* التعديلات الجديدة هنا */
+  .marketing-box {
+    background-color: #f9f4ea;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 30px 0 10px auto; /* لتثبيت المربع لليمين */
+    max-width: 900px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    text-align: right; /* محاذاة النص داخل المربع لليمين */
+    direction: rtl; /* لضمان اتجاه المحتوى من اليمين لليسار */
+  }
+
+  .marketing-feature {
+    display: flex;
+    align-items: flex-start;
+    padding: 0 24px;
+    padding-left: 32px;
+    line-height: 1.7;
+    word-break: break-word;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    flex-direction: row-reverse; /* لعكس ترتيب الأيقونة والنص */
+    justify-content: flex-end; /* لدفع المحتوى لليمين */
+  }
+
+  .marketing-feature .icon {
+    flex-shrink: 0;
+    margin-right: 15px; /* مسافة على يسار الأيقونة */
+    margin-left: 0; /* إزالة هامش اليسار السابق */
+    width: 36px;
+    height: 36px;
+  }
+
+  .marketing-feature .text {
+    flex: 1;
+    text-align: right; /* محاذاة النص لليمين */
+    /* text-align: justify; */ /* يمكنك إلغاء التعليق إذا كنت تريد ضبط المحاذاة */
+  }
+
+  .marketing-feature .text h5 {
+    font-size: 0.95rem; /* حجم خط أصغر للعناوين */
+    font-weight: bold;
+    color: #222;
+  }
+  .marketing-feature .text p {
+    font-size: 0.8rem; /* حجم خط أصغر للفقرات */
+    line-height: 1.5;
+    color: #444;
+    margin-top: 0;
+  }
+  /* نهاية التعديلات الجديدة */
+
+
+  .cairo-regular { font-family: "Cairo", sans-serif; font-optical-sizing: auto; font-weight: 400; font-style: normal; font-variation-settings: "slnt" 0; }
+  .cairo-bold { font-family: "Cairo", sans-serif; font-optical-sizing: auto; font-weight: 700; font-style: normal; font-variation-settings: "slnt" 0; }
+  .slider-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px 5px; }
+  .slider-title { font-weight: bold; font-size: 16px; color: #333; }
+  .see-more a { color: #007bff; font-weight: bold; font-size: 14px; text-decoration: none; }
+  .see-more a:hover { text-decoration: underline; }
+  .destination-slider { overflow-x: auto; white-space: nowrap; scroll-behavior: smooth; padding: 5px 10px; animation: slide 60s linear infinite; }
+  .destination-card { display: inline-block; width: 250px; height: 200px; margin: 0 5px; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: transform 0.3s; }
+  .destination-card:hover { transform: scale(1.05); }
+  .destination-card img { width: 100%; height: 150px; border-radius: 10px 10px 0 0; object-fit: cover; }
+  .card-body { padding: 8px; text-align: center; font-size: 14px; font-weight: bold; color: #333; background: #fff; border-radius: 0 0 10px 10px; line-height: 1.5; }
+  body.dark-mode .marketing-box { background-color: #333; }
+  body.dark-mode .marketing-feature .text h5 { color: #ddd; }
+  body.dark-mode .marketing-feature .text p { color: #bbb; }
+  body.dark-mode .destination-card { background: #444; }
+  body.dark-mode .card-body { background: #444; color: #ddd; }
+  body.dark-mode .slider-title { color: #ddd; }
+  body.dark-mode .see-more a { color: #007bff; }
+  body.dark-mode #ad-slider { box-shadow: 0 4px 10px rgba(255,255,255,0.2); }
+  @media (max-width: 992px) {
     .navbar-collapse {
-      flex-direction: column;
-      min-height: 400px;
-      padding: 15px;
-      position: absolute;
-      top: 60px;
-      left: 0;
       width: 100%;
-      background-color: #222;
-      transition: opacity 0.3s ease;
-      opacity: 1;
-      z-index: 1001;
+      left: 0;
+      padding: 15px;
+      border-radius: 0;
     }
-
-    .navbar-collapse.collapsing {
-      opacity: 0;
-      height: 0;
-      overflow: hidden;
-    }
-
-    .nav-item .sub-menu {
-      display: none;
-      list-style: none;
-      padding: 0 0 0 20px;
-      margin: 0;
-      transition: opacity 0.3s ease;
-      opacity: 0;
-    }
-
-    .nav-item .sub-menu.active {
-      display: block;
-      opacity: 1;
-    }
-
-    .nav-item .sub-menu li {
-      padding: 8px 0;
-    }
-
-    .nav-item .sub-menu a {
-      color: #fff;
-      text-decoration: none;
-      display: block;
-    }
-
-    .nav-item .sub-menu a:hover {
-      color: #007bff;
-    }
-
-    .nav-link.toggle::after {
-      content: " ▾";
-      margin-right: 5px;
-    }
-
-    .nav-link.toggle.active::after {
-      content: " ▴";
-    }
-
-    .destinations { padding: 20px; }
-    .destination-card { background: #2a2a2a; color: #fff; border-radius: 12px; padding: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3); height: 100%; }
-    .destination-card img { width: 100%; border-radius: 8px; height: 120px; object-fit: cover; }
-    .destination-card h5 { margin-top: 10px; }
-    .footer { background-color: #222; color: #fff; text-align: center; padding: 12px; }
-    #ad-slider { position: relative; height: 150px; border-radius: 12px; overflow: hidden; margin: 20px auto; z-index: 1; }
-    .ad-slide { position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity 2s ease-in-out; }
-    .ad-slide.active { opacity: 1; z-index: 1; }
-    .fade img { width: 100%; height: 150px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-    .clock-circle { position: relative; width: 100px; height: 100px; margin: 0 auto; border: 4px solid #aaa; border-radius: 50%; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
-    .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; background: #333; border-radius: 2px; }
-    .hour { width: 4px; height: 25px; }
-    .minute { width: 3px; height: 35px; }
-    .second { width: 2px; height: 40px; }
-    .clock-circle .number { position: absolute; width: 100%; height: 100%; font-size: 10px; color: #333; }
-    .clock-circle .number span { position: absolute; transform: translate(-50%, -50%); }
-    .marketing-box { background-color: #f9f4ea; border-radius: 20px; padding: 20px; margin: 30px auto 10px auto; max-width: 900px; box-shadow: 0 0 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 0px; }
-    .marketing-feature { display: flex; align-items: flex-start; padding: 0 24px; padding-left: 32px; line-height: 1.7; word-break: break-word; margin-bottom: 0; padding-top: 0; padding-bottom: 0; }
-    .marketing-feature:not(:last-child) { margin-bottom: 0; }
-    .marketing-feature .icon { flex-shrink: 0; margin-left: 15px; margin-right: 10px; width: 36px; height: 36px; }
-    .marketing-feature .text { flex: 1; text-align: right; text-align: justify; }
-    .marketing-feature .text h5 { font-size: 0.95rem; font-weight: bold; color: #222; }
-    .marketing-feature .text p { font-size: 0.80rem; line-height: 1.5; color: #444; margin-top: 0; }
-    .cairo-regular { font-family: "Cairo", sans-serif; font-optical-sizing: auto; font-weight: 400; font-style: normal; font-variation-settings: "slnt" 0; }
-    .cairo-bold { font-family: "Cairo", sans-serif; font-optical-sizing: auto; font-weight: 700; font-style: normal; font-variation-settings: "slnt" 0; }
-    .slider-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px 5px; }
-    .slider-title { font-weight: bold; font-size: 16px; color: #333; }
-    .see-more a { color: #007bff; font-weight: bold; font-size: 14px; text-decoration: none; }
-    .see-more a:hover { text-decoration: underline; }
-    .destination-slider { overflow-x: auto; white-space: nowrap; scroll-behavior: smooth; padding: 5px 10px; animation: slide 60s linear infinite; }
-    .destination-card { display: inline-block; width: 250px; height: 200px; margin: 0 5px; background: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: transform 0.3s; }
-    .destination-card:hover { transform: scale(1.05); }
-    .destination-card img { width: 100%; height: 150px; border-radius: 10px 10px 0 0; object-fit: cover; }
-    .card-body { padding: 8px; text-align: center; font-size: 14px; font-weight: bold; color: #333; background: #fff; border-radius: 0 0 10px 10px; line-height: 1.5; }
-    body.dark-mode .marketing-box { background-color: #333; }
-    body.dark-mode .marketing-feature .text h5 { color: #ddd; }
-    body.dark-mode .marketing-feature .text p { color: #bbb; }
-    body.dark-mode .destination-card { background: #444; }
-    body.dark-mode .card-body { background: #444; color: #ddd; }
-    body.dark-mode .slider-title { color: #ddd; }
-    body.dark-mode .see-more a { color: #007bff; }
-    body.dark-mode #ad-slider { box-shadow: 0 4px 10px rgba(255,255,255,0.2); }
-    @media (max-width: 992px) {
-      .navbar-collapse {
-        width: 100%;
-        left: 0;
-        padding: 15px;
-        border-radius: 0;
-      }
-    }
-    #theme-toggle {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      width: 40px;
-      height: 40px;
-      font-size: 1.2rem;
-      border: none;
-      background-color: #222;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1002;
-      color: white;
-    }
-  </style>
+  }
+  #theme-toggle {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    border: none;
+    background-color: #222;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+    color: white;
+  }
+</style>
 </head>
 <body class="light-mode">
   <div class="navbar">
