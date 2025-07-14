@@ -160,64 +160,13 @@
   .second { width: 2px; height: 40px; }
   .clock-circle .number { position: absolute; width: 100%; height: 100%; font-size: 10px; color: #333; }
   .clock-circle .number span { position: absolute; transform: translate(-50%, -50%); }
-
-  /* التعديلات الجديدة هنا */
-  .marketing-box {
-    background-color: #f9f4ea;
-    border-radius: 20px;
-    padding: 20px;
-    margin: 30px 0 10px auto; /* لتثبيت المربع لليمين */
-    max-width: 900px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 0px;
-    text-align: right; /* محاذاة النص داخل المربع لليمين */
-    direction: rtl; /* لضمان اتجاه المحتوى من اليمين لليسار */
-  }
-
-  .marketing-feature {
-    display: flex;
-    align-items: flex-start;
-    padding: 0 24px;
-    padding-left: 32px;
-    line-height: 1.7;
-    word-break: break-word;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    flex-direction: row-reverse; /* لعكس ترتيب الأيقونة والنص */
-    justify-content: flex-end; /* لدفع المحتوى لليمين */
-  }
-
-  .marketing-feature .icon {
-    flex-shrink: 0;
-    margin-right: 15px; /* مسافة على يسار الأيقونة */
-    margin-left: 0; /* إزالة هامش اليسار السابق */
-    width: 36px;
-    height: 36px;
-  }
-
-  .marketing-feature .text {
-    flex: 1;
-    text-align: right; /* محاذاة النص لليمين */
-    /* text-align: justify; */ /* يمكنك إلغاء التعليق إذا كنت تريد ضبط المحاذاة */
-  }
-
-  .marketing-feature .text h5 {
-    font-size: 0.95rem; /* حجم خط أصغر للعناوين */
-    font-weight: bold;
-    color: #222;
-  }
-  .marketing-feature .text p {
-    font-size: 0.8rem; /* حجم خط أصغر للفقرات */
-    line-height: 1.5;
-    color: #444;
-    margin-top: 0;
-  }
-  /* نهاية التعديلات الجديدة */
-
-
+  .marketing-box { background-color: #f9f4ea; border-radius: 20px; padding: 20px; margin: 30px auto 10px auto; max-width: 900px; box-shadow: 0 0 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 0px; }
+  .marketing-feature { display: flex; align-items: flex-start; padding: 0 24px; padding-left: 32px; line-height: 1.7; word-break: break-word; margin-bottom: 0; padding-top: 0; padding-bottom: 0; }
+  .marketing-feature:not(:last-child) { margin-bottom: 0; }
+  .marketing-feature .icon { flex-shrink: 0; margin-left: 15px; margin-right: 10px; width: 36px; height: 36px; }
+  .marketing-feature .text { flex: 1; text-align: right; text-align: justify; }
+  .marketing-feature .text h5 { font-size: 1.1rem; font-weight: bold; color: #222; }
+  .marketing-feature .text p { font-size: 0.95rem; line-height: 1.5; color: #444; margin-top: 0; }
   .cairo-regular { font-family: "Cairo", sans-serif; font-optical-sizing: auto; font-weight: 400; font-style: normal; font-variation-settings: "slnt" 0; }
   .cairo-bold { font-family: "Cairo", sans-serif; font-optical-sizing: auto; font-weight: 700; font-style: normal; font-variation-settings: "slnt" 0; }
   .slider-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px 5px; }
