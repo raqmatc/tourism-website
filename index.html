@@ -161,26 +161,19 @@
   .clock-circle .number { position: absolute; width: 100%; height: 100%; font-size: 10px; color: #333; }
   .clock-circle .number span { position: absolute; transform: translate(-50%, -50%); }
   .marketing-box {
-  background-image: url('map.png'); /* تحديد الصورة كخلفية */
-  background-size: cover; /* تغطية المربع بالكامل */
-  background-position: center; /* محاذاة الصورة في المنتصف */
-  background-repeat: no-repeat; /* منع تكرار الصورة */
-  background-color: rgba(249, 244, 234, 0.8); /* خلفية شبه شفافة لتحسين وضوح النصوص */
+  background-color: #f9f4ea;
   border-radius: 20px;
   padding: 20px;
   margin: 30px auto 10px auto;
   max-width: 900px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
   gap: 0px;
 }
+
 body.dark-mode .marketing-box {
-  background-image: url('map.png'); /* نفس الصورة */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: rgba(249, 244, 234, 0.3); /* شفافية عالية للون البيج */
+  background-color: #333;
 }
   .marketing-feature { display: flex; align-items: flex-start; padding: 0 24px; padding-left: 32px; line-height: 1.7; word-break: break-word; margin-bottom: 0; padding-top: 0; padding-bottom: 0; }
   .marketing-feature:not(:last-child) { margin-bottom: 0; }
