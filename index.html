@@ -161,20 +161,19 @@
   .clock-circle .number { position: absolute; width: 100%; height: 100%; font-size: 10px; color: #333; }
   .clock-circle .number span { position: absolute; transform: translate(-50%, -50%); }
   .marketing-box {
-  background-color: #f9f4ea;
-  border-radius: 20px;
-  padding: 20px;
-  margin: 30px auto 10px auto;
-  max-width: 900px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 0px;
-}
-
-body.dark-mode .marketing-box {
-  background-color: #333;
-}
+    background-color: #f9f4ea;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 30px auto 10px auto;
+    max-width: 900px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+  }
+  body.dark-mode .marketing-box {
+    background-color: #333;
+  }
   .marketing-feature { display: flex; align-items: flex-start; padding: 0 24px; padding-left: 32px; line-height: 1.7; word-break: break-word; margin-bottom: 0; padding-top: 0; padding-bottom: 0; }
   .marketing-feature:not(:last-child) { margin-bottom: 0; }
   .marketing-feature .icon { flex-shrink: 0; margin-left: 15px; margin-right: 10px; width: 36px; height: 36px; }
@@ -192,6 +191,10 @@ body.dark-mode .marketing-box {
   .destination-card:hover { transform: scale(1.05); }
   .destination-card img { width: 100%; height: 150px; border-radius: 10px 10px 0 0; object-fit: cover; }
   .card-body { padding: 8px; text-align: center; font-size: 14px; font-weight: bold; color: #333; background: #fff; border-radius: 0 0 10px 10px; line-height: 1.5; }
+  .destination-link {
+    text-decoration: none;
+    color: inherit;
+  }
   body.dark-mode .marketing-box { background-color: #333; }
   body.dark-mode .marketing-feature .text h5 { color: #ddd; }
   body.dark-mode .marketing-feature .text p { color: #bbb; }
@@ -311,7 +314,9 @@ body.dark-mode .marketing-box {
             <div class="see-more"><a href="asia.html">المزيد</a></div>
           </div>
           <div class="destination-slider">
-            <div class="destination-card"><img src="bangkok.jpg" alt="بانكوك"><div class="card-body cairo-bold">بانكوك</div></div>
+            <a href="bangkok.html" class="destination-link">
+              <div class="destination-card"><img src="bangkok.jpg" alt="بانكوك"><div class="card-body cairo-bold">بانكوك</div></div>
+            </a>
             <div class="destination-card"><img src="riyadh.jpg" alt="الرياض"><div class="card-body cairo-bold">الرياض</div></div>
             <div class="destination-card"><img src="maldiv.jpg" alt="مالديف"><div class="card-body cairo-bold">مالديف</div></div>
             <div class="destination-card"><img src="dubai.jpg" alt="دبي"><div class="card-body cairo-bold">دبي</div></div>
