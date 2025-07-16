@@ -1,1 +1,405 @@
- 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بانكوك: عاصمة التباين بين الأصالة والحداثة</title>
+    <!-- إضافة خط Cairo من Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+    <!-- إضافة Bootstrap CSS لدعم القائمة المنسدلة -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <!-- روابط Favicons -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" type="image/png" sizes="32x32" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="apple-touch-icon.png">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+            flex: 1;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #2980b9;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        p, li {
+            font-size: 1.1em;
+            font-weight: 400;
+            color: #34495e;
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 15px;
+            padding-right: 20px;
+            position: relative;
+        }
+        li::before {
+            content: "•";
+            color: #3498db;
+            font-size: 1.5em;
+            position: absolute;
+            right: -20px;
+            top: 0;
+        }
+        a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .section-divider {
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1.2em;
+            color: #777;
+        }
+        /* أنماط الشريط العلوي */
+        .navbar {
+            background-color: #222;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1000;
+        }
+        .navbar img {
+            height: 54px;
+            width: auto;
+            object-fit: contain;
+        }
+        .navbar-toggler {
+            border: none;
+            background: none;
+            padding: 0;
+            font-size: 1rem;
+            color: #fff;
+            cursor: pointer;
+            order: 2;
+        }
+        .navbar-toggler-icon {
+            width: 1em;
+            height: 1em;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' d='M2 5h16M2 10h16M2 15h16'/%3e%3c/svg%3e");
+        }
+        .nav-link {
+            color: #fff !important;
+            margin-left: 0;
+            padding: 10px 15px;
+            display: block;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: #007bff !important;
+        }
+        .navbar-collapse {
+            flex-direction: column;
+            min-height: 400px;
+            padding: 15px;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background-color: #222;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+            z-index: 1001;
+            display: block;
+        }
+        .navbar-collapse.collapsing {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+        }
+        .nav-item .sub-menu {
+            display: none;
+            list-style: none;
+            padding: 0 0 0 20px;
+            margin: 0;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+        .nav-item .sub-menu.active {
+            display: block;
+            opacity: 1;
+        }
+        .nav-item .sub-menu li {
+            padding: 8px 0;
+        }
+        .nav-item .sub-menu a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+        .nav-item .sub-menu a:hover {
+            color: #007bff;
+        }
+        .nav-link.toggle::after {
+            content: " ▾";
+            margin-right: 5px;
+        }
+        .nav-link.toggle.active::after {
+            content: " ▴";
+        }
+        /* أنماط الشريط السفلي */
+        .footer {
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 12px;
+        }
+        /* زر تبديل الوضع */
+        #theme-toggle {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            border: none;
+            background-color: #222;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+            color: white;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <!-- الشريط العلوي -->
+    <div class="navbar">
+        <img src="paygs.gif" alt="Paygo Logo" style="order: 1;">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="order: 2;">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav" style="order: 3;">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link toggle active" href="#" onclick="toggleSubMenu(event, 'destinations')">وجهات سياحية</a>
+                    <ul class="sub-menu" id="destinations" class="active">
+                        <li><a href="asia.html">وجهات آسيا</a></li>
+                        <li><a href="#europe">وجهات أوروبا</a></li>
+                        <li><a href="#africa">وجهات أفريقيا</a></li>
+                        <li><a href="#world">بقية العالم</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">المدونة</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">حولنا</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">اتصل بنا</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link toggle" href="#" onclick="toggleSubMenu(event, 'languages')">اللغة</a>
+                    <ul class="sub-menu" id="languages">
+                        <li><a href="#" onclick="changeLanguage('ar')">العربية</a></li>
+                        <li><a href="#" onclick="changeLanguage('en')">English</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <button id="theme-toggle" class="btn">🌞</button>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content">
+        <div class="container">
+            <h1>بانكوك: عاصمة التباين بين الأصالة والحداثة</h1>
+
+            <!-- صورة رئيسية لبانكوك -->
+            <div class="image-placeholder">إضافة صورة رئيسية لبانكوك هنا</div>
+
+            <h2>🗓 أفضل وقت للزيارة</h2>
+            <ul>
+                <li>نوفمبر – فبراير: الطقس معتدل وجميل.</li>
+                <li>مارس – مايو: درجات حرارة مرتفعة (حتى 40°C).</li>
+                <li>يونيو – أكتوبر: أمطار، وزيارات أقل وأجواء هادئة.</li>
+            </ul>
+            <div class="image-placeholder">إضافة صورة للطقس أو مهرجان سونغكران هنا</div>
+
+            <div class="section-divider"></div>
+
+            <h2>💱 العملة وسعر الصرف</h2>
+            <ul>
+                <li>العملة: البات التايلاندي (THB)</li>
+                <li>سعر الصرف التقريبي (يوليو 2025): 1 ريال ≈ 8.6 بات</li>
+            </ul>
+
+            <div class="section-divider"></div>
+
+            <h2>🏙 لمحة عن المدينة والتنقل</h2>
+            <p>تجمع بانكوك بين ناطحات السحاب، القنوات المائية، والمعابد التاريخية. وسائل التنقل: سكاي ترين (BTS)، ميترو (MRT)، تاكسي/Grab، وقوارب نهريّة في تشاو فرايا.</p>
+            <div class="image-placeholder">إضافة صورة لنهر تشاو فرايا أو BTS هنا</div>
+
+            <div class="section-divider"></div>
+
+            <h2>🥢 أفضل 5 مطاعم في بانكوك: تجربة فاخرة ومحلية</h2>
+            <ul>
+                <li><strong>Potong</strong><br>مطعم تايلاندي–صيني راقٍ، جوهرة في حي “ياوارات” (تشاينا تاون). يديره الشيف Pam Soontornyanakij؛ تقدم تجربة تذوق تتكون من 20 طبقًا يعبر عن تاريخ الأسرة وثقافتها، مع فلسفة “5 عناصر و5 حواس”. يتضمن: “Historical Stories” (كراب ومخبوزات بريوش)، صدر بطة معتقد 14 يومًا، وحلويات مثل بندق وتمر.</li>
+                <li><strong>Gaggan Anand</strong><br>مطعم هندي تقدمي – “تجربة مسرح طعام” تشمل 22 طبقًا مع مؤثرات بصرية وصوتية. يجمع بين وصفات هندية معدّلة بإبداع عالٍ ولحظات تفاعلية مع الضوء والموسيقى.</li>
+                <li><strong>Sorn</strong><br>أول مطعم في تايلاند ينال ثلاث نجوم ميشلان، متخصص في المطبخ الجنوبي التايلاندي. تجربة تذوق تتألف من 22 طبقًا غنيًا بالتوابل، بما في ذلك: سلطات أرز عشبية، لحوم بحر وفواكه محلية، مليء بالنكهات الحارّة والمنعشة.</li>
+                <li><strong>Thong Smith (Central Embassy)</strong><br>نسخة فاخرة من “نودلز القارب”، مع مرق غني ولحم بقري وكوروبوتا بقر ممتاز. أجواء حديثة ومريحة ضمن مركز “سنترال إمباسي”، خيار مثالي للوجبات السريعة ذات الجودة العالية.</li>
+                <li><strong>Phra Nakhon – Capella Bangkok</strong><br>يقدم مأكولات تايلاندية أصيلة بأسلوب معاصر، ويطل على نهر تشاو فرايا. أطباق مميزة: لحم خنزير مقلي مقرمش، كاري الروبيان بالأوراق، وسلطة البابايا (سوم تم)، مع الاعتماد على مزارع عضوية محلية.</li>
+            </ul>
+            <div class="image-placeholder">إضافة صورة لأحد المطاعم أو طبق مميز هنا</div>
+
+            <div class="section-divider"></div>
+
+            <h2>🏨 أفضل 5 فنادق مع روابط حجوزات</h2>
+            <ul>
+                <li><strong>Capella Bangkok</strong><br>فندق فخم بجانب النهر، الأفضل في العالم 2024، خدمات ممتازة وأجواء راقية.<br><a href="https://www.booking.com/hotel/th/capella-bangkok.html" target="_blank">احجز عبر Booking.com</a></li>
+                <li><strong>Mandarin Oriental Bangkok</strong><br>أيقوني، تاريخي ويشتهر بخدمة استثنائية، مفضّل لدى الشيف “نوك”.</li>
+                <li><strong>Four Seasons Hotel Bangkok</strong><br>إطلالة على النهر، ومطعم Yu Ting Yan الشهير بالمأكولات الصينية.<br><a href="https://www.booking.com/hotel/th/four-seasons-bangkok-at-chao-phraya-river.html" target="_blank">احجز عبر Booking.com</a></li>
+                <li><strong>The St. Regis Bangkok</strong><br>خدمة Butler فاخرة ومرافق مناسبة للعائلات.<br><a href="https://www.booking.com/hotel/th/the-st-regis-bangkok.html" target="_blank">احجز عبر Booking.com</a></li>
+                <li><strong>Cape House Langsuan Hotel</strong><br>أنيق، غرف واسعة، موقع ممتاز للمسافرين.<br><a href="https://www.booking.com/hotel/th/cape-house-langsuan.html" target="_blank">احجز عبر Booking.com</a><br>يُوصى به حسب الشيف “نوك”.</li>
+            </ul>
+            <div class="image-placeholder">إضافة صورة لأحد الفنادق هنا</div>
+
+            <div class="section-divider"></div>
+
+            <h2>🌃 أنشطة المساء والحياة الليلية</h2>
+            <ul>
+                <li>مباريات Muay Thai</li>
+                <li>أسواق ليلية: Ratchada، Asiatique</li>
+                <li>رحلات عشاء بالقوارب على نهر تشاو فرايا</li>
+                <li>مساج تايلاندي بأسعار مناسبة</li>
+                <li>بارات غير كحولية مثل BKK Social Club في Four Seasons</li>
+            </ul>
+            <div class="image-placeholder">إضافة صورة لسوق ليلي أو رحلة نهرية هنا</div>
+        </div>
+    </div>
+
+    <!-- الشريط السفلي -->
+    <div class="footer">
+        <p class="cairo-regular">جميع الحقوق محفوظة © Paygo 2025</p>
+    </div>
+
+    <!-- إضافة Bootstrap JS لدعم القائمة المنسدلة -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // تبديل الوضع النهاري/المسائي
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            document.body.classList.toggle('dark-mode');
+            themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌙' : '🌞';
+        });
+
+        // تغيير اللغة
+        function changeLanguage(lang) {
+            if (lang === 'en') {
+                alert('Switching to English (Feature to be implemented)');
+            } else {
+                alert('اللغة العربية مفعلة بالفعل');
+            }
+        }
+
+        // وظيفة لتبديل القوائم المنسدلة مع تأثير التلاشي
+        function toggleSubMenu(event, menuId) {
+            event.preventDefault();
+            const menu = document.getElementById(menuId);
+            const toggle = event.target;
+            const isActive = toggle.classList.contains('active');
+
+            document.querySelectorAll('.sub-menu').forEach(subMenu => {
+                subMenu.classList.remove('active');
+                subMenu.style.opacity = '0';
+                setTimeout(() => {
+                    if (!subMenu.classList.contains('active')) subMenu.style.display = 'none';
+                }, 300);
+            });
+            document.querySelectorAll('.nav-link.toggle').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            if (!isActive) {
+                menu.style.display = 'block';
+                setTimeout(() => {
+                    menu.classList.add('active');
+                    menu.style.opacity = '1';
+                }, 10);
+                toggle.classList.add('active');
+            }
+        }
+
+        // إخفاء القائمة المنسدلة عند الضغط في أي مكان
+        document.addEventListener('click', (event) => {
+            const navbarCollapse = document.getElementById('navbarNav');
+            const toggler = document.querySelector('.navbar-toggler');
+            if (!navbarCollapse.contains(event.target) && !toggler.contains(event.target)) {
+                const collapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+                collapse.hide();
+                document.querySelectorAll('.sub-menu').forEach(subMenu => {
+                    subMenu.classList.remove('active');
+                    subMenu.style.opacity = '0';
+                    setTimeout(() => {
+                        if (!subMenu.classList.contains('active')) subMenu.style.display = 'none';
+                    }, 300);
+                });
+                document.querySelectorAll('.nav-link.toggle').forEach(link => {
+                    link.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
