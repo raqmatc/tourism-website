@@ -50,6 +50,44 @@
     object-fit: contain;
   }
 
+  /* الشعار المتحرك */
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .animated-logo {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff;
+    animation: bounce 2s infinite;
+    display: inline-block;
+  }
+
+  .logo-text:nth-child(1) { animation-delay: 0s; }
+  .logo-text:nth-child(2) { animation-delay: 0.1s; }
+  .logo-text:nth-child(3) { animation-delay: 0.2s; }
+  .logo-text:nth-child(4) { animation-delay: 0.3s; }
+  .logo-text:nth-child(5) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+
   .navbar-toggler {
     border: none;
     background: none;
@@ -165,13 +203,14 @@
     background: #fff;
     padding: 15px 20px;
     border-bottom: 1px solid #e0e0e0;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     gap: 20px;
     flex-wrap: nowrap;
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
   }
 
   .dark-mode .filters-sort-bar {
@@ -180,10 +219,10 @@
   }
 
   .filter-sort-btn {
-    display: flex;
+    display: flex !important;
     align-items: center;
     gap: 8px;
-    padding: 8px 15px;
+    padding: 10px 20px;
     border: 1px solid #ddd;
     border-radius: 6px;
     background: #fff;
@@ -193,6 +232,9 @@
     position: relative;
     text-decoration: none;
     color: #333;
+    white-space: nowrap;
+    min-width: 120px;
+    justify-content: center;
   }
 
   .dark-mode .filter-sort-btn {
@@ -719,7 +761,15 @@
 <body class="light-mode">
   <!-- Navbar -->
   <nav class="navbar">
-    <img src="https://via.placeholder.com/120x54/007bff/ffffff?text=Paygo" alt="Paygo Logo">
+    <div class="logo-container">
+      <div class="animated-logo">
+        <span class="logo-text">P</span>
+        <span class="logo-text">a</span>
+        <span class="logo-text">y</span>
+        <span class="logo-text">g</span>
+        <span class="logo-text">o</span>
+      </div>
+    </div>
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
