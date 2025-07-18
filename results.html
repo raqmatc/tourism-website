@@ -139,7 +139,13 @@
     padding: 20px;
   }
 
+  /* إخفاء مربع البحث العلوي */
   .search-form-container {
+    display: none;
+  }
+
+  /* تصميم القوائم المنسدلة للفلاتر */
+  .filters-dropdown-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -147,48 +153,134 @@
     margin-bottom: 20px;
   }
 
-  .search-form-container .form-group {
-    margin-bottom: 15px;
+  .filter-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 15px;
+    margin-bottom: 10px;
   }
 
-  .search-form-container label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-
-  .search-form-container .form-control {
-    width: 100%;
-    padding: 8px;
+  .filter-dropdown-btn {
+    background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  .search-form-container .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    width: 100%;
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 5px;
+    cursor: pointer;
+    min-width: 150px;
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .filters-sidebar {
+  .filter-dropdown-btn:hover {
+    background-color: #f8f9fa;
+  }
+
+  .filter-dropdown-content {
+    display: none;
+    position: absolute;
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+    padding: 10px;
+    top: 100%;
+    right: 0;
+    border: 1px solid #ccc;
   }
 
-  .filters-sidebar h4 {
+  .filter-dropdown-content.show {
+    display: block;
+  }
+
+  .filter-option {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .filter-option:last-child {
+    border-bottom: none;
+  }
+
+  .filter-option label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .filter-option input[type="checkbox"] {
+    margin-left: 8px;
+  }
+
+  .price-range-inputs {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .price-range-inputs input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  /* تصميم قائمة الفرز المنسدلة */
+  .sort-dropdown {
+    position: relative;
+    display: inline-block;
     margin-bottom: 20px;
-    font-weight: bold;
   }
 
-  .filters-sidebar .form-group {
-    margin-bottom: 15px;
+  .sort-dropdown-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 200px;
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .filters-sidebar .form-check-label {
-    margin-left: 5px;
+  .sort-dropdown-btn:hover {
+    background-color: #0056b3;
+  }
+
+  .sort-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+    top: 100%;
+    right: 0;
+    border: 1px solid #ccc;
+  }
+
+  .sort-dropdown-content.show {
+    display: block;
+  }
+
+  .sort-option {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+  }
+
+  .sort-option:last-child {
+    border-bottom: none;
+  }
+
+  .sort-option:hover {
+    background-color: #f8f9fa;
   }
 
   .hotel-card {
@@ -357,8 +449,16 @@
     .main-content {
       padding: 10px;
     }
-    .filters-sidebar {
+    .filters-dropdown-container {
       margin-bottom: 20px;
+    }
+    .filter-dropdown {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .filter-dropdown-btn {
+      width: 100%;
     }
   }
   </style>
@@ -408,158 +508,112 @@
 
   <div class="main-content container-fluid mt-3">
     <div class="row">
-      <!-- شريط البحث العلوي -->
+      <!-- الفلاتر كقوائم منسدلة -->
       <div class="col-12 mb-3">
-        <div class="search-form-container">
-          <form id="searchFormTop">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="destinationTop">الوجهة</label>
-                  <input type="text" id="destinationTop" class="form-control" placeholder="أين تريد الإقامة؟">
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="form-group">
-                  <label for="checkinTop">تاريخ الوصول</label>
-                  <input type="date" id="checkinTop" class="form-control">
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="form-group">
-                  <label for="checkoutTop">تاريخ المغادرة</label>
-                  <input type="date" id="checkoutTop" class="form-control">
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label for="guestsDisplayTop">الضيوف والغرف</label>
-                  <input type="text" id="guestsDisplayTop" class="form-control" readonly value="1 بالغ، 1 غرفة، 0 أطفال">
-                  <input type="hidden" id="adultsTop" value="1">
-                  <input type="hidden" id="childrenTop" value="0">
-                  <input type="hidden" id="roomsTop" value="1">
-                  <div id="guestsDropdownTop" class="suggestions-dropdown" style="display: none; position: absolute; background: white; border: 1px solid #ccc; z-index: 100; width: 95%; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                      <span>البالغون:</span>
-                      <div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateGuestCountTop('adultsTop', -1)">-</button>
-                        <span id="adultsCountTop">1</span>
-                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateGuestCountTop('adultsTop', 1)">+</button>
-                      </div>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                      <span>الأطفال:</span>
-                      <div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateGuestCountTop('childrenTop', -1)">-</button>
-                        <span id="childrenCountTop">0</span>
-                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateGuestCountTop('childrenTop', 1)">+</button>
-                      </div>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <span>الغرف:</span>
-                      <div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateGuestCountTop('roomsTop', -1)">-</button>
-                        <span id="roomsCountTop">1</span>
-                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="updateGuestCountTop('roomsTop', 1)">+</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2 d-flex align-items-end">
-                <button type="button" class="btn btn-primary" onclick="searchHotelsTop()">بحث</button>
+        <div class="filters-dropdown-container">
+          <h4 style="margin-bottom: 20px;">الفلاتر</h4>
+          
+          <!-- فلتر السعر -->
+          <div class="filter-dropdown">
+            <div class="filter-dropdown-btn" onclick="toggleFilterDropdown('priceFilter')">
+              <span>السعر لكل ليلة</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="filter-dropdown-content" id="priceFilter">
+              <div class="price-range-inputs">
+                <input type="number" id="minPrice" placeholder="من" />
+                <input type="number" id="maxPrice" placeholder="إلى" />
               </div>
             </div>
-          </form>
-        </div>
-      </div>
+          </div>
 
-      <!-- الفلاتر الجانبية -->
-      <div class="col-md-3">
-        <div class="filters-sidebar">
-          <h4>الفلاتر</h4>
-          <div class="form-group">
-            <label for="priceRange">السعر لكل ليلة</label>
-            <div class="d-flex">
-              <input type="number" id="minPrice" class="form-control" placeholder="من">
-              <span class="mx-2">-</span>
-              <input type="number" id="maxPrice" class="form-control" placeholder="إلى">
+          <!-- فلتر تقييم النجوم -->
+          <div class="filter-dropdown">
+            <div class="filter-dropdown-btn" onclick="toggleFilterDropdown('starsFilter')">
+              <span>تقييم النجوم</span>
+              <i class="fas fa-chevron-down"></i>
             </div>
-          </div>
-          <div class="form-group">
-            <label>تقييم النجوم</label>
-            <div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="5" id="star5">
-                <label class="form-check-label" for="star5">5 نجوم</label>
+            <div class="filter-dropdown-content" id="starsFilter">
+              <div class="filter-option">
+                <label><input type="checkbox" value="5" id="star5"> 5 نجوم</label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="4" id="star4">
-                <label class="form-check-label" for="star4">4 نجوم</label>
+              <div class="filter-option">
+                <label><input type="checkbox" value="4" id="star4"> 4 نجوم</label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="3" id="star3">
-                <label class="form-check-label" for="star3">3 نجوم</label>
+              <div class="filter-option">
+                <label><input type="checkbox" value="3" id="star3"> 3 نجوم</label>
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <label>المرافق</label>
-            <div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="wifi" id="wifi">
-                <label class="form-check-label" for="wifi">واي فاي مجاني</label>
+
+          <!-- فلتر المرافق -->
+          <div class="filter-dropdown">
+            <div class="filter-dropdown-btn" onclick="toggleFilterDropdown('amenitiesFilter')">
+              <span>المرافق</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="filter-dropdown-content" id="amenitiesFilter">
+              <div class="filter-option">
+                <label><input type="checkbox" value="wifi" id="wifi"> واي فاي مجاني</label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="pool" id="pool">
-                <label class="form-check-label" for="pool">مسبح</label>
+              <div class="filter-option">
+                <label><input type="checkbox" value="pool" id="pool"> مسبح</label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="spa" id="spa">
-                <label class="form-check-label" for="spa">سبا</label>
+              <div class="filter-option">
+                <label><input type="checkbox" value="spa" id="spa"> سبا</label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="gym" id="gym">
-                <label class="form-check-label" for="gym">نادي صحي</label>
+              <div class="filter-option">
+                <label><input type="checkbox" value="gym" id="gym"> نادي صحي</label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="parking" id="parking">
-                <label class="form-check-label" for="parking">موقف سيارات</label>
+              <div class="filter-option">
+                <label><input type="checkbox" value="parking" id="parking"> موقف سيارات</label>
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <label>نوع الإقامة</label>
-            <div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="hotel" id="hotelType">
-                <label class="form-check-label" for="hotelType">فندق</label>
+
+          <!-- فلتر نوع الإقامة -->
+          <div class="filter-dropdown">
+            <div class="filter-dropdown-btn" onclick="toggleFilterDropdown('typeFilter')">
+              <span>نوع الإقامة</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="filter-dropdown-content" id="typeFilter">
+              <div class="filter-option">
+                <label><input type="checkbox" value="hotel" id="hotelType"> فندق</label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="resort" id="resortType">
-                <label class="form-check-label" for="resortType">منتجع</label>
+              <div class="filter-option">
+                <label><input type="checkbox" value="resort" id="resortType"> منتجع</label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="apartment" id="apartmentType">
-                <label class="form-check-label" for="apartmentType">شقة</label>
+              <div class="filter-option">
+                <label><input type="checkbox" value="apartment" id="apartmentType"> شقة</label>
               </div>
             </div>
           </div>
-          <button type="button" class="btn btn-primary" onclick="applyFilters()">تطبيق الفلاتر</button>
+
+          <button type="button" class="btn btn-primary" onclick="applyFilters()" style="margin-top: 10px;">تطبيق الفلاتر</button>
         </div>
       </div>
 
       <!-- نتائج الفنادق -->
-      <div class="col-md-9">
+      <div class="col-12">
         <h3 id="resultsTitle"></h3>
         <p id="resultsSubtitle"></p>
-        <div class="btn-group mb-3" role="group" aria-label="Sort options">
-          <button type="button" class="btn btn-outline-primary" onclick="sortHotels('recommended')">الأكثر توصية</button>
-          <button type="button" class="btn btn-outline-primary" onclick="sortHotels('priceAsc')">السعر: من الأقل للأعلى</button>
-          <button type="button" class="btn btn-outline-primary" onclick="sortHotels('priceDesc')">السعر: من الأعلى للأقل</button>
-          <button type="button" class="btn btn-outline-primary" onclick="sortHotels('rating')">التقييم الأعلى</button>
-          <button type="button" class="btn btn-outline-primary" onclick="sortHotels('distance')">المسافة من المركز</button>
+        
+        <!-- قائمة الفرز المنسدلة -->
+        <div class="sort-dropdown">
+          <div class="sort-dropdown-btn" onclick="toggleSortDropdown()">
+            <span id="currentSort">الأكثر توصية</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="sort-dropdown-content" id="sortDropdown">
+            <div class="sort-option" onclick="sortHotels('recommended')">الأكثر توصية</div>
+            <div class="sort-option" onclick="sortHotels('priceAsc')">السعر: من الأقل للأعلى</div>
+            <div class="sort-option" onclick="sortHotels('priceDesc')">السعر: من الأعلى للأقل</div>
+            <div class="sort-option" onclick="sortHotels('rating')">التقييم الأعلى</div>
+            <div class="sort-option" onclick="sortHotels('distance')">المسافة من المركز</div>
+          </div>
         </div>
+
         <div id="hotelsContainer">
           <!-- سيتم عرض الفنادق هنا -->
         </div>
@@ -1028,135 +1082,42 @@
       const children = urlParams.get("children");
       const rooms = urlParams.get("rooms");
 
-      document.getElementById("destinationTop").value = destination || "";
-      document.getElementById("checkinTop").value = checkin || "";
-      document.getElementById("checkoutTop").value = checkout || "";
-      document.getElementById("adultsTop").value = adults || "1";
-      document.getElementById("childrenTop").value = children || "0";
-      document.getElementById("roomsTop").value = rooms || "1";
-      updateGuestsDisplayTop();
-
       document.getElementById("resultsTitle").textContent = `10 فندق في ${destination}`;
       document.getElementById("resultsSubtitle").textContent = `${checkin} - ${checkout} • ${adults} بالغ، ${rooms} غرفة، ${children} أطفال`;
 
       filterAndDisplayHotels(destination);
-
-      // إعداد اقتراحات المدن لشريط البحث العلوي
-      setupCityAutocompleteTop();
     });
 
-    // إعداد الإكمال التلقائي للمدن لشريط البحث العلوي
-    function setupCityAutocompleteTop() {
-      const destinationInput = document.getElementById("destinationTop");
-      const suggestionsDiv = document.createElement("div");
-      suggestionsDiv.className = "suggestions-dropdown";
-      suggestionsDiv.style.position = "absolute";
-      suggestionsDiv.style.background = "white";
-      suggestionsDiv.style.border = "1px solid #ccc";
-      suggestionsDiv.style.zIndex = "100";
-      suggestionsDiv.style.width = "95%";
-      suggestionsDiv.style.padding = "10px";
-      suggestionsDiv.style.boxShadow = "0 2px 5px rgba(0,0,0,0.1)";
-      suggestionsDiv.style.display = "none";
-      destinationInput.parentNode.appendChild(suggestionsDiv);
+    // وظائف القوائم المنسدلة للفلاتر
+    function toggleFilterDropdown(filterId) {
+      const dropdown = document.getElementById(filterId);
+      const isVisible = dropdown.classList.contains('show');
       
-      destinationInput.addEventListener("input", function() {
-        const query = this.value.toLowerCase();
-        if (query.length < 2) {
-          suggestionsDiv.style.display = "none";
-          return;
-        }
-        
-        const cities = allHotels.map(hotel => hotel.city).filter((value, index, self) => self.indexOf(value) === index); // الحصول على قائمة فريدة من المدن
-        const matches = cities.filter(city => city.toLowerCase().includes(query));
-        
-        if (matches.length > 0) {
-          suggestionsDiv.innerHTML = matches.slice(0, 5).map(city => 
-            `<div class="suggestion-item" onclick="selectCityTop('${city}')">
-              <i class="fas fa-map-marker-alt suggestion-icon"></i>
-              <span>${city}</span>
-            </div>`
-          ).join('');
-          suggestionsDiv.style.display = "block";
-        } else {
-          suggestionsDiv.style.display = "none";
-        }
+      // إغلاق جميع القوائم المنسدلة الأخرى
+      document.querySelectorAll('.filter-dropdown-content').forEach(content => {
+        content.classList.remove('show');
       });
       
-      document.addEventListener("click", function(e) {
-        if (!destinationInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
-          suggestionsDiv.style.display = "none";
-        }
-      });
+      // فتح أو إغلاق القائمة المحددة
+      if (!isVisible) {
+        dropdown.classList.add('show');
+      }
     }
 
-    function selectCityTop(city) {
-      document.getElementById("destinationTop").value = city;
-      document.getElementById("destinationTop").parentNode.querySelector(".suggestions-dropdown").style.display = "none";
+    // وظائف قائمة الفرز المنسدلة
+    function toggleSortDropdown() {
+      const dropdown = document.getElementById('sortDropdown');
+      dropdown.classList.toggle('show');
     }
 
-    // وظائف للتعامل مع حقل الضيوف المدمج في شريط البحث العلوي
-    document.getElementById("guestsDisplayTop").addEventListener("click", function() {
-      const guestsDropdown = document.getElementById("guestsDropdownTop");
-      guestsDropdown.style.display = guestsDropdown.style.display === "none" ? "block" : "none";
-    });
-
-    document.addEventListener("click", function(e) {
-      const guestsDisplay = document.getElementById("guestsDisplayTop");
-      const guestsDropdown = document.getElementById("guestsDropdownTop");
-      if (!guestsDisplay.contains(e.target) && !guestsDropdown.contains(e.target)) {
-        guestsDropdown.style.display = "none";
+    // إغلاق القوائم المنسدلة عند النقر خارجها
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('.filter-dropdown') && !event.target.closest('.sort-dropdown')) {
+        document.querySelectorAll('.filter-dropdown-content, .sort-dropdown-content').forEach(content => {
+          content.classList.remove('show');
+        });
       }
     });
-
-    function updateGuestCountTop(type, change) {
-      let count = parseInt(document.getElementById(type).value);
-      count += change;
-      if (count < 0) count = 0;
-      if (type === "adultsTop" && count === 0 && parseInt(document.getElementById("childrenTop").value) === 0) count = 1; 
-      if (type === "roomsTop" && count === 0) count = 1; 
-
-      document.getElementById(type).value = count;
-      document.getElementById(type.replace("Top", "CountTop")).textContent = count;
-      updateGuestsDisplayTop();
-    }
-
-    function updateGuestsDisplayTop() {
-      const adults = document.getElementById("adultsTop").value;
-      const children = document.getElementById("childrenTop").value;
-      const rooms = document.getElementById("roomsTop").value;
-      document.getElementById("guestsDisplayTop").value = `${adults} بالغ، ${rooms} غرفة، ${children} أطفال`;
-    }
-
-    function searchHotelsTop() {
-      const destination = document.getElementById("destinationTop").value;
-      const checkin = document.getElementById("checkinTop").value;
-      const checkout = document.getElementById("checkoutTop").value;
-      const adults = document.getElementById("adultsTop").value;
-      const children = document.getElementById("childrenTop").value;
-      const rooms = document.getElementById("roomsTop").value;
-      
-      if (!destination || !checkin || !checkout) {
-        alert("يرجى ملء جميع الحقول المطلوبة");
-        return;
-      }
-      
-      if (new Date(checkin) >= new Date(checkout)) {
-        alert("تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول");
-        return;
-      }
-      
-      const params = new URLSearchParams({
-        destination: destination,
-        checkin: checkin,
-        checkout: checkout,
-        adults: adults,
-        children: children,
-        rooms: rooms
-      });
-      
-      window.location.href = `results.html?${params.toString()}`;
-    }
 
     function filterAndDisplayHotels(destination) {
       const hotelsContainer = document.getElementById("hotelsContainer");
@@ -1170,36 +1131,7 @@
         return;
       }
 
-      displayedHotels.forEach(hotel => {
-        const hotelCard = `
-          <div class="hotel-card">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="${hotel.image}" class="img-fluid rounded-start" alt="${hotel.name}">
-              </div>
-              <div class="col-md-8">
-                <div class="hotel-card-body">
-                  <h5 class="card-title">${hotel.name}</h5>
-                  <p class="card-text rating">${'★'.repeat(Math.floor(hotel.rating))} ${hotel.rating} (${hotel.reviews} تقييم)</p>
-                  <p class="card-text text-muted">${hotel.city}، على بعد ${hotel.distance} كم من المركز</p>
-                  <p class="card-text">
-                    ${hotel.amenities.map(amenity => `<span class="badge bg-info text-dark me-1">${amenity}</span>`).join('')}
-                  </p>
-                  <div class="d-flex justify-content-between align-items-center mt-3">
-                    <div>
-                      <span class="text-muted text-decoration-line-through">${hotel.originalPrice} ريال</span>
-                      <span class="price">${hotel.price} ريال</span>
-                      <small class="text-muted">/ ليلة</small>
-                    </div>
-                    <button type="button" class="btn btn-primary" onclick="showPriceComparison('${hotel.name}', ${JSON.stringify(hotel.offers).replace(/'/g, '&apos;')})">عرض العروض</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-        hotelsContainer.innerHTML += hotelCard;
-      });
+      renderHotels();
     }
 
     function showPriceComparison(hotelName, offers) {
@@ -1269,23 +1201,32 @@
     }
 
     function sortHotels(criteria) {
+      let sortText = '';
       switch (criteria) {
         case 'recommended':
           displayedHotels.sort((a, b) => b.reviews - a.reviews); // مثال: الأكثر تقييمًا
+          sortText = 'الأكثر توصية';
           break;
         case 'priceAsc':
           displayedHotels.sort((a, b) => a.price - b.price);
+          sortText = 'السعر: من الأقل للأعلى';
           break;
         case 'priceDesc':
           displayedHotels.sort((a, b) => b.price - a.price);
+          sortText = 'السعر: من الأعلى للأقل';
           break;
         case 'rating':
           displayedHotels.sort((a, b) => b.rating - a.rating);
+          sortText = 'التقييم الأعلى';
           break;
         case 'distance':
           displayedHotels.sort((a, b) => a.distance - b.distance);
+          sortText = 'المسافة من المركز';
           break;
       }
+      
+      document.getElementById('currentSort').textContent = sortText;
+      document.getElementById('sortDropdown').classList.remove('show');
       renderHotels();
     }
 
@@ -1397,5 +1338,4 @@
   </script>
 </body>
 </html>
-
 
