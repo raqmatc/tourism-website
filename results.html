@@ -63,7 +63,7 @@
   .navbar-toggler-icon {
     width: 1em;
     height: 1em;
-    background-image: url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'rgba%28255, 255, 255, 1%29\' stroke-width=\'2\' stroke-linecap=\'round\' d=\'M2 5h16M2 10h16M2 15h16\'%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' d='M2 5h16M2 10h16M2 15h16'/%3e%3c/svg%3e");
   }
 
   .nav-link {
@@ -133,6 +133,24 @@
 
   .nav-link.toggle.active::after {
     content: " ▴";
+  }
+
+  #theme-toggle {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    border: none;
+    background-color: #222;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+    color: white;
   }
 
   .main-content {
@@ -463,6 +481,15 @@
     }
     .dropdown-btn {
       width: 100%;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .navbar-collapse {
+      width: 100%;
+      left: 0;
+      padding: 15px;
+      border-radius: 0;
     }
   }
   </style>
@@ -1334,4 +1361,3 @@
   </script>
 </body>
 </html>
-
