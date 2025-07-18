@@ -144,8 +144,8 @@
     display: none;
   }
 
-  /* تصميم القوائم المنسدلة للفلاتر */
-  .filters-dropdown-container {
+  /* تصميم الفلاتر كأيقونات مع نص */
+  .filters-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -153,39 +153,58 @@
     margin-bottom: 20px;
   }
 
+  .filters-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .filter-btn {
+    background-color: #fff;
+    border: 1px solid #007bff;
+    color: #007bff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .filter-btn:hover {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .filter-btn.active {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .filter-btn i {
+    font-size: 16px;
+  }
+
+  /* تصميم القوائم المنسدلة للفلاتر */
   .filter-dropdown {
     position: relative;
     display: inline-block;
-    margin-left: 15px;
-    margin-bottom: 10px;
-  }
-
-  .filter-dropdown-btn {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    min-width: 150px;
-    text-align: right;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .filter-dropdown-btn:hover {
-    background-color: #f8f9fa;
   }
 
   .filter-dropdown-content {
     display: none;
     position: absolute;
     background-color: #fff;
-    min-width: 200px;
+    min-width: 250px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 1000;
     border-radius: 5px;
-    padding: 10px;
+    padding: 15px;
     top: 100%;
     right: 0;
     border: 1px solid #ccc;
@@ -208,6 +227,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    font-size: 14px;
   }
 
   .filter-option input[type="checkbox"] {
@@ -222,9 +242,10 @@
 
   .price-range-inputs input {
     flex: 1;
-    padding: 5px;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    font-size: 14px;
   }
 
   /* تصميم قائمة الفرز المنسدلة */
@@ -246,6 +267,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
   }
 
   .sort-dropdown-btn:hover {
@@ -258,7 +280,7 @@
     background-color: #fff;
     min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 1000;
     border-radius: 5px;
     top: 100%;
     right: 0;
@@ -273,6 +295,7 @@
     padding: 12px 16px;
     cursor: pointer;
     border-bottom: 1px solid #eee;
+    font-size: 14px;
   }
 
   .sort-option:last-child {
@@ -281,6 +304,24 @@
 
   .sort-option:hover {
     background-color: #f8f9fa;
+  }
+
+  .apply-filters-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+
+  .apply-filters-btn:hover {
+    background-color: #218838;
   }
 
   .hotel-card {
@@ -449,15 +490,15 @@
     .main-content {
       padding: 10px;
     }
-    .filters-dropdown-container {
-      margin-bottom: 20px;
+    .filters-row {
+      flex-direction: column;
+      align-items: stretch;
     }
-    .filter-dropdown {
-      display: block;
-      width: 100%;
-      margin-bottom: 10px;
+    .filter-btn {
+      justify-content: center;
+      margin-bottom: 5px;
     }
-    .filter-dropdown-btn {
+    .sort-dropdown-btn {
       width: 100%;
     }
   }
@@ -508,89 +549,103 @@
 
   <div class="main-content container-fluid mt-3">
     <div class="row">
-      <!-- الفلاتر كقوائم منسدلة -->
+      <!-- الفلاتر كأيقونات مع نص -->
       <div class="col-12 mb-3">
-        <div class="filters-dropdown-container">
+        <div class="filters-container">
           <h4 style="margin-bottom: 20px;">الفلاتر</h4>
           
-          <!-- فلتر السعر -->
-          <div class="filter-dropdown">
-            <div class="filter-dropdown-btn" onclick="toggleFilterDropdown('priceFilter')">
-              <span>السعر لكل ليلة</span>
-              <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="filter-dropdown-content" id="priceFilter">
-              <div class="price-range-inputs">
-                <input type="number" id="minPrice" placeholder="من" />
-                <input type="number" id="maxPrice" placeholder="إلى" />
+          <div class="filters-row">
+            <!-- فلتر السعر -->
+            <div class="filter-dropdown">
+              <div class="filter-btn" onclick="toggleFilterDropdown('priceFilter')">
+                <i class="fas fa-dollar-sign"></i>
+                <span>السعر</span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="filter-dropdown-content" id="priceFilter">
+                <h6 style="margin-bottom: 10px;">السعر لكل ليلة</h6>
+                <div class="price-range-inputs">
+                  <input type="number" id="minPrice" placeholder="من" />
+                  <input type="number" id="maxPrice" placeholder="إلى" />
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- فلتر تقييم النجوم -->
-          <div class="filter-dropdown">
-            <div class="filter-dropdown-btn" onclick="toggleFilterDropdown('starsFilter')">
-              <span>تقييم النجوم</span>
-              <i class="fas fa-chevron-down"></i>
+            <!-- فلتر تقييم النجوم -->
+            <div class="filter-dropdown">
+              <div class="filter-btn" onclick="toggleFilterDropdown('starsFilter')">
+                <i class="fas fa-star"></i>
+                <span>التقييم</span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="filter-dropdown-content" id="starsFilter">
+                <h6 style="margin-bottom: 10px;">تقييم النجوم</h6>
+                <div class="filter-option">
+                  <label><input type="checkbox" value="5" id="star5"> 5 نجوم</label>
+                </div>
+                <div class="filter-option">
+                  <label><input type="checkbox" value="4" id="star4"> 4 نجوم</label>
+                </div>
+                <div class="filter-option">
+                  <label><input type="checkbox" value="3" id="star3"> 3 نجوم</label>
+                </div>
+              </div>
             </div>
-            <div class="filter-dropdown-content" id="starsFilter">
-              <div class="filter-option">
-                <label><input type="checkbox" value="5" id="star5"> 5 نجوم</label>
-              </div>
-              <div class="filter-option">
-                <label><input type="checkbox" value="4" id="star4"> 4 نجوم</label>
-              </div>
-              <div class="filter-option">
-                <label><input type="checkbox" value="3" id="star3"> 3 نجوم</label>
-              </div>
-            </div>
-          </div>
 
-          <!-- فلتر المرافق -->
-          <div class="filter-dropdown">
-            <div class="filter-dropdown-btn" onclick="toggleFilterDropdown('amenitiesFilter')">
-              <span>المرافق</span>
-              <i class="fas fa-chevron-down"></i>
+            <!-- فلتر المرافق -->
+            <div class="filter-dropdown">
+              <div class="filter-btn" onclick="toggleFilterDropdown('amenitiesFilter')">
+                <i class="fas fa-swimming-pool"></i>
+                <span>المرافق</span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="filter-dropdown-content" id="amenitiesFilter">
+                <h6 style="margin-bottom: 10px;">المرافق المتاحة</h6>
+                <div class="filter-option">
+                  <label><input type="checkbox" value="wifi" id="wifi"> <i class="fas fa-wifi"></i> واي فاي مجاني</label>
+                </div>
+                <div class="filter-option">
+                  <label><input type="checkbox" value="pool" id="pool"> <i class="fas fa-swimming-pool"></i> مسبح</label>
+                </div>
+                <div class="filter-option">
+                  <label><input type="checkbox" value="spa" id="spa"> <i class="fas fa-spa"></i> سبا</label>
+                </div>
+                <div class="filter-option">
+                  <label><input type="checkbox" value="gym" id="gym"> <i class="fas fa-dumbbell"></i> نادي صحي</label>
+                </div>
+                <div class="filter-option">
+                  <label><input type="checkbox" value="parking" id="parking"> <i class="fas fa-parking"></i> موقف سيارات</label>
+                </div>
+              </div>
             </div>
-            <div class="filter-dropdown-content" id="amenitiesFilter">
-              <div class="filter-option">
-                <label><input type="checkbox" value="wifi" id="wifi"> واي فاي مجاني</label>
-              </div>
-              <div class="filter-option">
-                <label><input type="checkbox" value="pool" id="pool"> مسبح</label>
-              </div>
-              <div class="filter-option">
-                <label><input type="checkbox" value="spa" id="spa"> سبا</label>
-              </div>
-              <div class="filter-option">
-                <label><input type="checkbox" value="gym" id="gym"> نادي صحي</label>
-              </div>
-              <div class="filter-option">
-                <label><input type="checkbox" value="parking" id="parking"> موقف سيارات</label>
-              </div>
-            </div>
-          </div>
 
-          <!-- فلتر نوع الإقامة -->
-          <div class="filter-dropdown">
-            <div class="filter-dropdown-btn" onclick="toggleFilterDropdown('typeFilter')">
-              <span>نوع الإقامة</span>
-              <i class="fas fa-chevron-down"></i>
+            <!-- فلتر نوع الإقامة -->
+            <div class="filter-dropdown">
+              <div class="filter-btn" onclick="toggleFilterDropdown('typeFilter')">
+                <i class="fas fa-building"></i>
+                <span>نوع الإقامة</span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="filter-dropdown-content" id="typeFilter">
+                <h6 style="margin-bottom: 10px;">نوع الإقامة</h6>
+                <div class="filter-option">
+                  <label><input type="checkbox" value="hotel" id="hotelType"> <i class="fas fa-hotel"></i> فندق</label>
+                </div>
+                <div class="filter-option">
+                  <label><input type="checkbox" value="resort" id="resortType"> <i class="fas fa-umbrella-beach"></i> منتجع</label>
+                </div>
+                <div class="filter-option">
+                  <label><input type="checkbox" value="apartment" id="apartmentType"> <i class="fas fa-home"></i> شقة</label>
+                </div>
+              </div>
             </div>
-            <div class="filter-dropdown-content" id="typeFilter">
-              <div class="filter-option">
-                <label><input type="checkbox" value="hotel" id="hotelType"> فندق</label>
-              </div>
-              <div class="filter-option">
-                <label><input type="checkbox" value="resort" id="resortType"> منتجع</label>
-              </div>
-              <div class="filter-option">
-                <label><input type="checkbox" value="apartment" id="apartmentType"> شقة</label>
-              </div>
-            </div>
-          </div>
 
-          <button type="button" class="btn btn-primary" onclick="applyFilters()" style="margin-top: 10px;">تطبيق الفلاتر</button>
+            <!-- زر تطبيق الفلاتر -->
+            <button type="button" class="apply-filters-btn" onclick="applyFilters()">
+              <i class="fas fa-filter"></i>
+              <span>تطبيق الفلاتر</span>
+            </button>
+          </div>
         </div>
       </div>
 
