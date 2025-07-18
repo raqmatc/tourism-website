@@ -163,12 +163,12 @@
   /* شريط الفلاتر والفرز */
   .filters-sort-bar {
     background: #fff;
-    padding: 15px 20px;
+    padding: 10px 20px;
     border-bottom: 1px solid #e0e0e0;
     display: flex !important;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
     flex-wrap: nowrap;
     max-width: 1200px;
     margin: 0 auto;
@@ -183,19 +183,19 @@
   .filter-sort-btn {
     display: flex !important;
     align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
+    gap: 5px;
+    padding: 6px 12px;
     border: 1px solid #ddd;
-    border-radius: 6px;
+    border-radius: 4px;
     background: #fff;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     transition: all 0.3s;
     position: relative;
     text-decoration: none;
     color: #333;
     white-space: nowrap;
-    min-width: 120px;
+    min-width: 80px;
     justify-content: center;
   }
 
@@ -608,9 +608,17 @@
     .filters-sort-bar {
       flex-direction: row;
       align-items: center;
-      gap: 15px;
-      justify-content: space-around;
-      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: nowrap;
+      padding: 8px 15px;
+    }
+
+    .filter-sort-btn {
+      padding: 5px 10px;
+      font-size: 11px;
+      min-width: 70px;
+      gap: 3px;
     }
   }
 
@@ -1210,4 +1218,3 @@
   </script>
 </body>
 </html>
-
