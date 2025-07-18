@@ -1,1071 +1,1204 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نتائج البحث عن الفنادق - Paygo</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        /* Header */
-        .header {
-            background: white;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 0 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 60px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4CAF50;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-menu a:hover {
-            color: #4CAF50;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 3px;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: white;
-            transition: 0.3s;
-        }
-
-        /* Search Box */
-        .search-container {
-            background: #e8f5e8;
-            border: 2px solid #4CAF50;
-            border-radius: 12px;
-            margin: 20px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 20px auto;
-        }
-
-        .search-form {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr auto;
-            gap: 15px;
-            align-items: end;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .form-group input, .form-group select {
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            background: white;
-        }
-
-        .search-btn {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .search-btn:hover {
-            background: #45a049;
-        }
-
-        /* Filters and Sort Bar */
-        .filters-bar {
-            background: white;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn, .sort-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            background: white;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .filter-btn:hover, .sort-btn:hover {
-            border-color: #4CAF50;
-            color: #4CAF50;
-        }
-
-        .map-btn {
-            background: #4CAF50;
-            color: white;
-            border: 1px solid #4CAF50;
-            margin-right: auto;
-        }
-
-        .map-btn:hover {
-            background: #45a049;
-        }
-
-        /* Dropdown Menus */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            min-width: 250px;
-            max-height: 400px;
-            overflow-y: auto;
-            z-index: 1000;
-            display: none;
-        }
-
-        .dropdown.active .dropdown-menu {
-            display: block;
-        }
-
-        .dropdown-item {
-            padding: 12px 15px;
-            cursor: pointer;
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.3s;
-        }
-
-        .dropdown-item:hover {
-            background: #f8f9fa;
-        }
-
-        .dropdown-item:last-child {
-            border-bottom: none;
-        }
-
-        /* Main Content */
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 30px;
-        }
-
-        /* Sidebar Filters */
-        .sidebar {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            height: fit-content;
-            border: 1px solid #e0e0e0;
-        }
-
-        .results-count {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .filter-section {
-            margin-bottom: 25px;
-            border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 20px;
-        }
-
-        .filter-section:last-child {
-            border-bottom: none;
-        }
-
-        .filter-title {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #333;
-        }
-
-        .filter-option {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
-
-        .filter-option input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-        }
-
-        .filter-option label {
-            font-size: 13px;
-            cursor: pointer;
-            flex: 1;
-        }
-
-        .filter-count {
-            font-size: 12px;
-            color: #666;
-        }
-
-        /* Price Range */
-        .price-range {
-            margin: 15px 0;
-        }
-
-        .price-inputs {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .price-inputs input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-
-        /* Hotels List */
-        .hotels-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .hotel-card {
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            overflow: hidden;
-            transition: box-shadow 0.3s;
-        }
-
-        .hotel-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .hotel-content {
-            display: grid;
-            grid-template-columns: 200px 1fr 180px;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .hotel-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 6px;
-        }
-
-        .hotel-info {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .hotel-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .hotel-rating {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 5px;
-        }
-
-        .stars {
-            color: #FFC107;
-            font-size: 14px;
-        }
-
-        .rating-score {
-            background: #4CAF50;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .rating-count {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .hotel-location {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .hotel-amenities {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .amenity {
-            font-size: 11px;
-            background: #f0f0f0;
-            padding: 3px 8px;
-            border-radius: 12px;
-            color: #666;
-        }
-
-        .hotel-reviews {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-
-        .review-tag {
-            font-size: 11px;
-            background: #e8f5e8;
-            color: #4CAF50;
-            padding: 3px 8px;
-            border-radius: 12px;
-        }
-
-        /* Price Box */
-        .price-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            border-right: 1px solid #f0f0f0;
-            padding-right: 20px;
-        }
-
-        .booking-site {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .price {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 2px;
-        }
-
-        .price-currency {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .price-period {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .payment-options {
-            font-size: 11px;
-            color: #4CAF50;
-            margin-bottom: 15px;
-        }
-
-        .book-btn {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-        }
-
-        .book-btn:hover {
-            background: #45a049;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .search-form {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-
-            .filters-bar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-            }
-
-            .main-content {
-                grid-template-columns: 1fr;
-                padding: 10px;
-            }
-
-            .sidebar {
-                display: none;
-            }
-
-            .hotel-content {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .hotel-image {
-                height: 200px;
-            }
-
-            .price-box {
-                border-right: none;
-                border-top: 1px solid #f0f0f0;
-                padding-right: 0;
-                padding-top: 15px;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .price-info {
-                text-align: right;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hotel-content {
-                padding: 15px;
-            }
-
-            .hotel-name {
-                font-size: 16px;
-            }
-
-            .price {
-                font-size: 20px;
-            }
-        }
-
-        /* Dropdown specific styles */
-        .filter-dropdown-content {
-            padding: 15px;
-        }
-
-        .filter-group {
-            margin-bottom: 20px;
-        }
-
-        .filter-group:last-child {
-            margin-bottom: 0;
-        }
-
-        .filter-group h4 {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .checkbox-item input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-        }
-
-        .checkbox-item label {
-            font-size: 13px;
-            cursor: pointer;
-        }
-
-        .apply-filters-btn {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        .apply-filters-btn:hover {
-            background: #45a049;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>نتائج البحث - Paygo</title>
+
+  <!-- إضافة خط Cairo من Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+  html, body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+    color: #000;
+    transition: all 0.3s ease;
+  }
+
+  body.light-mode {
+    background-color: #f5f5f5;
+    color: #000;
+  }
+
+  body.dark-mode {
+    background-color: #222;
+    color: #fff;
+  }
+
+  .navbar {
+    background-color: #222;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1000;
+  }
+
+  .navbar img {
+    height: 54px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .navbar-toggler {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+    order: 2;
+  }
+
+  .navbar-toggler-icon {
+    width: 1em;
+    height: 1em;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' d='M2 5h16M2 10h16M2 15h16'/%3e%3c/svg%3e");
+  }
+
+  .nav-link {
+    color: #fff !important;
+    margin-left: 0;
+    padding: 10px 15px;
+    display: block;
+    position: relative;
+  }
+
+  .nav-link:hover {
+    color: #007bff !important;
+  }
+
+  .navbar-collapse {
+    flex-direction: column;
+    min-height: 400px;
+    padding: 15px;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #222;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+    z-index: 1001;
+  }
+
+  .navbar-collapse.collapsing {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .navbar-collapse.show {
+    opacity: 1;
+    height: auto;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-item {
+    width: 100%;
+    position: relative;
+  }
+
+  .dropdown-menu {
+    background-color: #333;
+    border: none;
+    border-radius: 0;
+    margin-top: 0;
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .dropdown-item {
+    color: #ccc !important;
+    padding: 8px 30px;
+    border-bottom: 1px solid #444;
+  }
+
+  .dropdown-item:hover {
+    background-color: #444;
+    color: #fff !important;
+  }
+
+  .dropdown-toggle::after {
+    margin-right: 10px;
+  }
+
+  .mode-toggle {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 10px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: right;
+  }
+
+  .mode-toggle:hover {
+    color: #007bff;
+  }
+
+  /* إخفاء مربع البحث */
+  .search-form-container {
+    display: none;
+  }
+
+  /* شريط الفلاتر والفرز */
+  .filters-sort-bar {
+    background: #fff;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .dark-mode .filters-sort-bar {
+    background: #333;
+    border-bottom-color: #555;
+  }
+
+  .filter-sort-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+    position: relative;
+    text-decoration: none;
+    color: #333;
+  }
+
+  .dark-mode .filter-sort-btn {
+    background: #444;
+    border-color: #666;
+    color: #fff;
+  }
+
+  .filter-sort-btn:hover {
+    border-color: #007bff;
+    color: #007bff;
+  }
+
+  .dark-mode .filter-sort-btn:hover {
+    border-color: #007bff;
+    color: #007bff;
+  }
+
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    min-width: 250px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+  }
+
+  .dark-mode .dropdown-content {
+    background: #444;
+    border-color: #666;
+  }
+
+  .dropdown.active .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-option {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.3s;
+  }
+
+  .dark-mode .dropdown-option {
+    border-bottom-color: #555;
+    color: #fff;
+  }
+
+  .dropdown-option:hover {
+    background: #f8f9fa;
+  }
+
+  .dark-mode .dropdown-option:hover {
+    background: #555;
+  }
+
+  .dropdown-option:last-child {
+    border-bottom: none;
+  }
+
+  /* المحتوى الرئيسي */
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+  }
+
+  /* الشريط الجانبي للفلاتر */
+  .sidebar {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    height: fit-content;
+    border: 1px solid #e0e0e0;
+  }
+
+  .dark-mode .sidebar {
+    background: #333;
+    border-color: #555;
+  }
+
+  .results-count {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .dark-mode .results-count {
+    color: #fff;
+  }
+
+  .filter-section {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 20px;
+  }
+
+  .dark-mode .filter-section {
+    border-bottom-color: #555;
+  }
+
+  .filter-section:last-child {
+    border-bottom: none;
+  }
+
+  .filter-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .dark-mode .filter-title {
+    color: #fff;
+  }
+
+  .filter-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+
+  .filter-option input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  .filter-option label {
+    font-size: 13px;
+    cursor: pointer;
+    flex: 1;
+    color: #666;
+  }
+
+  .dark-mode .filter-option label {
+    color: #ccc;
+  }
+
+  .filter-count {
+    font-size: 12px;
+    color: #999;
+  }
+
+  /* قائمة الفنادق - تخطيط Wego */
+  .hotels-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hotel-card {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+
+  .dark-mode .hotel-card {
+    background: #333;
+    border-color: #555;
+  }
+
+  .hotel-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .hotel-content {
+    display: grid;
+    grid-template-columns: 200px 1fr 180px;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .hotel-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .hotel-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hotel-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  .dark-mode .hotel-name {
+    color: #fff;
+  }
+
+  .hotel-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
+  }
+
+  .stars {
+    color: #ffc107;
+    font-size: 14px;
+  }
+
+  .rating-score {
+    background: #007bff;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .rating-count {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .dark-mode .rating-count {
+    color: #ccc;
+  }
+
+  .hotel-location {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  .dark-mode .hotel-location {
+    color: #ccc;
+  }
+
+  .hotel-amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .amenity {
+    font-size: 11px;
+    background: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 12px;
+    color: #666;
+  }
+
+  .dark-mode .amenity {
+    background: #555;
+    color: #ccc;
+  }
+
+  .hotel-reviews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .review-tag {
+    font-size: 11px;
+    background: #e8f4fd;
+    color: #007bff;
+    padding: 3px 8px;
+    border-radius: 12px;
+  }
+
+  .dark-mode .review-tag {
+    background: #1a4a6b;
+    color: #66b3ff;
+  }
+
+  /* مربع السعر */
+  .price-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-right: 1px solid #f0f0f0;
+    padding-right: 20px;
+  }
+
+  .dark-mode .price-box {
+    border-right-color: #555;
+  }
+
+  .booking-site {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  .dark-mode .booking-site {
+    color: #ccc;
+  }
+
+  .price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 2px;
+  }
+
+  .dark-mode .price {
+    color: #fff;
+  }
+
+  .price-currency {
+    font-size: 14px;
+    color: #666;
+  }
+
+  .dark-mode .price-currency {
+    color: #ccc;
+  }
+
+  .price-period {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  .dark-mode .price-period {
+    color: #ccc;
+  }
+
+  .payment-options {
+    font-size: 11px;
+    color: #007bff;
+    margin-bottom: 15px;
+  }
+
+  .book-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+  }
+
+  .book-btn:hover {
+    background: #0056b3;
+  }
+
+  /* التصميم المتجاوب */
+  @media (max-width: 768px) {
+    .main-content {
+      grid-template-columns: 1fr;
+      padding: 10px;
+    }
+
+    .sidebar {
+      display: none;
+    }
+
+    .hotel-content {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .hotel-image {
+      height: 200px;
+    }
+
+    .price-box {
+      border-right: none;
+      border-top: 1px solid #f0f0f0;
+      padding-right: 0;
+      padding-top: 15px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dark-mode .price-box {
+      border-top-color: #555;
+    }
+
+    .price-info {
+      text-align: right;
+    }
+
+    .filters-sort-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hotel-content {
+      padding: 15px;
+    }
+
+    .hotel-name {
+      font-size: 16px;
+    }
+
+    .price {
+      font-size: 20px;
+    }
+  }
+
+  /* تخطيط الفلاتر في القائمة المنسدلة */
+  .filter-dropdown-content {
+    padding: 15px;
+  }
+
+  .filter-group {
+    margin-bottom: 20px;
+  }
+
+  .filter-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .filter-group h4 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .dark-mode .filter-group h4 {
+    color: #fff;
+  }
+
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .checkbox-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  .checkbox-item label {
+    font-size: 13px;
+    cursor: pointer;
+    color: #666;
+  }
+
+  .dark-mode .checkbox-item label {
+    color: #ccc;
+  }
+
+  .apply-filters-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .apply-filters-btn:hover {
+    background: #0056b3;
+  }
+
+  .price-inputs {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .price-inputs input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    background: #fff;
+    color: #333;
+  }
+
+  .dark-mode .price-inputs input {
+    background: #555;
+    border-color: #666;
+    color: #fff;
+  }
+  </style>
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="navbar">
-            <div class="logo">Paygo</div>
-            <ul class="nav-menu">
-                <li><a href="#">الرئيسية</a></li>
-                <li><a href="#">وجهات سياحية</a></li>
-                <li><a href="#">المدونة</a></li>
-                <li><a href="#">حولنا</a></li>
-                <li><a href="#">اتصل بنا</a></li>
-                <li><a href="#" class="login-btn">تسجيل الدخول</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-    </header>
 
-    <!-- Search Container -->
-    <div class="search-container">
-        <form class="search-form">
-            <div class="form-group">
-                <label>الوجهة</label>
-                <input type="text" value="دبي، الإمارات العربية المتحدة" readonly>
+<body class="light-mode">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <img src="https://via.placeholder.com/120x54/007bff/ffffff?text=Paygo" alt="Paygo Logo">
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#">الرئيسية</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            وجهات سياحية
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">وجهات آسيا</a></li>
+            <li><a class="dropdown-item" href="#">وجهات أوروبا</a></li>
+            <li><a class="dropdown-item" href="#">وجهات أفريقيا</a></li>
+            <li><a class="dropdown-item" href="#">بقية العالم</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">المدونة</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">حولنا</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">اتصل بنا</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            اللغة
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">العربية</a></li>
+            <li><a class="dropdown-item" href="#">English</a></li>
+          </ul>
+        </li>
+      </ul>
+      <button class="mode-toggle" onclick="toggleMode()">
+        <span id="mode-icon">🌙</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- شريط الفلاتر والفرز -->
+  <div class="filters-sort-bar">
+    <div class="dropdown">
+      <button class="filter-sort-btn" onclick="toggleDropdown('filters')">
+        <i class="fas fa-filter"></i>
+        <span>الفلاتر</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="dropdown-content" id="filters-dropdown">
+        <div class="filter-dropdown-content">
+          <div class="filter-group">
+            <h4>السعر</h4>
+            <div class="price-inputs">
+              <input type="number" placeholder="من" min="0">
+              <input type="number" placeholder="إلى" min="0">
             </div>
-            <div class="form-group">
-                <label>تسجيل الوصول</label>
-                <input type="date" value="2025-07-18">
+          </div>
+          
+          <div class="filter-group">
+            <h4>تقييم النجوم</h4>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="stars5">
+                <label for="stars5">5 نجوم</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="stars4">
+                <label for="stars4">4 نجوم</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="stars3">
+                <label for="stars3">3 نجوم</label>
+              </div>
             </div>
-            <div class="form-group">
-                <label>تسجيل الخروج</label>
-                <input type="date" value="2025-07-19">
+          </div>
+
+          <div class="filter-group">
+            <h4>المرافق</h4>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="wifi">
+                <label for="wifi">📶 واي فاي</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="pool">
+                <label for="pool">🏊 مسبح</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="spa">
+                <label for="spa">💆 سبا</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="gym">
+                <label for="gym">🏋️ نادي صحي</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="parking">
+                <label for="parking">🚗 موقف سيارات</label>
+              </div>
             </div>
-            <div class="form-group">
-                <label>الضيوف والغرف</label>
-                <select>
-                    <option>2 بالغين في غرفة واحدة</option>
-                </select>
+          </div>
+
+          <div class="filter-group">
+            <h4>نوع الإقامة</h4>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="hotel">
+                <label for="hotel">🏨 فندق</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="resort">
+                <label for="resort">🏖️ منتجع</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="apartment">
+                <label for="apartment">🏠 شقة</label>
+              </div>
             </div>
-            <button type="submit" class="search-btn">بحث</button>
-        </form>
+          </div>
+
+          <button class="apply-filters-btn">تطبيق الفلاتر</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Filters and Sort Bar -->
-    <div class="filters-bar">
-        <div class="dropdown">
-            <button class="filter-btn">
-                <span>🔍</span>
-                <span>بحث</span>
-            </button>
-        </div>
-
-        <div class="dropdown">
-            <button class="filter-btn" onclick="toggleDropdown('filters')">
-                <span>⚙️</span>
-                <span>الفلاتر</span>
-                <span>▼</span>
-            </button>
-            <div class="dropdown-menu" id="filters-dropdown">
-                <div class="filter-dropdown-content">
-                    <div class="filter-group">
-                        <h4>السعر</h4>
-                        <div class="price-inputs">
-                            <input type="number" placeholder="من" min="0">
-                            <input type="number" placeholder="إلى" min="0">
-                        </div>
-                    </div>
-                    
-                    <div class="filter-group">
-                        <h4>تقييم النجوم</h4>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="stars5">
-                                <label for="stars5">5 نجوم</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="stars4">
-                                <label for="stars4">4 نجوم</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="stars3">
-                                <label for="stars3">3 نجوم</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4>المرافق</h4>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="wifi">
-                                <label for="wifi">📶 واي فاي</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="pool">
-                                <label for="pool">🏊 مسبح</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="spa">
-                                <label for="spa">💆 سبا</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="gym">
-                                <label for="gym">🏋️ نادي صحي</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="parking">
-                                <label for="parking">🚗 موقف سيارات</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4>نوع الإقامة</h4>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="hotel">
-                                <label for="hotel">🏨 فندق</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="resort">
-                                <label for="resort">🏖️ منتجع</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="apartment">
-                                <label for="apartment">🏠 شقة</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="apply-filters-btn">تطبيق الفلاتر</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="dropdown">
-            <button class="sort-btn" onclick="toggleDropdown('sort')">
-                <span>📊</span>
-                <span id="sort-text">الفرز</span>
-                <span>▼</span>
-            </button>
-            <div class="dropdown-menu" id="sort-dropdown">
-                <div class="dropdown-item" onclick="selectSort('الأكثر توصية')">الأكثر توصية</div>
-                <div class="dropdown-item" onclick="selectSort('السعر: من الأقل للأعلى')">السعر: من الأقل للأعلى</div>
-                <div class="dropdown-item" onclick="selectSort('السعر: من الأعلى للأقل')">السعر: من الأعلى للأقل</div>
-                <div class="dropdown-item" onclick="selectSort('التقييم الأعلى')">التقييم الأعلى</div>
-                <div class="dropdown-item" onclick="selectSort('المسافة من المركز')">المسافة من المركز</div>
-            </div>
-        </div>
-
-        <button class="filter-btn map-btn">
-            <span>🗺️</span>
-            <span>عرض الخريطة</span>
-        </button>
+    <div class="dropdown">
+      <button class="filter-sort-btn" onclick="toggleDropdown('sort')">
+        <i class="fas fa-sort"></i>
+        <span id="sort-text">الفرز</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="dropdown-content" id="sort-dropdown">
+        <div class="dropdown-option" onclick="selectSort('الأكثر توصية')">الأكثر توصية</div>
+        <div class="dropdown-option" onclick="selectSort('السعر: من الأقل للأعلى')">السعر: من الأقل للأعلى</div>
+        <div class="dropdown-option" onclick="selectSort('السعر: من الأعلى للأقل')">السعر: من الأعلى للأقل</div>
+        <div class="dropdown-option" onclick="selectSort('التقييم الأعلى')">التقييم الأعلى</div>
+        <div class="dropdown-option" onclick="selectSort('المسافة من المركز')">المسافة من المركز</div>
+      </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Sidebar Filters (Desktop) -->
-        <aside class="sidebar">
-            <div class="results-count">22 من 22 نتيجة</div>
-            
-            <div class="filter-section">
-                <div class="filter-title">الفلاتر الأكثر استخداماً</div>
-                <div class="filter-option">
-                    <input type="checkbox" id="free-cancel">
-                    <label for="free-cancel">إلغاء الحجز مجاني</label>
-                    <span class="filter-count">4</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="breakfast">
-                    <label for="breakfast">شامل وجبة الفطور</label>
-                    <span class="filter-count">15</span>
-                </div>
+    <button class="filter-sort-btn" style="margin-right: auto;">
+      <i class="fas fa-map"></i>
+      <span>عرض الخريطة</span>
+    </button>
+  </div>
+
+  <!-- المحتوى الرئيسي -->
+  <div class="main-content">
+    <!-- الشريط الجانبي للفلاتر (الشاشات الكبيرة) -->
+    <aside class="sidebar">
+      <div class="results-count">22 من 22 نتيجة</div>
+      
+      <div class="filter-section">
+        <div class="filter-title">الفلاتر الأكثر استخداماً</div>
+        <div class="filter-option">
+          <input type="checkbox" id="free-cancel">
+          <label for="free-cancel">إلغاء الحجز مجاني</label>
+          <span class="filter-count">4</span>
+        </div>
+        <div class="filter-option">
+          <input type="checkbox" id="breakfast">
+          <label for="breakfast">شامل وجبة الفطور</label>
+          <span class="filter-count">15</span>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-title">السعر</div>
+        <div class="price-range">
+          <div class="price-inputs">
+            <input type="number" placeholder="203" min="0">
+            <input type="number" placeholder="1,185" min="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-title">نجوم</div>
+        <div class="filter-option">
+          <input type="checkbox" id="stars2">
+          <label for="stars2">2 نجوم</label>
+          <span class="filter-count">3</span>
+        </div>
+        <div class="filter-option">
+          <input type="checkbox" id="stars3-sidebar">
+          <label for="stars3-sidebar">3 نجوم</label>
+          <span class="filter-count">19</span>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-title">وسائل الراحة في الفندق</div>
+        <div class="filter-option">
+          <input type="checkbox" id="parking-sidebar">
+          <label for="parking-sidebar">موقف سيارات</label>
+          <span class="filter-count">10</span>
+        </div>
+        <div class="filter-option">
+          <input type="checkbox" id="pool-sidebar">
+          <label for="pool-sidebar">حوض سباحة</label>
+          <span class="filter-count">1</span>
+        </div>
+        <div class="filter-option">
+          <input type="checkbox" id="restaurant">
+          <label for="restaurant">مطعم</label>
+          <span class="filter-count">10</span>
+        </div>
+        <div class="filter-option">
+          <input type="checkbox" id="fitness">
+          <label for="fitness">مركز لياقة بدنية</label>
+          <span class="filter-count">13</span>
+        </div>
+        <div class="filter-option">
+          <input type="checkbox" id="wifi-sidebar">
+          <label for="wifi-sidebar">انترنت سريع</label>
+          <span class="filter-count">19</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- قائمة الفنادق -->
+    <main class="hotels-list">
+      <!-- كارد الفندق 1 -->
+      <div class="hotel-card">
+        <div class="hotel-content">
+          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=200&h=150&fit=crop" alt="فندق برج العرب" class="hotel-image">
+          
+          <div class="hotel-info">
+            <h3 class="hotel-name">فندق برج العرب الفاخر</h3>
+            <div class="hotel-rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-score">9.2</span>
+              <span class="rating-count">(438 تقييم)</span>
             </div>
-
-            <div class="filter-section">
-                <div class="filter-title">السعر</div>
-                <div class="price-range">
-                    <div class="price-inputs">
-                        <input type="number" placeholder="203" min="0">
-                        <input type="number" placeholder="1,185" min="0">
-                    </div>
-                </div>
+            <div class="hotel-location">جميرا، دبي</div>
+            <div class="hotel-amenities">
+              <span class="amenity">📶 واي فاي</span>
+              <span class="amenity">🏊 مسبح</span>
+              <span class="amenity">💆 سبا</span>
+              <span class="amenity">🚗 موقف سيارات</span>
             </div>
-
-            <div class="filter-section">
-                <div class="filter-title">نجوم</div>
-                <div class="filter-option">
-                    <input type="checkbox" id="stars2">
-                    <label for="stars2">2 نجوم</label>
-                    <span class="filter-count">3</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="stars3-sidebar">
-                    <label for="stars3-sidebar">3 نجوم</label>
-                    <span class="filter-count">19</span>
-                </div>
+            <div class="hotel-reviews">
+              <span class="review-tag">غرف نظيفة</span>
+              <span class="review-tag">موقع ممتاز</span>
+              <span class="review-tag">إقامة مريحة</span>
+              <span class="review-tag">مرافق جيدة</span>
             </div>
+          </div>
 
-            <div class="filter-section">
-                <div class="filter-title">وسائل الراحة في الفندق</div>
-                <div class="filter-option">
-                    <input type="checkbox" id="parking-sidebar">
-                    <label for="parking-sidebar">موقف سيارات</label>
-                    <span class="filter-count">10</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="pool-sidebar">
-                    <label for="pool-sidebar">حوض سباحة</label>
-                    <span class="filter-count">1</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="restaurant">
-                    <label for="restaurant">مطعم</label>
-                    <span class="filter-count">10</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="fitness">
-                    <label for="fitness">مركز لياقة بدنية</label>
-                    <span class="filter-count">13</span>
-                </div>
-                <div class="filter-option">
-                    <input type="checkbox" id="wifi-sidebar">
-                    <label for="wifi-sidebar">انترنت سريع</label>
-                    <span class="filter-count">19</span>
-                </div>
+          <div class="price-box">
+            <div class="price-info">
+              <div class="booking-site">Agoda</div>
+              <div class="price">1,250 <span class="price-currency">ر.س</span></div>
+              <div class="price-period">لليلة الواحدة</div>
+              <div class="payment-options">الدفع مع (MADA) مقبول</div>
             </div>
-        </aside>
+            <button class="book-btn">احجز الآن</button>
+          </div>
+        </div>
+      </div>
 
-        <!-- Hotels List -->
-        <main class="hotels-list">
-            <!-- Hotel Card 1 -->
-            <div class="hotel-card">
-                <div class="hotel-content">
-                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=200&h=150&fit=crop" alt="فندق برج العرب" class="hotel-image">
-                    
-                    <div class="hotel-info">
-                        <h3 class="hotel-name">فندق برج العرب الفاخر</h3>
-                        <div class="hotel-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="rating-score">9.2</span>
-                            <span class="rating-count">(438 تقييم)</span>
-                        </div>
-                        <div class="hotel-location">جميرا، دبي</div>
-                        <div class="hotel-amenities">
-                            <span class="amenity">📶 واي فاي</span>
-                            <span class="amenity">🏊 مسبح</span>
-                            <span class="amenity">💆 سبا</span>
-                            <span class="amenity">🚗 موقف سيارات</span>
-                        </div>
-                        <div class="hotel-reviews">
-                            <span class="review-tag">غرف نظيفة</span>
-                            <span class="review-tag">موقع ممتاز</span>
-                            <span class="review-tag">إقامة مريحة</span>
-                            <span class="review-tag">مرافق جيدة</span>
-                        </div>
-                    </div>
-
-                    <div class="price-box">
-                        <div class="price-info">
-                            <div class="booking-site">Agoda</div>
-                            <div class="price">1,250 <span class="price-currency">ر.س</span></div>
-                            <div class="price-period">لليلة الواحدة</div>
-                            <div class="payment-options">الدفع مع (MADA) مقبول</div>
-                        </div>
-                        <button class="book-btn">احجز الآن</button>
-                    </div>
-                </div>
+      <!-- كارد الفندق 2 -->
+      <div class="hotel-card">
+        <div class="hotel-content">
+          <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=200&h=150&fit=crop" alt="فندق أتلانتس النخلة" class="hotel-image">
+          
+          <div class="hotel-info">
+            <h3 class="hotel-name">فندق أتلانتس النخلة</h3>
+            <div class="hotel-rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-score">8.8</span>
+              <span class="rating-count">(582 تقييم)</span>
             </div>
-
-            <!-- Hotel Card 2 -->
-            <div class="hotel-card">
-                <div class="hotel-content">
-                    <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=200&h=150&fit=crop" alt="فندق أتلانتس النخلة" class="hotel-image">
-                    
-                    <div class="hotel-info">
-                        <h3 class="hotel-name">فندق أتلانتس النخلة</h3>
-                        <div class="hotel-rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="rating-score">8.8</span>
-                            <span class="rating-count">(582 تقييم)</span>
-                        </div>
-                        <div class="hotel-location">نخلة جميرا، دبي</div>
-                        <div class="hotel-amenities">
-                            <span class="amenity">📶 واي فاي</span>
-                            <span class="amenity">🏊 مسبح</span>
-                            <span class="amenity">🏋️ نادي صحي</span>
-                            <span class="amenity">🍽️ مطعم</span>
-                        </div>
-                        <div class="hotel-reviews">
-                            <span class="review-tag">أسرّة مريحة</span>
-                            <span class="review-tag">غرف نظيفة</span>
-                            <span class="review-tag">موقع جيد</span>
-                            <span class="review-tag">إفطار ممتاز</span>
-                        </div>
-                    </div>
-
-                    <div class="price-box">
-                        <div class="price-info">
-                            <div class="booking-site">Wego</div>
-                            <div class="price">890 <span class="price-currency">ر.س</span></div>
-                            <div class="price-period">لليلة الواحدة</div>
-                            <div class="payment-options">الدفع مع (MADA) مقبول</div>
-                        </div>
-                        <button class="book-btn">احجز الآن</button>
-                    </div>
-                </div>
+            <div class="hotel-location">نخلة جميرا، دبي</div>
+            <div class="hotel-amenities">
+              <span class="amenity">📶 واي فاي</span>
+              <span class="amenity">🏊 مسبح</span>
+              <span class="amenity">🏋️ نادي صحي</span>
+              <span class="amenity">🍽️ مطعم</span>
             </div>
-
-            <!-- Hotel Card 3 -->
-            <div class="hotel-card">
-                <div class="hotel-content">
-                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=200&h=150&fit=crop" alt="فندق جميرا بيتش" class="hotel-image">
-                    
-                    <div class="hotel-info">
-                        <h3 class="hotel-name">فندق جميرا بيتش</h3>
-                        <div class="hotel-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="rating-score">8.5</span>
-                            <span class="rating-count">(324 تقييم)</span>
-                        </div>
-                        <div class="hotel-location">جميرا بيتش، دبي</div>
-                        <div class="hotel-amenities">
-                            <span class="amenity">📶 واي فاي</span>
-                            <span class="amenity">🏖️ شاطئ خاص</span>
-                            <span class="amenity">🚗 موقف سيارات</span>
-                            <span class="amenity">🍽️ مطعم</span>
-                        </div>
-                        <div class="hotel-reviews">
-                            <span class="review-tag">موقع ممتاز</span>
-                            <span class="review-tag">أسعار معقولة</span>
-                            <span class="review-tag">بيئة هادئة</span>
-                        </div>
-                    </div>
-
-                    <div class="price-box">
-                        <div class="price-info">
-                            <div class="booking-site">Booking.com</div>
-                            <div class="price">650 <span class="price-currency">ر.س</span></div>
-                            <div class="price-period">لليلة الواحدة</div>
-                            <div class="payment-options">إلغاء مجاني</div>
-                        </div>
-                        <button class="book-btn">احجز الآن</button>
-                    </div>
-                </div>
+            <div class="hotel-reviews">
+              <span class="review-tag">أسرّة مريحة</span>
+              <span class="review-tag">غرف نظيفة</span>
+              <span class="review-tag">موقع جيد</span>
+              <span class="review-tag">إفطار ممتاز</span>
             </div>
+          </div>
 
-            <!-- Hotel Card 4 -->
-            <div class="hotel-card">
-                <div class="hotel-content">
-                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=150&fit=crop" alt="فندق دبي مول" class="hotel-image">
-                    
-                    <div class="hotel-info">
-                        <h3 class="hotel-name">فندق دبي مول الحديث</h3>
-                        <div class="hotel-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="rating-score">8.2</span>
-                            <span class="rating-count">(267 تقييم)</span>
-                        </div>
-                        <div class="hotel-location">وسط المدينة، دبي</div>
-                        <div class="hotel-amenities">
-                            <span class="amenity">📶 واي فاي</span>
-                            <span class="amenity">🏋️ نادي صحي</span>
-                            <span class="amenity">🚗 موقف سيارات</span>
-                            <span class="amenity">🛎️ خدمة الغرف</span>
-                        </div>
-                        <div class="hotel-reviews">
-                            <span class="review-tag">موقع مركزي</span>
-                            <span class="review-tag">غرف واسعة</span>
-                            <span class="review-tag">خدمة جيدة</span>
-                        </div>
-                    </div>
-
-                    <div class="price-box">
-                        <div class="price-info">
-                            <div class="booking-site">Agoda</div>
-                            <div class="price">480 <span class="price-currency">ر.س</span></div>
-                            <div class="price-period">لليلة الواحدة</div>
-                            <div class="payment-options">الدفع مع (MADA) مقبول</div>
-                        </div>
-                        <button class="book-btn">احجز الآن</button>
-                    </div>
-                </div>
+          <div class="price-box">
+            <div class="price-info">
+              <div class="booking-site">Wego</div>
+              <div class="price">890 <span class="price-currency">ر.س</span></div>
+              <div class="price-period">لليلة الواحدة</div>
+              <div class="payment-options">الدفع مع (MADA) مقبول</div>
             </div>
+            <button class="book-btn">احجز الآن</button>
+          </div>
+        </div>
+      </div>
 
-            <!-- Hotel Card 5 -->
-            <div class="hotel-card">
-                <div class="hotel-content">
-                    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=200&h=150&fit=crop" alt="فندق مارينا دبي" class="hotel-image">
-                    
-                    <div class="hotel-info">
-                        <h3 class="hotel-name">فندق مارينا دبي</h3>
-                        <div class="hotel-rating">
-                            <span class="stars">★★★☆☆</span>
-                            <span class="rating-score">7.8</span>
-                            <span class="rating-count">(189 تقييم)</span>
-                        </div>
-                        <div class="hotel-location">مارينا دبي، دبي</div>
-                        <div class="hotel-amenities">
-                            <span class="amenity">📶 واي فاي</span>
-                            <span class="amenity">🏊 مسبح</span>
-                            <span class="amenity">🚗 موقف سيارات</span>
-                        </div>
-                        <div class="hotel-reviews">
-                            <span class="review-tag">أسعار جيدة</span>
-                            <span class="review-tag">موقع مناسب</span>
-                            <span class="review-tag">غرف نظيفة</span>
-                        </div>
-                    </div>
-
-                    <div class="price-box">
-                        <div class="price-info">
-                            <div class="booking-site">Wego</div>
-                            <div class="price">320 <span class="price-currency">ر.س</span></div>
-                            <div class="price-period">لليلة الواحدة</div>
-                            <div class="payment-options">إمكانية الدفع لاحقاً</div>
-                        </div>
-                        <button class="book-btn">احجز الآن</button>
-                    </div>
-                </div>
+      <!-- كارد الفندق 3 -->
+      <div class="hotel-card">
+        <div class="hotel-content">
+          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=200&h=150&fit=crop" alt="فندق جميرا بيتش" class="hotel-image">
+          
+          <div class="hotel-info">
+            <h3 class="hotel-name">فندق جميرا بيتش</h3>
+            <div class="hotel-rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-score">8.5</span>
+              <span class="rating-count">(324 تقييم)</span>
             </div>
-        </main>
-    </div>
+            <div class="hotel-location">جميرا بيتش، دبي</div>
+            <div class="hotel-amenities">
+              <span class="amenity">📶 واي فاي</span>
+              <span class="amenity">🏖️ شاطئ خاص</span>
+              <span class="amenity">🚗 موقف سيارات</span>
+              <span class="amenity">🍽️ مطعم</span>
+            </div>
+            <div class="hotel-reviews">
+              <span class="review-tag">موقع ممتاز</span>
+              <span class="review-tag">أسعار معقولة</span>
+              <span class="review-tag">بيئة هادئة</span>
+            </div>
+          </div>
 
-    <script>
-        // Toggle dropdown menus
-        function toggleDropdown(type) {
-            const dropdown = document.getElementById(type + '-dropdown');
-            const allDropdowns = document.querySelectorAll('.dropdown-menu');
-            
-            // Close all other dropdowns
-            allDropdowns.forEach(menu => {
-                if (menu.id !== type + '-dropdown') {
-                    menu.style.display = 'none';
-                    menu.parentElement.classList.remove('active');
-                }
-            });
-            
-            // Toggle current dropdown
-            if (dropdown.style.display === 'block') {
-                dropdown.style.display = 'none';
-                dropdown.parentElement.classList.remove('active');
-            } else {
-                dropdown.style.display = 'block';
-                dropdown.parentElement.classList.add('active');
-            }
+          <div class="price-box">
+            <div class="price-info">
+              <div class="booking-site">Booking.com</div>
+              <div class="price">650 <span class="price-currency">ر.س</span></div>
+              <div class="price-period">لليلة الواحدة</div>
+              <div class="payment-options">إلغاء مجاني</div>
+            </div>
+            <button class="book-btn">احجز الآن</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- كارد الفندق 4 -->
+      <div class="hotel-card">
+        <div class="hotel-content">
+          <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=150&fit=crop" alt="فندق دبي مول" class="hotel-image">
+          
+          <div class="hotel-info">
+            <h3 class="hotel-name">فندق دبي مول الحديث</h3>
+            <div class="hotel-rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-score">8.2</span>
+              <span class="rating-count">(267 تقييم)</span>
+            </div>
+            <div class="hotel-location">وسط المدينة، دبي</div>
+            <div class="hotel-amenities">
+              <span class="amenity">📶 واي فاي</span>
+              <span class="amenity">🏋️ نادي صحي</span>
+              <span class="amenity">🚗 موقف سيارات</span>
+              <span class="amenity">🛎️ خدمة الغرف</span>
+            </div>
+            <div class="hotel-reviews">
+              <span class="review-tag">موقع مركزي</span>
+              <span class="review-tag">غرف واسعة</span>
+              <span class="review-tag">خدمة جيدة</span>
+            </div>
+          </div>
+
+          <div class="price-box">
+            <div class="price-info">
+              <div class="booking-site">Agoda</div>
+              <div class="price">480 <span class="price-currency">ر.س</span></div>
+              <div class="price-period">لليلة الواحدة</div>
+              <div class="payment-options">الدفع مع (MADA) مقبول</div>
+            </div>
+            <button class="book-btn">احجز الآن</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- كارد الفندق 5 -->
+      <div class="hotel-card">
+        <div class="hotel-content">
+          <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=200&h=150&fit=crop" alt="فندق مارينا دبي" class="hotel-image">
+          
+          <div class="hotel-info">
+            <h3 class="hotel-name">فندق مارينا دبي</h3>
+            <div class="hotel-rating">
+              <span class="stars">★★★☆☆</span>
+              <span class="rating-score">7.8</span>
+              <span class="rating-count">(189 تقييم)</span>
+            </div>
+            <div class="hotel-location">مارينا دبي، دبي</div>
+            <div class="hotel-amenities">
+              <span class="amenity">📶 واي فاي</span>
+              <span class="amenity">🏊 مسبح</span>
+              <span class="amenity">🚗 موقف سيارات</span>
+            </div>
+            <div class="hotel-reviews">
+              <span class="review-tag">أسعار جيدة</span>
+              <span class="review-tag">موقع مناسب</span>
+              <span class="review-tag">غرف نظيفة</span>
+            </div>
+          </div>
+
+          <div class="price-box">
+            <div class="price-info">
+              <div class="booking-site">Wego</div>
+              <div class="price">320 <span class="price-currency">ر.س</span></div>
+              <div class="price-period">لليلة الواحدة</div>
+              <div class="payment-options">إمكانية الدفع لاحقاً</div>
+            </div>
+            <button class="book-btn">احجز الآن</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // تبديل الوضع النهاري/المسائي
+    function toggleMode() {
+      const body = document.body;
+      const modeIcon = document.getElementById('mode-icon');
+      
+      if (body.classList.contains('light-mode')) {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        modeIcon.textContent = '🌞';
+      } else {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        modeIcon.textContent = '🌙';
+      }
+    }
+
+    // تبديل القوائم المنسدلة
+    function toggleDropdown(type) {
+      const dropdown = document.getElementById(type + '-dropdown');
+      const allDropdowns = document.querySelectorAll('.dropdown-content');
+      
+      // إغلاق جميع القوائم الأخرى
+      allDropdowns.forEach(menu => {
+        if (menu.id !== type + '-dropdown') {
+          menu.style.display = 'none';
+          menu.parentElement.classList.remove('active');
         }
+      });
+      
+      // تبديل القائمة الحالية
+      if (dropdown.style.display === 'block') {
+        dropdown.style.display = 'none';
+        dropdown.parentElement.classList.remove('active');
+      } else {
+        dropdown.style.display = 'block';
+        dropdown.parentElement.classList.add('active');
+      }
+    }
 
-        // Select sort option
-        function selectSort(option) {
-            document.getElementById('sort-text').textContent = option;
-            document.getElementById('sort-dropdown').style.display = 'none';
-            document.getElementById('sort-dropdown').parentElement.classList.remove('active');
+    // اختيار خيار الفرز
+    function selectSort(option) {
+      document.getElementById('sort-text').textContent = option;
+      document.getElementById('sort-dropdown').style.display = 'none';
+      document.getElementById('sort-dropdown').parentElement.classList.remove('active');
+    }
+
+    // إغلاق القوائم المنسدلة عند النقر خارجها
+    document.addEventListener('click', function(event) {
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        if (!dropdown.contains(event.target)) {
+          const menu = dropdown.querySelector('.dropdown-content');
+          if (menu) {
+            menu.style.display = 'none';
+            dropdown.classList.remove('active');
+          }
         }
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
-            const dropdowns = document.querySelectorAll('.dropdown');
-            dropdowns.forEach(dropdown => {
-                if (!dropdown.contains(event.target)) {
-                    const menu = dropdown.querySelector('.dropdown-menu');
-                    if (menu) {
-                        menu.style.display = 'none';
-                        dropdown.classList.remove('active');
-                    }
-                }
-            });
-        });
-
-        // Hamburger menu toggle
-        document.querySelector('.hamburger').addEventListener('click', function() {
-            const navMenu = document.querySelector('.nav-menu');
-            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
-        });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
+
