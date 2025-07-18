@@ -150,11 +150,11 @@
   /* أنماط مربع حجز الفنادق */
   .hotel-booking-widget {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 20px;
-    padding: 30px;
-    margin: 20px auto;
-    max-width: 1000px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 800px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     position: relative;
     overflow: hidden;
   }
@@ -173,61 +173,74 @@
 
   .booking-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     position: relative;
     z-index: 2;
   }
 
   .booking-header h2 {
     color: white;
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
   }
 
   .booking-header p {
     color: rgba(255,255,255,0.9);
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin: 0;
   }
 
   .booking-form {
     background: white;
-    border-radius: 15px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     position: relative;
     z-index: 2;
   }
 
   .form-row {
     display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 15px;
     flex-wrap: wrap;
   }
 
   .form-group {
     flex: 1;
-    min-width: 200px;
+    min-width: 120px;
     position: relative;
+  }
+
+  .form-group.full-width {
+    flex: 1;
+    min-width: 100%;
+  }
+
+  .dates-row .form-group {
+    min-width: calc(50% - 6px);
+  }
+
+  .guests-row .form-group {
+    min-width: calc(33.333% - 8px);
   }
 
   .form-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 600;
     color: #333;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .form-control {
     width: 100%;
-    padding: 12px 15px;
+    padding: 10px 12px;
     border: 2px solid #e1e5e9;
-    border-radius: 10px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
     background: #fff;
   }
@@ -240,35 +253,36 @@
 
   .input-icon {
     position: absolute;
-    left: 15px;
+    left: 12px;
     top: 50%;
     transform: translateY(-50%);
     color: #999;
     pointer-events: none;
+    font-size: 0.85rem;
   }
 
   .form-control.with-icon {
-    padding-left: 45px;
+    padding-left: 35px;
   }
 
   .search-btn {
     background: linear-gradient(135deg, #ff6b6b, #ee5a24);
     color: white;
     border: none;
-    padding: 15px 40px;
-    border-radius: 50px;
-    font-size: 1.1rem;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(238, 90, 36, 0.4);
+    box-shadow: 0 4px 12px rgba(238, 90, 36, 0.4);
     width: 100%;
-    margin-top: 10px;
+    margin-top: 8px;
   }
 
   .search-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(238, 90, 36, 0.6);
+    box-shadow: 0 6px 20px rgba(238, 90, 36, 0.6);
   }
 
   .search-btn:active {
@@ -511,8 +525,72 @@
 
   /* أنماط متجاوبة */
   @media (max-width: 768px) {
+    .hotel-booking-widget {
+      margin: 10px;
+      padding: 15px;
+      border-radius: 12px;
+    }
+    
+    .booking-header h2 {
+      font-size: 1.5rem;
+    }
+    
+    .booking-header p {
+      font-size: 0.9rem;
+    }
+    
+    .booking-form {
+      padding: 15px;
+    }
+    
+    .form-row {
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    
+    .dates-row .form-group {
+      min-width: calc(50% - 4px);
+    }
+    
+    .guests-row .form-group {
+      min-width: calc(33.333% - 5px);
+    }
+    
+    .form-group label {
+      font-size: 0.8rem;
+      margin-bottom: 4px;
+    }
+    
+    .form-control {
+      padding: 8px 10px;
+      font-size: 0.85rem;
+    }
+    
+    .form-control.with-icon {
+      padding-left: 30px;
+    }
+    
+    .input-icon {
+      left: 10px;
+      font-size: 0.8rem;
+    }
+    
+    .search-btn {
+      padding: 10px 25px;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+    
     .form-row {
       flex-direction: column;
+    }
+    
+    .dates-row {
+      flex-direction: row;
+    }
+    
+    .guests-row {
+      flex-direction: row;
     }
     
     .hotel-card-content {
@@ -528,9 +606,19 @@
       min-width: auto;
       text-align: left;
     }
+  }
+
+  @media (max-width: 480px) {
+    .guests-row {
+      flex-direction: column;
+    }
     
-    .booking-header h2 {
-      font-size: 1.8rem;
+    .guests-row .form-group {
+      min-width: 100%;
+    }
+    
+    .dates-row .form-group {
+      min-width: calc(50% - 4px);
     }
   }
 
@@ -670,8 +758,9 @@
       </div>
       
       <div class="booking-form">
+        <!-- صف الوجهة -->
         <div class="form-row">
-          <div class="form-group">
+          <div class="form-group full-width">
             <label for="destination">الوجهة</label>
             <div style="position: relative;">
               <i class="fas fa-map-marker-alt input-icon"></i>
@@ -679,7 +768,10 @@
               <div id="destination-suggestions" class="suggestions-dropdown"></div>
             </div>
           </div>
-          
+        </div>
+        
+        <!-- صف التواريخ -->
+        <div class="form-row dates-row">
           <div class="form-group">
             <label for="checkin">تاريخ الوصول</label>
             <div style="position: relative;">
@@ -697,17 +789,18 @@
           </div>
         </div>
         
-        <div class="form-row">
+        <!-- صف الغرف والضيوف -->
+        <div class="form-row guests-row">
           <div class="form-group">
-            <label for="rooms">عدد الغرف</label>
+            <label for="rooms">الغرف</label>
             <div style="position: relative;">
               <i class="fas fa-bed input-icon"></i>
               <select id="rooms" class="form-control with-icon">
-                <option value="1">غرفة واحدة</option>
-                <option value="2">غرفتان</option>
-                <option value="3">3 غرف</option>
-                <option value="4">4 غرف</option>
-                <option value="5">5+ غرف</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5+</option>
               </select>
             </div>
           </div>
@@ -717,11 +810,11 @@
             <div style="position: relative;">
               <i class="fas fa-user input-icon"></i>
               <select id="adults" class="form-control with-icon">
-                <option value="1">بالغ واحد</option>
-                <option value="2">بالغان</option>
-                <option value="3">3 بالغين</option>
-                <option value="4">4 بالغين</option>
-                <option value="5">5+ بالغين</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5+</option>
               </select>
             </div>
           </div>
@@ -731,11 +824,11 @@
             <div style="position: relative;">
               <i class="fas fa-child input-icon"></i>
               <select id="children" class="form-control with-icon">
-                <option value="0">بدون أطفال</option>
-                <option value="1">طفل واحد</option>
-                <option value="2">طفلان</option>
-                <option value="3">3 أطفال</option>
-                <option value="4">4+ أطفال</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4+</option>
               </select>
             </div>
           </div>
@@ -1536,3 +1629,4 @@
     setInterval(showNextAd, 10000);
   </script>
 </body>
+</html
