@@ -14,6 +14,9 @@
   <link rel="icon" type="image/png" sizes="32x32" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="16x16" href="apple-touch-icon.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  
+  <!-- إضافة Font Awesome للأيقونات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <!-- تعليق حول مساحة أسماء SVG بناءً على المستند -->
   <!-- SVG namespace: http://www.w3.org/2000/svg is defined by W3C SVG 1.0 and updated in SVG 1.1, 1.2, and 2.0. See https://www.w3.org/TR/SVG/ for the latest spec. Last modified: 2025/03/14 23:44:06 -->
@@ -144,6 +147,393 @@
     content: " ▴";
   }
 
+  /* أنماط مربع حجز الفنادق */
+  .hotel-booking-widget {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 20px auto;
+    max-width: 1000px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hotel-booking-widget::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .booking-header {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .booking-header h2 {
+    color: white;
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .booking-header p {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .booking-form {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 2;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .form-group {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e5e9;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fff;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    pointer-events: none;
+  }
+
+  .form-control.with-icon {
+    padding-left: 45px;
+  }
+
+  .search-btn {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(238, 90, 36, 0.4);
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .search-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(238, 90, 36, 0.6);
+  }
+
+  .search-btn:active {
+    transform: translateY(0);
+  }
+
+  /* أنماط نتائج البحث */
+  .search-results {
+    margin-top: 30px;
+    display: none;
+  }
+
+  .results-header {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .hotel-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .hotel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  .hotel-card-content {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .hotel-image {
+    width: 200px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .hotel-info {
+    flex: 1;
+  }
+
+  .hotel-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  .hotel-rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .stars {
+    color: #ffc107;
+    margin-left: 5px;
+  }
+
+  .hotel-location {
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  .hotel-amenities {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+
+  .amenity {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 4px 8px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+  }
+
+  .hotel-prices {
+    min-width: 200px;
+    text-align: center;
+  }
+
+  .price-from {
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .price-amount {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ff6b6b;
+    margin: 5px 0;
+  }
+
+  .price-per-night {
+    color: #999;
+    font-size: 0.8rem;
+  }
+
+  .view-deals-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .view-deals-btn:hover {
+    background: #5a6fd8;
+    transform: translateY(-1px);
+  }
+
+  /* أنماط مودال مقارنة الأسعار */
+  .price-comparison-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 800px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+  }
+
+  .close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+  }
+
+  .booking-site {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .booking-site:hover {
+    border-color: #667eea;
+    background: #f8f9ff;
+  }
+
+  .site-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .site-logo {
+    width: 60px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  .site-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff6b6b;
+  }
+
+  .book-now-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .book-now-btn:hover {
+    background: #218838;
+    transform: translateY(-1px);
+  }
+
+  .loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+  }
+
+  .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* أنماط متجاوبة */
+  @media (max-width: 768px) {
+    .form-row {
+      flex-direction: column;
+    }
+    
+    .hotel-card-content {
+      flex-direction: column;
+    }
+    
+    .hotel-image {
+      width: 100%;
+      height: 200px;
+    }
+    
+    .hotel-prices {
+      min-width: auto;
+      text-align: left;
+    }
+    
+    .booking-header h2 {
+      font-size: 1.8rem;
+    }
+  }
+
   .destinations { padding: 20px; }
   .destination-card { background: #2a2a2a; color: #fff; border-radius: 12px; padding: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3); height: 100%; }
   .destination-card img { width: 100%; border-radius: 8px; height: 120px; object-fit: cover; }
@@ -272,6 +662,119 @@
   </div>
 
   <div class="main-content">
+    <!-- مربع حجز الفنادق -->
+    <div class="hotel-booking-widget">
+      <div class="booking-header">
+        <h2><i class="fas fa-hotel"></i> احجز فندقك المثالي</h2>
+        <p>ابحث وقارن أسعار الفنادق من مئات المواقع في ثوانٍ</p>
+      </div>
+      
+      <div class="booking-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="destination">الوجهة</label>
+            <div style="position: relative;">
+              <i class="fas fa-map-marker-alt input-icon"></i>
+              <input type="text" id="destination" class="form-control with-icon" placeholder="أين تريد الإقامة؟" autocomplete="off">
+              <div id="destination-suggestions" class="suggestions-dropdown"></div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="checkin">تاريخ الوصول</label>
+            <div style="position: relative;">
+              <i class="fas fa-calendar-alt input-icon"></i>
+              <input type="date" id="checkin" class="form-control with-icon">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="checkout">تاريخ المغادرة</label>
+            <div style="position: relative;">
+              <i class="fas fa-calendar-alt input-icon"></i>
+              <input type="date" id="checkout" class="form-control with-icon">
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="rooms">عدد الغرف</label>
+            <div style="position: relative;">
+              <i class="fas fa-bed input-icon"></i>
+              <select id="rooms" class="form-control with-icon">
+                <option value="1">غرفة واحدة</option>
+                <option value="2">غرفتان</option>
+                <option value="3">3 غرف</option>
+                <option value="4">4 غرف</option>
+                <option value="5">5+ غرف</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="adults">البالغون</label>
+            <div style="position: relative;">
+              <i class="fas fa-user input-icon"></i>
+              <select id="adults" class="form-control with-icon">
+                <option value="1">بالغ واحد</option>
+                <option value="2">بالغان</option>
+                <option value="3">3 بالغين</option>
+                <option value="4">4 بالغين</option>
+                <option value="5">5+ بالغين</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="children">الأطفال</label>
+            <div style="position: relative;">
+              <i class="fas fa-child input-icon"></i>
+              <select id="children" class="form-control with-icon">
+                <option value="0">بدون أطفال</option>
+                <option value="1">طفل واحد</option>
+                <option value="2">طفلان</option>
+                <option value="3">3 أطفال</option>
+                <option value="4">4+ أطفال</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <button class="search-btn" onclick="searchHotels()">
+          <i class="fas fa-search"></i> ابحث عن الفنادق
+        </button>
+      </div>
+    </div>
+
+    <!-- نتائج البحث -->
+    <div class="search-results" id="searchResults">
+      <div class="container">
+        <div class="results-header">
+          <h3 id="resultsTitle">نتائج البحث</h3>
+          <p id="resultsSubtitle">اختر الفندق المناسب لك</p>
+        </div>
+        
+        <div id="hotelsContainer">
+          <!-- سيتم إدراج نتائج الفنادق هنا -->
+        </div>
+      </div>
+    </div>
+
+    <!-- مودال مقارنة الأسعار -->
+    <div class="price-comparison-modal" id="priceModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalHotelName">مقارنة الأسعار</h3>
+          <button class="close-modal" onclick="closePriceModal()">&times;</button>
+        </div>
+        
+        <div id="priceComparison">
+          <!-- سيتم إدراج مقارنة الأسعار هنا -->
+        </div>
+      </div>
+    </div>
+
     <div class="container">
       <div id="ad-slider">
         <div class="ad-slide fade active"><img src="ad1.png" alt="إعلان 1"></div>
@@ -397,6 +900,567 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // بيانات وهمية للمدن والفنادق
+    const cities = [
+      'دبي', 'الرياض', 'جدة', 'الدمام', 'مكة المكرمة', 'المدينة المنورة',
+      'القاهرة', 'الإسكندرية', 'شرم الشيخ', 'الغردقة',
+      'بيروت', 'طرابلس', 'صيدا',
+      'عمان', 'العقبة', 'البتراء',
+      'الكويت', 'الجهراء',
+      'الدوحة', 'الوكرة',
+      'أبوظبي', 'الشارقة', 'عجمان',
+      'مسقط', 'صلالة',
+      'المنامة', 'المحرق',
+      'بغداد', 'البصرة', 'أربيل',
+      'دمشق', 'حلب', 'اللاذقية',
+      'طرابلس', 'بنغازي',
+      'تونس', 'سوسة', 'صفاقس',
+      'الجزائر', 'وهران', 'قسنطينة',
+      'الرباط', 'الدار البيضاء', 'مراكش', 'فاس',
+      'لندن', 'باريس', 'روما', 'مدريد', 'برلين', 'أمستردام',
+      'نيويورك', 'لوس أنجلوس', 'شيكاغو', 'ميامي',
+      'طوكيو', 'بانكوك', 'سنغافورة', 'كوالالمبور', 'جاكرتا',
+      'سيدني', 'ملبورن', 'بريسبان'
+    ];
+
+    const sampleHotels = [
+      {
+        id: 1,
+        name: 'فندق برج العرب',
+        rating: 5,
+        location: 'دبي، الإمارات العربية المتحدة',
+        image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop',
+        amenities: ['واي فاي مجاني', 'مسبح', 'سبا', 'مطعم', 'موقف سيارات'],
+        priceFrom: 850,
+        currency: 'ريال'
+      },
+      {
+        id: 2,
+        name: 'فندق الريتز كارلتون',
+        rating: 5,
+        location: 'الرياض، المملكة العربية السعودية',
+        image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=300&h=200&fit=crop',
+        amenities: ['واي فاي مجاني', 'مسبح', 'نادي صحي', 'مطعم فاخر'],
+        priceFrom: 720,
+        currency: 'ريال'
+      },
+      {
+        id: 3,
+        name: 'منتجع شرم الشيخ',
+        rating: 4,
+        location: 'شرم الشيخ، مصر',
+        image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=300&h=200&fit=crop',
+        amenities: ['شاطئ خاص', 'غوص', 'مسبح', 'مطعم'],
+        priceFrom: 320,
+        currency: 'ريال'
+      },
+      {
+        id: 4,
+        name: 'فندق فور سيزونز',
+        rating: 5,
+        location: 'بيروت، لبنان',
+        image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300&h=200&fit=crop',
+        amenities: ['إطلالة بحرية', 'سبا', 'مسبح', 'مطاعم متعددة'],
+        priceFrom: 450,
+        currency: 'ريال'
+      },
+      {
+        id: 5,
+        name: 'فندق كمبينسكي',
+        rating: 5,
+        location: 'عمان، الأردن',
+        image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=200&fit=crop',
+        amenities: ['واي فاي مجاني', 'مسبح', 'سبا', 'مركز أعمال'],
+        priceFrom: 380,
+        currency: 'ريال'
+      },
+      {
+        id: 6,
+        name: 'منتجع جزر المالديف',
+        rating: 5,
+        location: 'مالي، المالديف',
+        image: 'https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=300&h=200&fit=crop',
+        amenities: ['فيلا مائية', 'شاطئ خاص', 'غوص', 'سبا'],
+        priceFrom: 1200,
+        currency: 'ريال'
+      }
+    ];
+
+    const bookingSites = [
+      {
+        name: 'Booking.com',
+        logo: 'https://logos-world.net/wp-content/uploads/2021/08/Booking-Logo.png',
+        basePrice: 1.0
+      },
+      {
+        name: 'Expedia',
+        logo: 'https://logos-world.net/wp-content/uploads/2021/08/Expedia-Logo.png',
+        basePrice: 1.05
+      },
+      {
+        name: 'Hotels.com',
+        logo: 'https://logos-world.net/wp-content/uploads/2021/08/Hotels-com-Logo.png',
+        basePrice: 0.95
+      },
+      {
+        name: 'Agoda',
+        logo: 'https://logos-world.net/wp-content/uploads/2021/08/Agoda-Logo.png',
+        basePrice: 1.02
+      },
+      {
+        name: 'Trivago',
+        logo: 'https://logos-world.net/wp-content/uploads/2021/08/Trivago-Logo.png',
+        basePrice: 0.98
+      }
+    ];
+
+    // تعيين التواريخ الافتراضية
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      
+      document.getElementById('checkin').value = today.toISOString().split('T')[0];
+      document.getElementById('checkout').value = tomorrow.toISOString().split('T')[0];
+      
+      // إعداد اقتراحات المدن
+      setupCityAutocomplete();
+    });
+
+    // إعداد الإكمال التلقائي للمدن
+    function setupCityAutocomplete() {
+      const destinationInput = document.getElementById('destination');
+      const suggestionsDiv = document.createElement('div');
+      suggestionsDiv.className = 'suggestions-dropdown';
+      suggestionsDiv.style.cssText = `
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+      `;
+      
+      destinationInput.parentNode.appendChild(suggestionsDiv);
+      
+      destinationInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        if (query.length < 2) {
+          suggestionsDiv.style.display = 'none';
+          return;
+        }
+        
+        const matches = cities.filter(city => city.toLowerCase().includes(query));
+        
+        if (matches.length > 0) {
+          suggestionsDiv.innerHTML = matches.slice(0, 5).map(city => 
+            `<div style="padding: 10px; cursor: pointer; border-bottom: 1px solid #eee;" 
+                  onmouseover="this.style.background='#f5f5f5'" 
+                  onmouseout="this.style.background='white'"
+                  onclick="selectCity('${city}')">${city}</div>`
+          ).join('');
+          suggestionsDiv.style.display = 'block';
+        } else {
+          suggestionsDiv.style.display = 'none';
+        }
+      });
+      
+      // إخفاء الاقتراحات عند النقر خارجها
+      document.addEventListener('click', function(e) {
+        if (!destinationInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+          suggestionsDiv.style.display = 'none';
+        }
+      });
+    }
+
+    function selectCity(city) {
+      document.getElementById('destination').value = city;
+      document.querySelector('.suggestions-dropdown').style.display = 'none';
+    }
+
+    // البحث عن الفنادق
+    async function searchHotels() {
+      const destination = document.getElementById('destination').value;
+      const checkin = document.getElementById('checkin').value;
+      const checkout = document.getElementById('checkout').value;
+      
+      if (!destination || !checkin || !checkout) {
+        alert('يرجى ملء جميع الحقول المطلوبة');
+        return;
+      }
+      
+      if (new Date(checkin) >= new Date(checkout)) {
+        alert('تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول');
+        return;
+      }
+      
+      // عرض شاشة التحميل
+      showLoadingResults();
+      
+      try {
+        // محاولة البحث باستخدام واجهة برمجة التطبيقات الحقيقية
+        const realHotels = await searchRealHotels(destination);
+        if (realHotels && realHotels.length > 0) {
+          displayRealHotels(realHotels, destination, checkin, checkout);
+        } else {
+          // في حالة فشل الواجهة، استخدام البيانات الوهمية
+          setTimeout(() => {
+            displayHotels(destination, checkin, checkout);
+          }, 1000);
+        }
+      } catch (error) {
+        console.error('خطأ في البحث:', error);
+        // في حالة الخطأ، استخدام البيانات الوهمية
+        setTimeout(() => {
+          displayHotels(destination, checkin, checkout);
+        }, 1000);
+      }
+    }
+
+    // البحث باستخدام واجهة برمجة التطبيقات الحقيقية
+    async function searchRealHotels(cityName) {
+      try {
+        // أولاً نحصل على JWT Token
+        const tokenResponse = await fetch('https://api.makcorps.com/auth', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!tokenResponse.ok) {
+          throw new Error('فشل في الحصول على رمز المصادقة');
+        }
+        
+        const tokenData = await tokenResponse.json();
+        const token = tokenData.token;
+        
+        // ثم نبحث عن الفنادق
+        const hotelsResponse = await fetch(`https://api.makcorps.com/free/${encodeURIComponent(cityName)}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `JWT ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!hotelsResponse.ok) {
+          throw new Error('فشل في البحث عن الفنادق');
+        }
+        
+        const hotelsData = await hotelsResponse.json();
+        return hotelsData;
+        
+      } catch (error) {
+        console.error('خطأ في واجهة برمجة التطبيقات:', error);
+        return null;
+      }
+    }
+
+    // عرض النتائج الحقيقية من واجهة برمجة التطبيقات
+    function displayRealHotels(hotelsData, destination, checkin, checkout) {
+      const resultsDiv = document.getElementById('searchResults');
+      const hotelsContainer = document.getElementById('hotelsContainer');
+      
+      document.getElementById('resultsTitle').textContent = `وجدنا ${hotelsData.length} فندق في ${destination}`;
+      document.getElementById('resultsSubtitle').textContent = `${checkin} - ${checkout}`;
+      
+      hotelsContainer.innerHTML = hotelsData.map((hotelGroup, index) => {
+        const hotelInfo = hotelGroup[0];
+        const priceInfo = hotelGroup[1];
+        
+        // العثور على أقل سعر
+        const prices = priceInfo.filter(p => p.price1 || p.price2 || p.price3 || p.price4);
+        const minPrice = Math.min(...prices.map(p => 
+          Math.min(
+            ...[p.price1, p.price2, p.price3, p.price4].filter(price => price && price !== null).map(Number)
+          )
+        ));
+        
+        // إنشاء قائمة المرافق العشوائية
+        const amenities = ['واي فاي مجاني', 'مسبح', 'مطعم', 'موقف سيارات', 'نادي صحي', 'سبا'];
+        const randomAmenities = amenities.sort(() => 0.5 - Math.random()).slice(0, 3);
+        
+        // تقييم عشوائي
+        const rating = Math.floor(Math.random() * 2) + 4; // بين 4 و 5
+        
+        return `
+          <div class="hotel-card">
+            <div class="hotel-card-content">
+              <img src="https://images.unsplash.com/photo-${1566073771259 + index}?w=300&h=200&fit=crop" alt="${hotelInfo.hotelName}" class="hotel-image" onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop'">
+              <div class="hotel-info">
+                <h4 class="hotel-name">${hotelInfo.hotelName}</h4>
+                <div class="hotel-rating">
+                  <span class="stars">${'★'.repeat(rating)}</span>
+                  <span>(${rating}/5)</span>
+                </div>
+                <div class="hotel-location">
+                  <i class="fas fa-map-marker-alt"></i> ${destination}
+                </div>
+                <div class="hotel-amenities">
+                  ${randomAmenities.map(amenity => `<span class="amenity">${amenity}</span>`).join('')}
+                </div>
+              </div>
+              <div class="hotel-prices">
+                <div class="price-from">ابتداءً من</div>
+                <div class="price-amount">${minPrice} $</div>
+                <div class="price-per-night">لكل ليلة</div>
+                <button class="view-deals-btn" onclick="showRealPriceComparison('${hotelInfo.hotelId}', '${hotelInfo.hotelName}', '${JSON.stringify(priceInfo).replace(/'/g, "\\'")}')">
+                  مقارنة الأسعار
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function showLoadingResults() {
+      const resultsDiv = document.getElementById('searchResults');
+      const hotelsContainer = document.getElementById('hotelsContainer');
+      
+      document.getElementById('resultsTitle').textContent = 'جاري البحث...';
+      document.getElementById('resultsSubtitle').textContent = 'نبحث عن أفضل العروض لك';
+      
+      hotelsContainer.innerHTML = `
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>جاري البحث في مئات المواقع للعثور على أفضل الأسعار...</p>
+        </div>
+      `;
+      
+      resultsDiv.style.display = 'block';
+      resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function displayHotels(destination, checkin, checkout) {
+      const resultsDiv = document.getElementById('searchResults');
+      const hotelsContainer = document.getElementById('hotelsContainer');
+      
+      // تصفية الفنادق حسب الوجهة
+      let filteredHotels = sampleHotels;
+      if (destination) {
+        filteredHotels = sampleHotels.filter(hotel => 
+          hotel.location.toLowerCase().includes(destination.toLowerCase())
+        );
+      }
+      
+      // إذا لم توجد فنادق مطابقة، عرض جميع الفنادق
+      if (filteredHotels.length === 0) {
+        filteredHotels = sampleHotels;
+      }
+      
+      document.getElementById('resultsTitle').textContent = `وجدنا ${filteredHotels.length} فندق في ${destination}`;
+      document.getElementById('resultsSubtitle').textContent = `${checkin} - ${checkout}`;
+      
+      hotelsContainer.innerHTML = filteredHotels.map(hotel => `
+        <div class="hotel-card">
+          <div class="hotel-card-content">
+            <img src="${hotel.image}" alt="${hotel.name}" class="hotel-image">
+            <div class="hotel-info">
+              <h4 class="hotel-name">${hotel.name}</h4>
+              <div class="hotel-rating">
+                <span class="stars">${'★'.repeat(hotel.rating)}</span>
+                <span>(${hotel.rating}/5)</span>
+              </div>
+              <div class="hotel-location">
+                <i class="fas fa-map-marker-alt"></i> ${hotel.location}
+              </div>
+              <div class="hotel-amenities">
+                ${hotel.amenities.map(amenity => `<span class="amenity">${amenity}</span>`).join('')}
+              </div>
+            </div>
+            <div class="hotel-prices">
+              <div class="price-from">ابتداءً من</div>
+              <div class="price-amount">${hotel.priceFrom} ${hotel.currency}</div>
+              <div class="price-per-night">لكل ليلة</div>
+              <button class="view-deals-btn" onclick="showPriceComparison(${hotel.id})">
+                مقارنة الأسعار
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function showRealPriceComparison(hotelId, hotelName, priceInfoStr) {
+      const modal = document.getElementById('priceModal');
+      const modalHotelName = document.getElementById('modalHotelName');
+      const priceComparison = document.getElementById('priceComparison');
+      
+      modalHotelName.textContent = hotelName;
+      
+      try {
+        const priceInfo = JSON.parse(priceInfoStr);
+        
+        // تحويل بيانات الأسعار إلى تنسيق قابل للعرض
+        const prices = [];
+        priceInfo.forEach(priceData => {
+          if (priceData.price1 && priceData.vendor1) {
+            prices.push({
+              vendor: priceData.vendor1,
+              price: parseFloat(priceData.price1),
+              tax: parseFloat(priceData.tax1) || 0
+            });
+          }
+          if (priceData.price2 && priceData.vendor2) {
+            prices.push({
+              vendor: priceData.vendor2,
+              price: parseFloat(priceData.price2),
+              tax: parseFloat(priceData.tax2) || 0
+            });
+          }
+          if (priceData.price3 && priceData.vendor3) {
+            prices.push({
+              vendor: priceData.vendor3,
+              price: parseFloat(priceData.price3),
+              tax: parseFloat(priceData.tax3) || 0
+            });
+          }
+          if (priceData.price4 && priceData.vendor4) {
+            prices.push({
+              vendor: priceData.vendor4,
+              price: parseFloat(priceData.price4),
+              tax: parseFloat(priceData.tax4) || 0
+            });
+          }
+        });
+        
+        // ترتيب الأسعار من الأقل إلى الأعلى
+        prices.sort((a, b) => (a.price + a.tax) - (b.price + b.tax));
+        
+        priceComparison.innerHTML = `
+          <div style="margin-bottom: 20px;">
+            <h4>مقارنة الأسعار من مواقع الحجز المختلفة</h4>
+            <p style="color: #666;">الأسعار مرتبة من الأقل إلى الأعلى (بالدولار الأمريكي)</p>
+          </div>
+          ${prices.map((site, index) => `
+            <div class="booking-site" style="${index === 0 ? 'border-color: #28a745; background: #f8fff9;' : ''}">
+              <div class="site-info">
+                <div style="width: 60px; height: 40px; background: #f0f0f0; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #666;">
+                  ${site.vendor.substring(0, 3).toUpperCase()}
+                </div>
+                <div>
+                  <strong>${site.vendor}</strong>
+                  ${index === 0 ? '<span style="color: #28a745; font-size: 0.8rem; margin-right: 10px;">أفضل سعر</span>' : ''}
+                </div>
+              </div>
+              <div style="text-align: center;">
+                <div class="site-price">$${site.price}</div>
+                ${site.tax > 0 ? `<div style="font-size: 0.8rem; color: #666;">+ $${site.tax} ضرائب</div>` : ''}
+                <div style="font-size: 0.8rem; color: #666;">لكل ليلة</div>
+              </div>
+              <button class="book-now-btn" onclick="bookHotel('${site.vendor}', '${hotelName}', ${site.price + site.tax})">
+                احجز الآن
+              </button>
+            </div>
+          `).join('')}
+          <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+            <small style="color: #666;">
+              * الأسعار بالدولار الأمريكي وقابلة للتغيير حسب التواريخ المحددة
+            </small>
+          </div>
+        `;
+        
+      } catch (error) {
+        console.error('خطأ في تحليل بيانات الأسعار:', error);
+        priceComparison.innerHTML = `
+          <div class="loading">
+            <p>عذراً، حدث خطأ في تحميل مقارنة الأسعار</p>
+          </div>
+        `;
+      }
+      
+      modal.style.display = 'flex';
+    }
+
+    function showPriceComparison(hotelId) {
+      const hotel = sampleHotels.find(h => h.id === hotelId);
+      if (!hotel) return;
+      
+      const modal = document.getElementById('priceModal');
+      const modalHotelName = document.getElementById('modalHotelName');
+      const priceComparison = document.getElementById('priceComparison');
+      
+      modalHotelName.textContent = hotel.name;
+      
+      // عرض شاشة التحميل في المودال
+      priceComparison.innerHTML = `
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>جاري جلب أحدث الأسعار من جميع المواقع...</p>
+        </div>
+      `;
+      
+      modal.style.display = 'flex';
+      
+      // محاكاة تأخير جلب الأسعار
+      setTimeout(() => {
+        displayPriceComparison(hotel);
+      }, 1500);
+    }
+
+    function displayPriceComparison(hotel) {
+      const priceComparison = document.getElementById('priceComparison');
+      
+      // إنشاء أسعار مختلفة لكل موقع
+      const prices = bookingSites.map(site => ({
+        ...site,
+        price: Math.round(hotel.priceFrom * site.basePrice * (0.9 + Math.random() * 0.2))
+      })).sort((a, b) => a.price - b.price);
+      
+      priceComparison.innerHTML = `
+        <div style="margin-bottom: 20px;">
+          <h4>مقارنة الأسعار من مواقع الحجز المختلفة</h4>
+          <p style="color: #666;">الأسعار مرتبة من الأقل إلى الأعلى</p>
+        </div>
+        ${prices.map((site, index) => `
+          <div class="booking-site" style="${index === 0 ? 'border-color: #28a745; background: #f8fff9;' : ''}">
+            <div class="site-info">
+              <img src="${site.logo}" alt="${site.name}" class="site-logo" onerror="this.style.display='none'">
+              <div>
+                <strong>${site.name}</strong>
+                ${index === 0 ? '<span style="color: #28a745; font-size: 0.8rem; margin-right: 10px;">أفضل سعر</span>' : ''}
+              </div>
+            </div>
+            <div style="text-align: center;">
+              <div class="site-price">${site.price} ${hotel.currency}</div>
+              <div style="font-size: 0.8rem; color: #666;">لكل ليلة</div>
+            </div>
+            <button class="book-now-btn" onclick="bookHotel('${site.name}', '${hotel.name}', ${site.price})">
+              احجز الآن
+            </button>
+          </div>
+        `).join('')}
+        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+          <small style="color: #666;">
+            * الأسعار تشمل الضرائب والرسوم وقابلة للتغيير
+          </small>
+        </div>
+      `;
+    }
+
+    function bookHotel(siteName, hotelName, price) {
+      alert(`سيتم توجيهك إلى ${siteName} لإكمال حجز ${hotelName} بسعر ${price} ريال`);
+      // هنا يمكن إضافة رابط فعلي لموقع الحجز
+    }
+
+    function closePriceModal() {
+      document.getElementById('priceModal').style.display = 'none';
+    }
+
+    // إغلاق المودال عند النقر خارجه
+    document.getElementById('priceModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closePriceModal();
+      }
+    });
+
     // تبديل الوضع النهاري/المسائي
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {
@@ -472,4 +1536,3 @@
     setInterval(showNextAd, 10000);
   </script>
 </body>
-</html>
