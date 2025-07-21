@@ -95,6 +95,7 @@
     margin-bottom: 20px;
     overflow: hidden;
     transition: all 0.3s ease;
+    cursor: pointer;
   }
 
   .hotel-card:hover {
@@ -197,8 +198,8 @@
     margin-bottom: 15px;
   }
 
-  .book-now-btn {
-    background: linear-gradient(135deg, #28a745, #20c997);
+  .view-details-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     border: none;
     padding: 12px 24px;
@@ -208,11 +209,33 @@
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  .view-details-btn:hover {
+    background: linear-gradient(135deg, #5a6fd8, #6a4c93);
+    transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
+  }
+
+  .book-now-btn {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.9rem;
   }
 
   .book-now-btn:hover {
     background: linear-gradient(135deg, #218838, #1ea085);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     color: white;
     text-decoration: none;
   }
@@ -257,6 +280,20 @@
     margin: 20px auto;
     max-width: 1200px;
     text-align: center;
+  }
+
+  .retry-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+
+  .retry-btn:hover {
+    background: #5a6fd8;
   }
 
   /* أنماط متجاوبة */
@@ -324,6 +361,28 @@
     const RAPIDAPI_KEY = 'ed731333c1mshea92aa884b20792p16f38ajsn52efc429d7bc';
     const RAPIDAPI_HOST = 'booking-com15.p.rapidapi.com';
 
+    // قاموس أسماء المدن البديلة
+    const cityAliases = {
+      'الرياض': ['Riyadh', 'الرياض', 'riyadh'],
+      'جدة': ['Jeddah', 'جدة', 'jeddah'],
+      'الدمام': ['Dammam', 'الدمام', 'dammam'],
+      'مكة المكرمة': ['Mecca', 'Makkah', 'مكة', 'مكة المكرمة'],
+      'المدينة المنورة': ['Medina', 'المدينة المنورة', 'المدينة'],
+      'دبي': ['Dubai', 'دبي', 'dubai'],
+      'أبوظبي': ['Abu Dhabi', 'أبوظبي', 'abu dhabi'],
+      'الشارقة': ['Sharjah', 'الشارقة', 'sharjah'],
+      'الدوحة': ['Doha', 'الدوحة', 'doha'],
+      'الكويت': ['Kuwait City', 'الكويت', 'kuwait'],
+      'المنامة': ['Manama', 'المنامة', 'manama'],
+      'مسقط': ['Muscat', 'مسقط', 'muscat'],
+      'القاهرة': ['Cairo', 'القاهرة', 'cairo'],
+      'الإسكندرية': ['Alexandria', 'الإسكندرية', 'alexandria'],
+      'بيروت': ['Beirut', 'بيروت', 'beirut'],
+      'عمان': ['Amman', 'عمان', 'amman'],
+      'دمشق': ['Damascus', 'دمشق', 'damascus'],
+      'بغداد': ['Baghdad', 'بغداد', 'baghdad']
+    };
+
     // استخراج معاملات البحث من URL
     function getSearchParams() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -356,88 +415,133 @@
       `;
     }
 
-    // البحث عن الفنادق
+    // الحصول على أسماء بديلة للمدينة
+    function getCityAliases(cityName) {
+      const aliases = [cityName];
+      
+      // البحث في قاموس الأسماء البديلة
+      for (const [arabic, englishList] of Object.entries(cityAliases)) {
+        if (arabic === cityName || englishList.includes(cityName.toLowerCase())) {
+          aliases.push(...englishList, arabic);
+          break;
+        }
+      }
+      
+      return [...new Set(aliases)]; // إزالة التكرارات
+    }
+
+    // البحث عن الفنادق مع محاولات متعددة
     async function searchHotels(params) {
       const hotelsContainer = document.getElementById('hotelsContainer');
+      const cityAliases = getCityAliases(params.destination);
       
-      try {
-        // الخطوة 1: البحث عن الوجهة
-        const destResponse = await fetch(`https://${RAPIDAPI_HOST}/api/v1/hotels/searchDestination?query=${encodeURIComponent(params.destination)}`, {
-          method: 'GET',
-          headers: {
-            'x-rapidapi-key': RAPIDAPI_KEY,
-            'x-rapidapi-host': RAPIDAPI_HOST
+      for (let i = 0; i < cityAliases.length; i++) {
+        const cityName = cityAliases[i];
+        
+        try {
+          console.log(`محاولة البحث باستخدام: ${cityName}`);
+          
+          // الخطوة 1: البحث عن الوجهة
+          const destResponse = await fetch(`https://${RAPIDAPI_HOST}/api/v1/hotels/searchDestination?query=${encodeURIComponent(cityName)}`, {
+            method: 'GET',
+            headers: {
+              'x-rapidapi-key': RAPIDAPI_KEY,
+              'x-rapidapi-host': RAPIDAPI_HOST
+            }
+          });
+
+          if (!destResponse.ok) {
+            console.log(`فشل البحث عن الوجهة باستخدام ${cityName}: ${destResponse.status}`);
+            continue;
           }
-        });
-
-        if (!destResponse.ok) {
-          throw new Error(`خطأ في البحث عن الوجهة: ${destResponse.status}`);
-        }
-        
-        const destData = await destResponse.json();
-        
-        if (!destData.data || destData.data.length === 0) {
-          throw new Error('لم يتم العثور على الوجهة المطلوبة');
-        }
-        
-        const destinationId = destData.data[0].dest_id;
-
-        // الخطوة 2: البحث عن الفنادق
-        const searchParams = new URLSearchParams({
-          dest_id: destinationId,
-          search_type: 'CITY',
-          arrival_date: params.checkin,
-          departure_date: params.checkout,
-          adults: params.adults,
-          room_qty: params.rooms,
-          languagecode: 'ar',
-          currency_code: 'USD'
-        });
-
-        const hotelsResponse = await fetch(`https://${RAPIDAPI_HOST}/api/v1/hotels/searchHotels?${searchParams}`, {
-          method: 'GET',
-          headers: {
-            'x-rapidapi-key': RAPIDAPI_KEY,
-            'x-rapidapi-host': RAPIDAPI_HOST
+          
+          const destData = await destResponse.json();
+          
+          if (!destData.data || destData.data.length === 0) {
+            console.log(`لم يتم العثور على وجهة باستخدام ${cityName}`);
+            continue;
           }
-        });
+          
+          const destinationId = destData.data[0].dest_id;
+          console.log(`تم العثور على الوجهة: ${destinationId}`);
 
-        if (!hotelsResponse.ok) {
-          throw new Error(`خطأ في البحث عن الفنادق: ${hotelsResponse.status}`);
+          // الخطوة 2: البحث عن الفنادق
+          const searchParams = new URLSearchParams({
+            dest_id: destinationId,
+            search_type: 'CITY',
+            arrival_date: params.checkin,
+            departure_date: params.checkout,
+            adults: params.adults,
+            room_qty: params.rooms,
+            languagecode: 'ar',
+            currency_code: 'USD',
+            units: 'metric'
+          });
+
+          const hotelsResponse = await fetch(`https://${RAPIDAPI_HOST}/api/v1/hotels/searchHotels?${searchParams}`, {
+            method: 'GET',
+            headers: {
+              'x-rapidapi-key': RAPIDAPI_KEY,
+              'x-rapidapi-host': RAPIDAPI_HOST
+            }
+          });
+
+          if (!hotelsResponse.ok) {
+            console.log(`فشل البحث عن الفنادق: ${hotelsResponse.status}`);
+            continue;
+          }
+
+          const hotelsData = await hotelsResponse.json();
+          
+          if (!hotelsData.data || !hotelsData.data.hotels || hotelsData.data.hotels.length === 0) {
+            console.log(`لم يتم العثور على فنادق باستخدام ${cityName}`);
+            continue;
+          }
+
+          console.log(`تم العثور على ${hotelsData.data.hotels.length} فندق`);
+          displayHotels(hotelsData.data.hotels, params);
+          return; // نجح البحث، توقف هنا
+
+        } catch (error) {
+          console.error(`خطأ في البحث باستخدام ${cityName}:`, error);
+          continue;
         }
-
-        const hotelsData = await hotelsResponse.json();
-        
-        if (!hotelsData.data || !hotelsData.data.hotels || hotelsData.data.hotels.length === 0) {
-          displayNoResults();
-          return;
-        }
-
-        displayHotels(hotelsData.data.hotels);
-
-      } catch (error) {
-        console.error('خطأ في البحث:', error);
-        displayError(error.message);
       }
+
+      // إذا فشلت جميع المحاولات
+      displayNoResults();
     }
 
     // عرض الفنادق
-    function displayHotels(hotels) {
+    function displayHotels(hotels, searchParams) {
       const hotelsContainer = document.getElementById('hotelsContainer');
       
       let hotelsHTML = '';
       
-      hotels.forEach(hotel => {
-        // معالجة السعر
-        let priceDisplay = 'السعر عند الطلب';
+      hotels.forEach((hotel, index) => {
+        // معالجة السعر مع محاولات متعددة
+        let priceDisplay = 'اتصل للاستفسار';
         let currency = '';
         
-        if (hotel.price && hotel.price.price) {
-          priceDisplay = hotel.price.price;
+        // محاولة 1: من price
+        if (hotel.price && hotel.price.price && hotel.price.price !== 'undefined') {
+          priceDisplay = Math.round(hotel.price.price);
           currency = hotel.price.currency || 'USD';
-        } else if (hotel.composite_price_breakdown && hotel.composite_price_breakdown.gross_amount_per_night) {
-          priceDisplay = hotel.composite_price_breakdown.gross_amount_per_night.value;
+        }
+        // محاولة 2: من composite_price_breakdown
+        else if (hotel.composite_price_breakdown && hotel.composite_price_breakdown.gross_amount_per_night) {
+          priceDisplay = Math.round(hotel.composite_price_breakdown.gross_amount_per_night.value);
           currency = hotel.composite_price_breakdown.gross_amount_per_night.currency || 'USD';
+        }
+        // محاولة 3: من min_total_price
+        else if (hotel.min_total_price && hotel.min_total_price !== 'undefined') {
+          priceDisplay = Math.round(hotel.min_total_price);
+          currency = 'USD';
+        }
+        // محاولة 4: من أي حقل سعر آخر
+        else if (hotel.price_breakdown && hotel.price_breakdown.gross_amount) {
+          priceDisplay = Math.round(hotel.price_breakdown.gross_amount);
+          currency = hotel.price_breakdown.currency || 'USD';
         }
 
         // معالجة التقييم
@@ -449,30 +553,38 @@
           const starsCount = Math.round(hotel.review_score / 2);
           ratingDisplay = `<span class="rating-score">${rating}</span>`;
           starsDisplay = '⭐'.repeat(Math.min(starsCount, 5));
+        } else if (hotel.class && hotel.class > 0) {
+          starsDisplay = '⭐'.repeat(Math.min(hotel.class, 5));
         }
 
         // معالجة الموقع
-        let locationDisplay = 'الموقع غير محدد';
+        let locationDisplay = 'موقع متميز';
         if (hotel.property && hotel.property.address) {
           locationDisplay = hotel.property.address;
         } else if (hotel.address) {
           locationDisplay = hotel.address;
+        } else if (hotel.district) {
+          locationDisplay = hotel.district;
         }
 
         // معالجة الصورة
-        let imageUrl = 'https://via.placeholder.com/250x180?text=صورة+غير+متوفرة';
+        let imageUrl = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop';
         if (hotel.property && hotel.property.photoUrls && hotel.property.photoUrls.length > 0) {
           imageUrl = hotel.property.photoUrls[0];
         } else if (hotel.main_photo_url) {
           imageUrl = hotel.main_photo_url;
+        } else if (hotel.photos && hotel.photos.length > 0) {
+          imageUrl = hotel.photos[0].url_original || hotel.photos[0].url_max300;
         }
 
         // معالجة اسم الفندق
-        let hotelName = 'فندق غير محدد';
+        let hotelName = `فندق رقم ${index + 1}`;
         if (hotel.property && hotel.property.name) {
           hotelName = hotel.property.name;
         } else if (hotel.hotel_name) {
           hotelName = hotel.hotel_name;
+        } else if (hotel.name) {
+          hotelName = hotel.name;
         }
 
         // معالجة عدد التقييمات
@@ -481,10 +593,13 @@
           reviewCount = `(${hotel.review_nr} تقييم)`;
         }
 
+        // إنشاء معرف فريد للفندق
+        const hotelId = hotel.hotel_id || hotel.property?.id || `hotel_${index}`;
+
         hotelsHTML += `
-          <div class="hotel-card">
+          <div class="hotel-card" onclick="viewHotelDetails('${hotelId}', '${encodeURIComponent(hotelName)}', '${searchParams.checkin}', '${searchParams.checkout}', '${searchParams.adults}')">
             <div class="hotel-card-content">
-              <img src="${imageUrl}" alt="${hotelName}" class="hotel-image" onerror="this.src='https://via.placeholder.com/250x180?text=صورة+غير+متوفرة'">
+              <img src="${imageUrl}" alt="${hotelName}" class="hotel-image" onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop'">
               <div class="hotel-info">
                 <h4 class="hotel-name">${hotelName}</h4>
                 <div class="hotel-rating">
@@ -506,8 +621,11 @@
                 <div class="price-from">السعر لليلة الواحدة</div>
                 <div class="price-amount">${priceDisplay} ${currency}</div>
                 <div class="price-per-night">شامل الضرائب والرسوم</div>
-                <a href="#" class="book-now-btn" onclick="bookHotel('${hotelName}')">
-                  احجز الآن
+                <a href="#" class="view-details-btn" onclick="event.stopPropagation(); viewHotelDetails('${hotelId}', '${encodeURIComponent(hotelName)}', '${searchParams.checkin}', '${searchParams.checkout}', '${searchParams.adults}')">
+                  <i class="fas fa-eye"></i> عرض التفاصيل
+                </a>
+                <a href="#" class="book-now-btn" onclick="event.stopPropagation(); quickBooking('${encodeURIComponent(hotelName)}', '${priceDisplay} ${currency}')">
+                  <i class="fas fa-calendar-check"></i> احجز الآن
                 </a>
               </div>
             </div>
@@ -518,19 +636,45 @@
       hotelsContainer.innerHTML = hotelsHTML;
     }
 
+    // عرض تفاصيل الفندق
+    function viewHotelDetails(hotelId, hotelName, checkin, checkout, adults) {
+      const detailsUrl = `hotel-details.html?hotelId=${hotelId}&hotelName=${hotelName}&checkin=${checkin}&checkout=${checkout}&adults=${adults}`;
+      window.open(detailsUrl, '_blank');
+    }
+
+    // حجز سريع
+    function quickBooking(hotelName, price) {
+      const params = getSearchParams();
+      const message = `طلب حجز فوري!\n\n` +
+                     `🏨 الفندق: ${decodeURIComponent(hotelName)}\n` +
+                     `💰 السعر: ${price}\n` +
+                     `📅 الوصول: ${params.checkin}\n` +
+                     `📅 المغادرة: ${params.checkout}\n` +
+                     `👥 عدد الضيوف: ${params.adults} بالغ، ${params.children} طفل\n` +
+                     `🛏️ عدد الغرف: ${params.rooms}\n\n` +
+                     `سيتم التواصل معك خلال 15 دقيقة لتأكيد الحجز.`;
+      
+      alert(message);
+    }
+
     // عرض رسالة عدم وجود نتائج
     function displayNoResults() {
       const hotelsContainer = document.getElementById('hotelsContainer');
+      const params = getSearchParams();
+      
       hotelsContainer.innerHTML = `
         <div class="no-results">
           <h3>لم نجد أي فنادق متاحة</h3>
-          <p>عذراً، لم نتمكن من العثور على فنادق متاحة في هذه الوجهة للتواريخ المحددة.</p>
+          <p>عذراً، لم نتمكن من العثور على فنادق متاحة في <strong>${params.destination}</strong> للتواريخ المحددة.</p>
           <p>يرجى المحاولة مع:</p>
           <ul style="text-align: right; display: inline-block;">
             <li>تواريخ مختلفة</li>
             <li>وجهة أخرى قريبة</li>
             <li>تقليل عدد الغرف أو الضيوف</li>
           </ul>
+          <button class="retry-btn" onclick="retrySearch()">
+            <i class="fas fa-redo"></i> إعادة المحاولة
+          </button>
         </div>
       `;
     }
@@ -543,13 +687,27 @@
           <h4>حدث خطأ أثناء البحث</h4>
           <p>${message}</p>
           <p>يرجى المحاولة مرة أخرى أو العودة لتعديل معايير البحث.</p>
+          <button class="retry-btn" onclick="retrySearch()">
+            <i class="fas fa-redo"></i> إعادة المحاولة
+          </button>
         </div>
       `;
     }
 
-    // وظيفة الحجز (مؤقتة)
-    function bookHotel(hotelName) {
-      alert(`سيتم تفعيل نظام الحجز قريباً لفندق: ${hotelName}`);
+    // إعادة المحاولة
+    function retrySearch() {
+      const hotelsContainer = document.getElementById('hotelsContainer');
+      hotelsContainer.innerHTML = `
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>جاري إعادة البحث...</p>
+        </div>
+      `;
+      
+      setTimeout(() => {
+        const params = getSearchParams();
+        searchHotels(params);
+      }, 1000);
     }
 
     // تشغيل البحث عند تحميل الصفحة
