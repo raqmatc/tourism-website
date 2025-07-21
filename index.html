@@ -408,97 +408,6 @@
     transform: translateY(-1px);
   }
 
-  /* أنماط مودال مقارنة الأسعار */
-  .price-comparison-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.8);
-    z-index: 10000;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .modal-content {
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
-    max-width: 800px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-  }
-
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #eee;
-  }
-
-  .close-modal {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #999;
-  }
-
-  .booking-site {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border: 2px solid #eee;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    transition: all 0.3s ease;
-  }
-
-  .booking-site:hover {
-    border-color: #667eea;
-    background: #f8f9ff;
-  }
-
-  .site-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .site-logo {
-    width: 60px;
-    height: 40px;
-    object-fit: contain;
-  }
-
-  .site-price {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #ff6b6b;
-  }
-
-  .book-now-btn {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .book-now-btn:hover {
-    background: #218838;
-    transform: translateY(-1px);
-  }
-
   .loading {
     text-align: center;
     padding: 40px;
@@ -518,6 +427,42 @@
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+  .suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .suggestion-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .suggestion-item:hover {
+    background-color: #f8f9fa;
+  }
+
+  .suggestion-item:last-child {
+    border-bottom: none;
+  }
+
+  .suggestion-icon {
+    color: #666;
+    font-size: 0.8rem;
   }
 
   /* أنماط متجاوبة */
@@ -936,20 +881,6 @@
       </div>
     </div>
 
-    <!-- مودال مقارنة الأسعار -->
-    <div class="price-comparison-modal" id="priceModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 id="modalHotelName">مقارنة الأسعار</h3>
-          <button class="close-modal" onclick="closePriceModal()">&times;</button>
-        </div>
-        
-        <div id="priceComparison">
-          <!-- سيتم إدراج مقارنة الأسعار هنا -->
-        </div>
-      </div>
-    </div>
-
     <div class="container my-5">
       <div class="row text-center g-4 justify-con">
         <!-- مربع الجمل التسويقية -->
@@ -1067,213 +998,207 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // بيانات وهمية للمدن والفنادق
-    const cities = [
-      'دبي', 'الرياض', 'جدة', 'الدمام', 'مكة المكرمة', 'المدينة المنورة',
-      'القاهرة', 'الإسكندرية', 'شرم الشيخ', 'الغردقة',
-      'بيروت', 'طرابلس', 'صيدا',
-      'عمان', 'العقبة', 'البتراء',
-      'الكويت', 'الجهراء',
-      'الدوحة', 'الوكرة',
-      'أبوظبي', 'الشارقة', 'عجمان',
-      'مسقط', 'صلالة',
-      'المنامة', 'المحرق',
-      'بغداد', 'البصرة', 'أربيل',
-      'دمشق', 'حلب', 'اللاذقية',
-      'طرابلس', 'بنغازي',
-      'تونس', 'سوسة', 'صفاقس',
-      'الجزائر', 'وهران', 'قسنطينة',
-      'الرباط', 'الدار البيضاء', 'مراكش', 'فاس',
-      'لندن', 'باريس', 'روما', 'مدريد', 'برلين', 'أمستردام',
-      'نيويورك', 'لوس أنجلوس', 'شيكاغو', 'ميامي',
-      'طوكيو', 'بانكوك', 'سنغافورة', 'كوالالمبور', 'جاكرتا',
-      'سيدني', 'ملبورن', 'بريسبان'
-    ];
+    // ===================================================================================
+    // ابدأ التعديل هنا: ضع مفتاح RapidAPI الخاص بك في الأسفل
+    // ===================================================================================
 
-    // تعيين التواريخ الافتراضية
+    // استبدل النص بين علامتي الاقتباس بمفتاحك الذي حصلت عليه من RapidAPI
+    const RAPIDAPI_KEY = 'ed731333c1mshea92aa884b20792p16f38ajsn52efc429d7bc'; 
+
+    // ===================================================================================
+    // نهاية منطقة التعديل
+    // ===================================================================================
+
+
+    const RAPIDAPI_HOST = 'booking-com15.p.rapidapi.com';
+
+    // إعدادات أولية عند تحميل الصفحة
     document.addEventListener('DOMContentLoaded', function() {
-      const today = new Date();
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      
-      document.getElementById('checkin').value = today.toISOString().split('T')[0];
-      document.getElementById('checkout').value = tomorrow.toISOString().split('T')[0];
-      
-      // إعداد اقتراحات المدن
-      setupCityAutocomplete();
-      updateGuestsDisplay();
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        document.getElementById('checkin').value = today.toISOString().split('T')[0];
+        document.getElementById('checkout').value = tomorrow.toISOString().split('T')[0];
+        
+        updateGuestsDisplay();
+
+        // إخفاء القائمة المنسدلة عند الضغط في أي مكان
+        document.addEventListener('click', (event) => {
+            const navbarCollapse = document.getElementById('navbarNav');
+            const toggler = document.querySelector('.navbar-toggler');
+            if (navbarCollapse && toggler && !navbarCollapse.contains(event.target) && !toggler.contains(event.target)) {
+                const collapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+                if (navbarCollapse.classList.contains('show')) {
+                    collapse.hide();
+                }
+            }
+        });
     });
 
-    // إعداد الإكمال التلقائي للمدن
-    function setupCityAutocomplete() {
-      const destinationInput = document.getElementById('destination');
-      const suggestionsDiv = document.getElementById('destination-suggestions');
-      
-      destinationInput.addEventListener('input', function() {
-        const query = this.value.toLowerCase();
-        if (query.length < 2) {
-          suggestionsDiv.style.display = 'none';
-          return;
-        }
-        
-        const matches = cities.filter(city => city.toLowerCase().includes(query));
-        
-        if (matches.length > 0) {
-          suggestionsDiv.innerHTML = matches.slice(0, 5).map(city => 
-            `<div class="suggestion-item" onclick="selectCity('${city}')">
-              <i class="fas fa-map-marker-alt suggestion-icon"></i>
-              <span>${city}</span>
-            </div>`
-          ).join('');
-          suggestionsDiv.style.display = 'block';
-        } else {
-          suggestionsDiv.style.display = 'none';
-        }
-      });
-      
-      // إخفاء الاقتراحات عند النقر خارجها
-      document.addEventListener('click', function(e) {
-        if (!destinationInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
-          suggestionsDiv.style.display = 'none';
-        }
-      });
-    }
-
-    function selectCity(city) {
-      document.getElementById('destination').value = city;
-      document.getElementById('destination-suggestions').style.display = 'none';
-    }
-
     // وظائف للتعامل مع حقل الضيوف المدمج
-    document.getElementById('guests-display').addEventListener('click', function() {
-      const guestsDropdown = document.getElementById('guests-dropdown');
-      guestsDropdown.style.display = guestsDropdown.style.display === 'none' ? 'block' : 'none';
+    document.getElementById('guests-display').addEventListener('click', function(event) {
+        event.stopPropagation();
+        const guestsDropdown = document.getElementById('guests-dropdown');
+        guestsDropdown.style.display = guestsDropdown.style.display === 'none' ? 'block' : 'none';
     });
 
     document.addEventListener('click', function(e) {
-      const guestsDisplay = document.getElementById('guests-display');
-      const guestsDropdown = document.getElementById('guests-dropdown');
-      if (!guestsDisplay.contains(e.target) && !guestsDropdown.contains(e.target)) {
-        guestsDropdown.style.display = 'none';
-      }
+        const guestsDropdown = document.getElementById('guests-dropdown');
+        if (guestsDropdown && !guestsDropdown.parentElement.contains(e.target)) {
+            guestsDropdown.style.display = 'none';
+        }
     });
 
     function updateGuestCount(type, change) {
-      let count = parseInt(document.getElementById(type).value);
-      count += change;
-      if (count < 0) count = 0;
-      if (type === 'adults' && count === 0 && parseInt(document.getElementById('children').value) === 0) count = 1; // لا يمكن أن يكون البالغون والأطفال صفر معًا
-      if (type === 'rooms' && count === 0) count = 1; // لا يمكن أن تكون الغرف صفر
+        let countEl = document.getElementById(type);
+        let count = parseInt(countEl.value);
+        count += change;
 
-      document.getElementById(type).value = count;
-      document.getElementById(type + '-count').textContent = count;
-      updateGuestsDisplay();
+        if (type === 'adults' && count < 1) count = 1;
+        if (type === 'children' && count < 0) count = 0;
+        if (type === 'rooms' && count < 1) count = 1;
+
+        countEl.value = count;
+        document.getElementById(type + '-count').textContent = count;
+        updateGuestsDisplay();
     }
 
     function updateGuestsDisplay() {
-      const adults = document.getElementById('adults').value;
-      const children = document.getElementById('children').value;
-      const rooms = document.getElementById('rooms').value;
-      document.getElementById('guests-display').value = `${adults} بالغ، ${rooms} غرفة، ${children} أطفال`;
-    }
-
-    // البحث عن الفنادق
-    function searchHotels() {
-      const destination = document.getElementById('destination').value;
-      const checkin = document.getElementById('checkin').value;
-      const checkout = document.getElementById('checkout').value;
-      const adults = document.getElementById('adults').value;
-      const children = document.getElementById('children').value;
-      const rooms = document.getElementById('rooms').value;
-      
-      if (!destination || !checkin || !checkout) {
-        alert('يرجى ملء جميع الحقول المطلوبة');
-        return;
-      }
-      
-      if (new Date(checkin) >= new Date(checkout)) {
-        alert('تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول');
-        return;
-      }
-      
-      // إنشاء URL للصفحة الجديدة مع المعاملات
-      const params = new URLSearchParams({
-        destination: destination,
-        checkin: checkin,
-        checkout: checkout,
-        adults: adults,
-        children: children,
-        rooms: rooms
-      });
-      
-      // الانتقال إلى صفحة النتائج
-      window.location.href = `results.html?${params.toString()}`;
+        const adults = document.getElementById('adults').value;
+        const children = document.getElementById('children').value;
+        const rooms = document.getElementById('rooms').value;
+        document.getElementById('guests-display').value = `${adults} بالغ، ${rooms} غرفة، ${children} أطفال`;
     }
 
     // تبديل الوضع النهاري/المسائي
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-      document.body.classList.toggle('dark-mode');
-      themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌙' : '🌞';
+        document.body.classList.toggle('light-mode');
+        document.body.classList.toggle('dark-mode');
+        themeToggle.textContent = document.body.classList.contains('dark-mode') ? '🌙' : '🌞';
     });
 
-    // تغيير اللغة
-    function changeLanguage(lang) {
-      if (lang === 'en') {
-        alert('Switching to English (Feature to be implemented)');
-      } else {
-        alert('اللغة العربية مفعلة بالفعل');
-      }
-    }
-
-    // وظيفة لتبديل القوائم المنسدلة مع تأثير التلاشي
+    // وظيفة لتبديل القوائم المنسدلة
     function toggleSubMenu(event, menuId) {
-      event.preventDefault();
-      const menu = document.getElementById(menuId);
-      const toggle = event.target;
-      const isActive = toggle.classList.contains('active');
-
-      document.querySelectorAll('.sub-menu').forEach(subMenu => {
-        subMenu.classList.remove('active');
-        subMenu.style.opacity = '0';
-        setTimeout(() => {
-          if (!subMenu.classList.contains('active')) subMenu.style.display = 'none';
-        }, 300);
-      });
-      document.querySelectorAll('.nav-link.toggle').forEach(link => {
-        link.classList.remove('active');
-      });
-
-      if (!isActive) {
-        menu.style.display = 'block';
-        setTimeout(() => {
-          menu.classList.add('active');
-          menu.style.opacity = '1';
-        }, 10);
-        toggle.classList.add('active');
-      }
+        event.preventDefault();
+        const menu = document.getElementById(menuId);
+        menu.classList.toggle('active');
     }
 
-    // إخفاء القائمة المنسدلة عند الضغط في أي مكان
-    document.addEventListener('click', (event) => {
-      const navbarCollapse = document.getElementById('navbarNav');
-      const toggler = document.querySelector('.navbar-toggler');
-      if (!navbarCollapse.contains(event.target) && !toggler.contains(event.target)) {
-        const collapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
-        collapse.hide();
-        document.querySelectorAll('.sub-menu').forEach(subMenu => {
-          subMenu.classList.remove('active');
-          subMenu.style.opacity = '0';
-          setTimeout(() => {
-            if (!subMenu.classList.contains('active')) subMenu.style.display = 'none';
-          }, 300);
+    // الوظيفة الرئيسية للبحث عن الفنادق
+    async function searchHotels() {
+        const destination = document.getElementById('destination').value;
+        const checkin = document.getElementById('checkin').value;
+        const checkout = document.getElementById('checkout').value;
+        const adults = document.getElementById('adults').value;
+        const rooms = document.getElementById('rooms').value;
+        const searchResultsDiv = document.getElementById('searchResults');
+        const hotelsContainer = document.getElementById('hotelsContainer');
+
+        if (!destination) {
+            alert('يرجى إدخال وجهة البحث');
+            return;
+        }
+        if (RAPIDAPI_KEY.includes('ضع-مفتاح')) {
+            alert('خطأ: يرجى وضع مفتاح RapidAPI الصحيح في الكود.');
+            return;
+        }
+
+        // إظهار شاشة التحميل
+        hotelsContainer.innerHTML = `<div class="loading"><div class="spinner"></div><p>جاري البحث عن أفضل العروض في ${destination}...</p></div>`;
+        searchResultsDiv.style.display = 'block';
+        // تمرير الشاشة للأسفل لرؤية النتائج
+        searchResultsDiv.scrollIntoView({ behavior: 'smooth' });
+
+        try {
+            // الخطوة 1: البحث عن الوجهة للحصول على الـ ID
+            const destResponse = await fetch(`https://${RAPIDAPI_HOST}/api/v1/hotels/searchDestination?query=${destination}`, {
+                method: 'GET',
+                headers: {
+                    'x-rapidapi-key': RAPIDAPI_KEY,
+                    'x-rapidapi-host': RAPIDAPI_HOST
+                }
+            });
+
+            if (!destResponse.ok) throw new Error(`خطأ في البحث عن الوجهة: ${destResponse.statusText}`);
+            
+            const destData = await destResponse.json();
+            if (!destData.data || destData.data.length === 0) {
+                throw new Error('لم يتم العثور على الوجهة. يرجى التأكد من الاسم.');
+            }
+            
+            const destinationId = destData.data[0].dest_id;
+
+            // الخطوة 2: البحث عن الفنادق باستخدام الـ ID
+            const searchParams = new URLSearchParams({
+                dest_id: destinationId,
+                search_type: 'CITY',
+                arrival_date: checkin,
+                departure_date: checkout,
+                adults: adults,
+                room_qty: rooms,
+                languagecode: 'ar' // طلب النتائج باللغة العربية
+            });
+
+            const hotelsResponse = await fetch(`https://${RAPIDAPI_HOST}/api/v1/hotels/searchHotels?${searchParams}`, {
+                method: 'GET',
+                headers: {
+                    'x-rapidapi-key': RAPIDAPI_KEY,
+                    'x-rapidapi-host': RAPIDAPI_HOST
+                }
+            });
+
+            if (!hotelsResponse.ok) throw new Error(`خطأ في البحث عن الفنادق: ${hotelsResponse.statusText}`);
+
+            const hotelsData = await hotelsResponse.json();
+            displayHotels(hotelsData.data.hotels);
+
+        } catch (error) {
+            console.error('حدث خطأ:', error);
+            hotelsContainer.innerHTML = `<div class="loading"><p>حدث خطأ أثناء البحث. يرجى المحاولة مرة أخرى. (${error.message})</p></div>`;
+        }
+    }
+
+    // وظيفة عرض الفنادق في الصفحة
+    function displayHotels(hotels) {
+        const hotelsContainer = document.getElementById('hotelsContainer');
+        if (!hotels || hotels.length === 0) {
+            hotelsContainer.innerHTML = '<div class="loading"><p>عذراً، لم نجد أي فنادق متاحة بالمعايير التي اخترتها.</p></div>';
+            return;
+        }
+
+        let hotelsHTML = '';
+        hotels.forEach(hotel => {
+            const price = hotel.price ? `${hotel.price.price} ${hotel.price.currency}` : 'السعر عند الطلب';
+            const ratingValue = hotel.review_score ? (hotel.review_score / 2).toFixed(1) : 'جديد';
+            const stars = hotel.review_score ? '⭐'.repeat(Math.round(hotel.review_score / 2)) : '';
+
+            hotelsHTML += `
+                <div class="hotel-card">
+                    <div class="hotel-card-content">
+                        <img src="${hotel.property.photoUrls[0]}" alt="${hotel.property.name}" class="hotel-image">
+                        <div class="hotel-info">
+                            <h4 class="hotel-name">${hotel.property.name}</h4>
+                            <div class="hotel-rating">
+                                <span class="stars">${stars}</span>
+                                <span style="margin-right: 8px; font-weight: bold;">${ratingValue}</span>
+                                <span style="color: #666; font-size: 0.9em;">(${hotel.review_nr} تقييم)</span>
+                            </div>
+                            <p class="hotel-location"><i class="fas fa-map-marker-alt"></i> ${hotel.property.address}</p>
+                        </div>
+                        <div class="hotel-prices">
+                            <div class="price-from">السعر لليلة</div>
+                            <div class="price-amount">${price}</div>
+                            <button class="view-deals-btn" onclick="alert('سيتم تفعيل هذه الميزة قريباً لعرض تفاصيل الحجز.')">عرض التفاصيل</button>
+                        </div>
+                    </div>
+                </div>
+            `;
         });
-        document.querySelectorAll('.nav-link.toggle').forEach(link => {
-          link.classList.remove('active');
-        });
-      }
-    });
+
+        hotelsContainer.innerHTML = hotelsHTML;
+    }
   </script>
 </body>
 </html>
