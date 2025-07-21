@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Paygo.com - احجز فندقك المثالي</title>
+  <title>Paygo.com - احجز فندقك المثالي مع RateHawk</title>
 
   <!-- إضافة خط Cairo من Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,149 +66,110 @@
     text-decoration: none;
     padding: 8px 12px;
     border-radius: 4px;
-    transition: background 0.3s;
+    transition: background-color 0.3s;
   }
 
   .nav-item:hover {
-    background: rgba(255,255,255,0.1);
-    color: white;
-    text-decoration: none;
-  }
-
-  .nav-item.active {
-    background: rgba(255,255,255,0.2);
+    background-color: rgba(255,255,255,0.1);
   }
 
   /* Hero Section */
-  .hero-section {
+  .hero {
     background: linear-gradient(135deg, #003580 0%, #0071c2 100%);
     color: white;
-    padding: 80px 0 120px;
+    padding: 60px 20px;
     text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&h=1080&fit=crop&overlay=gradient&overlay-color=003580&overlay-opacity=80') center/cover;
-    opacity: 0.3;
-    z-index: 1;
   }
 
   .hero-content {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 0 20px;
-    position: relative;
-    z-index: 2;
   }
 
-  .hero-title {
+  .hero h1 {
     font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 16px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 20px;
+    font-weight: 700;
   }
 
-  .hero-subtitle {
+  .hero p {
     font-size: 1.3rem;
     margin-bottom: 40px;
     opacity: 0.9;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
   }
 
   /* Search Form */
-  .search-form {
+  .search-container {
     background: white;
-    border-radius: 8px;
-    padding: 24px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 30px;
+    margin: -50px auto 0;
     max-width: 900px;
-    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     position: relative;
-    z-index: 3;
+    z-index: 100;
   }
 
-  .search-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-    border-bottom: 1px solid #e7e7e7;
-  }
-
-  .search-tab {
-    padding: 12px 20px;
-    border: none;
-    background: none;
-    color: #666;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s;
-    font-weight: 500;
-  }
-
-  .search-tab.active {
-    color: #0071c2;
-    border-bottom-color: #0071c2;
-  }
-
-  .search-tab:hover {
-    color: #0071c2;
-  }
-
-  .search-inputs {
+  .search-form {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 120px;
-    gap: 12px;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: 15px;
     align-items: end;
   }
 
-  .input-group {
+  .form-group {
     display: flex;
     flex-direction: column;
   }
 
-  .input-label {
-    font-size: 0.9rem;
-    font-weight: 600;
+  .form-group label {
     color: #262626;
-    margin-bottom: 6px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
   }
 
-  .search-input {
-    padding: 14px 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+  .form-group input, .form-group select {
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
     font-size: 1rem;
+    font-family: 'Cairo', sans-serif;
     transition: border-color 0.3s;
-    background: white;
   }
 
-  .search-input:focus {
+  .form-group input:focus, .form-group select:focus {
     outline: none;
     border-color: #0071c2;
-    box-shadow: 0 0 0 2px rgba(0,113,194,0.1);
   }
 
-  .destination-input {
-    position: relative;
+  .search-btn {
+    background: #ff6b35;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'Cairo', sans-serif;
   }
 
-  .destination-suggestions {
+  .search-btn:hover {
+    background: #e55a2b;
+  }
+
+  /* Suggestions dropdown */
+  .suggestions {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
     background: white;
-    border: 1px solid #ddd;
+    border: 1px solid #e0e0e0;
     border-top: none;
-    border-radius: 0 0 4px 4px;
+    border-radius: 0 0 8px 8px;
     max-height: 200px;
     overflow-y: auto;
     z-index: 1000;
@@ -216,84 +177,54 @@
   }
 
   .suggestion-item {
-    padding: 12px 16px;
+    padding: 12px 15px;
     cursor: pointer;
     border-bottom: 1px solid #f0f0f0;
-    transition: background 0.3s;
+    transition: background-color 0.2s;
   }
 
   .suggestion-item:hover {
-    background: #f8f9fa;
+    background-color: #f8f9fa;
   }
 
   .suggestion-item:last-child {
     border-bottom: none;
   }
 
-  .search-btn {
-    background: #0071c2;
-    color: white;
-    border: none;
-    padding: 14px 24px;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-    height: fit-content;
-  }
-
-  .search-btn:hover {
-    background: #005999;
-  }
-
-  .search-btn:active {
-    transform: translateY(1px);
-  }
-
   /* Features Section */
-  .features-section {
+  .features {
+    padding: 80px 20px;
     background: white;
-    padding: 80px 0;
   }
 
   .features-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    text-align: center;
   }
 
-  .section-title {
-    text-align: center;
+  .features h2 {
     font-size: 2.5rem;
-    font-weight: bold;
     color: #262626;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
   }
 
-  .section-subtitle {
-    text-align: center;
+  .features-subtitle {
     font-size: 1.2rem;
     color: #666;
-    margin-bottom: 60px;
+    margin-bottom: 50px;
   }
 
   .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 40px;
+    margin-top: 50px;
   }
 
   .feature-card {
     text-align: center;
     padding: 30px 20px;
-    border-radius: 12px;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-
-  .feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   }
 
   .feature-icon {
@@ -302,36 +233,46 @@
     margin-bottom: 20px;
   }
 
-  .feature-title {
-    font-size: 1.3rem;
-    font-weight: bold;
+  .feature-card h3 {
+    font-size: 1.5rem;
     color: #262626;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
   }
 
-  .feature-description {
+  .feature-card p {
     color: #666;
     line-height: 1.6;
   }
 
   /* Popular Destinations */
-  .destinations-section {
+  .destinations {
+    padding: 80px 20px;
     background: #f8f9fa;
-    padding: 80px 0;
+  }
+
+  .destinations-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .destinations h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #262626;
+    margin-bottom: 50px;
   }
 
   .destinations-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-top: 40px;
+    gap: 30px;
   }
 
   .destination-card {
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
   }
@@ -351,97 +292,129 @@
     padding: 20px;
   }
 
-  .destination-name {
-    font-size: 1.2rem;
-    font-weight: bold;
+  .destination-info h3 {
+    font-size: 1.3rem;
     color: #262626;
     margin-bottom: 8px;
   }
 
-  .destination-properties {
+  .destination-info p {
     color: #666;
     font-size: 0.9rem;
+  }
+
+  /* RateHawk Integration Section */
+  .ratehawk-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #003580 0%, #0071c2 100%);
+    color: white;
+    text-align: center;
+  }
+
+  .ratehawk-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .ratehawk-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  .ratehawk-section p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+  }
+
+  .ratehawk-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin: 50px 0;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ff6b35;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
   }
 
   /* Footer */
   .footer {
     background: #262626;
     color: white;
-    padding: 60px 0 30px;
+    padding: 50px 20px 20px;
   }
 
   .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-  }
-
-  .footer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 40px;
-    margin-bottom: 40px;
   }
 
   .footer-section h3 {
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.3rem;
     margin-bottom: 20px;
-    color: white;
+    color: #ff6b35;
   }
 
-  .footer-links {
+  .footer-section ul {
     list-style: none;
   }
 
-  .footer-links li {
-    margin-bottom: 8px;
+  .footer-section ul li {
+    margin-bottom: 10px;
   }
 
-  .footer-links a {
+  .footer-section ul li a {
     color: #ccc;
     text-decoration: none;
     transition: color 0.3s;
   }
 
-  .footer-links a:hover {
+  .footer-section ul li a:hover {
     color: white;
   }
 
   .footer-bottom {
-    border-top: 1px solid #444;
-    padding-top: 30px;
     text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
     color: #ccc;
   }
 
   /* Responsive Design */
   @media (max-width: 768px) {
-    .hero-title {
+    .search-form {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .hero h1 {
       font-size: 2rem;
     }
     
-    .hero-subtitle {
+    .hero p {
       font-size: 1.1rem;
     }
     
-    .search-inputs {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-    
-    .search-form {
-      margin: 0 20px;
+    .search-container {
+      margin: -30px 20px 0;
       padding: 20px;
-    }
-    
-    .features-grid {
-      grid-template-columns: 1fr;
-      gap: 30px;
-    }
-    
-    .destinations-grid {
-      grid-template-columns: 1fr;
     }
     
     .header-nav {
@@ -454,7 +427,6 @@
     display: none;
     text-align: center;
     padding: 20px;
-    color: #666;
   }
 
   .spinner {
@@ -464,425 +436,568 @@
     width: 40px;
     height: 40px;
     animation: spin 1s linear infinite;
-    margin: 0 auto 15px;
+    margin: 0 auto 10px;
   }
 
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  /* Success Message */
+  .success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border: 1px solid #c3e6cb;
+    display: none;
+  }
   </style>
 </head>
+
 <body>
   <!-- Header -->
-  <div class="header">
+  <header class="header">
     <div class="header-container">
-      <a href="#" class="logo">Paygo.com</a>
-      <div class="header-nav">
-        <a href="#" class="nav-item active">الإقامة</a>
+      <a href="#" class="logo">
+        <i class="fas fa-plane"></i> Paygo.com
+      </a>
+      <nav class="header-nav">
+        <a href="#" class="nav-item">الفنادق</a>
         <a href="#" class="nav-item">الطيران</a>
-        <a href="#" class="nav-item">الطيران + الفندق</a>
-        <a href="#" class="nav-item">تأجير السيارات</a>
+        <a href="#" class="nav-item">السيارات</a>
         <a href="#" class="nav-item">الأنشطة</a>
-      </div>
+        <a href="#" class="nav-item">حسابي</a>
+      </nav>
     </div>
-  </div>
+  </header>
 
   <!-- Hero Section -->
-  <div class="hero-section">
+  <section class="hero">
     <div class="hero-content">
-      <h1 class="hero-title">اكتشف وجهتك المثالية</h1>
-      <p class="hero-subtitle">ابحث عن أفضل الفنادق والعروض في جميع أنحاء العالم</p>
-      
-      <!-- Search Form -->
-      <div class="search-form">
-        <div class="search-tabs">
-          <button class="search-tab active">
-            <i class="fas fa-bed"></i> الإقامة
-          </button>
-          <button class="search-tab">
-            <i class="fas fa-plane"></i> الطيران
-          </button>
-          <button class="search-tab">
-            <i class="fas fa-car"></i> تأجير السيارات
-          </button>
-        </div>
-        
-        <div class="search-inputs">
-          <div class="input-group destination-input">
-            <label class="input-label">الوجهة</label>
-            <input type="text" class="search-input" id="destinationInput" placeholder="إلى أين تريد الذهاب؟" autocomplete="off">
-            <div class="destination-suggestions" id="destinationSuggestions">
-              <!-- سيتم ملؤها بـ JavaScript -->
-            </div>
-          </div>
-          
-          <div class="input-group">
-            <label class="input-label">تاريخ الوصول</label>
-            <input type="date" class="search-input" id="checkinInput">
-          </div>
-          
-          <div class="input-group">
-            <label class="input-label">تاريخ المغادرة</label>
-            <input type="date" class="search-input" id="checkoutInput">
-          </div>
-          
-          <div class="input-group">
-            <label class="input-label">الضيوف والغرف</label>
-            <select class="search-input" id="guestsInput">
-              <option value="2-0-1">2 بالغ · 0 طفل · 1 غرفة</option>
-              <option value="1-0-1">1 بالغ · 0 طفل · 1 غرفة</option>
-              <option value="3-0-1">3 بالغ · 0 طفل · 1 غرفة</option>
-              <option value="4-0-1">4 بالغ · 0 طفل · 1 غرفة</option>
-              <option value="2-1-1">2 بالغ · 1 طفل · 1 غرفة</option>
-              <option value="2-0-2">2 بالغ · 0 طفل · 2 غرفة</option>
-            </select>
-          </div>
-          
-          <button class="search-btn" onclick="searchHotels()">
-            <i class="fas fa-search"></i> بحث
-          </button>
-        </div>
-        
-        <div class="loading" id="loadingIndicator">
-          <div class="spinner"></div>
-          <p>جاري البحث عن أفضل العروض...</p>
+      <h1>اكتشف العالم مع Paygo</h1>
+      <p>أكثر من 2.7 مليون فندق حول العالم بأفضل الأسعار المضمونة</p>
+    </div>
+  </section>
+
+  <!-- Search Container -->
+  <div class="search-container">
+    <form class="search-form" id="hotelSearchForm">
+      <div class="form-group">
+        <label for="destination">الوجهة</label>
+        <div style="position: relative;">
+          <input type="text" id="destination" name="destination" placeholder="أين تريد الإقامة؟" autocomplete="off" required>
+          <div class="suggestions" id="suggestions"></div>
         </div>
       </div>
+      
+      <div class="form-group">
+        <label for="checkin">تاريخ الوصول</label>
+        <input type="date" id="checkin" name="checkin" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="checkout">تاريخ المغادرة</label>
+        <input type="date" id="checkout" name="checkout" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="guests">عدد الضيوف</label>
+        <select id="guests" name="guests">
+          <option value="1">1 ضيف</option>
+          <option value="2" selected>2 ضيوف</option>
+          <option value="3">3 ضيوف</option>
+          <option value="4">4 ضيوف</option>
+          <option value="5">5+ ضيوف</option>
+        </select>
+      </div>
+      
+      <button type="submit" class="search-btn">
+        <i class="fas fa-search"></i> ابحث
+      </button>
+    </form>
+    
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>جاري البحث عن أفضل العروض...</p>
+    </div>
+    
+    <div class="success-message" id="successMessage">
+      تم العثور على عروض رائعة! سيتم توجيهك إلى صفحة النتائج...
     </div>
   </div>
 
   <!-- Features Section -->
-  <div class="features-section">
+  <section class="features">
     <div class="features-container">
-      <h2 class="section-title">لماذا تختار Paygo.com؟</h2>
-      <p class="section-subtitle">نوفر لك أفضل تجربة حجز مع ضمان أقل الأسعار</p>
+      <h2>لماذا تختار Paygo؟</h2>
+      <p class="features-subtitle">نوفر لك أفضل تجربة حجز مع ضمان أقل الأسعار</p>
       
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon">
-            <i class="fas fa-dollar-sign"></i>
+            <i class="fas fa-shield-alt"></i>
           </div>
-          <h3 class="feature-title">أفضل الأسعار</h3>
-          <p class="feature-description">نضمن لك أقل الأسعار مع إمكانية مقارنة العروض من مواقع متعددة</p>
+          <h3>أفضل الأسعار المضمونة</h3>
+          <p>نضمن لك الحصول على أفضل الأسعار أو نعيد لك الفرق</p>
         </div>
         
         <div class="feature-card">
           <div class="feature-icon">
-            <i class="fas fa-shield-alt"></i>
+            <i class="fas fa-globe"></i>
           </div>
-          <h3 class="feature-title">حجز آمن</h3>
-          <p class="feature-description">جميع المعاملات محمية بأعلى معايير الأمان والخصوصية</p>
+          <h3>أكثر من 2.7 مليون فندق</h3>
+          <p>شبكة عالمية واسعة من الفنادق في جميع أنحاء العالم</p>
         </div>
         
         <div class="feature-card">
           <div class="feature-icon">
             <i class="fas fa-headset"></i>
           </div>
-          <h3 class="feature-title">دعم 24/7</h3>
-          <p class="feature-description">فريق خدمة العملاء متاح على مدار الساعة لمساعدتك</p>
+          <h3>دعم 24/7</h3>
+          <p>فريق دعم متاح على مدار الساعة لمساعدتك</p>
         </div>
         
         <div class="feature-card">
           <div class="feature-icon">
-            <i class="fas fa-times-circle"></i>
+            <i class="fas fa-credit-card"></i>
           </div>
-          <h3 class="feature-title">إلغاء مجاني</h3>
-          <p class="feature-description">إمكانية الإلغاء المجاني لمعظم الحجوزات حتى 24 ساعة قبل الوصول</p>
+          <h3>دفع آمن</h3>
+          <p>نظام دفع آمن ومشفر لحماية بياناتك</p>
         </div>
         
         <div class="feature-card">
           <div class="feature-icon">
             <i class="fas fa-mobile-alt"></i>
           </div>
-          <h3 class="feature-title">سهولة الاستخدام</h3>
-          <p class="feature-description">واجهة بسيطة وسهلة الاستخدام على جميع الأجهزة</p>
+          <h3>حجز سهل وسريع</h3>
+          <p>واجهة بسيطة وسهلة الاستخدام على جميع الأجهزة</p>
         </div>
         
         <div class="feature-card">
           <div class="feature-icon">
             <i class="fas fa-star"></i>
           </div>
-          <h3 class="feature-title">تقييمات حقيقية</h3>
-          <p class="feature-description">تقييمات ومراجعات حقيقية من نزلاء سابقين</p>
+          <h3>تقييمات حقيقية</h3>
+          <p>تقييمات ومراجعات من نزلاء حقيقيين</p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- Popular Destinations -->
-  <div class="destinations-section">
-    <div class="features-container">
-      <h2 class="section-title">الوجهات الشائعة</h2>
-      <p class="section-subtitle">اكتشف أجمل الوجهات السياحية في العالم</p>
+  <section class="destinations">
+    <div class="destinations-container">
+      <h2>الوجهات الأكثر شعبية</h2>
       
       <div class="destinations-grid">
         <div class="destination-card" onclick="searchDestination('دبي')">
-          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&h=300&fit=crop" alt="دبي" class="destination-image">
+          <img src="dubai.jpg" alt="دبي" class="destination-image" onerror="this.src='https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&h=200&fit=crop'">
           <div class="destination-info">
-            <h3 class="destination-name">دبي</h3>
-            <p class="destination-properties">1,705 عقار</p>
+            <h3>دبي، الإمارات العربية المتحدة</h3>
+            <p>مدينة المستقبل والتسوق والترفيه</p>
           </div>
         </div>
         
         <div class="destination-card" onclick="searchDestination('الرياض')">
-          <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop" alt="الرياض" class="destination-image">
+          <img src="riyadh.jpg" alt="الرياض" class="destination-image" onerror="this.src='https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=200&fit=crop'">
           <div class="destination-info">
-            <h3 class="destination-name">الرياض</h3>
-            <p class="destination-properties">892 عقار</p>
+            <h3>الرياض، المملكة العربية السعودية</h3>
+            <p>العاصمة النابضة بالحياة والثقافة</p>
           </div>
         </div>
         
-        <div class="destination-card" onclick="searchDestination('جدة')">
-          <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop" alt="جدة" class="destination-image">
+        <div class="destination-card" onclick="searchDestination('القاهرة')">
+          <img src="qairo.jpg" alt="القاهرة" class="destination-image" onerror="this.src='https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=400&h=200&fit=crop'">
           <div class="destination-info">
-            <h3 class="destination-name">جدة</h3>
-            <p class="destination-properties">654 عقار</p>
+            <h3>القاهرة، مصر</h3>
+            <p>أم الدنيا وعاصمة التاريخ والحضارة</p>
           </div>
         </div>
         
-        <div class="destination-card" onclick="searchDestination('أبوظبي')">
-          <img src="https://images.unsplash.com/photo-1512632578888-169bbbc64f33?w=400&h=300&fit=crop" alt="أبوظبي" class="destination-image">
+        <div class="destination-card" onclick="searchDestination('إسطنبول')">
+          <img src="istanbul.png" alt="إسطنبول" class="destination-image" onerror="this.src='https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=400&h=200&fit=crop'">
           <div class="destination-info">
-            <h3 class="destination-name">أبوظبي</h3>
-            <p class="destination-properties">743 عقار</p>
+            <h3>إسطنبول، تركيا</h3>
+            <p>ملتقى القارات والثقافات</p>
           </div>
         </div>
         
-        <div class="destination-card" onclick="searchDestination('الدوحة')">
-          <img src="https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=400&h=300&fit=crop" alt="الدوحة" class="destination-image">
+        <div class="destination-card" onclick="searchDestination('بانكوك')">
+          <img src="bangkok.jpg" alt="بانكوك" class="destination-image" onerror="this.src='https://images.unsplash.com/photo-1563492065-1a83d8be8c13?w=400&h=200&fit=crop'">
           <div class="destination-info">
-            <h3 class="destination-name">الدوحة</h3>
-            <p class="destination-properties">521 عقار</p>
+            <h3>بانكوك، تايلاند</h3>
+            <p>مدينة المعابد والأسواق الليلية</p>
           </div>
         </div>
         
-        <div class="destination-card" onclick="searchDestination('الكويت')">
-          <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop" alt="الكويت" class="destination-image">
+        <div class="destination-card" onclick="searchDestination('لندن')">
+          <img src="london.jpg" alt="لندن" class="destination-image" onerror="this.src='https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=200&fit=crop'">
           <div class="destination-info">
-            <h3 class="destination-name">الكويت</h3>
-            <p class="destination-properties">387 عقار</p>
+            <h3>لندن، المملكة المتحدة</h3>
+            <p>عاصمة التاريخ والثقافة الأوروبية</p>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- RateHawk Integration Section -->
+  <section class="ratehawk-section">
+    <div class="ratehawk-container">
+      <h2>مدعوم بشبكة RateHawk العالمية</h2>
+      <p>نتعاون مع RateHawk لنوفر لك أوسع شبكة فنادق في العالم بأفضل الأسعار</p>
+      
+      <div class="ratehawk-stats">
+        <div class="stat-item">
+          <span class="stat-number">2.7M+</span>
+          <span class="stat-label">فندق حول العالم</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">200+</span>
+          <span class="stat-label">دولة ومنطقة</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">24/7</span>
+          <span class="stat-label">دعم متواصل</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">أسعار مضمونة</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
-  <div class="footer">
+  <footer class="footer">
     <div class="footer-container">
-      <div class="footer-grid">
-        <div class="footer-section">
-          <h3>Paygo.com</h3>
-          <ul class="footer-links">
-            <li><a href="#">من نحن</a></li>
-            <li><a href="#">كيف نعمل</a></li>
-            <li><a href="#">الوظائف</a></li>
-            <li><a href="#">الصحافة</a></li>
-          </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h3>الدعم</h3>
-          <ul class="footer-links">
-            <li><a href="#">مركز المساعدة</a></li>
-            <li><a href="#">اتصل بنا</a></li>
-            <li><a href="#">إلغاء الحجز</a></li>
-            <li><a href="#">تعديل الحجز</a></li>
-          </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h3>الشركاء</h3>
-          <ul class="footer-links">
-            <li><a href="#">انضم كشريك</a></li>
-            <li><a href="#">برنامج الشراكة</a></li>
-            <li><a href="#">مزودي الخدمة</a></li>
-            <li><a href="#">المطورين</a></li>
-          </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h3>الشروط والأحكام</h3>
-          <ul class="footer-links">
-            <li><a href="#">شروط الاستخدام</a></li>
-            <li><a href="#">سياسة الخصوصية</a></li>
-            <li><a href="#">سياسة الكوكيز</a></li>
-            <li><a href="#">إخلاء المسؤولية</a></li>
-          </ul>
-        </div>
+      <div class="footer-section">
+        <h3>Paygo.com</h3>
+        <ul>
+          <li><a href="#">من نحن</a></li>
+          <li><a href="#">كيف نعمل</a></li>
+          <li><a href="#">الوظائف</a></li>
+          <li><a href="#">الصحافة</a></li>
+        </ul>
       </div>
       
-      <div class="footer-bottom">
-        <p>&copy; 2025 Paygo.com. جميع الحقوق محفوظة.</p>
+      <div class="footer-section">
+        <h3>خدماتنا</h3>
+        <ul>
+          <li><a href="#">حجز الفنادق</a></li>
+          <li><a href="#">حجز الطيران</a></li>
+          <li><a href="#">تأجير السيارات</a></li>
+          <li><a href="#">الأنشطة السياحية</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>الدعم</h3>
+        <ul>
+          <li><a href="#">مركز المساعدة</a></li>
+          <li><a href="#">اتصل بنا</a></li>
+          <li><a href="#">الأسئلة الشائعة</a></li>
+          <li><a href="#">إلغاء الحجز</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3>تابعنا</h3>
+        <ul>
+          <li><a href="#"><i class="fab fa-facebook"></i> فيسبوك</a></li>
+          <li><a href="#"><i class="fab fa-twitter"></i> تويتر</a></li>
+          <li><a href="#"><i class="fab fa-instagram"></i> إنستغرام</a></li>
+          <li><a href="#"><i class="fab fa-youtube"></i> يوتيوب</a></li>
+        </ul>
       </div>
     </div>
-  </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Paygo.com - جميع الحقوق محفوظة | مدعوم بشبكة RateHawk العالمية</p>
+    </div>
+  </footer>
 
+  <!-- JavaScript -->
   <script>
-    // قائمة الوجهات المقترحة
-    const destinations = [
-      'دبي', 'الرياض', 'جدة', 'أبوظبي', 'الدوحة', 'الكويت', 'مكة المكرمة', 'المدينة المنورة',
-      'الدمام', 'الخبر', 'تبوك', 'أبها', 'الطائف', 'الشارقة', 'عجمان', 'رأس الخيمة',
-      'القاهرة', 'الإسكندرية', 'بيروت', 'عمان', 'المنامة', 'مسقط', 'صنعاء', 'بغداد',
-      'لندن', 'باريس', 'نيويورك', 'طوكيو', 'سيدني', 'روما', 'برشلونة', 'أمستردام'
+    // RateHawk Integration Configuration
+    const RATEHAWK_CONFIG = {
+      partnerId: '282088.affiliate.dd55',
+      baseUrl: 'https://www.zenhotels.com',
+      widgetId: '2a4f00af0f91dc4e0a4ad28a321021c9'
+    };
+
+    // Popular cities for suggestions
+    const popularCities = [
+      'الرياض، المملكة العربية السعودية',
+      'جدة، المملكة العربية السعودية',
+      'الدمام، المملكة العربية السعودية',
+      'مكة المكرمة، المملكة العربية السعودية',
+      'المدينة المنورة، المملكة العربية السعودية',
+      'دبي، الإمارات العربية المتحدة',
+      'أبوظبي، الإمارات العربية المتحدة',
+      'الشارقة، الإمارات العربية المتحدة',
+      'القاهرة، مصر',
+      'الإسكندرية، مصر',
+      'شرم الشيخ، مصر',
+      'الغردقة، مصر',
+      'بيروت، لبنان',
+      'عمان، الأردن',
+      'العقبة، الأردن',
+      'الدوحة، قطر',
+      'المنامة، البحرين',
+      'مسقط، عمان',
+      'الكويت، الكويت',
+      'إسطنبول، تركيا',
+      'أنطاليا، تركيا',
+      'بودروم، تركيا',
+      'لندن، المملكة المتحدة',
+      'باريس، فرنسا',
+      'روما، إيطاليا',
+      'برشلونة، إسبانيا',
+      'أمستردام، هولندا',
+      'فيينا، النمسا',
+      'براغ، التشيك',
+      'بودابست، المجر',
+      'نيويورك، الولايات المتحدة',
+      'لوس أنجلوس، الولايات المتحدة',
+      'ميامي، الولايات المتحدة',
+      'طوكيو، اليابان',
+      'سيول، كوريا الجنوبية',
+      'بانكوك، تايلاند',
+      'بوكيت، تايلاند',
+      'كوالالمبور، ماليزيا',
+      'سنغافورة',
+      'بالي، إندونيسيا',
+      'جاكرتا، إندونيسيا',
+      'مانيلا، الفلبين',
+      'هانوي، فيتنام',
+      'هو تشي مين، فيتنام',
+      'سيدني، أستراليا',
+      'ملبورن، أستراليا'
     ];
 
-    // تعيين التواريخ الافتراضية
+    // Set default dates
     function setDefaultDates() {
       const today = new Date();
       const tomorrow = new Date(today);
       tomorrow.setDate(tomorrow.getDate() + 1);
-      
-      document.getElementById('checkinInput').value = today.toISOString().split('T')[0];
-      document.getElementById('checkoutInput').value = tomorrow.toISOString().split('T')[0];
+      const dayAfter = new Date(today);
+      dayAfter.setDate(dayAfter.getDate() + 2);
+
+      document.getElementById('checkin').value = tomorrow.toISOString().split('T')[0];
+      document.getElementById('checkout').value = dayAfter.toISOString().split('T')[0];
     }
 
-    // إظهار اقتراحات الوجهات
-    function showDestinationSuggestions(query) {
-      const suggestionsContainer = document.getElementById('destinationSuggestions');
-      
-      if (!query || query.length < 1) {
-        suggestionsContainer.style.display = 'none';
-        return;
-      }
-      
-      const filteredDestinations = destinations.filter(dest => 
-        dest.includes(query) || dest.toLowerCase().includes(query.toLowerCase())
-      );
-      
-      if (filteredDestinations.length === 0) {
-        suggestionsContainer.style.display = 'none';
-        return;
-      }
-      
-      suggestionsContainer.innerHTML = filteredDestinations.slice(0, 5).map(dest => 
-        `<div class="suggestion-item" onclick="selectDestination('${dest}')">${dest}</div>`
-      ).join('');
-      
-      suggestionsContainer.style.display = 'block';
+    // Initialize suggestions
+    function initializeSuggestions() {
+      const destinationInput = document.getElementById('destination');
+      const suggestionsDiv = document.getElementById('suggestions');
+
+      destinationInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        
+        if (query.length < 2) {
+          suggestionsDiv.style.display = 'none';
+          return;
+        }
+
+        const filteredCities = popularCities.filter(city => 
+          city.toLowerCase().includes(query)
+        ).slice(0, 8);
+
+        if (filteredCities.length > 0) {
+          suggestionsDiv.innerHTML = filteredCities.map(city => 
+            `<div class="suggestion-item" onclick="selectDestination('${city}')">${city}</div>`
+          ).join('');
+          suggestionsDiv.style.display = 'block';
+        } else {
+          suggestionsDiv.style.display = 'none';
+        }
+      });
+
+      // Hide suggestions when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!destinationInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+          suggestionsDiv.style.display = 'none';
+        }
+      });
     }
 
-    // اختيار وجهة من الاقتراحات
-    function selectDestination(destination) {
-      document.getElementById('destinationInput').value = destination;
-      document.getElementById('destinationSuggestions').style.display = 'none';
+    // Select destination from suggestions
+    function selectDestination(city) {
+      document.getElementById('destination').value = city;
+      document.getElementById('suggestions').style.display = 'none';
     }
 
-    // البحث عن وجهة محددة
-    function searchDestination(destination) {
-      document.getElementById('destinationInput').value = destination;
-      searchHotels();
+    // Search destination from popular cards
+    function searchDestination(city) {
+      document.getElementById('destination').value = city;
+      document.getElementById('destination').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // البحث عن الفنادق
-    function searchHotels() {
-      const destination = document.getElementById('destinationInput').value.trim();
-      const checkin = document.getElementById('checkinInput').value;
-      const checkout = document.getElementById('checkoutInput').value;
-      const guests = document.getElementById('guestsInput').value;
+    // Generate RateHawk URL
+    function generateRateHawkUrl(destination, checkin, checkout, guests) {
+      // Extract city name from destination
+      const cityName = destination.split('،')[0].trim();
       
-      // التحقق من صحة البيانات
-      if (!destination) {
-        alert('يرجى إدخال الوجهة');
-        document.getElementById('destinationInput').focus();
+      // Create search URL with RateHawk affiliate parameters
+      const searchParams = new URLSearchParams({
+        'destination': cityName,
+        'checkin': checkin,
+        'checkout': checkout,
+        'guests': guests,
+        'partner_id': RATEHAWK_CONFIG.partnerId,
+        'utm_source': 'paygo',
+        'utm_medium': 'website',
+        'utm_campaign': 'hotel_search'
+      });
+
+      return `${RATEHAWK_CONFIG.baseUrl}/search?${searchParams.toString()}`;
+    }
+
+    // Track click for analytics
+    function trackClick(destination, checkin, checkout, guests) {
+      // Send tracking data to analytics
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'hotel_search', {
+          'destination': destination,
+          'checkin': checkin,
+          'checkout': checkout,
+          'guests': guests,
+          'partner': 'ratehawk'
+        });
+      }
+
+      // You can also send to your own analytics endpoint
+      fetch('/api/track-click', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          destination,
+          checkin,
+          checkout,
+          guests,
+          timestamp: new Date().toISOString(),
+          partner: 'ratehawk'
+        })
+      }).catch(err => console.log('Tracking failed:', err));
+    }
+
+    // Handle form submission
+    function handleFormSubmission(e) {
+      e.preventDefault();
+      
+      const destination = document.getElementById('destination').value.trim();
+      const checkin = document.getElementById('checkin').value;
+      const checkout = document.getElementById('checkout').value;
+      const guests = document.getElementById('guests').value;
+
+      // Validate form
+      if (!destination || !checkin || !checkout) {
+        alert('يرجى ملء جميع الحقول المطلوبة');
         return;
       }
-      
-      if (!checkin || !checkout) {
-        alert('يرجى تحديد تواريخ الوصول والمغادرة');
+
+      // Validate dates
+      const checkinDate = new Date(checkin);
+      const checkoutDate = new Date(checkout);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (checkinDate < today) {
+        alert('تاريخ الوصول يجب أن يكون اليوم أو في المستقبل');
         return;
       }
-      
-      if (new Date(checkin) >= new Date(checkout)) {
+
+      if (checkoutDate <= checkinDate) {
         alert('تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول');
         return;
       }
+
+      // Show loading
+      document.getElementById('loading').style.display = 'block';
       
-      if (new Date(checkin) < new Date().setHours(0,0,0,0)) {
-        alert('لا يمكن اختيار تاريخ في الماضي');
-        return;
-      }
-      
-      // إظهار مؤشر التحميل
-      const loadingIndicator = document.getElementById('loadingIndicator');
-      loadingIndicator.style.display = 'block';
-      
-      // تحضير معاملات البحث
-      const [adults, children, rooms] = guests.split('-');
-      const searchParams = new URLSearchParams({
-        destination: destination,
-        checkin: checkin,
-        checkout: checkout,
-        adults: adults,
-        children: children,
-        rooms: rooms
-      });
-      
-      // محاكاة وقت البحث
+      // Track the search
+      trackClick(destination, checkin, checkout, guests);
+
+      // Generate RateHawk URL
+      const rateHawkUrl = generateRateHawkUrl(destination, checkin, checkout, guests);
+
+      // Simulate loading time
       setTimeout(() => {
-        loadingIndicator.style.display = 'none';
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
         
-        // فتح صفحة النتائج في نافذة جديدة
-        const resultsUrl = `booking-clone-results.html?${searchParams.toString()}`;
-        window.open(resultsUrl, '_blank');
+        // Redirect to RateHawk after showing success message
+        setTimeout(() => {
+          window.open(rateHawkUrl, '_blank');
+        }, 1500);
       }, 2000);
     }
 
-    // إعداد مستمعي الأحداث
+    // Initialize the page
     document.addEventListener('DOMContentLoaded', function() {
-      // تعيين التواريخ الافتراضية
       setDefaultDates();
+      initializeSuggestions();
       
-      // مستمع لحقل الوجهة
-      const destinationInput = document.getElementById('destinationInput');
-      destinationInput.addEventListener('input', function(e) {
-        showDestinationSuggestions(e.target.value);
-      });
+      // Add form submission handler
+      document.getElementById('hotelSearchForm').addEventListener('submit', handleFormSubmission);
       
-      // إخفاء الاقتراحات عند النقر خارجها
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('.destination-input')) {
-          document.getElementById('destinationSuggestions').style.display = 'none';
-        }
-      });
-      
-      // مستمع لمفتاح Enter في حقل الوجهة
-      destinationInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
+      // Add smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
           e.preventDefault();
-          searchHotels();
-        }
-      });
-      
-      // التحقق من صحة التواريخ
-      const checkinInput = document.getElementById('checkinInput');
-      const checkoutInput = document.getElementById('checkoutInput');
-      
-      checkinInput.addEventListener('change', function() {
-        const checkinDate = new Date(this.value);
-        const checkoutDate = new Date(checkoutInput.value);
-        
-        if (checkoutDate <= checkinDate) {
-          const newCheckout = new Date(checkinDate);
-          newCheckout.setDate(newCheckout.getDate() + 1);
-          checkoutInput.value = newCheckout.toISOString().split('T')[0];
-        }
-      });
-      
-      checkoutInput.addEventListener('change', function() {
-        const checkinDate = new Date(checkinInput.value);
-        const checkoutDate = new Date(this.value);
-        
-        if (checkoutDate <= checkinDate) {
-          alert('تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول');
-          const newCheckout = new Date(checkinDate);
-          newCheckout.setDate(newCheckout.getDate() + 1);
-          this.value = newCheckout.toISOString().split('T')[0];
-        }
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
+        });
       });
     });
+
+    // Add some interactive animations
+    function addScrollAnimations() {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+
+      // Observe feature cards and destination cards
+      document.querySelectorAll('.feature-card, .destination-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+      });
+    }
+
+    // Initialize animations after page load
+    window.addEventListener('load', addScrollAnimations);
+  </script>
+
+  <!-- Google Analytics (Optional) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
   </script>
 </body>
 </html>
-
