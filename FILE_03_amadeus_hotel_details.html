@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تفاصيل الفندق - Paygo.com</title>
+    <title>تفاصيل الفندق - Paygo.com مع Amadeus</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     <style>
         * {
             margin: 0;
@@ -16,45 +16,9 @@
 
         body {
             font-family: 'Cairo', sans-serif;
-            background: #f8f9fa;
-            direction: rtl;
-            line-height: 1.6;
-        }
-
-        .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .back-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            min-height: 100vh;
+            direction: rtl;
         }
 
         .container {
@@ -63,22 +27,90 @@
             padding: 20px;
         }
 
-        .hotel-header {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
-        .image-gallery {
-            position: relative;
-            height: 400px;
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .amadeus-badge {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .amadeus-badge i {
+            margin-left: 8px;
+        }
+
+        .back-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .back-btn i {
+            margin-left: 8px;
+        }
+
+        .hotel-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .hotel-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .hotel-gallery {
+            margin-bottom: 30px;
         }
 
         .swiper {
             width: 100%;
-            height: 100%;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
         }
 
         .swiper-slide img {
@@ -89,22 +121,28 @@
 
         .swiper-button-next,
         .swiper-button-prev {
-            color: white;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
+            color: #667eea;
+            background: rgba(255, 255, 255, 0.9);
             width: 40px;
             height: 40px;
+            border-radius: 50%;
+            margin-top: -20px;
         }
 
-        .swiper-pagination-bullet-active {
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 16px;
+        }
+
+        .swiper-pagination-bullet {
             background: #667eea;
         }
 
-        .hotel-info-header {
-            padding: 30px;
+        .hotel-header {
+            margin-bottom: 25px;
         }
 
-        .hotel-title {
+        .hotel-name {
             font-size: 2.5rem;
             font-weight: 700;
             color: #333;
@@ -117,7 +155,11 @@
             margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 8px;
+        }
+
+        .hotel-location i {
+            margin-left: 8px;
+            color: #667eea;
         }
 
         .hotel-rating {
@@ -129,42 +171,45 @@
 
         .stars {
             color: #ffd700;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
         }
 
         .rating-score {
             background: #667eea;
             color: white;
-            padding: 8px 15px;
-            border-radius: 25px;
+            padding: 8px 16px;
+            border-radius: 15px;
             font-weight: 600;
+            font-size: 1.1rem;
         }
 
-        .reviews-count {
+        .rating-text {
             color: #666;
         }
 
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 20px;
+        .amadeus-verified {
+            background: linear-gradient(45deg, #51cf66, #40c057);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
-        .hotel-details {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .amadeus-verified i {
+            margin-left: 8px;
         }
 
         .tabs {
             display: flex;
-            border-bottom: 1px solid #eee;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 25px;
         }
 
         .tab {
-            flex: 1;
-            padding: 20px;
-            text-align: center;
+            padding: 15px 25px;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
@@ -172,12 +217,11 @@
         }
 
         .tab.active {
-            border-bottom-color: #667eea;
             color: #667eea;
+            border-bottom-color: #667eea;
         }
 
         .tab-content {
-            padding: 30px;
             display: none;
         }
 
@@ -185,31 +229,24 @@
             display: block;
         }
 
-        .description {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 25px;
-        }
-
         .amenities-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .amenity-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px;
+            padding: 12px;
             background: #f8f9ff;
             border-radius: 10px;
-            border: 1px solid #e0e6ff;
         }
 
-        .amenity-icon {
+        .amenity-item i {
             color: #667eea;
+            margin-left: 10px;
             width: 20px;
         }
 
@@ -218,288 +255,241 @@
             gap: 20px;
         }
 
-        .room-card {
-            border: 1px solid #eee;
-            border-radius: 10px;
-            overflow: hidden;
+        .room-type {
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 20px;
             transition: all 0.3s ease;
         }
 
-        .room-card:hover {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .room-type:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.1);
         }
 
-        .room-header {
-            display: grid;
-            grid-template-columns: 150px 1fr auto;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .room-image {
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .room-image img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-        }
-
-        .room-info h4 {
+        .room-name {
+            font-size: 1.3rem;
+            font-weight: 600;
             color: #333;
             margin-bottom: 10px;
         }
 
         .room-features {
-            color: #666;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .room-feature {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 12px;
+            border-radius: 15px;
             font-size: 0.9rem;
         }
 
         .room-price {
-            text-align: center;
-        }
-
-        .room-price-amount {
             font-size: 1.5rem;
             font-weight: 700;
             color: #667eea;
         }
 
-        .room-price-per {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .reviews-section {
-            display: grid;
-            gap: 20px;
-        }
-
-        .review-summary {
+        .reviews-summary {
             background: #f8f9ff;
             padding: 20px;
-            border-radius: 10px;
-            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 20px;
         }
 
-        .review-score {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .review-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .review-category {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background: white;
-            border-radius: 8px;
-        }
-
-        .review-bar {
-            width: 100px;
-            height: 8px;
-            background: #eee;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .review-bar-fill {
-            height: 100%;
-            background: #667eea;
-            transition: width 0.3s ease;
-        }
-
-        .review-item {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #eee;
-        }
-
-        .review-header {
+        .reviews-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
         }
 
-        .reviewer-name {
+        .reviews-score {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .reviews-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .review-category {
+            text-align: center;
+        }
+
+        .review-category-name {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .review-category-score {
+            font-size: 1.2rem;
             font-weight: 600;
             color: #333;
         }
 
-        .review-date {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .review-rating {
-            color: #ffd700;
-        }
-
         .booking-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 20px;
             height: fit-content;
         }
 
-        .booking-price {
+        .booking-header {
             text-align: center;
             margin-bottom: 25px;
         }
 
-        .original-price {
-            color: #999;
-            text-decoration: line-through;
-            font-size: 1.1rem;
-        }
-
-        .current-price {
+        .price-display {
             font-size: 2.5rem;
             font-weight: 700;
             color: #667eea;
-            margin: 10px 0;
+            margin-bottom: 5px;
         }
 
-        .price-per-night {
+        .price-period {
             color: #666;
+            font-size: 1rem;
         }
 
-        .discount-badge {
-            background: #ff6b6b;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        .booking-dates {
+        .booking-details {
             margin-bottom: 25px;
         }
 
-        .date-group {
-            margin-bottom: 15px;
+        .booking-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
         }
 
-        .date-group label {
-            display: block;
-            margin-bottom: 5px;
+        .booking-row:last-child {
+            border-bottom: none;
+        }
+
+        .booking-label {
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+
+        .booking-label i {
+            margin-left: 8px;
+            color: #667eea;
+        }
+
+        .booking-value {
             font-weight: 600;
             color: #333;
         }
 
-        .date-group input,
-        .date-group select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .booking-summary {
+        .price-breakdown {
             background: #f8f9ff;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 15px;
             margin-bottom: 25px;
         }
 
-        .summary-row {
+        .price-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
         }
 
-        .summary-row.total {
+        .price-row.total {
             font-weight: 700;
-            font-size: 1.1rem;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
+            font-size: 1.2rem;
+            color: #333;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 15px;
             margin-top: 15px;
         }
 
         .book-now-btn {
-            width: 100%;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(45deg, #51cf66, #40c057);
             color: white;
             border: none;
             padding: 18px;
-            border-radius: 10px;
+            border-radius: 15px;
             font-size: 1.2rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
+            width: 100%;
+            margin-bottom: 15px;
             transition: all 0.3s ease;
             font-family: 'Cairo', sans-serif;
-            margin-bottom: 15px;
         }
 
         .book-now-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(81, 207, 102, 0.3);
         }
 
-        .secure-booking {
+        .amadeus-guarantee {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
             text-align: center;
-            color: #666;
             font-size: 0.9rem;
         }
 
-        .secure-booking i {
-            color: #51cf66;
+        .amadeus-guarantee i {
             margin-left: 5px;
         }
 
-        .map-section {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
         }
 
-        .map-placeholder {
-            width: 100%;
-            height: 300px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 1.1rem;
+        .loading i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @media (max-width: 768px) {
-            .main-content {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .hotel-main {
                 grid-template-columns: 1fr;
             }
 
-            .booking-card {
-                position: static;
-                order: -1;
+            .hotel-name {
+                font-size: 2rem;
             }
 
-            .hotel-title {
-                font-size: 2rem;
+            .swiper {
+                height: 250px;
             }
 
             .tabs {
@@ -509,452 +499,473 @@
             .tab {
                 flex: 1;
                 min-width: 120px;
-            }
-
-            .room-header {
-                grid-template-columns: 1fr;
                 text-align: center;
             }
 
-            .review-categories {
+            .amenities-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .reviews-breakdown {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <div class="header-content">
-            <div class="logo">
-                <i class="fas fa-plane"></i> Paygo.com
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <div class="logo">
+                    <i class="fas fa-plane"></i> Paygo.com
+                </div>
             </div>
-            <button class="back-btn" onclick="goBack()">
+            <div class="amadeus-badge">
+                <i class="fas fa-star"></i>
+                مدعوم بـ Amadeus
+            </div>
+            <a href="javascript:history.back()" class="back-btn">
                 <i class="fas fa-arrow-right"></i>
                 العودة للنتائج
-            </button>
+            </a>
         </div>
-    </div>
 
-    <div class="container">
-        <!-- Hotel Header -->
-        <div class="hotel-header">
-            <div class="image-gallery">
-                <div class="swiper">
-                    <div class="swiper-wrapper" id="imageGallery">
-                        <!-- Images will be populated here -->
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner"></i>
+            <h3>جاري تحميل تفاصيل الفندق من Amadeus</h3>
+            <p>نحضر لك أحدث المعلومات والأسعار...</p>
+        </div>
+
+        <!-- Hotel Main Content -->
+        <div class="hotel-main" id="hotelMain" style="display: none;">
+            <div class="hotel-content">
+                <!-- Hotel Gallery -->
+                <div class="hotel-gallery">
+                    <div class="swiper hotelSwiper">
+                        <div class="swiper-wrapper" id="hotelImages">
+                            <!-- سيتم ملء الصور هنا بواسطة JavaScript -->
+                        </div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-pagination"></div>
                     </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-pagination"></div>
                 </div>
-            </div>
-            
-            <div class="hotel-info-header">
-                <h1 class="hotel-title" id="hotelName">جاري التحميل...</h1>
-                <div class="hotel-location" id="hotelLocation">
-                    <i class="fas fa-map-marker-alt"></i>
-                    جاري التحميل...
-                </div>
-                <div class="hotel-rating">
-                    <div class="stars" id="hotelStars"></div>
-                    <div class="rating-score" id="hotelScore">0.0</div>
-                    <div class="reviews-count" id="reviewsCount">0 تقييم</div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Hotel Details -->
-            <div class="hotel-details">
+                <!-- Hotel Header -->
+                <div class="hotel-header">
+                    <h1 class="hotel-name" id="hotelName">برج العرب جميرا</h1>
+                    <div class="hotel-location" id="hotelLocation">
+                        <i class="fas fa-map-marker-alt"></i>
+                        جميرا، دبي • 2.5 كم من المركز
+                    </div>
+                    <div class="hotel-rating">
+                        <div class="stars" id="hotelStars">★★★★★</div>
+                        <div class="rating-score" id="ratingScore">9.2</div>
+                        <div class="rating-text" id="ratingText">ممتاز (1,250 تقييم)</div>
+                    </div>
+                    <div class="amadeus-verified">
+                        <i class="fas fa-shield-alt"></i>
+                        معتمد ومضمون من Amadeus
+                    </div>
+                </div>
+
+                <!-- Tabs -->
                 <div class="tabs">
-                    <div class="tab active" data-tab="overview">نظرة عامة</div>
-                    <div class="tab" data-tab="rooms">الغرف</div>
-                    <div class="tab" data-tab="reviews">التقييمات</div>
-                    <div class="tab" data-tab="location">الموقع</div>
-                    <div class="tab" data-tab="policies">السياسات</div>
+                    <div class="tab active" onclick="showTab('amenities')">المرافق</div>
+                    <div class="tab" onclick="showTab('rooms')">أنواع الغرف</div>
+                    <div class="tab" onclick="showTab('reviews')">التقييمات</div>
+                    <div class="tab" onclick="showTab('location')">الموقع</div>
+                    <div class="tab" onclick="showTab('policies')">السياسات</div>
                 </div>
 
-                <!-- Overview Tab -->
-                <div class="tab-content active" id="overview">
-                    <div class="description" id="hotelDescription">
-                        جاري تحميل وصف الفندق...
-                    </div>
-                    
-                    <h3 style="margin-bottom: 20px; color: #333;">المرافق والخدمات</h3>
+                <!-- Tab Contents -->
+                <div id="amenities" class="tab-content active">
+                    <h3 style="margin-bottom: 20px; color: #333;">مرافق الفندق</h3>
                     <div class="amenities-grid" id="amenitiesGrid">
-                        <!-- Amenities will be populated here -->
+                        <!-- سيتم ملء المرافق هنا بواسطة JavaScript -->
                     </div>
                 </div>
 
-                <!-- Rooms Tab -->
-                <div class="tab-content" id="rooms">
+                <div id="rooms" class="tab-content">
                     <h3 style="margin-bottom: 20px; color: #333;">أنواع الغرف المتاحة</h3>
                     <div class="room-types" id="roomTypes">
-                        <!-- Room types will be populated here -->
+                        <!-- سيتم ملء أنواع الغرف هنا بواسطة JavaScript -->
                     </div>
                 </div>
 
-                <!-- Reviews Tab -->
-                <div class="tab-content" id="reviews">
-                    <div class="review-summary">
-                        <div class="review-score" id="overallScore">8.9</div>
-                        <div>ممتاز</div>
-                        <div style="color: #666; margin-top: 10px;">بناءً على 1,234 تقييم</div>
-                        
-                        <div class="review-categories">
-                            <div class="review-category">
-                                <span>النظافة</span>
-                                <div class="review-bar">
-                                    <div class="review-bar-fill" style="width: 92%"></div>
-                                </div>
-                                <span>9.2</span>
-                            </div>
-                            <div class="review-category">
-                                <span>الموقع</span>
-                                <div class="review-bar">
-                                    <div class="review-bar-fill" style="width: 88%"></div>
-                                </div>
-                                <span>8.8</span>
-                            </div>
-                            <div class="review-category">
-                                <span>الخدمة</span>
-                                <div class="review-bar">
-                                    <div class="review-bar-fill" style="width: 90%"></div>
-                                </div>
-                                <span>9.0</span>
-                            </div>
-                            <div class="review-category">
-                                <span>القيمة مقابل المال</span>
-                                <div class="review-bar">
-                                    <div class="review-bar-fill" style="width: 85%"></div>
-                                </div>
-                                <span>8.5</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="review-item">
-                        <div class="review-header">
+                <div id="reviews" class="tab-content">
+                    <h3 style="margin-bottom: 20px; color: #333;">تقييمات النزلاء</h3>
+                    <div class="reviews-summary">
+                        <div class="reviews-header">
                             <div>
-                                <div class="reviewer-name">أحمد محمد</div>
-                                <div class="review-rating">★★★★★</div>
+                                <div class="reviews-score" id="reviewsScore">9.2</div>
+                                <div>ممتاز</div>
                             </div>
-                            <div class="review-date">منذ أسبوع</div>
-                        </div>
-                        <p>إقامة رائعة! الفندق نظيف جداً والموقع ممتاز. الطاقم محترف ومتعاون. أنصح بشدة بهذا الفندق.</p>
-                    </div>
-
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div>
-                                <div class="reviewer-name">فاطمة علي</div>
-                                <div class="review-rating">★★★★☆</div>
+                            <div style="text-align: left;">
+                                <div id="totalReviews">1,250 تقييم</div>
+                                <div style="color: #666; font-size: 0.9rem;">من نزلاء Amadeus</div>
                             </div>
-                            <div class="review-date">منذ أسبوعين</div>
                         </div>
-                        <p>فندق جميل مع إطلالة رائعة. الغرف واسعة ومريحة. الإفطار متنوع ولذيذ. التجربة كانت ممتازة بشكل عام.</p>
+                        <div class="reviews-breakdown">
+                            <div class="review-category">
+                                <div class="review-category-name">النظافة</div>
+                                <div class="review-category-score">9.5</div>
+                            </div>
+                            <div class="review-category">
+                                <div class="review-category-name">الراحة</div>
+                                <div class="review-category-score">9.3</div>
+                            </div>
+                            <div class="review-category">
+                                <div class="review-category-name">الموقع</div>
+                                <div class="review-category-score">9.0</div>
+                            </div>
+                            <div class="review-category">
+                                <div class="review-category-name">الخدمة</div>
+                                <div class="review-category-score">9.4</div>
+                            </div>
+                            <div class="review-category">
+                                <div class="review-category-name">المرافق</div>
+                                <div class="review-category-score">9.1</div>
+                            </div>
+                            <div class="review-category">
+                                <div class="review-category-name">القيمة مقابل المال</div>
+                                <div class="review-category-score">8.8</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Location Tab -->
-                <div class="tab-content" id="location">
-                    <h3 style="margin-bottom: 20px; color: #333;">موقع الفندق</h3>
-                    <div class="map-placeholder">
-                        <div>
-                            <i class="fas fa-map-marker-alt" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                            <div>خريطة تفاعلية للموقع</div>
-                            <div style="font-size: 0.9rem; color: #999; margin-top: 5px;">
-                                (في التطبيق الحقيقي ستظهر خريطة Google Maps)
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 20px;">
-                        <h4 style="margin-bottom: 15px; color: #333;">المعالم القريبة</h4>
+                <div id="location" class="tab-content">
+                    <h3 style="margin-bottom: 20px; color: #333;">الموقع والمعالم القريبة</h3>
+                    <div style="background: #f8f9ff; padding: 20px; border-radius: 15px;">
+                        <h4 style="color: #667eea; margin-bottom: 15px;">المعالم القريبة:</h4>
                         <div style="display: grid; gap: 10px;">
-                            <div style="display: flex; justify-content: space-between; padding: 10px; background: #f8f9ff; border-radius: 8px;">
-                                <span><i class="fas fa-building"></i> برج خليفة</span>
-                                <span>2.5 كم</span>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>برج خليفة</span>
+                                <span style="color: #666;">15 دقيقة بالسيارة</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; padding: 10px; background: #f8f9ff; border-radius: 8px;">
-                                <span><i class="fas fa-shopping-bag"></i> دبي مول</span>
-                                <span>1.8 كم</span>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>دبي مول</span>
+                                <span style="color: #666;">12 دقيقة بالسيارة</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; padding: 10px; background: #f8f9ff; border-radius: 8px;">
-                                <span><i class="fas fa-plane"></i> مطار دبي الدولي</span>
-                                <span>15 كم</span>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>مطار دبي الدولي</span>
+                                <span style="color: #666;">25 دقيقة بالسيارة</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>شاطئ جميرا</span>
+                                <span style="color: #666;">5 دقائق مشياً</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Policies Tab -->
-                <div class="tab-content" id="policies">
+                <div id="policies" class="tab-content">
                     <h3 style="margin-bottom: 20px; color: #333;">سياسات الفندق</h3>
-                    
-                    <div style="margin-bottom: 25px;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">تسجيل الوصول والمغادرة</h4>
-                        <p>• تسجيل الوصول: من الساعة 3:00 مساءً</p>
-                        <p>• تسجيل المغادرة: حتى الساعة 12:00 ظهراً</p>
-                        <p>• تسجيل الوصول المبكر والمغادرة المتأخرة متاحان حسب التوفر</p>
-                    </div>
-
-                    <div style="margin-bottom: 25px;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">سياسة الإلغاء</h4>
-                        <p>• إلغاء مجاني حتى 24 ساعة قبل تاريخ الوصول</p>
-                        <p>• رسوم إلغاء 50% من قيمة الليلة الأولى بعد هذا التاريخ</p>
-                        <p>• عدم الحضور: رسوم كامل قيمة الحجز</p>
-                    </div>
-
-                    <div style="margin-bottom: 25px;">
-                        <h4 style="color: #667eea; margin-bottom: 10px;">القواعد العامة</h4>
-                        <p>• التدخين ممنوع في جميع الغرف والمناطق المغلقة</p>
-                        <p>• الحيوانات الأليفة غير مسموحة</p>
-                        <p>• ساعات الهدوء من 10:00 مساءً حتى 7:00 صباحاً</p>
-                        <p>• يُطلب إثبات هوية ساري المفعول عند تسجيل الوصول</p>
-                    </div>
-
-                    <div>
-                        <h4 style="color: #667eea; margin-bottom: 10px;">الرسوم الإضافية</h4>
-                        <p>• رسوم المنتجع: 50 ريال لكل ليلة</p>
-                        <p>• موقف السيارات: 25 ريال لكل ليلة</p>
-                        <p>• الإنترنت: مجاني في جميع المناطق</p>
+                    <div style="display: grid; gap: 20px;">
+                        <div style="background: #f8f9ff; padding: 20px; border-radius: 15px;">
+                            <h4 style="color: #667eea; margin-bottom: 10px;">تسجيل الوصول والمغادرة</h4>
+                            <p>تسجيل الوصول: 3:00 مساءً</p>
+                            <p>تسجيل المغادرة: 12:00 ظهراً</p>
+                        </div>
+                        <div style="background: #f8f9ff; padding: 20px; border-radius: 15px;">
+                            <h4 style="color: #667eea; margin-bottom: 10px;">سياسة الإلغاء</h4>
+                            <p>إلغاء مجاني حتى 24 ساعة قبل الوصول</p>
+                            <p>بعد ذلك يتم خصم تكلفة ليلة واحدة</p>
+                        </div>
+                        <div style="background: #f8f9ff; padding: 20px; border-radius: 15px;">
+                            <h4 style="color: #667eea; margin-bottom: 10px;">سياسات إضافية</h4>
+                            <p>• يُسمح بالحيوانات الأليفة (رسوم إضافية)</p>
+                            <p>• خدمة واي فاي مجانية في جميع أنحاء الفندق</p>
+                            <p>• موقف سيارات مجاني</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Booking Card -->
             <div class="booking-card">
-                <div class="booking-price">
-                    <div class="original-price" id="originalPrice">2,500 ريال</div>
-                    <div class="current-price" id="currentPrice">1,899 ريال</div>
-                    <div class="price-per-night">لكل ليلة</div>
-                    <div class="discount-badge" id="discountBadge">خصم 24%</div>
+                <div class="booking-header">
+                    <div class="price-display" id="priceDisplay">2,500</div>
+                    <div class="price-period">ريال سعودي / ليلة</div>
                 </div>
 
-                <div class="booking-dates">
-                    <div class="date-group">
-                        <label>تاريخ الوصول</label>
-                        <input type="date" id="checkinDate">
+                <div class="booking-details" id="bookingDetails">
+                    <div class="booking-row">
+                        <div class="booking-label">
+                            <i class="fas fa-calendar-alt"></i>
+                            تسجيل الوصول
+                        </div>
+                        <div class="booking-value" id="checkinDisplay">15 مارس 2025</div>
                     </div>
-                    <div class="date-group">
-                        <label>تاريخ المغادرة</label>
-                        <input type="date" id="checkoutDate">
+                    <div class="booking-row">
+                        <div class="booking-label">
+                            <i class="fas fa-calendar-alt"></i>
+                            تسجيل المغادرة
+                        </div>
+                        <div class="booking-value" id="checkoutDisplay">17 مارس 2025</div>
                     </div>
-                    <div class="date-group">
-                        <label>عدد البالغين</label>
-                        <select id="adultsCount">
-                            <option value="1">1 بالغ</option>
-                            <option value="2">2 بالغين</option>
-                            <option value="3">3 بالغين</option>
-                            <option value="4">4 بالغين</option>
-                        </select>
+                    <div class="booking-row">
+                        <div class="booking-label">
+                            <i class="fas fa-users"></i>
+                            عدد النزلاء
+                        </div>
+                        <div class="booking-value" id="guestsDisplay">2 بالغين</div>
+                    </div>
+                    <div class="booking-row">
+                        <div class="booking-label">
+                            <i class="fas fa-moon"></i>
+                            عدد الليالي
+                        </div>
+                        <div class="booking-value" id="nightsDisplay">2 ليلة</div>
                     </div>
                 </div>
 
-                <div class="booking-summary">
-                    <div class="summary-row">
-                        <span>السعر لكل ليلة</span>
-                        <span id="pricePerNight">1,899 ريال</span>
+                <div class="price-breakdown">
+                    <div class="price-row">
+                        <span>2,500 ريال × 2 ليلة</span>
+                        <span id="subtotal">5,000 ريال</span>
                     </div>
-                    <div class="summary-row">
-                        <span>عدد الليالي</span>
-                        <span id="nightsCount">1</span>
-                    </div>
-                    <div class="summary-row">
+                    <div class="price-row">
                         <span>الضرائب والرسوم</span>
-                        <span id="taxesAndFees">285 ريال</span>
+                        <span id="taxes">375 ريال</span>
                     </div>
-                    <div class="summary-row total">
+                    <div class="price-row total">
                         <span>المجموع الكلي</span>
-                        <span id="totalPrice">2,184 ريال</span>
+                        <span id="totalPrice">5,375 ريال</span>
                     </div>
                 </div>
 
-                <button class="book-now-btn" onclick="proceedToBooking()">
-                    <i class="fas fa-calendar-check"></i>
-                    احجز الآن
+                <button class="book-now-btn" onclick="bookHotel()">
+                    احجز الآن مع Amadeus
                 </button>
 
-                <div class="secure-booking">
+                <div class="amadeus-guarantee">
                     <i class="fas fa-shield-alt"></i>
-                    حجز آمن ومضمون بتقنية Amadeus
-                </div>
-            </div>
-        </div>
-
-        <!-- Map Section -->
-        <div class="map-section">
-            <h3 style="margin-bottom: 20px; color: #333;">
-                <i class="fas fa-map-marker-alt"></i>
-                الموقع على الخريطة
-            </h3>
-            <div class="map-placeholder">
-                <div>
-                    <i class="fas fa-map" style="font-size: 3rem; margin-bottom: 15px; color: #667eea;"></i>
-                    <div>خريطة تفاعلية لموقع الفندق</div>
-                    <div style="font-size: 0.9rem; color: #999; margin-top: 10px;">
-                        في التطبيق الحقيقي ستظهر خريطة Google Maps التفاعلية
-                    </div>
+                    ضمان أفضل سعر من Amadeus
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script>
-        // بيانات الفندق الوهمية
-        const hotelData = {
-            'h1': {
+        // بيانات الفنادق من Amadeus (نفس البيانات من صفحة النتائج)
+        const amadeusHotels = {
+            'AMADEUS_HOTEL_001': {
+                id: 'AMADEUS_HOTEL_001',
                 name: 'برج العرب جميرا',
-                location: 'جميرا، دبي، الإمارات العربية المتحدة',
+                location: 'جميرا، دبي • 2.5 كم من المركز',
                 rating: 5,
-                score: 9.2,
-                reviewsCount: 1234,
-                originalPrice: 2500,
-                currentPrice: 1899,
-                discount: 24,
-                description: 'يقع برج العرب جميرا على جزيرة اصطناعية خاصة، ويُعتبر من أفخم الفنادق في العالم. يتميز الفندق بتصميمه المعماري الفريد على شكل شراع، ويوفر إطلالات خلابة على الخليج العربي. يضم الفندق مجموعة من أفخم الغرف والأجنحة، بالإضافة إلى مطاعم عالمية المستوى وسبا فاخر.',
+                reviewScore: 9.2,
+                reviewCount: 1250,
                 images: [
                     'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
                     'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
-                    'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800',
                     'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800',
-                    'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800'
+                    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800'
                 ],
                 amenities: [
-                    { icon: 'fas fa-wifi', name: 'واي فاي مجاني' },
-                    { icon: 'fas fa-swimming-pool', name: 'مسبح خارجي' },
-                    { icon: 'fas fa-spa', name: 'سبا ومركز صحي' },
-                    { icon: 'fas fa-utensils', name: '9 مطاعم ومقاهي' },
-                    { icon: 'fas fa-car', name: 'موقف سيارات مجاني' },
-                    { icon: 'fas fa-dumbbell', name: 'صالة رياضية' },
-                    { icon: 'fas fa-concierge-bell', name: 'خدمة الغرف 24/7' },
-                    { icon: 'fas fa-plane', name: 'خدمة المطار' },
-                    { icon: 'fas fa-baby', name: 'خدمات الأطفال' },
-                    { icon: 'fas fa-business-time', name: 'مركز أعمال' },
-                    { icon: 'fas fa-water', name: 'شاطئ خاص' },
-                    { icon: 'fas fa-cocktail', name: 'بار ولاونج' }
+                    { name: 'واي فاي مجاني', icon: 'fas fa-wifi' },
+                    { name: 'مسبح خارجي', icon: 'fas fa-swimming-pool' },
+                    { name: 'سبا ومركز صحي', icon: 'fas fa-spa' },
+                    { name: 'مطاعم متعددة', icon: 'fas fa-utensils' },
+                    { name: 'خدمة الغرف 24/7', icon: 'fas fa-concierge-bell' },
+                    { name: 'مركز أعمال', icon: 'fas fa-briefcase' },
+                    { name: 'موقف سيارات مجاني', icon: 'fas fa-parking' },
+                    { name: 'نادي رياضي', icon: 'fas fa-dumbbell' },
+                    { name: 'خدمة النقل', icon: 'fas fa-shuttle-van' },
+                    { name: 'خدمة الكونسيرج', icon: 'fas fa-user-tie' },
+                    { name: 'غرف اجتماعات', icon: 'fas fa-users' },
+                    { name: 'خدمة الغسيل', icon: 'fas fa-tshirt' }
                 ],
                 roomTypes: [
                     {
-                        name: 'جناح ديلوكس',
-                        image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=300',
-                        features: 'غرفة نوم منفصلة، صالة معيشة، إطلالة على البحر',
-                        price: 1899
+                        name: 'جناح ديلوكس مع إطلالة على البحر',
+                        features: ['سرير كينغ', 'إطلالة على البحر', 'شرفة خاصة', 'حمام رخامي'],
+                        price: 2500
                     },
                     {
-                        name: 'جناح بانوراما',
-                        image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300',
-                        features: 'غرفتي نوم، صالة طعام، شرفة خاصة، إطلالة 360 درجة',
-                        price: 2899
+                        name: 'جناح رويال مع إطلالة على المدينة',
+                        features: ['سرير كينغ', 'إطلالة على المدينة', 'غرفة معيشة منفصلة', 'خدمة بتلر'],
+                        price: 3200
                     },
                     {
-                        name: 'الجناح الملكي',
-                        image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300',
-                        features: '3 غرف نوم، مكتب خاص، خدمة خاصة، مدخل منفصل',
-                        price: 4999
+                        name: 'الجناح الرئاسي',
+                        features: ['غرفتي نوم', 'إطلالة بانورامية', 'مطبخ صغير', 'خدمة بتلر خاصة'],
+                        price: 5000
                     }
-                ]
+                ],
+                pricePerNight: 2500,
+                currency: 'SAR',
+                amadeusVerified: true
+            },
+            'AMADEUS_HOTEL_002': {
+                id: 'AMADEUS_HOTEL_002',
+                name: 'فندق أتلانتس النخلة',
+                location: 'نخلة جميرا، دبي • 8.2 كم من المركز',
+                rating: 5,
+                reviewScore: 8.9,
+                reviewCount: 2100,
+                images: [
+                    'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
+                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+                    'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800'
+                ],
+                amenities: [
+                    { name: 'حديقة مائية', icon: 'fas fa-water' },
+                    { name: 'أكواريوم', icon: 'fas fa-fish' },
+                    { name: 'مسبح', icon: 'fas fa-swimming-pool' },
+                    { name: 'سبا', icon: 'fas fa-spa' },
+                    { name: 'مطاعم متعددة', icon: 'fas fa-utensils' },
+                    { name: 'شاطئ خاص', icon: 'fas fa-umbrella-beach' }
+                ],
+                roomTypes: [
+                    {
+                        name: 'غرفة ديلوكس مع إطلالة على البحر',
+                        features: ['سرير كينغ', 'إطلالة على البحر', 'شرفة'],
+                        price: 1800
+                    }
+                ],
+                pricePerNight: 1800,
+                currency: 'SAR',
+                amadeusVerified: true
             }
         };
 
-        // متغيرات عامة
-        let currentHotel = null;
-        let searchParams = {};
-        let swiper = null;
-
-        // تهيئة الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            parseSearchParams();
-            loadHotelData();
-            setupTabs();
-            setupBookingCalculator();
-            initializeImageGallery();
-        });
-
-        // تحليل معاملات البحث
-        function parseSearchParams() {
+        // استخراج معاملات URL
+        function getUrlParams() {
             const urlParams = new URLSearchParams(window.location.search);
-            searchParams = {
-                hotel: urlParams.get('hotel') || 'h1',
-                checkin: urlParams.get('checkin') || '',
-                checkout: urlParams.get('checkout') || '',
-                adults: urlParams.get('adults') || '1'
+            return {
+                hotelId: urlParams.get('hotel') || 'AMADEUS_HOTEL_001',
+                city: urlParams.get('city') || 'DXB',
+                checkin: urlParams.get('checkin') || '2025-03-15',
+                checkout: urlParams.get('checkout') || '2025-03-17',
+                adults: urlParams.get('adults') || '2'
             };
         }
 
-        // تحميل بيانات الفندق
-        function loadHotelData() {
-            currentHotel = hotelData[searchParams.hotel] || hotelData['h1'];
+        // تحميل تفاصيل الفندق
+        async function loadHotelDetails() {
+            const params = getUrlParams();
+            const hotel = amadeusHotels[params.hotelId];
             
-            // تحديث معلومات الفندق
-            document.getElementById('hotelName').textContent = currentHotel.name;
+            if (!hotel) {
+                alert('الفندق غير موجود');
+                history.back();
+                return;
+            }
+
+            // عرض شاشة التحميل
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('hotelMain').style.display = 'none';
+
+            try {
+                // محاكاة تأخير API
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // ملء بيانات الفندق
+                displayHotelDetails(hotel, params);
+                
+                // إخفاء شاشة التحميل وعرض المحتوى
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('hotelMain').style.display = 'grid';
+                
+                // تهيئة معرض الصور
+                initializeSwiper();
+                
+            } catch (error) {
+                console.error('Error loading hotel details:', error);
+                alert('حدث خطأ في تحميل تفاصيل الفندق');
+                history.back();
+            }
+        }
+
+        // عرض تفاصيل الفندق
+        function displayHotelDetails(hotel, params) {
+            // معلومات الفندق الأساسية
+            document.getElementById('hotelName').textContent = hotel.name;
             document.getElementById('hotelLocation').innerHTML = `
                 <i class="fas fa-map-marker-alt"></i>
-                ${currentHotel.location}
+                ${hotel.location}
             `;
-            document.getElementById('hotelStars').textContent = '★'.repeat(currentHotel.rating);
-            document.getElementById('hotelScore').textContent = currentHotel.score;
-            document.getElementById('reviewsCount').textContent = `${currentHotel.reviewsCount.toLocaleString()} تقييم`;
-            
-            // تحديث الوصف
-            document.getElementById('hotelDescription').textContent = currentHotel.description;
-            
-            // تحديث المرافق
+            document.getElementById('hotelStars').textContent = '★'.repeat(hotel.rating) + '☆'.repeat(5-hotel.rating);
+            document.getElementById('ratingScore').textContent = hotel.reviewScore;
+            document.getElementById('ratingText').textContent = `ممتاز (${hotel.reviewCount.toLocaleString()} تقييم)`;
+
+            // صور الفندق
+            const imagesContainer = document.getElementById('hotelImages');
+            imagesContainer.innerHTML = hotel.images.map(image => `
+                <div class="swiper-slide">
+                    <img src="${image}" alt="${hotel.name}" 
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDgwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjBGMEYwIi8+CjxwYXRoIGQ9Ik0zNTAgMTUwSDQ1MFYyNTBIMzUwVjE1MFoiIGZpbGw9IiNEMEQwRDAiLz4KPHA+dGV4dCB4PSI0MDAiIHk9IjMwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzk5OSIgZm9udC1zaXplPSIyMCI+2LXZiNix2Kkg2LrZitixINmF2KrYp9it2Kk8L3RleHQ+Cjwvc3ZnPgo='">
+                </div>
+            `).join('');
+
+            // المرافق
             const amenitiesGrid = document.getElementById('amenitiesGrid');
-            amenitiesGrid.innerHTML = currentHotel.amenities.map(amenity => `
+            amenitiesGrid.innerHTML = hotel.amenities.map(amenity => `
                 <div class="amenity-item">
-                    <i class="${amenity.icon} amenity-icon"></i>
-                    <span>${amenity.name}</span>
+                    <i class="${amenity.icon}"></i>
+                    ${amenity.name}
                 </div>
             `).join('');
-            
-            // تحديث أنواع الغرف
+
+            // أنواع الغرف
             const roomTypes = document.getElementById('roomTypes');
-            roomTypes.innerHTML = currentHotel.roomTypes.map(room => `
-                <div class="room-card">
-                    <div class="room-header">
-                        <div class="room-image">
-                            <img src="${room.image}" alt="${room.name}" loading="lazy">
-                        </div>
-                        <div class="room-info">
-                            <h4>${room.name}</h4>
-                            <div class="room-features">${room.features}</div>
-                        </div>
-                        <div class="room-price">
-                            <div class="room-price-amount">${room.price.toLocaleString()} ريال</div>
-                            <div class="room-price-per">لكل ليلة</div>
-                        </div>
+            roomTypes.innerHTML = hotel.roomTypes.map(room => `
+                <div class="room-type">
+                    <div class="room-name">${room.name}</div>
+                    <div class="room-features">
+                        ${room.features.map(feature => `<span class="room-feature">${feature}</span>`).join('')}
                     </div>
+                    <div class="room-price">${room.price.toLocaleString()} ريال / ليلة</div>
                 </div>
             `).join('');
+
+            // معلومات الحجز
+            displayBookingInfo(hotel, params);
+        }
+
+        // عرض معلومات الحجز
+        function displayBookingInfo(hotel, params) {
+            const checkinDate = new Date(params.checkin);
+            const checkoutDate = new Date(params.checkout);
+            const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
             
-            // تحديث الأسعار
-            updatePricing();
-            
-            // تحديث التواريخ
-            if (searchParams.checkin) {
-                document.getElementById('checkinDate').value = searchParams.checkin;
-            }
-            if (searchParams.checkout) {
-                document.getElementById('checkoutDate').value = searchParams.checkout;
-            }
-            document.getElementById('adultsCount').value = searchParams.adults;
+            document.getElementById('priceDisplay').textContent = hotel.pricePerNight.toLocaleString();
+            document.getElementById('checkinDisplay').textContent = formatDate(params.checkin);
+            document.getElementById('checkoutDisplay').textContent = formatDate(params.checkout);
+            document.getElementById('guestsDisplay').textContent = params.adults + ' ' + (params.adults == '1' ? 'بالغ' : 'بالغين');
+            document.getElementById('nightsDisplay').textContent = nights + ' ' + (nights == 1 ? 'ليلة' : 'ليلة');
+
+            // حساب الأسعار
+            const subtotal = hotel.pricePerNight * nights;
+            const taxes = Math.round(subtotal * 0.075); // 7.5% ضرائب
+            const total = subtotal + taxes;
+
+            document.getElementById('subtotal').textContent = subtotal.toLocaleString() + ' ريال';
+            document.getElementById('taxes').textContent = taxes.toLocaleString() + ' ريال';
+            document.getElementById('totalPrice').textContent = total.toLocaleString() + ' ريال';
+        }
+
+        // تنسيق التاريخ
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ar-SA', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
         }
 
         // تهيئة معرض الصور
-        function initializeImageGallery() {
-            const imageGallery = document.getElementById('imageGallery');
-            imageGallery.innerHTML = currentHotel.images.map(image => `
-                <div class="swiper-slide">
-                    <img src="${image}" alt="${currentHotel.name}" loading="lazy">
-                </div>
-            `).join('');
-
-            swiper = new Swiper('.swiper', {
+        function initializeSwiper() {
+            new Swiper('.hotelSwiper', {
+                slidesPerView: 1,
+                spaceBetween: 0,
                 loop: true,
                 pagination: {
                     el: '.swiper-pagination',
@@ -971,107 +982,62 @@
             });
         }
 
-        // إعداد التبويبات
-        function setupTabs() {
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
+        // التبديل بين التبويبات
+        function showTab(tabName) {
+            // إخفاء جميع التبويبات
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const targetTab = this.dataset.tab;
-                    
-                    // إزالة الفئة النشطة من جميع التبويبات
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tabContents.forEach(tc => tc.classList.remove('active'));
-                    
-                    // إضافة الفئة النشطة للتبويب المحدد
-                    this.classList.add('active');
-                    document.getElementById(targetTab).classList.add('active');
+            // عرض التبويب المحدد
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // حجز الفندق
+        function bookHotel() {
+            const params = getUrlParams();
+            const hotel = amadeusHotels[params.hotelId];
+            
+            if (hotel) {
+                const checkinDate = new Date(params.checkin);
+                const checkoutDate = new Date(params.checkout);
+                const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+                const total = (hotel.pricePerNight * nights) + Math.round((hotel.pricePerNight * nights) * 0.075);
+                
+                alert(`تأكيد الحجز مع Amadeus:\n\n` +
+                      `الفندق: ${hotel.name}\n` +
+                      `التواريخ: ${formatDate(params.checkin)} - ${formatDate(params.checkout)}\n` +
+                      `عدد الليالي: ${nights}\n` +
+                      `عدد النزلاء: ${params.adults}\n` +
+                      `المجموع: ${total.toLocaleString()} ريال\n\n` +
+                      `هذه نسخة تجريبية - في التطبيق الحقيقي سيتم التكامل مع نظام الدفع الآمن لـ Amadeus.`);
+                
+                // في التطبيق الحقيقي، سيتم إرسال طلب الحجز لـ Amadeus API
+                console.log('Amadeus Booking Request:', {
+                    hotelId: params.hotelId,
+                    hotel: hotel,
+                    bookingDetails: {
+                        checkin: params.checkin,
+                        checkout: params.checkout,
+                        adults: params.adults,
+                        nights: nights,
+                        totalPrice: total
+                    }
                 });
-            });
-        }
-
-        // إعداد حاسبة الحجز
-        function setupBookingCalculator() {
-            const checkinDate = document.getElementById('checkinDate');
-            const checkoutDate = document.getElementById('checkoutDate');
-            const adultsCount = document.getElementById('adultsCount');
-
-            [checkinDate, checkoutDate, adultsCount].forEach(element => {
-                element.addEventListener('change', calculateBookingPrice);
-            });
-
-            calculateBookingPrice();
-        }
-
-        // حساب سعر الحجز
-        function calculateBookingPrice() {
-            const checkin = new Date(document.getElementById('checkinDate').value);
-            const checkout = new Date(document.getElementById('checkoutDate').value);
-            const adults = parseInt(document.getElementById('adultsCount').value);
-
-            if (checkin && checkout && checkout > checkin) {
-                const nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
-                const basePrice = currentHotel.currentPrice;
-                const subtotal = basePrice * nights;
-                const taxes = Math.round(subtotal * 0.15); // 15% ضرائب ورسوم
-                const total = subtotal + taxes;
-
-                document.getElementById('nightsCount').textContent = nights;
-                document.getElementById('pricePerNight').textContent = `${basePrice.toLocaleString()} ريال`;
-                document.getElementById('taxesAndFees').textContent = `${taxes.toLocaleString()} ريال`;
-                document.getElementById('totalPrice').textContent = `${total.toLocaleString()} ريال`;
             }
         }
 
-        // تحديث الأسعار
-        function updatePricing() {
-            document.getElementById('originalPrice').textContent = `${currentHotel.originalPrice.toLocaleString()} ريال`;
-            document.getElementById('currentPrice').textContent = `${currentHotel.currentPrice.toLocaleString()} ريال`;
-            document.getElementById('discountBadge').textContent = `خصم ${currentHotel.discount}%`;
-        }
-
-        // المتابعة للحجز
-        function proceedToBooking() {
-            const checkin = document.getElementById('checkinDate').value;
-            const checkout = document.getElementById('checkoutDate').value;
-            const adults = document.getElementById('adultsCount').value;
-
-            if (!checkin || !checkout) {
-                alert('يرجى تحديد تواريخ الوصول والمغادرة');
-                return;
-            }
-
-            if (new Date(checkin) >= new Date(checkout)) {
-                alert('تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول');
-                return;
-            }
-
-            // في التطبيق الحقيقي، سيتم التوجه لصفحة الدفع
-            const nights = Math.ceil((new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24));
-            const total = document.getElementById('totalPrice').textContent;
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            loadHotelDetails();
             
-            alert(`سيتم توجيهك لإتمام الحجز:\n\nالفندق: ${currentHotel.name}\nالتواريخ: ${checkin} إلى ${checkout}\nعدد الليالي: ${nights}\nعدد البالغين: ${adults}\nالمجموع: ${total}\n\nسيتم التوجه لصفحة الدفع الآمن...`);
-            
-            // تتبع الحدث
-            trackEvent('booking_initiated', {
-                hotel: currentHotel.name,
-                checkin: checkin,
-                checkout: checkout,
-                adults: adults,
-                nights: nights,
-                total: total
-            });
-        }
-
-        // العودة للنتائج
-        function goBack() {
-            if (document.referrer) {
-                window.history.back();
-            } else {
-                window.location.href = 'amadeus_results.html';
-            }
-        }
+            console.log('Amadeus Hotel Details Page loaded successfully!');
+            console.log('URL params:', getUrlParams());
+        });
 
         // تتبع الأحداث
         function trackEvent(eventName, eventData) {
@@ -1079,12 +1045,13 @@
         }
 
         // تتبع عرض تفاصيل الفندق
-        trackEvent('hotel_details_viewed', {
-            hotel: searchParams.hotel,
-            hotelName: currentHotel?.name,
-            checkin: searchParams.checkin,
-            checkout: searchParams.checkout,
-            adults: searchParams.adults
+        window.addEventListener('load', function() {
+            const params = getUrlParams();
+            trackEvent('hotel_details_viewed', {
+                hotelId: params.hotelId,
+                searchParams: params,
+                provider: 'Amadeus'
+            });
         });
     </script>
 </body>
