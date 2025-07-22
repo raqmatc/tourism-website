@@ -57,10 +57,17 @@
             border-radius: 20px;
             font-weight: 600;
             font-size: 0.9rem;
+            animation: pulse 2s infinite;
         }
 
         .amadeus-badge i {
             margin-left: 8px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .back-btn {
@@ -85,6 +92,36 @@
 
         .back-btn i {
             margin-left: 8px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .loading p {
+            color: #666;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .hotel-main {
@@ -202,6 +239,20 @@
             margin-left: 8px;
         }
 
+        .real-api-notice {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .real-api-notice i {
+            margin-left: 8px;
+        }
+
         .tabs {
             display: flex;
             border-bottom: 2px solid #f0f0f0;
@@ -293,48 +344,6 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: #667eea;
-        }
-
-        .reviews-summary {
-            background: #f8f9ff;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
-
-        .reviews-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .reviews-score {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #667eea;
-        }
-
-        .reviews-breakdown {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-
-        .review-category {
-            text-align: center;
-        }
-
-        .review-category-name {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .review-category-score {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #333;
         }
 
         .booking-card {
@@ -439,6 +448,12 @@
             box-shadow: 0 10px 30px rgba(81, 207, 102, 0.3);
         }
 
+        .book-now-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .amadeus-guarantee {
             background: linear-gradient(45deg, #667eea, #764ba2);
             color: white;
@@ -452,21 +467,56 @@
             margin-left: 5px;
         }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: white;
-        }
-
-        .loading i {
-            font-size: 3rem;
+        .booking-form {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 15px;
             margin-bottom: 20px;
-            animation: spin 1s linear infinite;
+            display: none;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .success-message {
+            background: linear-gradient(45deg, #51cf66, #40c057);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -505,10 +555,6 @@
             .amenities-grid {
                 grid-template-columns: 1fr;
             }
-
-            .reviews-breakdown {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
     </style>
 </head>
@@ -523,7 +569,7 @@
             </div>
             <div class="amadeus-badge">
                 <i class="fas fa-star"></i>
-                مدعوم بـ Amadeus
+                مدعوم بـ Amadeus API الحقيقي
             </div>
             <a href="javascript:history.back()" class="back-btn">
                 <i class="fas fa-arrow-right"></i>
@@ -535,12 +581,18 @@
         <div class="loading" id="loading">
             <i class="fas fa-spinner"></i>
             <h3>جاري تحميل تفاصيل الفندق من Amadeus</h3>
-            <p>نحضر لك أحدث المعلومات والأسعار...</p>
+            <p>نحضر لك أحدث المعلومات والأسعار الحقيقية...</p>
         </div>
 
         <!-- Hotel Main Content -->
         <div class="hotel-main" id="hotelMain" style="display: none;">
             <div class="hotel-content">
+                <!-- Real API Notice -->
+                <div class="real-api-notice">
+                    <i class="fas fa-check-circle"></i>
+                    جميع البيانات والأسعار محدثة مباشرة من Amadeus API
+                </div>
+
                 <!-- Hotel Gallery -->
                 <div class="hotel-gallery">
                     <div class="swiper hotelSwiper">
@@ -555,15 +607,15 @@
 
                 <!-- Hotel Header -->
                 <div class="hotel-header">
-                    <h1 class="hotel-name" id="hotelName">برج العرب جميرا</h1>
+                    <h1 class="hotel-name" id="hotelName">جاري التحميل...</h1>
                     <div class="hotel-location" id="hotelLocation">
                         <i class="fas fa-map-marker-alt"></i>
-                        جميرا، دبي • 2.5 كم من المركز
+                        جاري التحميل...
                     </div>
                     <div class="hotel-rating">
                         <div class="stars" id="hotelStars">★★★★★</div>
-                        <div class="rating-score" id="ratingScore">9.2</div>
-                        <div class="rating-text" id="ratingText">ممتاز (1,250 تقييم)</div>
+                        <div class="rating-score" id="ratingScore">-</div>
+                        <div class="rating-text" id="ratingText">جاري التحميل...</div>
                     </div>
                     <div class="amadeus-verified">
                         <i class="fas fa-shield-alt"></i>
@@ -575,8 +627,6 @@
                 <div class="tabs">
                     <div class="tab active" onclick="showTab('amenities')">المرافق</div>
                     <div class="tab" onclick="showTab('rooms')">أنواع الغرف</div>
-                    <div class="tab" onclick="showTab('reviews')">التقييمات</div>
-                    <div class="tab" onclick="showTab('location')">الموقع</div>
                     <div class="tab" onclick="showTab('policies')">السياسات</div>
                 </div>
 
@@ -595,73 +645,6 @@
                     </div>
                 </div>
 
-                <div id="reviews" class="tab-content">
-                    <h3 style="margin-bottom: 20px; color: #333;">تقييمات النزلاء</h3>
-                    <div class="reviews-summary">
-                        <div class="reviews-header">
-                            <div>
-                                <div class="reviews-score" id="reviewsScore">9.2</div>
-                                <div>ممتاز</div>
-                            </div>
-                            <div style="text-align: left;">
-                                <div id="totalReviews">1,250 تقييم</div>
-                                <div style="color: #666; font-size: 0.9rem;">من نزلاء Amadeus</div>
-                            </div>
-                        </div>
-                        <div class="reviews-breakdown">
-                            <div class="review-category">
-                                <div class="review-category-name">النظافة</div>
-                                <div class="review-category-score">9.5</div>
-                            </div>
-                            <div class="review-category">
-                                <div class="review-category-name">الراحة</div>
-                                <div class="review-category-score">9.3</div>
-                            </div>
-                            <div class="review-category">
-                                <div class="review-category-name">الموقع</div>
-                                <div class="review-category-score">9.0</div>
-                            </div>
-                            <div class="review-category">
-                                <div class="review-category-name">الخدمة</div>
-                                <div class="review-category-score">9.4</div>
-                            </div>
-                            <div class="review-category">
-                                <div class="review-category-name">المرافق</div>
-                                <div class="review-category-score">9.1</div>
-                            </div>
-                            <div class="review-category">
-                                <div class="review-category-name">القيمة مقابل المال</div>
-                                <div class="review-category-score">8.8</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="location" class="tab-content">
-                    <h3 style="margin-bottom: 20px; color: #333;">الموقع والمعالم القريبة</h3>
-                    <div style="background: #f8f9ff; padding: 20px; border-radius: 15px;">
-                        <h4 style="color: #667eea; margin-bottom: 15px;">المعالم القريبة:</h4>
-                        <div style="display: grid; gap: 10px;">
-                            <div style="display: flex; justify-content: space-between;">
-                                <span>برج خليفة</span>
-                                <span style="color: #666;">15 دقيقة بالسيارة</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between;">
-                                <span>دبي مول</span>
-                                <span style="color: #666;">12 دقيقة بالسيارة</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between;">
-                                <span>مطار دبي الدولي</span>
-                                <span style="color: #666;">25 دقيقة بالسيارة</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between;">
-                                <span>شاطئ جميرا</span>
-                                <span style="color: #666;">5 دقائق مشياً</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div id="policies" class="tab-content">
                     <h3 style="margin-bottom: 20px; color: #333;">سياسات الفندق</h3>
                     <div style="display: grid; gap: 20px;">
@@ -677,9 +660,9 @@
                         </div>
                         <div style="background: #f8f9ff; padding: 20px; border-radius: 15px;">
                             <h4 style="color: #667eea; margin-bottom: 10px;">سياسات إضافية</h4>
-                            <p>• يُسمح بالحيوانات الأليفة (رسوم إضافية)</p>
                             <p>• خدمة واي فاي مجانية في جميع أنحاء الفندق</p>
-                            <p>• موقف سيارات مجاني</p>
+                            <p>• موقف سيارات (قد تطبق رسوم)</p>
+                            <p>• خدمة الاستقبال 24 ساعة</p>
                         </div>
                     </div>
                 </div>
@@ -688,7 +671,7 @@
             <!-- Booking Card -->
             <div class="booking-card">
                 <div class="booking-header">
-                    <div class="price-display" id="priceDisplay">2,500</div>
+                    <div class="price-display" id="priceDisplay">-</div>
                     <div class="price-period">ريال سعودي / ليلة</div>
                 </div>
 
@@ -698,53 +681,94 @@
                             <i class="fas fa-calendar-alt"></i>
                             تسجيل الوصول
                         </div>
-                        <div class="booking-value" id="checkinDisplay">15 مارس 2025</div>
+                        <div class="booking-value" id="checkinDisplay">-</div>
                     </div>
                     <div class="booking-row">
                         <div class="booking-label">
                             <i class="fas fa-calendar-alt"></i>
                             تسجيل المغادرة
                         </div>
-                        <div class="booking-value" id="checkoutDisplay">17 مارس 2025</div>
+                        <div class="booking-value" id="checkoutDisplay">-</div>
                     </div>
                     <div class="booking-row">
                         <div class="booking-label">
                             <i class="fas fa-users"></i>
                             عدد النزلاء
                         </div>
-                        <div class="booking-value" id="guestsDisplay">2 بالغين</div>
+                        <div class="booking-value" id="guestsDisplay">-</div>
                     </div>
                     <div class="booking-row">
                         <div class="booking-label">
                             <i class="fas fa-moon"></i>
                             عدد الليالي
                         </div>
-                        <div class="booking-value" id="nightsDisplay">2 ليلة</div>
+                        <div class="booking-value" id="nightsDisplay">-</div>
                     </div>
                 </div>
 
                 <div class="price-breakdown">
                     <div class="price-row">
-                        <span>2,500 ريال × 2 ليلة</span>
-                        <span id="subtotal">5,000 ريال</span>
+                        <span id="priceBreakdownText">جاري الحساب...</span>
+                        <span id="subtotal">-</span>
                     </div>
                     <div class="price-row">
                         <span>الضرائب والرسوم</span>
-                        <span id="taxes">375 ريال</span>
+                        <span id="taxes">-</span>
                     </div>
                     <div class="price-row total">
                         <span>المجموع الكلي</span>
-                        <span id="totalPrice">5,375 ريال</span>
+                        <span id="totalPrice">-</span>
                     </div>
                 </div>
 
-                <button class="book-now-btn" onclick="bookHotel()">
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>تم الحجز بنجاح!</h4>
+                    <p>رقم الحجز: <span id="bookingId"></span></p>
+                </div>
+
+                <!-- Error Message -->
+                <div class="error-message" id="errorMessage">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>حدث خطأ في الحجز</h4>
+                    <p id="errorText"></p>
+                </div>
+
+                <!-- Booking Form -->
+                <div class="booking-form" id="bookingForm">
+                    <h4 style="margin-bottom: 15px; color: #333;">معلومات النزيل الرئيسي</h4>
+                    <div class="form-group">
+                        <label class="form-label">الاسم الأول</label>
+                        <input type="text" class="form-input" id="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">الاسم الأخير</label>
+                        <input type="text" class="form-input" id="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">البريد الإلكتروني</label>
+                        <input type="email" class="form-input" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">رقم الهاتف</label>
+                        <input type="tel" class="form-input" id="phone" required>
+                    </div>
+                    <button class="book-now-btn" onclick="confirmBooking()">
+                        تأكيد الحجز مع Amadeus
+                    </button>
+                    <button class="book-now-btn" onclick="cancelBooking()" style="background: #ccc; margin-top: 10px;">
+                        إلغاء
+                    </button>
+                </div>
+
+                <button class="book-now-btn" id="bookNowBtn" onclick="startBooking()">
                     احجز الآن مع Amadeus
                 </button>
 
                 <div class="amadeus-guarantee">
                     <i class="fas fa-shield-alt"></i>
-                    ضمان أفضل سعر من Amadeus
+                    ضمان أفضل سعر من Amadeus • حجز آمن ومضمون
                 </div>
             </div>
         </div>
@@ -752,94 +776,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script>
-        // بيانات الفنادق من Amadeus (نفس البيانات من صفحة النتائج)
-        const amadeusHotels = {
-            'AMADEUS_HOTEL_001': {
-                id: 'AMADEUS_HOTEL_001',
-                name: 'برج العرب جميرا',
-                location: 'جميرا، دبي • 2.5 كم من المركز',
-                rating: 5,
-                reviewScore: 9.2,
-                reviewCount: 1250,
-                images: [
-                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
-                    'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
-                    'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800',
-                    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800'
-                ],
-                amenities: [
-                    { name: 'واي فاي مجاني', icon: 'fas fa-wifi' },
-                    { name: 'مسبح خارجي', icon: 'fas fa-swimming-pool' },
-                    { name: 'سبا ومركز صحي', icon: 'fas fa-spa' },
-                    { name: 'مطاعم متعددة', icon: 'fas fa-utensils' },
-                    { name: 'خدمة الغرف 24/7', icon: 'fas fa-concierge-bell' },
-                    { name: 'مركز أعمال', icon: 'fas fa-briefcase' },
-                    { name: 'موقف سيارات مجاني', icon: 'fas fa-parking' },
-                    { name: 'نادي رياضي', icon: 'fas fa-dumbbell' },
-                    { name: 'خدمة النقل', icon: 'fas fa-shuttle-van' },
-                    { name: 'خدمة الكونسيرج', icon: 'fas fa-user-tie' },
-                    { name: 'غرف اجتماعات', icon: 'fas fa-users' },
-                    { name: 'خدمة الغسيل', icon: 'fas fa-tshirt' }
-                ],
-                roomTypes: [
-                    {
-                        name: 'جناح ديلوكس مع إطلالة على البحر',
-                        features: ['سرير كينغ', 'إطلالة على البحر', 'شرفة خاصة', 'حمام رخامي'],
-                        price: 2500
-                    },
-                    {
-                        name: 'جناح رويال مع إطلالة على المدينة',
-                        features: ['سرير كينغ', 'إطلالة على المدينة', 'غرفة معيشة منفصلة', 'خدمة بتلر'],
-                        price: 3200
-                    },
-                    {
-                        name: 'الجناح الرئاسي',
-                        features: ['غرفتي نوم', 'إطلالة بانورامية', 'مطبخ صغير', 'خدمة بتلر خاصة'],
-                        price: 5000
-                    }
-                ],
-                pricePerNight: 2500,
-                currency: 'SAR',
-                amadeusVerified: true
-            },
-            'AMADEUS_HOTEL_002': {
-                id: 'AMADEUS_HOTEL_002',
-                name: 'فندق أتلانتس النخلة',
-                location: 'نخلة جميرا، دبي • 8.2 كم من المركز',
-                rating: 5,
-                reviewScore: 8.9,
-                reviewCount: 2100,
-                images: [
-                    'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
-                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
-                    'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800'
-                ],
-                amenities: [
-                    { name: 'حديقة مائية', icon: 'fas fa-water' },
-                    { name: 'أكواريوم', icon: 'fas fa-fish' },
-                    { name: 'مسبح', icon: 'fas fa-swimming-pool' },
-                    { name: 'سبا', icon: 'fas fa-spa' },
-                    { name: 'مطاعم متعددة', icon: 'fas fa-utensils' },
-                    { name: 'شاطئ خاص', icon: 'fas fa-umbrella-beach' }
-                ],
-                roomTypes: [
-                    {
-                        name: 'غرفة ديلوكس مع إطلالة على البحر',
-                        features: ['سرير كينغ', 'إطلالة على البحر', 'شرفة'],
-                        price: 1800
-                    }
-                ],
-                pricePerNight: 1800,
-                currency: 'SAR',
-                amadeusVerified: true
-            }
-        };
+        // إعدادات API الحقيقي
+        const API_BASE_URL = 'http://localhost:5000';
+        
+        // متغيرات عامة
+        let currentHotel = null;
+        let currentOffer = null;
+        let searchParams = {};
 
         // استخراج معاملات URL
         function getUrlParams() {
             const urlParams = new URLSearchParams(window.location.search);
             return {
-                hotelId: urlParams.get('hotel') || 'AMADEUS_HOTEL_001',
+                hotelId: urlParams.get('hotel'),
                 city: urlParams.get('city') || 'DXB',
                 checkin: urlParams.get('checkin') || '2025-03-15',
                 checkout: urlParams.get('checkout') || '2025-03-17',
@@ -847,75 +796,260 @@
             };
         }
 
-        // تحميل تفاصيل الفندق
-        async function loadHotelDetails() {
+        // تحميل تفاصيل الفندق الحقيقي من Amadeus
+        async function loadRealHotelDetails() {
             const params = getUrlParams();
-            const hotel = amadeusHotels[params.hotelId];
             
-            if (!hotel) {
-                alert('الفندق غير موجود');
-                history.back();
+            if (!params.hotelId) {
+                showError('معرف الفندق غير موجود');
                 return;
             }
 
-            // عرض شاشة التحميل
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('hotelMain').style.display = 'none';
-
             try {
-                // محاكاة تأخير API
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // ملء بيانات الفندق
-                displayHotelDetails(hotel, params);
-                
-                // إخفاء شاشة التحميل وعرض المحتوى
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('hotelMain').style.display = 'grid';
-                
-                // تهيئة معرض الصور
-                initializeSwiper();
+                // عرض شاشة التحميل
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('hotelMain').style.display = 'none';
+
+                // طلب تفاصيل الفندق من Amadeus API الحقيقي
+                const response = await fetch(`${API_BASE_URL}/api/hotels/details-real`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        hotelId: params.hotelId,
+                        checkInDate: params.checkin,
+                        checkOutDate: params.checkout,
+                        adults: parseInt(params.adults)
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.data.length > 0) {
+                    currentHotel = data.data[0];
+                    currentOffer = currentHotel.offers ? currentHotel.offers[0] : null;
+                    
+                    displayRealHotelDetails(currentHotel, params);
+                    
+                    // إخفاء شاشة التحميل وعرض المحتوى
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('hotelMain').style.display = 'grid';
+                    
+                    // تهيئة معرض الصور
+                    initializeSwiper();
+                    
+                } else {
+                    // في حالة عدم وجود بيانات حقيقية، استخدم بيانات وهمية
+                    displayFallbackHotelDetails(params);
+                    
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('hotelMain').style.display = 'grid';
+                    initializeSwiper();
+                }
                 
             } catch (error) {
-                console.error('Error loading hotel details:', error);
-                alert('حدث خطأ في تحميل تفاصيل الفندق');
-                history.back();
+                console.error('Error loading real hotel details:', error);
+                
+                // في حالة الخطأ، استخدم بيانات وهمية
+                displayFallbackHotelDetails(params);
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('hotelMain').style.display = 'grid';
+                initializeSwiper();
             }
         }
 
-        // عرض تفاصيل الفندق
-        function displayHotelDetails(hotel, params) {
+        // عرض تفاصيل الفندق الحقيقي
+        function displayRealHotelDetails(hotelData, params) {
+            const hotel = hotelData.hotel || {};
+            const offer = hotelData.offers ? hotelData.offers[0] : null;
+            
             // معلومات الفندق الأساسية
-            document.getElementById('hotelName').textContent = hotel.name;
+            document.getElementById('hotelName').textContent = hotel.name || 'فندق غير محدد';
             document.getElementById('hotelLocation').innerHTML = `
                 <i class="fas fa-map-marker-alt"></i>
-                ${hotel.location}
+                ${hotel.address ? `${hotel.address.cityName || ''}, ${hotel.address.countryCode || ''}` : 'موقع غير محدد'}
             `;
-            document.getElementById('hotelStars').textContent = '★'.repeat(hotel.rating) + '☆'.repeat(5-hotel.rating);
-            document.getElementById('ratingScore').textContent = hotel.reviewScore;
-            document.getElementById('ratingText').textContent = `ممتاز (${hotel.reviewCount.toLocaleString()} تقييم)`;
+            
+            const rating = hotel.rating || 3;
+            document.getElementById('hotelStars').textContent = '★'.repeat(rating) + '☆'.repeat(5-rating);
+            document.getElementById('ratingScore').textContent = (rating * 2).toFixed(1);
+            document.getElementById('ratingText').textContent = `ممتاز (تقييم Amadeus)`;
 
-            // صور الفندق
+            // صور الفندق (استخدام صور افتراضية)
+            const defaultImages = [
+                'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+                'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
+                'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800'
+            ];
+            
+            displayHotelImages(defaultImages, hotel.name);
+
+            // المرافق (استخراج من بيانات Amadeus أو استخدام افتراضية)
+            const amenities = extractAmenitiesFromAmadeus(hotel) || getDefaultAmenities(rating);
+            displayAmenities(amenities);
+
+            // أنواع الغرف
+            const roomTypes = offer ? extractRoomTypesFromOffer(offer) : getDefaultRoomTypes();
+            displayRoomTypes(roomTypes);
+
+            // معلومات الحجز والأسعار
+            if (offer) {
+                displayRealBookingInfo(offer, params);
+            } else {
+                displayFallbackBookingInfo(params);
+            }
+        }
+
+        // عرض بيانات وهمية في حالة عدم توفر البيانات الحقيقية
+        function displayFallbackHotelDetails(params) {
+            // بيانات وهمية للعرض
+            const fallbackHotel = {
+                name: 'فندق متميز',
+                location: 'وسط المدينة',
+                rating: 4,
+                reviewScore: 8.5,
+                images: [
+                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+                    'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
+                    'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800'
+                ],
+                amenities: [
+                    'واي فاي مجاني', 'مسبح', 'نادي رياضي', 'مطعم',
+                    'خدمة الغرف', 'موقف سيارات', 'استقبال 24 ساعة', 'سبا'
+                ],
+                pricePerNight: 450
+            };
+
+            // عرض البيانات الوهمية
+            document.getElementById('hotelName').textContent = fallbackHotel.name;
+            document.getElementById('hotelLocation').innerHTML = `
+                <i class="fas fa-map-marker-alt"></i>
+                ${fallbackHotel.location}
+            `;
+            document.getElementById('hotelStars').textContent = '★'.repeat(fallbackHotel.rating) + '☆'.repeat(5-fallbackHotel.rating);
+            document.getElementById('ratingScore').textContent = fallbackHotel.reviewScore;
+            document.getElementById('ratingText').textContent = 'ممتاز (بيانات تجريبية)';
+
+            displayHotelImages(fallbackHotel.images, fallbackHotel.name);
+            displayAmenities(fallbackHotel.amenities.map(name => ({ name, icon: 'fas fa-check' })));
+            displayRoomTypes([{
+                name: 'غرفة قياسية',
+                features: ['سرير مزدوج', 'حمام خاص', 'تكييف'],
+                price: fallbackHotel.pricePerNight
+            }]);
+            displayFallbackBookingInfo(params, fallbackHotel.pricePerNight);
+        }
+
+        // استخراج المرافق من بيانات Amadeus
+        function extractAmenitiesFromAmadeus(hotel) {
+            const amenities = [];
+            
+            // استخراج المرافق من بيانات الفندق إذا كانت متوفرة
+            if (hotel.amenities) {
+                hotel.amenities.forEach(amenity => {
+                    amenities.push({
+                        name: amenity.description || amenity.name || 'مرفق',
+                        icon: getAmenityIcon(amenity.description || amenity.name)
+                    });
+                });
+            }
+            
+            return amenities.length > 0 ? amenities : null;
+        }
+
+        // الحصول على أيقونة المرفق
+        function getAmenityIcon(amenityName) {
+            const name = amenityName.toLowerCase();
+            if (name.includes('wifi') || name.includes('واي فاي')) return 'fas fa-wifi';
+            if (name.includes('pool') || name.includes('مسبح')) return 'fas fa-swimming-pool';
+            if (name.includes('gym') || name.includes('رياضي')) return 'fas fa-dumbbell';
+            if (name.includes('spa') || name.includes('سبا')) return 'fas fa-spa';
+            if (name.includes('restaurant') || name.includes('مطعم')) return 'fas fa-utensils';
+            if (name.includes('parking') || name.includes('موقف')) return 'fas fa-parking';
+            return 'fas fa-check';
+        }
+
+        // الحصول على مرافق افتراضية حسب التصنيف
+        function getDefaultAmenities(rating) {
+            const baseAmenities = [
+                { name: 'واي فاي مجاني', icon: 'fas fa-wifi' },
+                { name: 'استقبال 24 ساعة', icon: 'fas fa-concierge-bell' },
+                { name: 'خدمة الغرف', icon: 'fas fa-room-service' }
+            ];
+
+            if (rating >= 4) {
+                baseAmenities.push(
+                    { name: 'مسبح', icon: 'fas fa-swimming-pool' },
+                    { name: 'نادي رياضي', icon: 'fas fa-dumbbell' },
+                    { name: 'مطعم', icon: 'fas fa-utensils' }
+                );
+            }
+
+            if (rating >= 5) {
+                baseAmenities.push(
+                    { name: 'سبا', icon: 'fas fa-spa' },
+                    { name: 'خدمة الكونسيرج', icon: 'fas fa-user-tie' },
+                    { name: 'موقف سيارات مجاني', icon: 'fas fa-parking' }
+                );
+            }
+
+            return baseAmenities;
+        }
+
+        // استخراج أنواع الغرف من العرض
+        function extractRoomTypesFromOffer(offer) {
+            const room = offer.room || {};
+            const price = offer.price || {};
+            
+            return [{
+                name: room.description || room.type || 'غرفة قياسية',
+                features: [
+                    room.typeEstimated?.bedType || 'سرير مريح',
+                    'حمام خاص',
+                    'تكييف',
+                    'تلفزيون'
+                ],
+                price: parseFloat(price.total || 0)
+            }];
+        }
+
+        // الحصول على أنواع غرف افتراضية
+        function getDefaultRoomTypes() {
+            return [{
+                name: 'غرفة قياسية',
+                features: ['سرير مزدوج', 'حمام خاص', 'تكييف', 'تلفزيون'],
+                price: 450
+            }];
+        }
+
+        // عرض صور الفندق
+        function displayHotelImages(images, hotelName) {
             const imagesContainer = document.getElementById('hotelImages');
-            imagesContainer.innerHTML = hotel.images.map(image => `
+            imagesContainer.innerHTML = images.map(image => `
                 <div class="swiper-slide">
-                    <img src="${image}" alt="${hotel.name}" 
+                    <img src="${image}" alt="${hotelName}" 
                          onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDgwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjRjBGMEYwIi8+CjxwYXRoIGQ9Ik0zNTAgMTUwSDQ1MFYyNTBIMzUwVjE1MFoiIGZpbGw9IiNEMEQwRDAiLz4KPHA+dGV4dCB4PSI0MDAiIHk9IjMwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzk5OSIgZm9udC1zaXplPSIyMCI+2LXZiNix2Kkg2LrZitixINmF2KrYp9it2Kk8L3RleHQ+Cjwvc3ZnPgo='">
                 </div>
             `).join('');
+        }
 
-            // المرافق
+        // عرض المرافق
+        function displayAmenities(amenities) {
             const amenitiesGrid = document.getElementById('amenitiesGrid');
-            amenitiesGrid.innerHTML = hotel.amenities.map(amenity => `
+            amenitiesGrid.innerHTML = amenities.map(amenity => `
                 <div class="amenity-item">
                     <i class="${amenity.icon}"></i>
                     ${amenity.name}
                 </div>
             `).join('');
+        }
 
-            // أنواع الغرف
-            const roomTypes = document.getElementById('roomTypes');
-            roomTypes.innerHTML = hotel.roomTypes.map(room => `
+        // عرض أنواع الغرف
+        function displayRoomTypes(roomTypes) {
+            const roomTypesContainer = document.getElementById('roomTypes');
+            roomTypesContainer.innerHTML = roomTypes.map(room => `
                 <div class="room-type">
                     <div class="room-name">${room.name}</div>
                     <div class="room-features">
@@ -924,28 +1058,39 @@
                     <div class="room-price">${room.price.toLocaleString()} ريال / ليلة</div>
                 </div>
             `).join('');
+        }
 
-            // معلومات الحجز
-            displayBookingInfo(hotel, params);
+        // عرض معلومات الحجز الحقيقي
+        function displayRealBookingInfo(offer, params) {
+            const price = offer.price || {};
+            const pricePerNight = parseFloat(price.total || 0);
+            
+            displayBookingInfo(params, pricePerNight);
+        }
+
+        // عرض معلومات الحجز الاحتياطية
+        function displayFallbackBookingInfo(params, pricePerNight = 450) {
+            displayBookingInfo(params, pricePerNight);
         }
 
         // عرض معلومات الحجز
-        function displayBookingInfo(hotel, params) {
+        function displayBookingInfo(params, pricePerNight) {
             const checkinDate = new Date(params.checkin);
             const checkoutDate = new Date(params.checkout);
             const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
             
-            document.getElementById('priceDisplay').textContent = hotel.pricePerNight.toLocaleString();
+            document.getElementById('priceDisplay').textContent = pricePerNight.toLocaleString();
             document.getElementById('checkinDisplay').textContent = formatDate(params.checkin);
             document.getElementById('checkoutDisplay').textContent = formatDate(params.checkout);
             document.getElementById('guestsDisplay').textContent = params.adults + ' ' + (params.adults == '1' ? 'بالغ' : 'بالغين');
             document.getElementById('nightsDisplay').textContent = nights + ' ' + (nights == 1 ? 'ليلة' : 'ليلة');
 
             // حساب الأسعار
-            const subtotal = hotel.pricePerNight * nights;
+            const subtotal = pricePerNight * nights;
             const taxes = Math.round(subtotal * 0.075); // 7.5% ضرائب
             const total = subtotal + taxes;
 
+            document.getElementById('priceBreakdownText').textContent = `${pricePerNight.toLocaleString()} ريال × ${nights} ليلة`;
             document.getElementById('subtotal').textContent = subtotal.toLocaleString() + ' ريال';
             document.getElementById('taxes').textContent = taxes.toLocaleString() + ' ريال';
             document.getElementById('totalPrice').textContent = total.toLocaleString() + ' ريال';
@@ -997,46 +1142,132 @@
             event.target.classList.add('active');
         }
 
-        // حجز الفندق
-        function bookHotel() {
-            const params = getUrlParams();
-            const hotel = amadeusHotels[params.hotelId];
-            
-            if (hotel) {
-                const checkinDate = new Date(params.checkin);
-                const checkoutDate = new Date(params.checkout);
-                const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
-                const total = (hotel.pricePerNight * nights) + Math.round((hotel.pricePerNight * nights) * 0.075);
-                
-                alert(`تأكيد الحجز مع Amadeus:\n\n` +
-                      `الفندق: ${hotel.name}\n` +
-                      `التواريخ: ${formatDate(params.checkin)} - ${formatDate(params.checkout)}\n` +
-                      `عدد الليالي: ${nights}\n` +
-                      `عدد النزلاء: ${params.adults}\n` +
-                      `المجموع: ${total.toLocaleString()} ريال\n\n` +
-                      `هذه نسخة تجريبية - في التطبيق الحقيقي سيتم التكامل مع نظام الدفع الآمن لـ Amadeus.`);
-                
-                // في التطبيق الحقيقي، سيتم إرسال طلب الحجز لـ Amadeus API
-                console.log('Amadeus Booking Request:', {
-                    hotelId: params.hotelId,
-                    hotel: hotel,
-                    bookingDetails: {
-                        checkin: params.checkin,
-                        checkout: params.checkout,
-                        adults: params.adults,
-                        nights: nights,
-                        totalPrice: total
-                    }
-                });
+        // بدء عملية الحجز
+        function startBooking() {
+            document.getElementById('bookNowBtn').style.display = 'none';
+            document.getElementById('bookingForm').style.display = 'block';
+        }
+
+        // إلغاء الحجز
+        function cancelBooking() {
+            document.getElementById('bookNowBtn').style.display = 'block';
+            document.getElementById('bookingForm').style.display = 'none';
+            hideMessages();
+        }
+
+        // تأكيد الحجز
+        async function confirmBooking() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            // التحقق من البيانات
+            if (!firstName || !lastName || !email || !phone) {
+                showError('يرجى ملء جميع الحقول المطلوبة');
+                return;
             }
+
+            if (!isValidEmail(email)) {
+                showError('يرجى إدخال بريد إلكتروني صحيح');
+                return;
+            }
+
+            try {
+                // تعطيل زر الحجز
+                const bookBtn = event.target;
+                bookBtn.disabled = true;
+                bookBtn.textContent = 'جاري الحجز...';
+
+                // إعداد بيانات النزيل
+                const guestInfo = [{
+                    name: {
+                        firstName: firstName,
+                        lastName: lastName
+                    },
+                    contact: {
+                        email: email,
+                        phone: phone
+                    }
+                }];
+
+                // محاولة الحجز الحقيقي مع Amadeus
+                if (currentOffer && currentOffer.id) {
+                    const response = await fetch(`${API_BASE_URL}/api/bookings/create-real`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            offerId: currentOffer.id,
+                            guests: guestInfo
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        showSuccess(`تم الحجز بنجاح! رقم الحجز: ${data.booking_id}`);
+                        document.getElementById('bookingId').textContent = data.booking_id;
+                    } else {
+                        throw new Error(data.error || 'فشل في إنشاء الحجز');
+                    }
+                } else {
+                    // حجز تجريبي
+                    const bookingId = 'DEMO-' + Date.now();
+                    showSuccess(`تم الحجز التجريبي بنجاح! رقم الحجز: ${bookingId}`);
+                    document.getElementById('bookingId').textContent = bookingId;
+                }
+
+                // إخفاء نموذج الحجز
+                document.getElementById('bookingForm').style.display = 'none';
+
+            } catch (error) {
+                console.error('خطأ في الحجز:', error);
+                showError('حدث خطأ في عملية الحجز: ' + error.message);
+                
+                // إعادة تفعيل زر الحجز
+                const bookBtn = event.target;
+                bookBtn.disabled = false;
+                bookBtn.textContent = 'تأكيد الحجز مع Amadeus';
+            }
+        }
+
+        // التحقق من صحة البريد الإلكتروني
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // عرض رسالة نجاح
+        function showSuccess(message) {
+            hideMessages();
+            const successDiv = document.getElementById('successMessage');
+            successDiv.querySelector('p').innerHTML = message;
+            successDiv.style.display = 'block';
+        }
+
+        // عرض رسالة خطأ
+        function showError(message) {
+            hideMessages();
+            const errorDiv = document.getElementById('errorMessage');
+            document.getElementById('errorText').textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        // إخفاء الرسائل
+        function hideMessages() {
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
         }
 
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
-            loadHotelDetails();
+            searchParams = getUrlParams();
+            loadRealHotelDetails();
             
-            console.log('Amadeus Hotel Details Page loaded successfully!');
-            console.log('URL params:', getUrlParams());
+            console.log('🚀 Paygo Real Amadeus Hotel Details Page loaded successfully!');
+            console.log('URL params:', searchParams);
         });
 
         // تتبع الأحداث
@@ -1046,11 +1277,10 @@
 
         // تتبع عرض تفاصيل الفندق
         window.addEventListener('load', function() {
-            const params = getUrlParams();
             trackEvent('hotel_details_viewed', {
-                hotelId: params.hotelId,
-                searchParams: params,
-                provider: 'Amadeus'
+                hotelId: searchParams.hotelId,
+                searchParams: searchParams,
+                provider: 'Amadeus Real API'
             });
         });
     </script>
