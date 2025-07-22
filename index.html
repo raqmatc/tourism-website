@@ -30,25 +30,21 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 30px;
+            padding: 20px 30px;
             margin-bottom: 30px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .logo {
-            font-size: 3rem;
+            font-size: 2rem;
             font-weight: 700;
             background: linear-gradient(45deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #666;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
         }
 
         .amadeus-badge {
@@ -56,14 +52,21 @@
             align-items: center;
             background: linear-gradient(45deg, #ff6b6b, #ee5a24);
             color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 8px 16px;
+            border-radius: 20px;
             font-weight: 600;
-            margin-top: 10px;
+            font-size: 0.9rem;
+            animation: pulse 2s infinite;
         }
 
         .amadeus-badge i {
             margin-left: 8px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         .search-section {
@@ -76,33 +79,55 @@
         }
 
         .search-title {
-            font-size: 2rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 30px;
             text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-title h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .search-title p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .real-api-notice {
+            background: linear-gradient(45deg, #51cf66, #40c057);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .real-api-notice i {
+            margin-left: 8px;
         }
 
         .search-form {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
             gap: 20px;
-            margin-bottom: 30px;
+            align-items: end;
         }
 
         .form-group {
             position: relative;
         }
 
-        .form-group label {
+        .form-label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #333;
         }
 
-        .form-group input,
-        .form-group select {
+        .form-input {
             width: 100%;
             padding: 15px 20px;
             border: 2px solid #e0e0e0;
@@ -113,54 +138,70 @@
             background: white;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
+        .form-input:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .city-suggestions {
+        .destination-input {
+            position: relative;
+        }
+
+        .suggestions {
             position: absolute;
             top: 100%;
             left: 0;
             right: 0;
             background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 15px 15px;
             max-height: 200px;
             overflow-y: auto;
             z-index: 1000;
             display: none;
         }
 
-        .city-suggestion {
+        .suggestion-item {
             padding: 12px 20px;
             cursor: pointer;
             border-bottom: 1px solid #f0f0f0;
-            transition: background 0.2s ease;
+            transition: background-color 0.2s ease;
         }
 
-        .city-suggestion:hover {
-            background: #f8f9ff;
+        .suggestion-item:hover {
+            background-color: #f8f9ff;
         }
 
-        .city-suggestion:last-child {
+        .suggestion-item:last-child {
             border-bottom: none;
         }
 
+        .city-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .country-name {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
         .search-btn {
-            grid-column: 1 / -1;
             background: linear-gradient(45deg, #667eea, #764ba2);
             color: white;
             border: none;
-            padding: 18px 40px;
+            padding: 18px 30px;
             border-radius: 15px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Cairo', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .search-btn:hover {
@@ -169,9 +210,19 @@
         }
 
         .search-btn:disabled {
-            opacity: 0.7;
+            opacity: 0.6;
             cursor: not-allowed;
             transform: none;
+        }
+
+        .loading-spinner {
+            display: none;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .features {
@@ -202,111 +253,35 @@
         }
 
         .feature-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: #333;
-            margin-bottom: 15px;
-        }
-
-        .feature-desc {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .stats {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            text-align: center;
-        }
-
-        .stat-item {
-            padding: 20px;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #667eea;
             margin-bottom: 10px;
         }
 
-        .stat-label {
+        .feature-description {
             color: #666;
-            font-weight: 600;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .loading i {
-            font-size: 2rem;
-            color: #667eea;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            line-height: 1.6;
         }
 
         .error-message {
             background: #ff6b6b;
             color: white;
             padding: 15px 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+            border-radius: 15px;
+            margin-top: 20px;
             display: none;
+            text-align: center;
         }
 
         .success-message {
             background: #51cf66;
             color: white;
             padding: 15px 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+            border-radius: 15px;
+            margin-top: 20px;
             display: none;
-        }
-
-        .footer {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            color: #666;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #764ba2;
         }
 
         @media (max-width: 768px) {
@@ -314,21 +289,23 @@
                 padding: 10px;
             }
 
-            .search-form {
-                grid-template-columns: 1fr;
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
             }
 
-            .logo {
+            .search-form {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .search-title h1 {
                 font-size: 2rem;
             }
 
-            .search-title {
-                font-size: 1.5rem;
-            }
-
-            .footer-links {
-                flex-direction: column;
-                gap: 15px;
+            .features {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -340,59 +317,46 @@
             <div class="logo">
                 <i class="fas fa-plane"></i> Paygo.com
             </div>
-            <div class="subtitle">منصة حجز الفنادق الرائدة في الشرق الأوسط</div>
             <div class="amadeus-badge">
                 <i class="fas fa-star"></i>
-                مدعوم بتقنية Amadeus العالمية
+                مدعوم بـ Amadeus API الحقيقي
             </div>
         </div>
 
         <!-- Search Section -->
         <div class="search-section">
-            <h2 class="search-title">
-                <i class="fas fa-search"></i>
-                ابحث عن فندقك المثالي
-            </h2>
-            
-            <div class="error-message" id="errorMessage"></div>
-            <div class="success-message" id="successMessage"></div>
-            
+            <div class="search-title">
+                <h1>ابحث عن الفنادق في العالم</h1>
+                <p>أكثر من مليون فندق حقيقي من Amadeus</p>
+            </div>
+
+            <div class="real-api-notice">
+                <i class="fas fa-check-circle"></i>
+                متصل بـ Amadeus API الحقيقي - جميع الفنادق والأسعار حقيقية ومحدثة
+            </div>
+
             <form class="search-form" id="searchForm">
-                <div class="form-group">
-                    <label for="destination">
-                        <i class="fas fa-map-marker-alt"></i>
-                        الوجهة
-                    </label>
-                    <input type="text" id="destination" name="destination" 
-                           placeholder="أدخل اسم المدينة..." 
-                           autocomplete="off" required>
-                    <div class="city-suggestions" id="citySuggestions"></div>
+                <div class="form-group destination-input">
+                    <label class="form-label">الوجهة</label>
+                    <input type="text" class="form-input" id="destination" placeholder="أين تريد الإقامة؟" autocomplete="off" required>
+                    <div class="suggestions" id="suggestions"></div>
                 </div>
 
                 <div class="form-group">
-                    <label for="checkin">
-                        <i class="fas fa-calendar-alt"></i>
-                        تاريخ الوصول
-                    </label>
-                    <input type="date" id="checkin" name="checkin" required>
+                    <label class="form-label">تسجيل الوصول</label>
+                    <input type="date" class="form-input" id="checkin" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="checkout">
-                        <i class="fas fa-calendar-alt"></i>
-                        تاريخ المغادرة
-                    </label>
-                    <input type="date" id="checkout" name="checkout" required>
+                    <label class="form-label">تسجيل المغادرة</label>
+                    <input type="date" class="form-input" id="checkout" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="adults">
-                        <i class="fas fa-users"></i>
-                        عدد البالغين
-                    </label>
-                    <select id="adults" name="adults" required>
+                    <label class="form-label">عدد النزلاء</label>
+                    <select class="form-input" id="adults" required>
                         <option value="1">1 بالغ</option>
-                        <option value="2">2 بالغين</option>
+                        <option value="2" selected>2 بالغين</option>
                         <option value="3">3 بالغين</option>
                         <option value="4">4 بالغين</option>
                         <option value="5">5 بالغين</option>
@@ -401,15 +365,14 @@
                 </div>
 
                 <button type="submit" class="search-btn" id="searchBtn">
-                    <i class="fas fa-search"></i>
-                    ابحث عن الفنادق
+                    <i class="fas fa-search" id="searchIcon"></i>
+                    <i class="fas fa-spinner loading-spinner" id="loadingSpinner"></i>
+                    <span id="searchText">ابحث</span>
                 </button>
             </form>
 
-            <div class="loading" id="loading">
-                <i class="fas fa-spinner"></i>
-                <p>جاري البحث عن أفضل العروض...</p>
-            </div>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
         </div>
 
         <!-- Features -->
@@ -418,9 +381,9 @@
                 <div class="feature-icon">
                     <i class="fas fa-globe"></i>
                 </div>
-                <div class="feature-title">شبكة عالمية واسعة</div>
-                <div class="feature-desc">
-                    أكثر من 150,000 فندق حول العالم مع أفضل الأسعار المضمونة
+                <div class="feature-title">أكثر من مليون فندق</div>
+                <div class="feature-description">
+                    ابحث في أكبر قاعدة بيانات فنادق في العالم مع Amadeus
                 </div>
             </div>
 
@@ -429,89 +392,44 @@
                     <i class="fas fa-shield-alt"></i>
                 </div>
                 <div class="feature-title">حجز آمن ومضمون</div>
-                <div class="feature-desc">
-                    تقنية Amadeus المتقدمة تضمن لك حجز آمن وموثوق
+                <div class="feature-description">
+                    جميع الحجوزات محمية ومضمونة من خلال شبكة Amadeus العالمية
                 </div>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-headset"></i>
+                    <i class="fas fa-money-bill-wave"></i>
                 </div>
-                <div class="feature-title">دعم 24/7</div>
-                <div class="feature-desc">
-                    فريق دعم متخصص متاح على مدار الساعة لمساعدتك
-                </div>
-            </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">150K+</div>
-                    <div class="stat-label">فندق حول العالم</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">200+</div>
-                    <div class="stat-label">دولة ومنطقة</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">1M+</div>
-                    <div class="stat-label">عميل راضٍ</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">دعم فني</div>
+                <div class="feature-title">أفضل الأسعار</div>
+                <div class="feature-description">
+                    أسعار حقيقية ومحدثة لحظياً من مزودي الخدمة مباشرة
                 </div>
             </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-links">
-                <a href="#about">عن Paygo</a>
-                <a href="#contact">اتصل بنا</a>
-                <a href="#privacy">سياسة الخصوصية</a>
-                <a href="#terms">الشروط والأحكام</a>
-                <a href="#help">المساعدة</a>
-            </div>
-            <p>&copy; 2025 Paygo.com - جميع الحقوق محفوظة | مدعوم بتقنية Amadeus</p>
         </div>
     </div>
 
     <script>
-        // قاعدة بيانات المدن مع أكواد Amadeus
-        const cities = [
-            { name: 'دبي', code: 'DXB', country: 'الإمارات العربية المتحدة' },
-            { name: 'الرياض', code: 'RUH', country: 'المملكة العربية السعودية' },
-            { name: 'القاهرة', code: 'CAI', country: 'مصر' },
-            { name: 'الدوحة', code: 'DOH', country: 'قطر' },
-            { name: 'الكويت', code: 'KWI', country: 'الكويت' },
-            { name: 'بيروت', code: 'BEY', country: 'لبنان' },
-            { name: 'عمان', code: 'AMM', country: 'الأردن' },
-            { name: 'مسقط', code: 'MCT', country: 'عمان' },
-            { name: 'المنامة', code: 'BAH', country: 'البحرين' },
-            { name: 'الدار البيضاء', code: 'CMN', country: 'المغرب' },
-            { name: 'تونس', code: 'TUN', country: 'تونس' },
-            { name: 'الجزائر', code: 'ALG', country: 'الجزائر' },
-            { name: 'بغداد', code: 'BGW', country: 'العراق' },
-            { name: 'دمشق', code: 'DAM', country: 'سوريا' },
-            { name: 'صنعاء', code: 'SAH', country: 'اليمن' },
-            { name: 'لندن', code: 'LON', country: 'المملكة المتحدة' },
-            { name: 'باريس', code: 'PAR', country: 'فرنسا' },
-            { name: 'نيويورك', code: 'NYC', country: 'الولايات المتحدة' },
-            { name: 'طوكيو', code: 'TYO', country: 'اليابان' },
-            { name: 'سنغافورة', code: 'SIN', country: 'سنغافورة' },
-            { name: 'هونغ كونغ', code: 'HKG', country: 'هونغ كونغ' },
-            { name: 'سيدني', code: 'SYD', country: 'أستراليا' },
-            { name: 'تورونتو', code: 'YTO', country: 'كندا' },
-            { name: 'فرانكفورت', code: 'FRA', country: 'ألمانيا' },
-            { name: 'أمستردام', code: 'AMS', country: 'هولندا' }
-        ];
+        // إعدادات API الحقيقي
+        const API_BASE_URL = 'http://localhost:5000';  // سيتم تحديثه للخادم الحقيقي
+        
+        // عناصر DOM
+        const destinationInput = document.getElementById('destination');
+        const suggestionsDiv = document.getElementById('suggestions');
+        const searchForm = document.getElementById('searchForm');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchIcon = document.getElementById('searchIcon');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const searchText = document.getElementById('searchText');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
 
-        // إعداد التواريخ الافتراضية
-        function setupDefaultDates() {
+        // متغيرات عامة
+        let selectedCity = null;
+        let searchTimeout = null;
+
+        // تهيئة التواريخ الافتراضية
+        function initializeDates() {
             const today = new Date();
             const tomorrow = new Date(today);
             tomorrow.setDate(tomorrow.getDate() + 1);
@@ -520,198 +438,304 @@
 
             document.getElementById('checkin').value = tomorrow.toISOString().split('T')[0];
             document.getElementById('checkout').value = dayAfter.toISOString().split('T')[0];
+            
+            // تعيين الحد الأدنى للتواريخ
+            document.getElementById('checkin').min = today.toISOString().split('T')[0];
+            document.getElementById('checkout').min = tomorrow.toISOString().split('T')[0];
         }
 
-        // اقتراحات المدن
-        function setupCitySuggestions() {
-            const destinationInput = document.getElementById('destination');
-            const suggestionsDiv = document.getElementById('citySuggestions');
+        // البحث عن المدن من API الحقيقي
+        async function searchCities(query) {
+            if (query.length < 2) {
+                hideSuggestions();
+                return;
+            }
 
-            destinationInput.addEventListener('input', function() {
-                const query = this.value.toLowerCase().trim();
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/cities/search?q=${encodeURIComponent(query)}`);
                 
-                if (query.length < 1) {
-                    suggestionsDiv.style.display = 'none';
-                    return;
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-
-                const filteredCities = cities.filter(city => 
-                    city.name.toLowerCase().includes(query) ||
-                    city.country.toLowerCase().includes(query)
-                );
-
-                if (filteredCities.length > 0) {
-                    suggestionsDiv.innerHTML = filteredCities.map(city => 
-                        `<div class="city-suggestion" data-code="${city.code}" data-name="${city.name}">
-                            <strong>${city.name}</strong> - ${city.country}
-                        </div>`
-                    ).join('');
-                    suggestionsDiv.style.display = 'block';
+                
+                const data = await response.json();
+                
+                if (data.success && data.data.length > 0) {
+                    showSuggestions(data.data);
                 } else {
-                    suggestionsDiv.style.display = 'none';
+                    hideSuggestions();
                 }
-            });
-
-            // اختيار المدينة
-            suggestionsDiv.addEventListener('click', function(e) {
-                const suggestion = e.target.closest('.city-suggestion');
-                if (suggestion) {
-                    const cityName = suggestion.dataset.name;
-                    const cityCode = suggestion.dataset.code;
-                    
-                    destinationInput.value = cityName;
-                    destinationInput.dataset.cityCode = cityCode;
-                    suggestionsDiv.style.display = 'none';
-                }
-            });
-
-            // إخفاء الاقتراحات عند النقر خارجها
-            document.addEventListener('click', function(e) {
-                if (!destinationInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
-                    suggestionsDiv.style.display = 'none';
-                }
-            });
+            } catch (error) {
+                console.error('خطأ في البحث عن المدن:', error);
+                hideSuggestions();
+            }
         }
 
-        // معالج البحث
-        function setupSearchForm() {
-            const form = document.getElementById('searchForm');
-            const searchBtn = document.getElementById('searchBtn');
-            const loading = document.getElementById('loading');
-            const errorMessage = document.getElementById('errorMessage');
-            const successMessage = document.getElementById('successMessage');
-
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
+        // عرض اقتراحات المدن
+        function showSuggestions(cities) {
+            suggestionsDiv.innerHTML = '';
+            
+            cities.forEach(city => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'suggestion-item';
+                suggestionItem.innerHTML = `
+                    <div class="city-name">${city.name}</div>
+                    <div class="country-name">${city.country}</div>
+                `;
                 
-                // إخفاء الرسائل السابقة
-                errorMessage.style.display = 'none';
-                successMessage.style.display = 'none';
-
-                // الحصول على البيانات
-                const destination = document.getElementById('destination');
-                const checkin = document.getElementById('checkin').value;
-                const checkout = document.getElementById('checkout').value;
-                const adults = document.getElementById('adults').value;
-
-                // التحقق من صحة البيانات
-                if (!destination.dataset.cityCode) {
-                    showError('يرجى اختيار مدينة من القائمة المقترحة');
-                    return;
-                }
-
-                if (new Date(checkin) >= new Date(checkout)) {
-                    showError('تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول');
-                    return;
-                }
-
-                // بدء البحث
-                searchBtn.disabled = true;
-                loading.style.display = 'block';
-
-                try {
-                    // محاكاة استدعاء API
-                    await simulateAmadeusSearch({
-                        cityCode: destination.dataset.cityCode,
-                        cityName: destination.value,
-                        checkIn: checkin,
-                        checkOut: checkout,
-                        adults: adults
-                    });
-
-                    showSuccess(`تم العثور على عروض رائعة في ${destination.value}! سيتم توجيهك إلى صفحة النتائج...`);
-                    
-                    // التوجه إلى صفحة النتائج بعد ثانيتين
-                    setTimeout(() => {
-                        // تأكد من وجود الملف قبل التوجه إليه
-                        const resultsUrl = `FILE_02_amadeus_results.html?city=${destination.dataset.cityCode}&checkin=${checkin}&checkout=${checkout}&adults=${adults}&cityName=${encodeURIComponent(destination.value)}`;
-                        
-                        // التحقق من وجود الملف
-                        fetch('FILE_02_amadeus_results.html')
-                            .then(response => {
-                                if (response.ok) {
-                                    window.location.href = resultsUrl;
-                                } else {
-                                    throw new Error('Results page not found');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                                showError('عذراً، صفحة النتائج غير متاحة حالياً. يرجى المحاولة لاحقاً.');
-                                searchBtn.disabled = false;
-                                loading.style.display = 'none';
-                            });
-                    }, 2000);
-
-                } catch (error) {
-                    showError('حدث خطأ أثناء البحث. يرجى المحاولة مرة أخرى.');
-                    console.error('Search error:', error);
-                    searchBtn.disabled = false;
-                    loading.style.display = 'none';
-                }
+                suggestionItem.addEventListener('click', () => {
+                    selectCity(city);
+                });
+                
+                suggestionsDiv.appendChild(suggestionItem);
             });
+            
+            suggestionsDiv.style.display = 'block';
         }
 
-        // محاكاة استدعاء Amadeus API
-        async function simulateAmadeusSearch(searchData) {
-            // محاكاة تأخير الشبكة
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            
-            // محاكاة استجابة API
-            console.log('Amadeus API Search:', searchData);
-            
-            // في التطبيق الحقيقي، ستكون هذه استدعاءات API حقيقية
-            return {
-                success: true,
-                data: {
-                    hotels: [],
-                    totalResults: Math.floor(Math.random() * 100) + 20
-                }
-            };
+        // إخفاء الاقتراحات
+        function hideSuggestions() {
+            suggestionsDiv.style.display = 'none';
+        }
+
+        // اختيار مدينة
+        function selectCity(city) {
+            selectedCity = city;
+            destinationInput.value = city.name;
+            destinationInput.dataset.cityCode = city.code;
+            hideSuggestions();
         }
 
         // عرض رسالة خطأ
         function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+            
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
         }
 
         // عرض رسالة نجاح
         function showSuccess(message) {
-            const successDiv = document.getElementById('successMessage');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
-            successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+            
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
         }
+
+        // تعيين حالة التحميل
+        function setLoading(loading) {
+            if (loading) {
+                searchBtn.disabled = true;
+                searchIcon.style.display = 'none';
+                loadingSpinner.style.display = 'inline-block';
+                searchText.textContent = 'جاري البحث...';
+            } else {
+                searchBtn.disabled = false;
+                searchIcon.style.display = 'inline-block';
+                loadingSpinner.style.display = 'none';
+                searchText.textContent = 'ابحث';
+            }
+        }
+
+        // البحث عن الفنادق
+        async function searchHotels(searchData) {
+            try {
+                setLoading(true);
+                
+                const response = await fetch(`${API_BASE_URL}/api/hotels/search-real`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(searchData)
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showSuccess(`تم العثور على ${data.total_results} فندق حقيقي!`);
+                    
+                    // الانتقال إلى صفحة النتائج مع البيانات
+                    const params = new URLSearchParams({
+                        city: searchData.cityCode,
+                        checkin: searchData.checkInDate,
+                        checkout: searchData.checkOutDate,
+                        adults: searchData.adults,
+                        cityName: encodeURIComponent(selectedCity.name)
+                    });
+                    
+                    // التحقق من وجود صفحة النتائج
+                    const resultsPageExists = await checkPageExists('REAL_FILE_02_amadeus_results.html');
+                    
+                    if (resultsPageExists) {
+                        window.location.href = `REAL_FILE_02_amadeus_results.html?${params.toString()}`;
+                    } else {
+                        showError('صفحة النتائج غير موجودة. يرجى رفع ملف REAL_FILE_02_amadeus_results.html');
+                    }
+                } else {
+                    showError(data.error || 'حدث خطأ في البحث');
+                }
+            } catch (error) {
+                console.error('خطأ في البحث:', error);
+                showError('حدث خطأ في الاتصال بالخادم. تأكد من تشغيل Backend API');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // التحقق من وجود صفحة
+        async function checkPageExists(pageName) {
+            try {
+                const response = await fetch(pageName, { method: 'HEAD' });
+                return response.ok;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // التحقق من صحة البيانات
+        function validateSearchData(formData) {
+            const checkinDate = new Date(formData.get('checkin'));
+            const checkoutDate = new Date(formData.get('checkout'));
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (!selectedCity) {
+                throw new Error('يرجى اختيار وجهة من القائمة');
+            }
+
+            if (checkinDate < today) {
+                throw new Error('تاريخ الوصول لا يمكن أن يكون في الماضي');
+            }
+
+            if (checkoutDate <= checkinDate) {
+                throw new Error('تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول');
+            }
+
+            const daysDiff = (checkoutDate - checkinDate) / (1000 * 60 * 60 * 24);
+            if (daysDiff > 30) {
+                throw new Error('لا يمكن الحجز لأكثر من 30 يوماً');
+            }
+
+            return true;
+        }
+
+        // معالج إرسال النموذج
+        searchForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            try {
+                const formData = new FormData(searchForm);
+                
+                // التحقق من صحة البيانات
+                validateSearchData(formData);
+                
+                // إعداد بيانات البحث
+                const searchData = {
+                    cityCode: selectedCity.code,
+                    checkInDate: formData.get('checkin'),
+                    checkOutDate: formData.get('checkout'),
+                    adults: parseInt(formData.get('adults')),
+                    currency: 'SAR',
+                    maxResults: 100  // الحد الأقصى للنتائج
+                };
+                
+                // البحث عن الفنادق
+                await searchHotels(searchData);
+                
+            } catch (error) {
+                showError(error.message);
+            }
+        });
+
+        // معالج البحث في المدن
+        destinationInput.addEventListener('input', function(e) {
+            const query = e.target.value.trim();
+            
+            // إلغاء البحث السابق
+            if (searchTimeout) {
+                clearTimeout(searchTimeout);
+            }
+            
+            // إعادة تعيين المدينة المختارة إذا تغير النص
+            if (selectedCity && selectedCity.name !== query) {
+                selectedCity = null;
+                destinationInput.removeAttribute('data-city-code');
+            }
+            
+            // البحث بعد تأخير قصير
+            searchTimeout = setTimeout(() => {
+                searchCities(query);
+            }, 300);
+        });
+
+        // إخفاء الاقتراحات عند النقر خارجها
+        document.addEventListener('click', function(e) {
+            if (!destinationInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+                hideSuggestions();
+            }
+        });
+
+        // تحديث تاريخ المغادرة عند تغيير تاريخ الوصول
+        document.getElementById('checkin').addEventListener('change', function(e) {
+            const checkinDate = new Date(e.target.value);
+            const checkoutInput = document.getElementById('checkout');
+            const currentCheckout = new Date(checkoutInput.value);
+            
+            // تعيين الحد الأدنى لتاريخ المغادرة
+            const minCheckout = new Date(checkinDate);
+            minCheckout.setDate(minCheckout.getDate() + 1);
+            checkoutInput.min = minCheckout.toISOString().split('T')[0];
+            
+            // تحديث تاريخ المغادرة إذا كان أقل من الحد الأدنى
+            if (currentCheckout <= checkinDate) {
+                checkoutInput.value = minCheckout.toISOString().split('T')[0];
+            }
+        });
 
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
-            setupDefaultDates();
-            setupCitySuggestions();
-            setupSearchForm();
+            initializeDates();
             
-            console.log('Paygo Amadeus Integration loaded successfully!');
-            console.log('Cities database:', cities.length, 'cities available');
+            // اختبار الاتصال بـ API
+            fetch(`${API_BASE_URL}/api/health`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'healthy') {
+                        console.log('✅ متصل بـ Amadeus API بنجاح!');
+                        showSuccess('متصل بـ Amadeus API - جاهز للبحث!');
+                    } else {
+                        console.warn('⚠️ مشكلة في الاتصال بـ Amadeus API');
+                        showError('مشكلة في الاتصال بـ Amadeus API');
+                    }
+                })
+                .catch(error => {
+                    console.error('❌ فشل الاتصال بـ API:', error);
+                    showError('تأكد من تشغيل Backend API على المنفذ 5000');
+                });
+            
+            console.log('🚀 Paygo Real Amadeus Frontend loaded successfully!');
         });
 
-        // تتبع الأحداث (Analytics)
+        // تتبع الأحداث
         function trackEvent(eventName, eventData) {
             console.log('Analytics Event:', eventName, eventData);
-            // في التطبيق الحقيقي، ستكون هذه استدعاءات لخدمة التحليلات
         }
 
         // تتبع البحث
-        document.getElementById('searchForm').addEventListener('submit', function() {
-            trackEvent('hotel_search', {
-                destination: document.getElementById('destination').value,
-                checkin: document.getElementById('checkin').value,
-                checkout: document.getElementById('checkout').value,
-                adults: document.getElementById('adults').value
+        searchForm.addEventListener('submit', function() {
+            trackEvent('hotel_search_initiated', {
+                destination: selectedCity ? selectedCity.name : 'unknown',
+                cityCode: selectedCity ? selectedCity.code : 'unknown',
+                provider: 'Amadeus Real API'
             });
         });
     </script>
 </body>
 </html>
-
