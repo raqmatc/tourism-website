@@ -1,1230 +1,991 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>نتائج البحث - Paygo.com</title>
-
-  <!-- إضافة خط Cairo من Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
-
-  <!-- إضافة Font Awesome للأيقونات -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-  <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  html, body {
-    min-height: 100vh;
-    font-family: 'Cairo', sans-serif;
-    color: #262626;
-    background: #f5f5f5;
-    line-height: 1.4;
-  }
-
-  /* Header */
-  .header {
-    background: #003580;
-    color: white;
-    padding: 12px 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-
-  .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-  }
-
-  .back-btn {
-    background: rgba(255,255,255,0.1);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .back-btn:hover {
-    background: rgba(255,255,255,0.2);
-  }
-
-  /* Search Summary */
-  .search-summary {
-    background: white;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-
-  .search-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-
-  .search-details {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-
-  .search-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #666;
-  }
-
-  .modify-search-btn {
-    background: #0071c2;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s;
-  }
-
-  .modify-search-btn:hover {
-    background: #005a9f;
-  }
-
-  /* Main Content */
-  .main-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 30px;
-  }
-
-  /* Filters */
-  .filters {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    height: fit-content;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: sticky;
-    top: 100px;
-  }
-
-  .filter-section {
-    margin-bottom: 25px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .filter-section:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-  }
-
-  .filter-title {
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #262626;
-  }
-
-  .price-range {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-
-  .price-input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 0.9rem;
-  }
-
-  .filter-option {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-    cursor: pointer;
-  }
-
-  .filter-checkbox {
-    width: 16px;
-    height: 16px;
-  }
-
-  .star-rating {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 10px;
-  }
-
-  .star-btn {
-    background: none;
-    border: 1px solid #ddd;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .star-btn.active {
-    background: #0071c2;
-    color: white;
-    border-color: #0071c2;
-  }
-
-  /* Results */
-  .results-section {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-
-  .results-header {
-    padding: 20px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-
-  .results-count {
-    font-weight: bold;
-    color: #262626;
-  }
-
-  .sort-select {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background: white;
-    cursor: pointer;
-  }
-
-  /* Hotel Cards */
-  .hotel-list {
-    padding: 0;
-  }
-
-  .hotel-card {
-    display: grid;
-    grid-template-columns: 250px 1fr auto;
-    gap: 20px;
-    padding: 20px;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.3s;
-    cursor: pointer;
-  }
-
-  .hotel-card:hover {
-    background: #f8f9fa;
-  }
-
-  .hotel-card:last-child {
-    border-bottom: none;
-  }
-
-  .hotel-image {
-    position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .hotel-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-  }
-
-  .discount-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #e74c3c;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: bold;
-  }
-
-  .hotel-info {
-    flex: 1;
-  }
-
-  .hotel-name {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #0071c2;
-    margin-bottom: 8px;
-    text-decoration: none;
-  }
-
-  .hotel-name:hover {
-    text-decoration: underline;
-  }
-
-  .hotel-rating {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
-
-  .stars {
-    color: #ffa500;
-  }
-
-  .rating-score {
-    background: #0071c2;
-    color: white;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: bold;
-  }
-
-  .review-count {
-    color: #666;
-    font-size: 0.9rem;
-  }
-
-  .hotel-location {
-    color: #666;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .amenities {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 10px;
-  }
-
-  .amenity {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: #28a745;
-    font-size: 0.9rem;
-  }
-
-  .availability {
-    color: #e74c3c;
-    font-weight: 600;
-    font-size: 0.9rem;
-  }
-
-  .availability.available {
-    color: #28a745;
-  }
-
-  /* Pricing */
-  .hotel-pricing {
-    text-align: left;
-    min-width: 150px;
-  }
-
-  .original-price {
-    text-decoration: line-through;
-    color: #999;
-    font-size: 0.9rem;
-  }
-
-  .current-price {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #e74c3c;
-    margin: 5px 0;
-  }
-
-  .price-per-night {
-    color: #666;
-    font-size: 0.8rem;
-    margin-bottom: 15px;
-  }
-
-  .book-btn {
-    background: #ff6b35;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 100%;
-  }
-
-  .book-btn:hover {
-    background: #e55a2b;
-  }
-
-  /* Pagination */
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    padding: 30px 20px;
-    background: white;
-    border-top: 1px solid #eee;
-  }
-
-  .page-btn {
-    background: white;
-    border: 1px solid #ddd;
-    color: #666;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s;
-    min-width: 40px;
-    text-align: center;
-  }
-
-  .page-btn:hover {
-    background: #f0f8ff;
-    border-color: #0071c2;
-    color: #0071c2;
-  }
-
-  .page-btn.active {
-    background: #0071c2;
-    color: white;
-    border-color: #0071c2;
-  }
-
-  .page-btn:disabled {
-    background: #f5f5f5;
-    color: #ccc;
-    cursor: not-allowed;
-  }
-
-  /* Loading */
-  .loading {
-    text-align: center;
-    padding: 40px;
-    color: #666;
-  }
-
-  .loading-spinner {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #0071c2;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 15px;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .main-content {
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-    
-    .filters {
-      position: static;
-    }
-    
-    .hotel-card {
-      grid-template-columns: 1fr;
-      gap: 15px;
-    }
-    
-    .hotel-image {
-      order: -1;
-    }
-    
-    .hotel-pricing {
-      text-align: center;
-    }
-    
-    .search-info {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتائج البحث - Paygo.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #f8f9fa;
+            direction: rtl;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .search-summary {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+
+        .filters {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .filters h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-group h4 {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .price-range {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .price-range input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .filter-checkbox input {
+            margin-left: 10px;
+            transform: scale(1.2);
+        }
+
+        .filter-checkbox label {
+            cursor: pointer;
+            color: #555;
+        }
+
+        .sort-options {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .sort-select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            background: white;
+        }
+
+        .results-count {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .hotels-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .hotel-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: grid;
+            grid-template-columns: 250px 1fr auto;
+            gap: 20px;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .hotel-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hotel-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .hotel-card:hover .hotel-image img {
+            transform: scale(1.05);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .hotel-info {
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hotel-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .hotel-location {
+            color: #666;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .hotel-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            color: #ffd700;
+        }
+
+        .rating-score {
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .hotel-amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .amenity {
+            background: #f8f9ff;
+            color: #667eea;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            border: 1px solid #e0e6ff;
+        }
+
+        .hotel-pricing {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-right: 1px solid #eee;
+        }
+
+        .original-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .current-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .price-per-night {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .book-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+            width: 100%;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        .page-btn {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            background: white;
+            color: #666;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .page-btn:hover,
+        .page-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            color: #667eea;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .filters {
+                position: static;
+            }
+
+            .hotel-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hotel-image {
+                order: -1;
+            }
+
+            .hotel-pricing {
+                border-right: none;
+                border-top: 1px solid #eee;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .search-summary {
+                max-width: 100%;
+                margin-top: 15px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="header-container">
-      <a href="index.html" class="logo">
-        <i class="fas fa-plane"></i> Paygo.com
-      </a>
-      <a href="index.html" class="back-btn">
-        <i class="fas fa-arrow-right"></i>
-        العودة للبحث
-      </a>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-plane"></i> Paygo.com
+            </div>
+            <div class="search-summary" id="searchSummary">
+                <i class="fas fa-search"></i>
+                جاري تحميل نتائج البحث...
+            </div>
+        </div>
     </div>
-  </header>
 
-  <!-- Search Summary -->
-  <div style="max-width: 1200px; margin: 0 auto; padding: 20px 20px 0;">
-    <div class="search-summary">
-      <div class="search-info">
-        <div class="search-details">
-          <div class="search-item">
-            <i class="fas fa-map-marker-alt"></i>
-            <span id="searchDestination">دبي، الإمارات العربية المتحدة</span>
-          </div>
-          <div class="search-item">
-            <i class="fas fa-calendar"></i>
-            <span id="searchDates">٢٢ - ٢٣ يوليو ٢٠٢٥</span>
-          </div>
-          <div class="search-item">
-            <i class="fas fa-users"></i>
-            <span id="searchGuests">٢ ضيوف</span>
-          </div>
+    <div class="container">
+        <!-- Filters Sidebar -->
+        <div class="filters">
+            <h3><i class="fas fa-filter"></i> تصفية النتائج</h3>
+            
+            <div class="filter-group">
+                <h4>نطاق السعر (ريال سعودي)</h4>
+                <div class="price-range">
+                    <input type="number" id="minPrice" placeholder="من" min="0">
+                    <span>-</span>
+                    <input type="number" id="maxPrice" placeholder="إلى" min="0">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>تصنيف الفندق</h4>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="star5" value="5">
+                    <label for="star5">5 نجوم</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="star4" value="4">
+                    <label for="star4">4 نجوم</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="star3" value="3">
+                    <label for="star3">3 نجوم</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>المرافق</h4>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="wifi" value="wifi">
+                    <label for="wifi">واي فاي مجاني</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="pool" value="pool">
+                    <label for="pool">مسبح</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="gym" value="gym">
+                    <label for="gym">صالة رياضية</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="spa" value="spa">
+                    <label for="spa">سبا</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="restaurant" value="restaurant">
+                    <label for="restaurant">مطعم</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>نوع الإقامة</h4>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="hotel" value="hotel">
+                    <label for="hotel">فندق</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="resort" value="resort">
+                    <label for="resort">منتجع</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="apartment" value="apartment">
+                    <label for="apartment">شقة فندقية</label>
+                </div>
+            </div>
         </div>
-        <button class="modify-search-btn" onclick="modifySearch()">
-          تعديل البحث
-        </button>
-      </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sort Options -->
+            <div class="sort-options">
+                <div class="results-count" id="resultsCount">
+                    جاري تحميل النتائج...
+                </div>
+                <select class="sort-select" id="sortSelect">
+                    <option value="recommended">الأكثر توصية</option>
+                    <option value="price_low">السعر: من الأقل للأعلى</option>
+                    <option value="price_high">السعر: من الأعلى للأقل</option>
+                    <option value="rating">التقييم الأعلى</option>
+                    <option value="distance">الأقرب للمركز</option>
+                </select>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading" id="loadingState">
+                <i class="fas fa-spinner"></i>
+                <h3>جاري البحث في شبكة Amadeus العالمية...</h3>
+                <p>نبحث لك عن أفضل العروض من أكثر من 150,000 فندق</p>
+            </div>
+
+            <!-- Hotels Grid -->
+            <div class="hotels-grid" id="hotelsGrid" style="display: none;">
+                <!-- Hotels will be populated here -->
+            </div>
+
+            <!-- No Results -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>لم نجد نتائج مطابقة لبحثك</h3>
+                <p>جرب تعديل معايير البحث أو اختيار تواريخ أخرى</p>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination" style="display: none;">
+                <button class="page-btn" id="prevPage">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn" id="nextPage">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <!-- Filters -->
-    <aside class="filters">
-      <div class="filter-section">
-        <div class="filter-title">نطاق السعر (ريال سعودي)</div>
-        <div class="price-range">
-          <input type="number" class="price-input" placeholder="من" id="minPrice">
-          <input type="number" class="price-input" placeholder="إلى" id="maxPrice">
-        </div>
-      </div>
+    <script>
+        // بيانات الفنادق الوهمية (في التطبيق الحقيقي ستأتي من Amadeus API)
+        const sampleHotels = {
+            'DXB': [
+                {
+                    id: 'h1',
+                    name: 'برج العرب جميرا',
+                    location: 'جميرا، دبي',
+                    rating: 5,
+                    score: 9.2,
+                    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400',
+                    originalPrice: 2500,
+                    currentPrice: 1899,
+                    discount: 24,
+                    amenities: ['واي فاي مجاني', 'مسبح', 'سبا', 'مطعم', 'خدمة الغرف'],
+                    type: 'فندق'
+                },
+                {
+                    id: 'h2',
+                    name: 'أتلانتس النخلة',
+                    location: 'نخلة جميرا، دبي',
+                    rating: 5,
+                    score: 8.9,
+                    image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400',
+                    originalPrice: 2200,
+                    currentPrice: 1699,
+                    discount: 23,
+                    amenities: ['واي فاي مجاني', 'مسبح', 'حديقة مائية', 'مطعم', 'صالة رياضية'],
+                    type: 'منتجع'
+                },
+                {
+                    id: 'h3',
+                    name: 'أرماني فندق دبي',
+                    location: 'برج خليفة، دبي',
+                    rating: 5,
+                    score: 9.0,
+                    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400',
+                    originalPrice: 1800,
+                    currentPrice: 1399,
+                    discount: 22,
+                    amenities: ['واي فاي مجاني', 'مسبح', 'سبا', 'مطعم', 'خدمة الغرف'],
+                    type: 'فندق'
+                },
+                {
+                    id: 'h4',
+                    name: 'فندق العنوان دبي مول',
+                    location: 'وسط مدينة دبي',
+                    rating: 5,
+                    score: 8.7,
+                    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400',
+                    originalPrice: 1500,
+                    currentPrice: 1199,
+                    discount: 20,
+                    amenities: ['واي فاي مجاني', 'مسبح', 'صالة رياضية', 'مطعم'],
+                    type: 'فندق'
+                },
+                {
+                    id: 'h5',
+                    name: 'جميرا بيتش هوتيل',
+                    location: 'جميرا، دبي',
+                    rating: 4,
+                    score: 8.5,
+                    image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400',
+                    originalPrice: 1200,
+                    currentPrice: 899,
+                    discount: 25,
+                    amenities: ['واي فاي مجاني', 'مسبح', 'شاطئ خاص', 'مطعم'],
+                    type: 'منتجع'
+                },
+                {
+                    id: 'h6',
+                    name: 'فندق روز وود دبي',
+                    location: 'الخليج التجاري، دبي',
+                    rating: 5,
+                    score: 8.8,
+                    image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400',
+                    originalPrice: 1600,
+                    currentPrice: 1299,
+                    discount: 19,
+                    amenities: ['واي فاي مجاني', 'مسبح', 'سبا', 'مطعم', 'صالة رياضية'],
+                    type: 'فندق'
+                }
+            ],
+            'RUH': [
+                {
+                    id: 'h7',
+                    name: 'الفيصلية هوتيل',
+                    location: 'العليا، الرياض',
+                    rating: 5,
+                    score: 8.9,
+                    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400',
+                    originalPrice: 1400,
+                    currentPrice: 1099,
+                    discount: 21,
+                    amenities: ['واي فاي مجاني', 'مسبح', 'سبا', 'مطعم', 'صالة رياضية'],
+                    type: 'فندق'
+                },
+                {
+                    id: 'h8',
+                    name: 'الريتز كارلتون الرياض',
+                    location: 'العليا، الرياض',
+                    rating: 5,
+                    score: 9.1,
+                    image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400',
+                    originalPrice: 1600,
+                    currentPrice: 1299,
+                    discount: 19,
+                    amenities: ['واي فاي مجاني', 'مسبح', 'سبا', 'مطعم', 'خدمة الغرف'],
+                    type: 'فندق'
+                }
+            ],
+            'CAI': [
+                {
+                    id: 'h9',
+                    name: 'فورسيزونز القاهرة',
+                    location: 'جاردن سيتي، القاهرة',
+                    rating: 5,
+                    score: 8.8,
+                    image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=400',
+                    originalPrice: 800,
+                    currentPrice: 599,
+                    discount: 25,
+                    amenities: ['واي فاي مجاني', 'مسبح', 'سبا', 'مطعم', 'إطلالة على النيل'],
+                    type: 'فندق'
+                },
+                {
+                    id: 'h10',
+                    name: 'سوفيتيل القاهرة',
+                    location: 'جزيرة الجزيرة، القاهرة',
+                    rating: 5,
+                    score: 8.6,
+                    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400',
+                    originalPrice: 700,
+                    currentPrice: 549,
+                    discount: 22,
+                    amenities: ['واي فاي مجاني', 'مسبح', 'مطعم', 'صالة رياضية'],
+                    type: 'فندق'
+                }
+            ]
+        };
 
-      <div class="filter-section">
-        <div class="filter-title">تقييم الفندق</div>
-        <div class="star-rating">
-          <button class="star-btn" onclick="toggleStarFilter(5)">5★</button>
-          <button class="star-btn" onclick="toggleStarFilter(4)">4★</button>
-          <button class="star-btn" onclick="toggleStarFilter(3)">3★</button>
-        </div>
-      </div>
+        // متغيرات عامة
+        let currentHotels = [];
+        let filteredHotels = [];
+        let currentPage = 1;
+        let hotelsPerPage = 6;
+        let searchParams = {};
 
-      <div class="filter-section">
-        <div class="filter-title">نوع الإقامة</div>
-        <label class="filter-option">
-          <input type="checkbox" class="filter-checkbox" value="hotel">
-          <span>فندق</span>
-        </label>
-        <label class="filter-option">
-          <input type="checkbox" class="filter-checkbox" value="resort">
-          <span>منتجع</span>
-        </label>
-        <label class="filter-option">
-          <input type="checkbox" class="filter-checkbox" value="apartment">
-          <span>شقة فندقية</span>
-        </label>
-        <label class="filter-option">
-          <input type="checkbox" class="filter-checkbox" value="villa">
-          <span>فيلا</span>
-        </label>
-      </div>
-
-      <div class="filter-section">
-        <div class="filter-title">المرافق</div>
-        <label class="filter-option">
-          <input type="checkbox" class="filter-checkbox" value="wifi">
-          <span>واي فاي مجاني</span>
-        </label>
-        <label class="filter-option">
-          <input type="checkbox" class="filter-checkbox" value="pool">
-          <span>مسبح</span>
-        </label>
-        <label class="filter-option">
-          <input type="checkbox" class="filter-checkbox" value="gym">
-          <span>صالة رياضية</span>
-        </label>
-        <label class="filter-option">
-          <input type="checkbox" class="filter-checkbox" value="spa">
-          <span>سبا</span>
-        </label>
-        <label class="filter-option">
-          <input type="checkbox" class="filter-checkbox" value="restaurant">
-          <span>مطعم</span>
-        </label>
-        <label class="filter-option">
-          <input type="checkbox" class="filter-checkbox" value="parking">
-          <span>موقف سيارات</span>
-        </label>
-      </div>
-    </aside>
-
-    <!-- Results -->
-    <main class="results-section">
-      <div class="results-header">
-        <div class="results-count" id="resultsCount">
-          تم العثور على <span id="totalHotels">24</span> فندق
-        </div>
-        <select class="sort-select" id="sortSelect" onchange="sortResults()">
-          <option value="recommended">الأكثر توصية</option>
-          <option value="price_low">السعر: من الأقل للأعلى</option>
-          <option value="price_high">السعر: من الأعلى للأقل</option>
-          <option value="rating">التقييم</option>
-          <option value="distance">المسافة</option>
-        </select>
-      </div>
-
-      <div class="hotel-list" id="hotelList">
-        <!-- Hotels will be loaded here -->
-      </div>
-
-      <!-- Loading -->
-      <div class="loading" id="loading" style="display: none;">
-        <div class="loading-spinner"></div>
-        <div>جاري تحميل المزيد من الفنادق...</div>
-      </div>
-
-      <!-- Pagination -->
-      <div class="pagination" id="pagination">
-        <button class="page-btn" id="prevBtn" onclick="changePage(-1)">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        <div id="pageNumbers"></div>
-        <button class="page-btn" id="nextBtn" onclick="changePage(1)">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-      </div>
-    </main>
-  </div>
-
-  <script>
-    // Hotel data by city
-    const hotelData = {
-      'دبي': [
-        {
-          id: 1,
-          name: 'فندق برج العرب جميرا',
-          stars: 5,
-          rating: 9.2,
-          reviews: 1250,
-          location: 'جميرا، دبي • 2.5 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=200&fit=crop',
-          originalPrice: 2500,
-          currentPrice: 1899,
-          discount: 24,
-          amenities: ['wifi', 'pool', 'spa', 'restaurant', 'parking'],
-          availability: 'غرفتان متبقيتان فقط!',
-          urgent: true
-        },
-        {
-          id: 2,
-          name: 'فندق أتلانتس النخلة',
-          stars: 5,
-          rating: 8.9,
-          reviews: 2100,
-          location: 'نخلة جميرا، دبي • 15 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=300&h=200&fit=crop',
-          originalPrice: 1800,
-          currentPrice: 1299,
-          discount: 28,
-          amenities: ['wifi', 'pool', 'gym', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 3,
-          name: 'فندق أرماني دبي',
-          stars: 5,
-          rating: 9.0,
-          reviews: 890,
-          location: 'وسط المدينة، دبي • 0.5 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=200&fit=crop',
-          originalPrice: 2200,
-          currentPrice: 1699,
-          discount: 23,
-          amenities: ['wifi', 'pool', 'spa', 'gym', 'restaurant'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 4,
-          name: 'منتجع جميرا بيتش',
-          stars: 4,
-          rating: 8.7,
-          reviews: 1560,
-          location: 'جميرا، دبي • 8 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=300&h=200&fit=crop',
-          originalPrice: 1200,
-          currentPrice: 899,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 5,
-          name: 'فندق فيرمونت دبي',
-          stars: 4,
-          rating: 8.5,
-          reviews: 1200,
-          location: 'الشيخ زايد، دبي • 12 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300&h=200&fit=crop',
-          originalPrice: 950,
-          currentPrice: 699,
-          discount: 26,
-          amenities: ['wifi', 'pool', 'gym', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 6,
-          name: 'فندق جيه دبليو ماريوت ماركيز',
-          stars: 5,
-          rating: 8.8,
-          reviews: 980,
-          location: 'الخليج التجاري، دبي • 3 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=300&h=200&fit=crop',
-          originalPrice: 1400,
-          currentPrice: 1050,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'spa', 'gym', 'restaurant', 'parking'],
-          availability: '5 غرف متبقية',
-          urgent: true
-        }
-      ],
-      'الرياض': [
-        {
-          id: 7,
-          name: 'فندق الفيصلية',
-          stars: 5,
-          rating: 9.1,
-          reviews: 850,
-          location: 'العليا، الرياض • 1 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop',
-          originalPrice: 1800,
-          currentPrice: 1350,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'spa', 'gym', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 8,
-          name: 'فندق الريتز كارلتون الرياض',
-          stars: 5,
-          rating: 8.9,
-          reviews: 1200,
-          location: 'العليا، الرياض • 2 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=300&h=200&fit=crop',
-          originalPrice: 2000,
-          currentPrice: 1499,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'spa', 'gym', 'restaurant', 'parking'],
-          availability: '3 غرف متبقية',
-          urgent: true
-        },
-        {
-          id: 9,
-          name: 'فندق فورسيزونز الرياض',
-          stars: 5,
-          rating: 8.8,
-          reviews: 750,
-          location: 'المملكة، الرياض • 5 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=300&h=200&fit=crop',
-          originalPrice: 1600,
-          currentPrice: 1199,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'spa', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 10,
-          name: 'فندق هيلتون الرياض',
-          stars: 4,
-          rating: 8.3,
-          reviews: 950,
-          location: 'العليا، الرياض • 3 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=300&h=200&fit=crop',
-          originalPrice: 800,
-          currentPrice: 599,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'gym', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 11,
-          name: 'فندق شيراتون الرياض',
-          stars: 4,
-          rating: 8.1,
-          reviews: 1100,
-          location: 'العليا، الرياض • 4 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=300&h=200&fit=crop',
-          originalPrice: 700,
-          currentPrice: 525,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'gym', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 12,
-          name: 'فندق راديسون بلو الرياض',
-          stars: 4,
-          rating: 8.4,
-          reviews: 680,
-          location: 'العليا، الرياض • 2.5 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=300&h=200&fit=crop',
-          originalPrice: 900,
-          currentPrice: 675,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'spa', 'gym', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        }
-      ],
-      'القاهرة': [
-        {
-          id: 13,
-          name: 'فندق فورسيزونز القاهرة',
-          stars: 5,
-          rating: 8.9,
-          reviews: 1400,
-          location: 'جاردن سيتي، القاهرة • 2 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=300&h=200&fit=crop',
-          originalPrice: 1200,
-          currentPrice: 899,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'spa', 'gym', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 14,
-          name: 'فندق سوفيتيل القاهرة',
-          stars: 5,
-          rating: 8.7,
-          reviews: 980,
-          location: 'جزيرة الجزيرة، القاهرة • 3 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=300&h=200&fit=crop',
-          originalPrice: 1000,
-          currentPrice: 749,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'spa', 'restaurant', 'parking'],
-          availability: '4 غرف متبقية',
-          urgent: true
-        },
-        {
-          id: 15,
-          name: 'فندق كمبينسكي النيل',
-          stars: 5,
-          rating: 8.8,
-          reviews: 1150,
-          location: 'جاردن سيتي، القاهرة • 1.5 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1520637836862-4d197d17c90a?w=300&h=200&fit=crop',
-          originalPrice: 1100,
-          currentPrice: 825,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'spa', 'gym', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 16,
-          name: 'فندق هيلتون القاهرة',
-          stars: 4,
-          rating: 8.2,
-          reviews: 1350,
-          location: 'التحرير، القاهرة • 1 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=300&h=200&fit=crop',
-          originalPrice: 600,
-          currentPrice: 449,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'gym', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 17,
-          name: 'فندق شيراتون القاهرة',
-          stars: 4,
-          rating: 8.0,
-          reviews: 890,
-          location: 'الدقي، القاهرة • 4 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=300&h=200&fit=crop',
-          originalPrice: 550,
-          currentPrice: 412,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'gym', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        },
-        {
-          id: 18,
-          name: 'فندق إنتركونتيننتال القاهرة',
-          stars: 5,
-          rating: 8.6,
-          reviews: 760,
-          location: 'مدينة نصر، القاهرة • 8 كم من وسط المدينة',
-          image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=300&h=200&fit=crop',
-          originalPrice: 800,
-          currentPrice: 599,
-          discount: 25,
-          amenities: ['wifi', 'pool', 'spa', 'gym', 'restaurant', 'parking'],
-          availability: 'متاح',
-          urgent: false
-        }
-      ]
-    };
-
-    // Global variables
-    let currentCity = 'دبي';
-    let currentPage = 1;
-    let hotelsPerPage = 6;
-    let filteredHotels = [];
-    let allHotels = [];
-
-    // Initialize page
-    document.addEventListener('DOMContentLoaded', function() {
-      loadSearchParams();
-      loadHotels();
-    });
-
-    // Load search parameters from URL
-    function loadSearchParams() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const destination = urlParams.get('destination') || 'دبي، الإمارات العربية المتحدة';
-      const checkin = urlParams.get('checkin') || '2025-07-22';
-      const checkout = urlParams.get('checkout') || '2025-07-23';
-      const guests = urlParams.get('guests') || '2';
-
-      // Extract city name from destination
-      currentCity = destination.split('،')[0].trim();
-      
-      // Update search summary
-      document.getElementById('searchDestination').textContent = destination;
-      document.getElementById('searchDates').textContent = formatDateRange(checkin, checkout);
-      document.getElementById('searchGuests').textContent = `${guests} ${guests == '1' ? 'ضيف' : 'ضيوف'}`;
-    }
-
-    // Format date range for display
-    function formatDateRange(checkin, checkout) {
-      const checkinDate = new Date(checkin);
-      const checkoutDate = new Date(checkout);
-      const months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 
-                     'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
-      
-      return `${checkinDate.getDate()} - ${checkoutDate.getDate()} ${months[checkinDate.getMonth()]} ${checkinDate.getFullYear()}`;
-    }
-
-    // Load hotels for current city
-    function loadHotels() {
-      allHotels = hotelData[currentCity] || hotelData['دبي'];
-      
-      // Create additional pages by duplicating and modifying hotels
-      const additionalHotels = [];
-      for (let page = 2; page <= 4; page++) {
-        allHotels.forEach((hotel, index) => {
-          const newHotel = { ...hotel };
-          newHotel.id = hotel.id + (page - 1) * 100;
-          newHotel.currentPrice = Math.round(hotel.currentPrice * (0.9 + Math.random() * 0.2));
-          newHotel.originalPrice = Math.round(newHotel.currentPrice / (1 - hotel.discount / 100));
-          newHotel.rating = Math.round((hotel.rating + Math.random() * 0.4 - 0.2) * 10) / 10;
-          newHotel.reviews = Math.round(hotel.reviews * (0.5 + Math.random() * 0.8));
-          additionalHotels.push(newHotel);
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            parseSearchParams();
+            updateSearchSummary();
+            loadHotels();
+            setupFilters();
+            setupSorting();
+            setupPagination();
         });
-      }
-      
-      allHotels = [...allHotels, ...additionalHotels];
-      filteredHotels = [...allHotels];
-      
-      updateResultsCount();
-      displayHotels();
-      updatePagination();
-    }
 
-    // Display hotels for current page
-    function displayHotels() {
-      const startIndex = (currentPage - 1) * hotelsPerPage;
-      const endIndex = startIndex + hotelsPerPage;
-      const hotelsToShow = filteredHotels.slice(startIndex, endIndex);
-      
-      const hotelList = document.getElementById('hotelList');
-      hotelList.innerHTML = '';
-      
-      hotelsToShow.forEach(hotel => {
-        const hotelCard = createHotelCard(hotel);
-        hotelList.appendChild(hotelCard);
-      });
-    }
+        // تحليل معاملات البحث من URL
+        function parseSearchParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            searchParams = {
+                city: urlParams.get('city') || 'DXB',
+                cityName: decodeURIComponent(urlParams.get('cityName') || 'دبي'),
+                checkin: urlParams.get('checkin') || '',
+                checkout: urlParams.get('checkout') || '',
+                adults: urlParams.get('adults') || '1'
+            };
+        }
 
-    // Create hotel card element
-    function createHotelCard(hotel) {
-      const card = document.createElement('div');
-      card.className = 'hotel-card';
-      card.onclick = () => openHotelDetails(hotel.id);
-      
-      const amenityIcons = {
-        wifi: 'fas fa-wifi',
-        pool: 'fas fa-swimming-pool',
-        spa: 'fas fa-spa',
-        gym: 'fas fa-dumbbell',
-        restaurant: 'fas fa-utensils',
-        parking: 'fas fa-car'
-      };
-      
-      const amenityNames = {
-        wifi: 'واي فاي مجاني',
-        pool: 'مسبح',
-        spa: 'سبا',
-        gym: 'صالة رياضية',
-        restaurant: 'مطعم',
-        parking: 'موقف سيارات'
-      };
-      
-      card.innerHTML = `
-        <div class="hotel-image">
-          <img src="${hotel.image}" alt="${hotel.name}" class="hotel-img">
-          <div class="discount-badge">خصم ${hotel.discount}%</div>
-        </div>
-        
-        <div class="hotel-info">
-          <a href="#" class="hotel-name" onclick="event.stopPropagation(); openHotelDetails(${hotel.id})">${hotel.name}</a>
-          
-          <div class="hotel-rating">
-            <div class="stars">${'★'.repeat(hotel.stars)}</div>
-            <span class="rating-score">${hotel.rating}</span>
-            <span class="review-count">(${hotel.reviews.toLocaleString()} تقييم)</span>
-          </div>
-          
-          <div class="hotel-location">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>${hotel.location}</span>
-          </div>
-          
-          <div class="amenities">
-            ${hotel.amenities.slice(0, 5).map(amenity => 
-              `<div class="amenity">
-                <i class="${amenityIcons[amenity]}"></i>
-                <span>${amenityNames[amenity]}</span>
-              </div>`
-            ).join('')}
-          </div>
-          
-          <div class="availability ${hotel.urgent ? '' : 'available'}">
-            ${hotel.availability}
-          </div>
-        </div>
-        
-        <div class="hotel-pricing">
-          <div class="original-price">${hotel.originalPrice.toLocaleString()} ريال</div>
-          <div class="current-price">${hotel.currentPrice.toLocaleString()} ريال</div>
-          <div class="price-per-night">لليلة الواحدة شامل الضرائب</div>
-          <button class="book-btn" onclick="event.stopPropagation(); openHotelDetails(${hotel.id})">
-            احجز الآن
-          </button>
-        </div>
-      `;
-      
-      return card;
-    }
+        // تحديث ملخص البحث
+        function updateSearchSummary() {
+            const summaryElement = document.getElementById('searchSummary');
+            const checkinDate = new Date(searchParams.checkin).toLocaleDateString('ar-SA');
+            const checkoutDate = new Date(searchParams.checkout).toLocaleDateString('ar-SA');
+            
+            summaryElement.innerHTML = `
+                <i class="fas fa-map-marker-alt"></i> ${searchParams.cityName} |
+                <i class="fas fa-calendar"></i> ${checkinDate} - ${checkoutDate} |
+                <i class="fas fa-users"></i> ${searchParams.adults} بالغ
+            `;
+        }
 
-    // Open hotel details page
-    function openHotelDetails(hotelId) {
-      // In a real application, this would navigate to the hotel details page
-      window.location.href = `hotel_details.html?hotel=${hotelId}`;
-    }
+        // تحميل الفنادق
+        async function loadHotels() {
+            const loadingState = document.getElementById('loadingState');
+            const hotelsGrid = document.getElementById('hotelsGrid');
+            const noResults = document.getElementById('noResults');
 
-    // Update results count
-    function updateResultsCount() {
-      document.getElementById('totalHotels').textContent = filteredHotels.length;
-    }
+            try {
+                // محاكاة تأخير API
+                await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // Update pagination
-    function updatePagination() {
-      const totalPages = Math.ceil(filteredHotels.length / hotelsPerPage);
-      const pageNumbers = document.getElementById('pageNumbers');
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      
-      // Clear existing page numbers
-      pageNumbers.innerHTML = '';
-      
-      // Add page numbers
-      for (let i = 1; i <= totalPages; i++) {
-        const pageBtn = document.createElement('button');
-        pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
-        pageBtn.textContent = i;
-        pageBtn.onclick = () => goToPage(i);
-        pageNumbers.appendChild(pageBtn);
-      }
-      
-      // Update navigation buttons
-      prevBtn.disabled = currentPage === 1;
-      nextBtn.disabled = currentPage === totalPages;
-    }
+                // الحصول على الفنادق للمدينة المحددة
+                currentHotels = sampleHotels[searchParams.city] || [];
+                
+                if (currentHotels.length === 0) {
+                    loadingState.style.display = 'none';
+                    noResults.style.display = 'block';
+                    return;
+                }
 
-    // Navigate to specific page
-    function goToPage(page) {
-      const totalPages = Math.ceil(filteredHotels.length / hotelsPerPage);
-      if (page >= 1 && page <= totalPages) {
-        currentPage = page;
-        displayHotels();
-        updatePagination();
-        
-        // Scroll to top of results
-        document.querySelector('.results-section').scrollIntoView({ 
-          behavior: 'smooth' 
+                filteredHotels = [...currentHotels];
+                
+                loadingState.style.display = 'none';
+                hotelsGrid.style.display = 'block';
+                
+                updateResultsCount();
+                renderHotels();
+                updatePagination();
+
+            } catch (error) {
+                console.error('Error loading hotels:', error);
+                loadingState.style.display = 'none';
+                noResults.style.display = 'block';
+            }
+        }
+
+        // عرض الفنادق
+        function renderHotels() {
+            const hotelsGrid = document.getElementById('hotelsGrid');
+            const startIndex = (currentPage - 1) * hotelsPerPage;
+            const endIndex = startIndex + hotelsPerPage;
+            const hotelsToShow = filteredHotels.slice(startIndex, endIndex);
+
+            hotelsGrid.innerHTML = hotelsToShow.map(hotel => `
+                <div class="hotel-card" data-hotel-id="${hotel.id}">
+                    <div class="hotel-image">
+                        <img src="${hotel.image}" alt="${hotel.name}" loading="lazy">
+                        ${hotel.discount ? `<div class="discount-badge">خصم ${hotel.discount}%</div>` : ''}
+                    </div>
+                    
+                    <div class="hotel-info">
+                        <h3 class="hotel-name">${hotel.name}</h3>
+                        <div class="hotel-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${hotel.location}
+                        </div>
+                        
+                        <div class="hotel-rating">
+                            <div class="stars">
+                                ${'★'.repeat(hotel.rating)}${'☆'.repeat(5 - hotel.rating)}
+                            </div>
+                            <div class="rating-score">${hotel.score}</div>
+                        </div>
+                        
+                        <div class="hotel-amenities">
+                            ${hotel.amenities.slice(0, 4).map(amenity => 
+                                `<span class="amenity">${amenity}</span>`
+                            ).join('')}
+                            ${hotel.amenities.length > 4 ? `<span class="amenity">+${hotel.amenities.length - 4} المزيد</span>` : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="hotel-pricing">
+                        ${hotel.originalPrice ? `<div class="original-price">${hotel.originalPrice} ريال</div>` : ''}
+                        <div class="current-price">${hotel.currentPrice} ريال</div>
+                        <div class="price-per-night">لكل ليلة</div>
+                        <button class="book-btn" onclick="bookHotel('${hotel.id}')">
+                            <i class="fas fa-calendar-check"></i>
+                            احجز الآن
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // إضافة تأثير الظهور التدريجي
+            const cards = hotelsGrid.querySelectorAll('.hotel-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        // تحديث عدد النتائج
+        function updateResultsCount() {
+            const resultsCount = document.getElementById('resultsCount');
+            resultsCount.textContent = `تم العثور على ${filteredHotels.length} فندق في ${searchParams.cityName}`;
+        }
+
+        // إعداد الفلاتر
+        function setupFilters() {
+            // فلتر السعر
+            const minPrice = document.getElementById('minPrice');
+            const maxPrice = document.getElementById('maxPrice');
+            
+            [minPrice, maxPrice].forEach(input => {
+                input.addEventListener('input', applyFilters);
+            });
+
+            // فلاتر أخرى
+            const checkboxes = document.querySelectorAll('.filter-checkbox input');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', applyFilters);
+            });
+        }
+
+        // تطبيق الفلاتر
+        function applyFilters() {
+            const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
+            const maxPrice = parseInt(document.getElementById('maxPrice').value) || Infinity;
+            
+            const selectedStars = Array.from(document.querySelectorAll('input[id^="star"]:checked')).map(cb => parseInt(cb.value));
+            const selectedAmenities = Array.from(document.querySelectorAll('input[id="wifi"]:checked, input[id="pool"]:checked, input[id="gym"]:checked, input[id="spa"]:checked, input[id="restaurant"]:checked')).map(cb => cb.value);
+            const selectedTypes = Array.from(document.querySelectorAll('input[id="hotel"]:checked, input[id="resort"]:checked, input[id="apartment"]:checked')).map(cb => cb.value);
+
+            filteredHotels = currentHotels.filter(hotel => {
+                // فلتر السعر
+                if (hotel.currentPrice < minPrice || hotel.currentPrice > maxPrice) return false;
+                
+                // فلتر النجوم
+                if (selectedStars.length > 0 && !selectedStars.includes(hotel.rating)) return false;
+                
+                // فلتر المرافق
+                if (selectedAmenities.length > 0) {
+                    const hasAmenity = selectedAmenities.some(amenity => {
+                        switch(amenity) {
+                            case 'wifi': return hotel.amenities.some(a => a.includes('واي فاي'));
+                            case 'pool': return hotel.amenities.some(a => a.includes('مسبح'));
+                            case 'gym': return hotel.amenities.some(a => a.includes('صالة رياضية'));
+                            case 'spa': return hotel.amenities.some(a => a.includes('سبا'));
+                            case 'restaurant': return hotel.amenities.some(a => a.includes('مطعم'));
+                            default: return false;
+                        }
+                    });
+                    if (!hasAmenity) return false;
+                }
+                
+                // فلتر النوع
+                if (selectedTypes.length > 0 && !selectedTypes.includes(hotel.type)) return false;
+                
+                return true;
+            });
+
+            currentPage = 1;
+            updateResultsCount();
+            renderHotels();
+            updatePagination();
+        }
+
+        // إعداد الترتيب
+        function setupSorting() {
+            const sortSelect = document.getElementById('sortSelect');
+            sortSelect.addEventListener('change', function() {
+                const sortBy = this.value;
+                
+                filteredHotels.sort((a, b) => {
+                    switch(sortBy) {
+                        case 'price_low':
+                            return a.currentPrice - b.currentPrice;
+                        case 'price_high':
+                            return b.currentPrice - a.currentPrice;
+                        case 'rating':
+                            return b.score - a.score;
+                        case 'distance':
+                            return Math.random() - 0.5; // محاكاة ترتيب المسافة
+                        default: // recommended
+                            return b.score - a.score;
+                    }
+                });
+                
+                currentPage = 1;
+                renderHotels();
+                updatePagination();
+            });
+        }
+
+        // إعداد التصفح
+        function setupPagination() {
+            const pagination = document.getElementById('pagination');
+            const pageButtons = pagination.querySelectorAll('.page-btn:not(#prevPage):not(#nextPage)');
+            const prevButton = document.getElementById('prevPage');
+            const nextButton = document.getElementById('nextPage');
+
+            pageButtons.forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                    currentPage = index + 1;
+                    updatePagination();
+                    renderHotels();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePagination();
+                    renderHotels();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+
+            nextButton.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredHotels.length / hotelsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePagination();
+                    renderHotels();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+
+        // تحديث التصفح
+        function updatePagination() {
+            const pagination = document.getElementById('pagination');
+            const totalPages = Math.ceil(filteredHotels.length / hotelsPerPage);
+            
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+                return;
+            }
+            
+            pagination.style.display = 'flex';
+            
+            const pageButtons = pagination.querySelectorAll('.page-btn:not(#prevPage):not(#nextPage)');
+            pageButtons.forEach((btn, index) => {
+                btn.classList.toggle('active', index + 1 === currentPage);
+                btn.style.display = index + 1 <= totalPages ? 'block' : 'none';
+            });
+
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages;
+        }
+
+        // حجز الفندق
+        function bookHotel(hotelId) {
+            const hotel = currentHotels.find(h => h.id === hotelId);
+            if (hotel) {
+                // في التطبيق الحقيقي، سيتم التوجه إلى صفحة الحجز
+                alert(`سيتم توجيهك لإتمام حجز ${hotel.name}\nالسعر: ${hotel.currentPrice} ريال لكل ليلة`);
+                
+                // محاكاة التوجه لصفحة الحجز
+                window.location.href = `amadeus_hotel_details.html?hotel=${hotelId}&checkin=${searchParams.checkin}&checkout=${searchParams.checkout}&adults=${searchParams.adults}`;
+            }
+        }
+
+        // تتبع الأحداث
+        function trackEvent(eventName, eventData) {
+            console.log('Analytics Event:', eventName, eventData);
+        }
+
+        // تتبع عرض النتائج
+        trackEvent('search_results_viewed', {
+            city: searchParams.city,
+            cityName: searchParams.cityName,
+            checkin: searchParams.checkin,
+            checkout: searchParams.checkout,
+            adults: searchParams.adults,
+            resultsCount: filteredHotels.length
         });
-      }
-    }
-
-    // Change page (next/previous)
-    function changePage(direction) {
-      const newPage = currentPage + direction;
-      goToPage(newPage);
-    }
-
-    // Sort results
-    function sortResults() {
-      const sortBy = document.getElementById('sortSelect').value;
-      
-      switch (sortBy) {
-        case 'price_low':
-          filteredHotels.sort((a, b) => a.currentPrice - b.currentPrice);
-          break;
-        case 'price_high':
-          filteredHotels.sort((a, b) => b.currentPrice - a.currentPrice);
-          break;
-        case 'rating':
-          filteredHotels.sort((a, b) => b.rating - a.rating);
-          break;
-        case 'distance':
-          filteredHotels.sort((a, b) => {
-            const aDistance = parseFloat(a.location.match(/(\d+\.?\d*) كم/)?.[1] || 0);
-            const bDistance = parseFloat(b.location.match(/(\d+\.?\d*) كم/)?.[1] || 0);
-            return aDistance - bDistance;
-          });
-          break;
-        default: // recommended
-          filteredHotels.sort((a, b) => {
-            const aScore = a.rating * 0.6 + (a.reviews / 1000) * 0.2 + (100 - a.currentPrice / 50) * 0.2;
-            const bScore = b.rating * 0.6 + (b.reviews / 1000) * 0.2 + (100 - b.currentPrice / 50) * 0.2;
-            return bScore - aScore;
-          });
-      }
-      
-      currentPage = 1;
-      displayHotels();
-      updatePagination();
-    }
-
-    // Toggle star filter
-    function toggleStarFilter(stars) {
-      const btn = event.target;
-      btn.classList.toggle('active');
-      applyFilters();
-    }
-
-    // Apply all filters
-    function applyFilters() {
-      const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
-      const maxPrice = parseInt(document.getElementById('maxPrice').value) || Infinity;
-      
-      const activeStars = Array.from(document.querySelectorAll('.star-btn.active'))
-        .map(btn => parseInt(btn.textContent));
-      
-      const activeAmenities = Array.from(document.querySelectorAll('.filter-checkbox:checked'))
-        .map(cb => cb.value);
-      
-      filteredHotels = allHotels.filter(hotel => {
-        // Price filter
-        if (hotel.currentPrice < minPrice || hotel.currentPrice > maxPrice) {
-          return false;
-        }
-        
-        // Star filter
-        if (activeStars.length > 0 && !activeStars.includes(hotel.stars)) {
-          return false;
-        }
-        
-        // Amenities filter
-        if (activeAmenities.length > 0) {
-          const hasAllAmenities = activeAmenities.every(amenity => 
-            hotel.amenities.includes(amenity)
-          );
-          if (!hasAllAmenities) {
-            return false;
-          }
-        }
-        
-        return true;
-      });
-      
-      currentPage = 1;
-      updateResultsCount();
-      displayHotels();
-      updatePagination();
-    }
-
-    // Add event listeners for filters
-    document.getElementById('minPrice').addEventListener('input', applyFilters);
-    document.getElementById('maxPrice').addEventListener('input', applyFilters);
-    
-    document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
-      checkbox.addEventListener('change', applyFilters);
-    });
-
-    // Modify search function
-    function modifySearch() {
-      window.location.href = 'index.html';
-    }
-  </script>
+    </script>
 </body>
 </html>
 
