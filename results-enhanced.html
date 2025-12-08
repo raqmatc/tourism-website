@@ -505,10 +505,16 @@
     <script>
         // الحصول على معاملات البحث من URL
         const urlParams = new URLSearchParams(window.location.search);
-        const destId = urlParams.get('dest_id');
+        let destId = urlParams.get('dest_id');
+        const cityCode = urlParams.get('city');
         const checkin = urlParams.get('checkin');
         const checkout = urlParams.get('checkout');
         const guests = parseInt(urlParams.get('guests')) || 2;
+        
+        // إذا لم يتم توفير dest_id لكن تم توفير city code، استخدم التحويل
+        if (!destId && cityCode && API_CONFIG.CITY_IDS[cityCode]) {
+            destId = API_CONFIG.CITY_IDS[cityCode];
+        }
 
         // قاموس المدن
         const cities = {
