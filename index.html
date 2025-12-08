@@ -737,8 +737,8 @@
                 countryName: selectedCity.country
             }));
             
-            // الانتقال مباشرة لصفحة النتائج
-            window.location.href = `results.html?city=${selectedCity.iata_code}&checkin=${searchData.checkInDate}&checkout=${searchData.checkOutDate}&guests=${searchData.adults}`;
+            // الانتقال مباشرة لصفحة النتائج المحسّنة
+            window.location.href = `results-enhanced.html?city=${selectedCity.iata_code}&checkin=${searchData.checkInDate}&checkout=${searchData.checkOutDate}&guests=${searchData.adults}`;
         });
         
         // تهيئة الصفحة
