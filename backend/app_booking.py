@@ -90,10 +90,10 @@ class BookingAPI:
             url = f"{RAPIDAPI_BASE_URL}/stays/search"
             params = {
                 'locationId': location_id,
-                'arrival_date': arrival_date,
-                'departure_date': departure_date,
+                'checkIn': arrival_date,
+                'checkOut': departure_date,
                 'adults': str(adults),
-                'room_qty': str(room_qty),
+                'rooms': str(room_qty),
                 'page_number': str(page_number),
                 'sort_by': sort_by,
                 'units': units,
