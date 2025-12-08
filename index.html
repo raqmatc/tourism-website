@@ -665,34 +665,7 @@
             showSuccess(`تم اختيار ${city.name} بنجاح!`);
         }
         
-        // البحث عن الفنادق
-        async function searchHotels(searchData) {
-            try {
-                const response = await fetch(`${API_BASE_URL}/hotels/search`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(searchData)
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const result = await response.json();
-                
-                if (result.error) {
-                    throw new Error(result.error);
-                }
-                
-                return result;
-                
-            } catch (error) {
-                console.error('خطأ في البحث عن الفنادق:', error);
-                throw error;
-            }
-        }
+
         
         // معالج البحث في المدن
         destinationInput.addEventListener('input', (e) => {
@@ -757,34 +730,15 @@
                 return;
             }
             
-            // عرض حالة التحميل
-            loading.style.display = 'block';
-            searchBtn.disabled = true;
-            errorMessage.style.display = 'none';
-            successMessage.style.display = 'none';
+            // حفظ معايير البحث في localStorage
+            localStorage.setItem('searchParams', JSON.stringify({
+                ...searchData,
+                cityName: selectedCity.name,
+                countryName: selectedCity.country
+            }));
             
-            try {
-                // البحث عن الفنادق
-                const results = await searchHotels(searchData);
-                
-                // حفظ نتائج البحث في localStorage
-                localStorage.setItem('hotelSearchResults', JSON.stringify(results));
-                localStorage.setItem('searchParams', JSON.stringify({
-                    ...searchData,
-                    cityName: selectedCity.name,
-                    countryName: selectedCity.country
-                }));
-                
-                // الانتقال لصفحة النتائج
-                window.location.href = `results.html?city=${selectedCity.iata_code}&checkin=${searchData.checkInDate}&checkout=${searchData.checkOutDate}&guests=${searchData.adults}`;
-                
-            } catch (error) {
-                console.error('خطأ في البحث:', error);
-                showError(error.message || 'حدث خطأ أثناء البحث. يرجى المحاولة مرة أخرى.');
-            } finally {
-                loading.style.display = 'none';
-                searchBtn.disabled = false;
-            }
+            // الانتقال مباشرة لصفحة النتائج
+            window.location.href = `results.html?city=${selectedCity.iata_code}&checkin=${searchData.checkInDate}&checkout=${searchData.checkOutDate}&guests=${searchData.adults}`;
         });
         
         // تهيئة الصفحة
