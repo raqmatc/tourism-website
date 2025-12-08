@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الفندق - Paygo.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #f5f7fa;
+            direction: rtl;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            background: #f5f7fa;
+            color: #667eea;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .hotel-header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hotel-image-main {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .hotel-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .hotel-location {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hotel-rating {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .star {
+            color: #ffd700;
+            font-size: 1.5rem;
+        }
+
+        .hotel-amenities-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .amenity-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .amenity-item i {
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .prices-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .prices-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .prices-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .price-cards {
+            display: grid;
+            gap: 15px;
+        }
+
+        .price-card {
+            background: #f8f9fa;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 150px 1fr auto;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .price-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .price-card.best-price {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            border-color: #4caf50;
+        }
+
+        .best-price-badge {
+            background: #4caf50;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .provider-logo {
+            width: 120px;
+            height: 60px;
+            object-fit: contain;
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .provider-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .provider-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .provider-features {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .feature-tag {
+            background: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .feature-tag i {
+            color: #667eea;
+        }
+
+        .price-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .price-night {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .book-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .book-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 992px) {
+            .price-card {
+                grid-template-columns: 120px 1fr auto;
+                gap: 15px;
+            }
+
+            .provider-logo {
+                width: 100px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hotel-title {
+                font-size: 1.8rem;
+            }
+
+            .hotel-image-main {
+                height: 250px;
+            }
+
+            .price-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .provider-logo {
+                margin: 0 auto;
+            }
+
+            .provider-info {
+                align-items: center;
+            }
+
+            .provider-features {
+                justify-content: center;
+            }
+
+            .price-action {
+                width: 100%;
+            }
+
+            .book-btn {
+                width: 100%;
+            }
+
+            .hotel-amenities-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-plane"></i> Paygo.com
+            </a>
+            <button class="back-btn" onclick="history.back()">
+                <i class="fas fa-arrow-right"></i>
+                <span>العودة للنتائج</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>جاري تحميل التفاصيل...</p>
+        </div>
+
+        <div id="hotelContent" style="display: none;">
+            <div class="hotel-header">
+                <img id="hotelImage" class="hotel-image-main" src="" alt="">
+                <h1 class="hotel-title" id="hotelName"></h1>
+                <div class="hotel-location" id="hotelLocation">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span></span>
+                </div>
+                <div class="hotel-rating" id="hotelRating"></div>
+                <div class="hotel-amenities-list" id="hotelAmenities"></div>
+            </div>
+
+            <div class="prices-section">
+                <h2 class="prices-title">قارن الأسعار واحجز</h2>
+                <p class="prices-subtitle">اختر أفضل سعر من مواقع الحجز المختلفة</p>
+                <div class="price-cards" id="priceCards"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // الحصول على بيانات الفندق
+        const hotelData = JSON.parse(localStorage.getItem('selectedHotel'));
+        const searchParams = JSON.parse(localStorage.getItem('searchParams'));
+
+        // مواقع الحجز مع الأسعار
+        const bookingProviders = [
+            {
+                name: 'Booking.com',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Booking.com_logo.svg/320px-Booking.com_logo.svg.png',
+                basePrice: hotelData?.price || 500,
+                priceVariation: 0,
+                features: ['إلغاء مجاني', 'دفع عند الوصول', 'تأكيد فوري'],
+                url: 'https://www.booking.com',
+                isBest: true
+            },
+            {
+                name: 'Agoda',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Agoda_transparent_logo.svg/320px-Agoda_transparent_logo.svg.png',
+                basePrice: hotelData?.price || 500,
+                priceVariation: 50,
+                features: ['خصم حصري', 'نقاط مكافآت'],
+                url: 'https://www.agoda.com'
+            },
+            {
+                name: 'Hotels.com',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Hotels.com_logo.svg/320px-Hotels.com_logo.svg.png',
+                basePrice: hotelData?.price || 500,
+                priceVariation: 80,
+                features: ['ليلة مجانية بعد 10 ليالي', 'دفع آمن'],
+                url: 'https://www.hotels.com'
+            },
+            {
+                name: 'Expedia',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Expedia_logo.svg/320px-Expedia_logo.svg.png',
+                basePrice: hotelData?.price || 500,
+                priceVariation: 100,
+                features: ['عروض الباقات', 'نقاط مكافآت'],
+                url: 'https://www.expedia.com'
+            },
+            {
+                name: 'Trip.com',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Trip.com_logo.svg/320px-Trip.com_logo.svg.png',
+                basePrice: hotelData?.price || 500,
+                priceVariation: 120,
+                features: ['خصومات إضافية', 'دعم 24/7'],
+                url: 'https://www.trip.com'
+            }
+        ];
+
+        // عرض تفاصيل الفندق
+        function displayHotelDetails() {
+            if (!hotelData) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            document.getElementById('hotelImage').src = hotelData.image;
+            document.getElementById('hotelName').textContent = hotelData.name;
+            document.getElementById('hotelLocation').querySelector('span').textContent = hotelData.location;
+
+            // عرض التقييم
+            const stars = '★'.repeat(hotelData.rating) + '☆'.repeat(5 - hotelData.rating);
+            document.getElementById('hotelRating').innerHTML = stars.split('').map(star => 
+                `<span class="star">${star}</span>`
+            ).join('');
+
+            // عرض المرافق
+            const amenitiesHTML = hotelData.amenities.map(amenity => `
+                <div class="amenity-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>${amenity}</span>
+                </div>
+            `).join('');
+            document.getElementById('hotelAmenities').innerHTML = amenitiesHTML;
+
+            // عرض الأسعار
+            displayPrices();
+
+            // إخفاء التحميل وعرض المحتوى
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('hotelContent').style.display = 'block';
+            }, 1000);
+        }
+
+        // عرض الأسعار من مواقع الحجز
+        function displayPrices() {
+            const priceCardsContainer = document.getElementById('priceCards');
+            priceCardsContainer.innerHTML = '';
+
+            // ترتيب حسب السعر
+            const sortedProviders = bookingProviders.sort((a, b) => 
+                (a.basePrice + a.priceVariation) - (b.basePrice + b.priceVariation)
+            );
+
+            sortedProviders.forEach((provider, index) => {
+                const finalPrice = provider.basePrice + provider.priceVariation;
+                const card = document.createElement('div');
+                card.className = `price-card ${index === 0 ? 'best-price' : ''}`;
+
+                const featuresHTML = provider.features.map(feature => `
+                    <span class="feature-tag">
+                        <i class="fas fa-check"></i>
+                        ${feature}
+                    </span>
+                `).join('');
+
+                card.innerHTML = `
+                    ${index === 0 ? '<span class="best-price-badge">أفضل سعر</span>' : ''}
+                    <img src="${provider.logo}" alt="${provider.name}" class="provider-logo" onerror="this.style.display='none'">
+                    <div class="provider-info">
+                        <div class="provider-name">${provider.name}</div>
+                        <div class="provider-features">
+                            ${featuresHTML}
+                        </div>
+                    </div>
+                    <div class="price-action">
+                        <div>
+                            <div class="price-amount">${finalPrice} ${hotelData.currency}</div>
+                            <div class="price-night">لليلة الواحدة</div>
+                        </div>
+                        <a href="${provider.url}" target="_blank" class="book-btn">
+                            احجز الآن
+                        </a>
+                    </div>
+                `;
+
+                priceCardsContainer.appendChild(card);
+            });
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', displayHotelDetails);
+    </script>
+</body>
+</html>
