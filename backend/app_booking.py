@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Paygo Booking.com Backend
+Paygo Booking.com Backend v2.0
 تطبيق Flask للتكامل مع Booking.com API من RapidAPI
+تم تحديثه ليستخدم endpoints الصحيحة: /stays/auto-complete و /stays/search
 """
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
 import os
-import json
-from datetime import datetime, timedelta
 import logging
-from functools import wraps
+from datetime import datetime
 
 # إعداد التطبيق
 app = Flask(__name__)
-CORS(app)  # تمكين CORS للتطبيقات الأمامية
+CORS(app)
 
 # إعداد التسجيل
 logging.basicConfig(level=logging.INFO)
@@ -36,205 +35,197 @@ class BookingAPI:
             'x-rapidapi-host': RAPIDAPI_HOST
         }
     
-    def search_locations(self, query):
-        """البحث عن المواقع والمدن"""
+    def search_locations(self, query, language_code='ar'):
+        """البحث عن المواقع والمدن باستخدام stays/auto-complete"""
         try:
-            url = f"{RAPIDAPI_BASE_URL}/locations/auto-complete"
+            url = f"{RAPIDAPI_BASE_URL}/stays/auto-complete"
             params = {
-                'text': query,
-                'languagecode': 'ar'
+                'query': query,
+                'languageCode': language_code
             }
             
+            logger.info(f"🔍 البحث عن الموقع: {query}")
             response = requests.get(url, headers=self.headers, params=params, timeout=30)
             response.raise_for_status()
             
             data = response.json()
-            logger.info(f"تم البحث عن الموقع: {query}")
+            
+            # تنسيق البيانات
+            locations = []
+            if 'data' in data:
+                for item in data['data']:
+                    locations.append({
+                        'dest_id': item.get('id', ''),
+                        'dest_type': item.get('dest_type', ''),
+                        'name': item.get('name', ''),
+                        'city_name': item.get('city_name', ''),
+                        'country': item.get('country', ''),
+                        'region': item.get('region', ''),
+                        'label': item.get('label', ''),
+                        'latitude': item.get('latitude'),
+                        'longitude': item.get('longitude')
+                    })
+            
+            logger.info(f"✅ تم العثور على {len(locations)} موقع")
             
             return {
                 'success': True,
-                'data': data.get('data', [])
+                'data': locations
             }
             
         except requests.exceptions.RequestException as e:
-            logger.error(f"خطأ في البحث عن الموقع: {e}")
+            logger.error(f"❌ خطأ في البحث عن الموقع: {e}")
             return {
                 'success': False,
                 'error': str(e),
                 'data': []
             }
     
-    def search_hotels(self, dest_id, checkin, checkout, adults=2, rooms=1, currency='SAR'):
-        """البحث عن الفنادق في وجهة محددة"""
+    def search_hotels(self, location_id, arrival_date, departure_date, adults=2, 
+                     room_qty=1, page_number=1, sort_by='popularity', 
+                     units='metric', temperature_unit='c', language_code='ar', 
+                     currency_code='SAR'):
+        """البحث عن الفنادق باستخدام stays/search"""
         try:
-            url = f"{RAPIDAPI_BASE_URL}/hotels/search"
+            url = f"{RAPIDAPI_BASE_URL}/stays/search"
             params = {
-                'dest_id': dest_id,
-                'search_type': 'CITY',
-                'arrival_date': checkin,
-                'departure_date': checkout,
-                'adults': adults,
-                'room_qty': rooms,
-                'units': 'metric',
-                'temperature_unit': 'c',
-                'languagecode': 'ar',
-                'currency_code': currency
+                'locationId': location_id,
+                'arrival_date': arrival_date,
+                'departure_date': departure_date,
+                'adults': str(adults),
+                'room_qty': str(room_qty),
+                'page_number': str(page_number),
+                'sort_by': sort_by,
+                'units': units,
+                'temperature_unit': temperature_unit,
+                'languagecode': language_code,
+                'currency_code': currency_code
             }
             
+            logger.info(f"🏨 البحث عن الفنادق في {location_id} من {arrival_date} إلى {departure_date}")
             response = requests.get(url, headers=self.headers, params=params, timeout=60)
             response.raise_for_status()
             
             data = response.json()
-            hotels = data.get('data', {}).get('hotels', [])
             
-            logger.info(f"تم البحث عن الفنادق في {dest_id}: {len(hotels)} نتيجة")
+            # معالجة البيانات
+            hotels = []
+            if 'data' in data and 'result' in data['data']:
+                for hotel in data['data']['result']:
+                    try:
+                        # معلومات أساسية
+                        hotel_id = hotel.get('hotel_id', '')
+                        property_data = hotel.get('property', {})
+                        
+                        # الاسم
+                        hotel_name = property_data.get('name', hotel.get('hotel_name', 'فندق'))
+                        
+                        # الصور
+                        images = []
+                        if 'photoUrls' in property_data:
+                            images = property_data['photoUrls']
+                        elif 'max_photo_url' in hotel:
+                            images = [hotel['max_photo_url']]
+                        
+                        # السعر
+                        price_breakdown = hotel.get('composite_price_breakdown', {})
+                        gross_amount = price_breakdown.get('gross_amount_per_night', {})
+                        price = gross_amount.get('value', 0)
+                        currency = gross_amount.get('currency', currency_code)
+                        
+                        # التقييم
+                        review_score = hotel.get('review_score', 0)
+                        review_count = hotel.get('review_nr', 0)
+                        review_word = hotel.get('review_score_word', '')
+                        
+                        # الموقع
+                        city = hotel.get('city', '')
+                        address = hotel.get('address', '')
+                        distance = hotel.get('distance', '')
+                        
+                        # المرافق
+                        amenities = []
+                        if 'property' in hotel and 'facilities' in hotel['property']:
+                            amenities = [f.get('name', '') for f in hotel['property']['facilities'][:10]]
+                        
+                        # النجوم
+                        stars = hotel.get('class', 0)
+                        
+                        # بناء كائن الفندق
+                        processed_hotel = {
+                            'id': hotel_id,
+                            'name': hotel_name,
+                            'location': city,
+                            'address': address,
+                            'price': price,
+                            'currency': currency,
+                            'rating': review_score,
+                            'reviews': review_count,
+                            'review_word': review_word,
+                            'stars': stars,
+                            'images': images,
+                            'amenities': amenities,
+                            'distance_from_center': distance,
+                            'latitude': hotel.get('latitude'),
+                            'longitude': hotel.get('longitude'),
+                            'is_free_cancellable': hotel.get('is_free_cancellable', 0),
+                            'booking_url': f"https://www.booking.com/hotel/{hotel.get('cc1', 'ae')}/{hotel_id}.html"
+                        }
+                        
+                        hotels.append(processed_hotel)
+                        
+                    except Exception as e:
+                        logger.warning(f"⚠️ خطأ في معالجة فندق: {e}")
+                        continue
             
-            # معالجة البيانات لتكون أكثر وضوحاً
-            processed_hotels = []
-            for hotel in hotels:
-                try:
-                    processed_hotel = {
-                        'id': hotel.get('hotel_id'),
-                        'name': hotel.get('hotel_name', 'فندق'),
-                        'name_trans': hotel.get('hotel_name_trans', hotel.get('hotel_name', 'فندق')),
-                        'address': hotel.get('address', ''),
-                        'address_trans': hotel.get('address_trans', hotel.get('address', '')),
-                        'city': hotel.get('city', ''),
-                        'city_trans': hotel.get('city_trans', hotel.get('city', '')),
-                        'country': hotel.get('country_trans', ''),
-                        'latitude': hotel.get('latitude'),
-                        'longitude': hotel.get('longitude'),
-                        'rating': hotel.get('class', 0),
-                        'review_score': hotel.get('review_score', 0),
-                        'review_score_word': hotel.get('review_score_word', ''),
-                        'review_count': hotel.get('review_nr', 0),
-                        'image': hotel.get('main_photo_url', ''),
-                        'price': hotel.get('min_total_price', 0),
-                        'currency': hotel.get('currency_code', currency),
-                        'distance': hotel.get('distance', 0),
-                        'distance_to_cc': hotel.get('distance_to_cc', 0),
-                        'url': hotel.get('url', ''),
-                        'checkin': hotel.get('checkin', {}),
-                        'checkout': hotel.get('checkout', {}),
-                        'facilities': hotel.get('hotel_facilities', []),
-                        'is_free_cancellable': hotel.get('is_free_cancellable', 0),
-                        'is_genius_deal': hotel.get('is_genius_deal', 0)
-                    }
-                    processed_hotels.append(processed_hotel)
-                except Exception as e:
-                    logger.warning(f"خطأ في معالجة فندق: {e}")
-                    continue
+            logger.info(f"✅ تم العثور على {len(hotels)} فندق")
             
             return {
                 'success': True,
-                'data': processed_hotels,
-                'total_results': len(processed_hotels),
-                'search_params': {
-                    'dest_id': dest_id,
-                    'checkin': checkin,
-                    'checkout': checkout,
-                    'adults': adults,
-                    'rooms': rooms
-                }
+                'data': hotels,
+                'total': len(hotels)
             }
             
         except requests.exceptions.RequestException as e:
-            logger.error(f"خطأ في البحث عن الفنادق: {e}")
+            logger.error(f"❌ خطأ في البحث عن الفنادق: {e}")
             return {
                 'success': False,
                 'error': str(e),
                 'data': []
             }
     
-    def get_hotel_details(self, hotel_id, checkin, checkout, adults=2, rooms=1, currency='SAR'):
+    def get_hotel_details(self, hotel_id, arrival_date, departure_date, 
+                         adults=2, room_qty=1, language_code='ar', currency_code='SAR'):
         """الحصول على تفاصيل فندق محدد"""
         try:
-            url = f"{RAPIDAPI_BASE_URL}/hotels/details"
+            url = f"{RAPIDAPI_BASE_URL}/stays/detail"
             params = {
                 'hotel_id': hotel_id,
-                'arrival_date': checkin,
-                'departure_date': checkout,
-                'adults': adults,
-                'room_qty': rooms,
-                'units': 'metric',
-                'temperature_unit': 'c',
-                'languagecode': 'ar',
-                'currency_code': currency
+                'arrival_date': arrival_date,
+                'departure_date': departure_date,
+                'adults': str(adults),
+                'room_qty': str(room_qty),
+                'languagecode': language_code,
+                'currency_code': currency_code
             }
             
+            logger.info(f"📋 الحصول على تفاصيل الفندق: {hotel_id}")
             response = requests.get(url, headers=self.headers, params=params, timeout=60)
             response.raise_for_status()
             
             data = response.json()
-            hotel_data = data.get('data', {})
-            
-            logger.info(f"تم الحصول على تفاصيل الفندق: {hotel_id}")
-            
-            # معالجة التفاصيل
-            processed_data = {
-                'id': hotel_data.get('hotel_id'),
-                'name': hotel_data.get('hotel_name', ''),
-                'description': hotel_data.get('hotel_description', ''),
-                'address': hotel_data.get('address', ''),
-                'city': hotel_data.get('city', ''),
-                'country': hotel_data.get('country_trans', ''),
-                'latitude': hotel_data.get('latitude'),
-                'longitude': hotel_data.get('longitude'),
-                'rating': hotel_data.get('class', 0),
-                'review_score': hotel_data.get('review_score', 0),
-                'review_score_word': hotel_data.get('review_score_word', ''),
-                'review_count': hotel_data.get('review_nr', 0),
-                'images': hotel_data.get('hotel_photos', []),
-                'facilities': hotel_data.get('hotel_facilities', []),
-                'rooms': hotel_data.get('rooms', []),
-                'policies': hotel_data.get('hotel_policies', {}),
-                'checkin': hotel_data.get('checkin', {}),
-                'checkout': hotel_data.get('checkout', {}),
-                'url': hotel_data.get('url', '')
-            }
             
             return {
                 'success': True,
-                'data': processed_data
+                'data': data.get('data', {})
             }
             
         except requests.exceptions.RequestException as e:
-            logger.error(f"خطأ في الحصول على تفاصيل الفندق: {e}")
+            logger.error(f"❌ خطأ في الحصول على تفاصيل الفندق: {e}")
             return {
                 'success': False,
                 'error': str(e),
                 'data': {}
-            }
-    
-    def get_hotel_reviews(self, hotel_id, languagecode='ar'):
-        """الحصول على مراجعات الفندق"""
-        try:
-            url = f"{RAPIDAPI_BASE_URL}/hotels/reviews"
-            params = {
-                'hotel_id': hotel_id,
-                'languagecode': languagecode
-            }
-            
-            response = requests.get(url, headers=self.headers, params=params, timeout=30)
-            response.raise_for_status()
-            
-            data = response.json()
-            reviews = data.get('data', {}).get('reviews', [])
-            
-            logger.info(f"تم الحصول على مراجعات الفندق: {hotel_id}")
-            
-            return {
-                'success': True,
-                'data': reviews,
-                'total_reviews': len(reviews)
-            }
-            
-        except requests.exceptions.RequestException as e:
-            logger.error(f"خطأ في الحصول على المراجعات: {e}")
-            return {
-                'success': False,
-                'error': str(e),
-                'data': []
             }
 
 # إنشاء كائن Booking API
@@ -249,10 +240,9 @@ def home():
         'status': 'running',
         'api_provider': 'Booking.com via RapidAPI',
         'endpoints': {
-            'search_locations': '/api/locations/search',
-            'search_hotels': '/api/hotels/search',
-            'hotel_details': '/api/hotels/details',
-            'hotel_reviews': '/api/hotels/reviews',
+            'search_locations': '/api/locations/search?query=Dubai',
+            'search_hotels': '/api/hotels/search?dest_id=XXX&checkin=2025-12-09&checkout=2025-12-10&adults=2',
+            'hotel_details': '/api/hotels/details?hotel_id=XXX&checkin=2025-12-09&checkout=2025-12-10',
             'health_check': '/api/health'
         }
     })
@@ -261,14 +251,11 @@ def home():
 def health_check():
     """فحص صحة النظام"""
     try:
-        # اختبار الاتصال مع Booking.com API
-        result = booking_api.search_locations('Dubai')
-        
         return jsonify({
             'status': 'healthy',
             'timestamp': datetime.now().isoformat(),
-            'booking_api_connection': 'connected' if result['success'] else 'disconnected',
-            'api_key_configured': bool(RAPIDAPI_KEY and RAPIDAPI_KEY != 'YOUR_RAPIDAPI_KEY_HERE')
+            'api_key_configured': bool(RAPIDAPI_KEY),
+            'version': '2.0.0'
         })
     except Exception as e:
         return jsonify({
@@ -282,86 +269,81 @@ def search_locations():
     """البحث عن المواقع والمدن"""
     try:
         query = request.args.get('query', '')
+        language_code = request.args.get('languageCode', 'ar')
         
         if not query:
             return jsonify({
                 'success': False,
-                'error': 'معامل البحث query مطلوب'
+                'error': 'معامل البحث query مطلوب',
+                'data': []
             }), 400
         
-        result = booking_api.search_locations(query)
+        result = booking_api.search_locations(query, language_code)
         return jsonify(result)
         
     except Exception as e:
-        logger.error(f"خطأ في البحث عن الموقع: {e}")
+        logger.error(f"❌ خطأ في endpoint البحث عن الموقع: {e}")
         return jsonify({
             'success': False,
-            'error': str(e)
+            'error': str(e),
+            'data': []
         }), 500
 
-@app.route('/api/hotels/search', methods=['POST'])
+@app.route('/api/hotels/search', methods=['GET'])
 def search_hotels():
     """البحث عن الفنادق"""
     try:
-        data = request.get_json()
+        # الحصول على المعاملات (دعم كل من dest_id و locationId)
+        location_id = request.args.get('dest_id') or request.args.get('locationId')
+        arrival_date = request.args.get('checkin') or request.args.get('arrival_date')
+        departure_date = request.args.get('checkout') or request.args.get('departure_date')
+        adults = int(request.args.get('adults', 2))
+        room_qty = int(request.args.get('room_qty', 1))
+        page_number = int(request.args.get('page_number', 1))
+        sort_by = request.args.get('sort_by', 'popularity')
+        units = request.args.get('units', 'metric')
+        temperature_unit = request.args.get('temperature_unit', 'c')
+        language_code = request.args.get('languagecode', 'ar')
+        currency_code = request.args.get('currency_code', 'SAR')
         
-        # التحقق من البيانات المطلوبة
-        required_fields = ['dest_id', 'checkin', 'checkout']
-        for field in required_fields:
-            if field not in data:
-                return jsonify({
-                    'success': False,
-                    'error': f'الحقل {field} مطلوب'
-                }), 400
-        
-        # استخراج البيانات
-        dest_id = data['dest_id']
-        checkin = data['checkin']
-        checkout = data['checkout']
-        adults = data.get('adults', 2)
-        rooms = data.get('rooms', 1)
-        currency = data.get('currency', 'SAR')
-        
-        # التحقق من صحة التواريخ
-        try:
-            checkin_date = datetime.strptime(checkin, '%Y-%m-%d')
-            checkout_date = datetime.strptime(checkout, '%Y-%m-%d')
-            
-            if checkout_date <= checkin_date:
-                return jsonify({
-                    'success': False,
-                    'error': 'تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول'
-                }), 400
-                
-            if checkin_date < datetime.now():
-                return jsonify({
-                    'success': False,
-                    'error': 'تاريخ الوصول لا يمكن أن يكون في الماضي'
-                }), 400
-                
-        except ValueError:
+        # التحقق من المعاملات المطلوبة
+        if not location_id:
             return jsonify({
                 'success': False,
-                'error': 'تنسيق التاريخ غير صحيح. استخدم YYYY-MM-DD'
+                'error': 'معامل dest_id أو locationId مطلوب',
+                'data': []
+            }), 400
+            
+        if not arrival_date or not departure_date:
+            return jsonify({
+                'success': False,
+                'error': 'معاملات checkin و checkout مطلوبة',
+                'data': []
             }), 400
         
         # البحث عن الفنادق
         result = booking_api.search_hotels(
-            dest_id=dest_id,
-            checkin=checkin,
-            checkout=checkout,
+            location_id=location_id,
+            arrival_date=arrival_date,
+            departure_date=departure_date,
             adults=adults,
-            rooms=rooms,
-            currency=currency
+            room_qty=room_qty,
+            page_number=page_number,
+            sort_by=sort_by,
+            units=units,
+            temperature_unit=temperature_unit,
+            language_code=language_code,
+            currency_code=currency_code
         )
         
         return jsonify(result)
         
     except Exception as e:
-        logger.error(f"خطأ في البحث عن الفنادق: {e}")
+        logger.error(f"❌ خطأ في endpoint البحث عن الفنادق: {e}")
         return jsonify({
             'success': False,
-            'error': str(e)
+            'error': str(e),
+            'data': []
         }), 500
 
 @app.route('/api/hotels/details', methods=['GET'])
@@ -369,58 +351,39 @@ def get_hotel_details():
     """الحصول على تفاصيل فندق محدد"""
     try:
         hotel_id = request.args.get('hotel_id')
-        checkin = request.args.get('checkin')
-        checkout = request.args.get('checkout')
+        arrival_date = request.args.get('checkin') or request.args.get('arrival_date')
+        departure_date = request.args.get('checkout') or request.args.get('departure_date')
         adults = int(request.args.get('adults', 2))
-        rooms = int(request.args.get('rooms', 1))
-        currency = request.args.get('currency', 'SAR')
-        
-        if not all([hotel_id, checkin, checkout]):
-            return jsonify({
-                'success': False,
-                'error': 'hotel_id, checkin, checkout مطلوبة'
-            }), 400
-        
-        result = booking_api.get_hotel_details(
-            hotel_id=hotel_id,
-            checkin=checkin,
-            checkout=checkout,
-            adults=adults,
-            rooms=rooms,
-            currency=currency
-        )
-        
-        return jsonify(result)
-        
-    except Exception as e:
-        logger.error(f"خطأ في الحصول على تفاصيل الفندق: {e}")
-        return jsonify({
-            'success': False,
-            'error': str(e)
-        }), 500
-
-@app.route('/api/hotels/reviews', methods=['GET'])
-def get_hotel_reviews():
-    """الحصول على مراجعات الفندق"""
-    try:
-        hotel_id = request.args.get('hotel_id')
-        languagecode = request.args.get('languagecode', 'ar')
+        room_qty = int(request.args.get('room_qty', 1))
+        language_code = request.args.get('languagecode', 'ar')
+        currency_code = request.args.get('currency_code', 'SAR')
         
         if not hotel_id:
             return jsonify({
                 'success': False,
-                'error': 'hotel_id مطلوب'
+                'error': 'معامل hotel_id مطلوب'
+            }), 400
+            
+        if not arrival_date or not departure_date:
+            return jsonify({
+                'success': False,
+                'error': 'معاملات checkin و checkout مطلوبة'
             }), 400
         
-        result = booking_api.get_hotel_reviews(
+        result = booking_api.get_hotel_details(
             hotel_id=hotel_id,
-            languagecode=languagecode
+            arrival_date=arrival_date,
+            departure_date=departure_date,
+            adults=adults,
+            room_qty=room_qty,
+            language_code=language_code,
+            currency_code=currency_code
         )
         
         return jsonify(result)
         
     except Exception as e:
-        logger.error(f"خطأ في الحصول على المراجعات: {e}")
+        logger.error(f"❌ خطأ في endpoint تفاصيل الفندق: {e}")
         return jsonify({
             'success': False,
             'error': str(e)
@@ -446,7 +409,8 @@ if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     debug = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
     
-    logger.info(f"🚀 بدء تشغيل Paygo Booking.com Backend على المنفذ {port}")
-    logger.info(f"🔑 مفتاح API مكون: {bool(RAPIDAPI_KEY and RAPIDAPI_KEY != 'YOUR_RAPIDAPI_KEY_HERE')}")
+    logger.info(f"🚀 بدء تشغيل Paygo Booking.com Backend v2.0 على المنفذ {port}")
+    logger.info(f"🔑 مفتاح API مكون: {bool(RAPIDAPI_KEY)}")
+    logger.info(f"📡 استخدام endpoints الجديدة: /stays/auto-complete و /stays/search")
     
     app.run(host='0.0.0.0', port=port, debug=debug)
