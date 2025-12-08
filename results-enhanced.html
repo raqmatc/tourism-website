@@ -505,7 +505,7 @@
     <script>
         // الحصول على معاملات البحث من URL
         const urlParams = new URLSearchParams(window.location.search);
-        const cityCode = urlParams.get('city') || 'DXB';
+        const destId = urlParams.get('dest_id');
         const checkin = urlParams.get('checkin');
         const checkout = urlParams.get('checkout');
         const guests = parseInt(urlParams.get('guests')) || 2;
@@ -555,14 +555,15 @@
 
         // عرض ملخص البحث
         function displaySearchSummary() {
-            const city = cities[cityCode] || { name: cityCode };
+            const searchParams = JSON.parse(localStorage.getItem('searchParams') || '{}');
+            const cityName = searchParams.cityName || 'الوجهة';
             const checkinDate = new Date(checkin).toLocaleDateString('ar-SA');
             const checkoutDate = new Date(checkout).toLocaleDateString('ar-SA');
 
             document.getElementById('searchSummary').innerHTML = `
                 <div class="search-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>${city.name}</span>
+                    <span>${cityName}</span>
                 </div>
                 <div class="search-item">
                     <i class="fas fa-calendar"></i>
@@ -587,11 +588,7 @@
         async function loadHotels() {
             try {
                 console.log('🔍 بدء البحث عن الفنادق...');
-                console.log('معاملات البحث:', { cityCode, checkin, checkout, guests });
-
-                // الحصول على dest_id من config.js
-                const destId = API_CONFIG.CITY_IDS[cityCode] || API_CONFIG.CITY_IDS['DXB'];
-                console.log('معرف الوجهة:', destId);
+                console.log('معاملات البحث:', { destId, checkin, checkout, guests });
 
                 // استدعاء API من config.js
                 const response = await searchHotels(destId, checkin, checkout, guests, 1);
@@ -790,7 +787,7 @@
         function viewHotelDetails(hotel) {
             localStorage.setItem('selectedHotel', JSON.stringify(hotel));
             localStorage.setItem('searchParams', JSON.stringify({
-                cityCode, checkin, checkout, guests
+                destId, checkin, checkout, guests
             }));
             window.location.href = `hotel-details-enhanced.html?id=${hotel.id}`;
         }

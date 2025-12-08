@@ -503,7 +503,7 @@
             
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-tags"></i>
+                    <i class="fas fa-tag"></i>
                 </div>
                 <h3 class="feature-title">أفضل الأسعار</h3>
                 <p class="feature-desc">
@@ -523,50 +523,10 @@
         </section>
     </div>
 
+    <!-- تضمين ملف config.js -->
+    <script src="config.js"></script>
+
     <script>
-        // قائمة المدن الثابتة (بدلاً من الاتصال بالخادم)
-        const cities = [
-            { name: 'دبي', country: 'الإمارات العربية المتحدة', iata_code: 'DXB' },
-            { name: 'أبوظبي', country: 'الإمارات العربية المتحدة', iata_code: 'AUH' },
-            { name: 'الرياض', country: 'المملكة العربية السعودية', iata_code: 'RUH' },
-            { name: 'جدة', country: 'المملكة العربية السعودية', iata_code: 'JED' },
-            { name: 'القاهرة', country: 'مصر', iata_code: 'CAI' },
-            { name: 'الإسكندرية', country: 'مصر', iata_code: 'ALY' },
-            { name: 'شرم الشيخ', country: 'مصر', iata_code: 'SSH' },
-            { name: 'بيروت', country: 'لبنان', iata_code: 'BEY' },
-            { name: 'عمّان', country: 'الأردن', iata_code: 'AMM' },
-            { name: 'الدوحة', country: 'قطر', iata_code: 'DOH' },
-            { name: 'الكويت', country: 'الكويت', iata_code: 'KWI' },
-            { name: 'مسقط', country: 'عمان', iata_code: 'MCT' },
-            { name: 'المنامة', country: 'البحرين', iata_code: 'BAH' },
-            { name: 'إسطنبول', country: 'تركيا', iata_code: 'IST' },
-            { name: 'أنقرة', country: 'تركيا', iata_code: 'ANK' },
-            { name: 'لندن', country: 'المملكة المتحدة', iata_code: 'LON' },
-            { name: 'باريس', country: 'فرنسا', iata_code: 'PAR' },
-            { name: 'روما', country: 'إيطاليا', iata_code: 'ROM' },
-            { name: 'برشلونة', country: 'إسبانيا', iata_code: 'BCN' },
-            { name: 'مدريد', country: 'إسبانيا', iata_code: 'MAD' },
-            { name: 'أمستردام', country: 'هولندا', iata_code: 'AMS' },
-            { name: 'برلين', country: 'ألمانيا', iata_code: 'BER' },
-            { name: 'فيينا', country: 'النمسا', iata_code: 'VIE' },
-            { name: 'نيويورك', country: 'الولايات المتحدة', iata_code: 'NYC' },
-            { name: 'لوس أنجلوس', country: 'الولايات المتحدة', iata_code: 'LAX' },
-            { name: 'طوكيو', country: 'اليابان', iata_code: 'TYO' },
-            { name: 'سنغافورة', country: 'سنغافورة', iata_code: 'SIN' },
-            { name: 'كوالالمبور', country: 'ماليزيا', iata_code: 'KUL' },
-            { name: 'بانكوك', country: 'تايلاند', iata_code: 'BKK' },
-            { name: 'بالي', country: 'إندونيسيا', iata_code: 'DPS' },
-            { name: 'دلهي', country: 'الهند', iata_code: 'DEL' },
-            { name: 'مومباي', country: 'الهند', iata_code: 'BOM' },
-            { name: 'سيدني', country: 'أستراليا', iata_code: 'SYD' },
-            { name: 'ملبورن', country: 'أستراليا', iata_code: 'MEL' },
-            { name: 'تورنتو', country: 'كندا', iata_code: 'YTO' },
-            { name: 'فانكوفر', country: 'كندا', iata_code: 'YVR' }
-        ];
-        
-        // إعدادات API
-        const API_BASE_URL = 'http://localhost:5000/api';
-        
         // عناصر DOM
         const destinationInput = document.getElementById('destination');
         const suggestionsDiv = document.getElementById('suggestions');
@@ -612,21 +572,33 @@
             }, 3000);
         }
         
-        // البحث عن المدن (من القائمة الثابتة)
-        function searchCities(query) {
+        // البحث عن المدن من Booking.com API
+        async function searchCities(query) {
             if (!query || query.length < 2) {
                 suggestionsDiv.style.display = 'none';
                 return;
             }
             
-            // البحث في القائمة الثابتة
-            const filteredCities = cities.filter(city => 
-                city.name.includes(query) || 
-                city.country.includes(query) ||
-                city.name.toLowerCase().includes(query.toLowerCase())
-            );
-            
-            displaySuggestions(filteredCities.slice(0, 10)); // عرض أول 10 نتائج
+            try {
+                // استدعاء API للبحث عن المواقع
+                const response = await searchLocations(query);
+                
+                if (response.success && response.data && response.data.length > 0) {
+                    const locations = response.data.map(loc => ({
+                        name: loc.name || loc.dest_id,
+                        country: loc.country || '',
+                        dest_id: loc.dest_id,
+                        dest_type: loc.dest_type || 'city'
+                    }));
+                    
+                    displaySuggestions(locations.slice(0, 10));
+                } else {
+                    suggestionsDiv.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('خطأ في البحث عن المدن:', error);
+                suggestionsDiv.style.display = 'none';
+            }
         }
         
         // عرض اقتراحات المدن
@@ -659,12 +631,11 @@
         // اختيار مدينة
         function selectCity(city) {
             selectedCity = city;
-            destinationInput.value = `${city.name}, ${city.country}`;
-            destinationInput.dataset.cityCode = city.iata_code;
+            destinationInput.value = city.country ? `${city.name}, ${city.country}` : city.name;
+            destinationInput.dataset.destId = city.dest_id;
             suggestionsDiv.style.display = 'none';
             showSuccess(`تم اختيار ${city.name} بنجاح!`);
         }
-        
 
         
         // معالج البحث في المدن
@@ -679,13 +650,13 @@
             // إعادة تعيين المدينة المختارة إذا تغير النص
             if (selectedCity && !query.includes(selectedCity.name)) {
                 selectedCity = null;
-                destinationInput.removeAttribute('data-city-code');
+                destinationInput.removeAttribute('data-dest-id');
             }
             
             // بحث جديد بعد تأخير قصير
             searchTimeout = setTimeout(() => {
                 searchCities(query);
-            }, 300);
+            }, 500);
         });
         
         // إخفاء الاقتراحات عند النقر خارجها
@@ -707,7 +678,7 @@
             
             // جمع بيانات البحث
             const searchData = {
-                cityCode: selectedCity.iata_code,
+                destId: selectedCity.dest_id,
                 checkInDate: document.getElementById('checkin').value,
                 checkOutDate: document.getElementById('checkout').value,
                 adults: parseInt(document.getElementById('guests').value),
@@ -738,7 +709,7 @@
             }));
             
             // الانتقال مباشرة لصفحة النتائج المحسّنة
-            window.location.href = `results-enhanced.html?city=${selectedCity.iata_code}&checkin=${searchData.checkInDate}&checkout=${searchData.checkOutDate}&guests=${searchData.adults}`;
+            window.location.href = `results-enhanced.html?dest_id=${selectedCity.dest_id}&checkin=${searchData.checkInDate}&checkout=${searchData.checkOutDate}&guests=${searchData.adults}`;
         });
         
         // تهيئة الصفحة
@@ -749,4 +720,3 @@
     </script>
 </body>
 </html>
-
