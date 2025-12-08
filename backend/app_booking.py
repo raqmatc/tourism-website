@@ -55,7 +55,8 @@ class BookingAPI:
             if 'data' in data:
                 for item in data['data']:
                     locations.append({
-                        'dest_id': item.get('id', ''),
+                        'dest_id': item.get('id', ''),  # هذا هو Base64 encoded locationId
+                        'dest_id_simple': item.get('dest_id', ''),  # هذا رقم بسيط
                         'dest_type': item.get('dest_type', ''),
                         'name': item.get('name', ''),
                         'city_name': item.get('city_name', ''),
@@ -110,46 +111,45 @@ class BookingAPI:
             
             # معالجة البيانات
             hotels = []
-            if 'data' in data and 'result' in data['data']:
-                for hotel in data['data']['result']:
+            if 'data' in data and isinstance(data['data'], list):
+                for hotel in data['data']:
                     try:
                         # معلومات أساسية
-                        hotel_id = hotel.get('hotel_id', '')
-                        property_data = hotel.get('property', {})
+                        hotel_id = hotel.get('id', '')
                         
                         # الاسم
-                        hotel_name = property_data.get('name', hotel.get('hotel_name', 'فندق'))
+                        hotel_name = hotel.get('name', 'فندق')
                         
                         # الصور
                         images = []
-                        if 'photoUrls' in property_data:
-                            images = property_data['photoUrls']
-                        elif 'max_photo_url' in hotel:
-                            images = [hotel['max_photo_url']]
+                        if 'photoUrls' in hotel:
+                            images = hotel['photoUrls']
+                        elif 'mainPhotoUrl' in hotel:
+                            images = [hotel['mainPhotoUrl']]
                         
                         # السعر
-                        price_breakdown = hotel.get('composite_price_breakdown', {})
-                        gross_amount = price_breakdown.get('gross_amount_per_night', {})
-                        price = gross_amount.get('value', 0)
-                        currency = gross_amount.get('currency', currency_code)
+                        price_breakdown = hotel.get('priceBreakdown', {})
+                        gross_price = price_breakdown.get('grossPrice', {})
+                        price = gross_price.get('value', 0)
+                        currency = gross_price.get('currency', currency_code)
                         
                         # التقييم
-                        review_score = hotel.get('review_score', 0)
-                        review_count = hotel.get('review_nr', 0)
-                        review_word = hotel.get('review_score_word', '')
+                        review_score = hotel.get('reviewScore', 0)
+                        review_count = hotel.get('reviewCount', 0)
+                        review_word = hotel.get('reviewScoreWord', '')
                         
                         # الموقع
                         city = hotel.get('city', '')
                         address = hotel.get('address', '')
-                        distance = hotel.get('distance', '')
+                        distance = hotel.get('distanceFromCenter', '')
                         
                         # المرافق
                         amenities = []
-                        if 'property' in hotel and 'facilities' in hotel['property']:
-                            amenities = [f.get('name', '') for f in hotel['property']['facilities'][:10]]
+                        if 'facilities' in hotel:
+                            amenities = hotel['facilities'][:10]
                         
                         # النجوم
-                        stars = hotel.get('class', 0)
+                        stars = hotel.get('propertyClass', 0)
                         
                         # بناء كائن الفندق
                         processed_hotel = {
@@ -169,7 +169,7 @@ class BookingAPI:
                             'latitude': hotel.get('latitude'),
                             'longitude': hotel.get('longitude'),
                             'is_free_cancellable': hotel.get('is_free_cancellable', 0),
-                            'booking_url': f"https://www.booking.com/hotel/{hotel.get('cc1', 'ae')}/{hotel_id}.html"
+                            'booking_url': hotel.get('url', f"https://www.booking.com/hotel/ae/{hotel_id}.html")
                         }
                         
                         hotels.append(processed_hotel)
