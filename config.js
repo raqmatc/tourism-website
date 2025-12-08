@@ -90,7 +90,7 @@ async function searchLocations(query) {
 
 // البحث عن الفنادق
 async function searchHotels(destId, checkin, checkout, adults = 2, rooms = 1) {
-    return await apiPost('/api/hotels/search', {
+    return await apiGet('/api/hotels/search', {
         dest_id: destId,
         checkin,
         checkout,
