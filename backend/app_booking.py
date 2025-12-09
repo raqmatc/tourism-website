@@ -111,6 +111,27 @@ class BookingAPI:
             
             # معالجة البيانات
             hotels = []
+            logger.info(f"🔍 هيكل الاستجابة: keys={list(data.keys())}")
+            
+            if 'data' in data:
+                logger.info(f"🔍 نوع data: {type(data['data'])}")
+                if isinstance(data['data'], list):
+                    logger.info(f"🔍 عدد العناصر في data: {len(data['data'])}")
+                else:
+                    logger.warning(f"⚠️ data ليس list: {type(data['data'])}")
+                    return {
+                        'success': False,
+                        'error': f"data is {type(data['data'])}, not list",
+                        'data': []
+                    }
+            else:
+                logger.warning("⚠️ لا يوجد 'data' في الاستجابة")
+                return {
+                    'success': False,
+                    'error': "No 'data' in response",
+                    'data': []
+                }
+            
             if 'data' in data and isinstance(data['data'], list):
                 for hotel in data['data']:
                     try:
