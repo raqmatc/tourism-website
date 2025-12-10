@@ -708,8 +708,9 @@
                 countryName: selectedCity.country
             }));
             
-            // الانتقال مباشرة لصفحة النتائج المحسّنة
-            window.location.href = `results-enhanced.html?dest_id=${selectedCity.id || selectedCity.dest_id}&checkin=${searchData.checkInDate}&checkout=${searchData.checkOutDate}&guests=${searchData.adults}`;
+            // الانتقال لصفحة النتائج الجديدة مع TravelPayouts
+            const destination = selectedCity.name || destinationInput.value;
+            window.location.href = `results.html?destination=${encodeURIComponent(destination)}&checkin=${searchData.checkInDate}&checkout=${searchData.checkOutDate}&adults=${searchData.adults}`;
         });
         
         // تهيئة الصفحة

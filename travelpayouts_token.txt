@@ -1,0 +1,7 @@
+TravelPayouts API Token:
+0c99883bf40eab32e39bcf9ddd7dc518
+
+تم الحصول على هذا Token من:
+https://app.travelpayouts.com/profile/api-token
+
+تاريخ الحصول: 2025-12-10
