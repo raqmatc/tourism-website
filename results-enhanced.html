@@ -516,7 +516,9 @@
         let filteredHotels = [];
         let currentPage = 1;
         let isLoading = false;
-        let hasMorePages = true;حويل
+        let hasMorePages = true;
+        
+        // تحويل city code إلى dest_id إذا لزم الأمر
         if (!destId && cityCode && API_CONFIG.CITY_IDS[cityCode]) {
             destId = API_CONFIG.CITY_IDS[cityCode];
         }
@@ -560,9 +562,6 @@
             'YTO': { name: 'تورنتو', country: 'كندا' },
             'YVR': { name: 'فانكوفر', country: 'كندا' }
         };
-
-        let allHotels = [];
-        let filteredHotels = [];
 
         // عرض ملخص البحث
         function displaySearchSummary() {
@@ -665,6 +664,11 @@
                     
                     // تحديث عداد النتائج
                     document.getElementById('resultsCount').textContent = `وجدنا ${allHotels.length} فندق متاح`;
+                    
+                    // عرض ملاحظة التواريخ إذا وجدت
+                    if (response.date_note && pageNumber === 1) {
+                        showDateNote(response.date_note);
+                    }
                     
                     // التحقق من وجود صفحات أخرى
                     if (response.data.length < 20) {
@@ -846,6 +850,37 @@
             }
             
             displayHotels(filteredHotels);
+        }
+
+        // عرض ملاحظة التواريخ
+        function showDateNote(dateNote) {
+            const noteDiv = document.createElement('div');
+            noteDiv.style.cssText = `
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 15px 20px;
+                margin: 20px 0;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                animation: slideIn 0.5s ease-out;
+            `;
+            
+            noteDiv.innerHTML = `
+                <i class="fas fa-info-circle" style="font-size: 1.5rem;"></i>
+                <div style="flex: 1;">
+                    <div style="font-weight: 600; margin-bottom: 5px;">ملاحظة هامة</div>
+                    <div style="font-size: 0.9rem; opacity: 0.95;">${dateNote.message}</div>
+                </div>
+            `;
+            
+            // إضافة الملاحظة بعد عداد النتائج
+            const resultsCount = document.getElementById('resultsCount');
+            if (resultsCount && resultsCount.parentNode) {
+                resultsCount.parentNode.insertBefore(noteDiv, resultsCount.nextSibling);
+            }
         }
 
         // عرض تفاصيل الفندق

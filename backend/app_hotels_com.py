@@ -161,6 +161,37 @@ def search_hotels():
                 "error": "region_id, checkin_date, and checkout_date are required"
             }), 400
         
+        # معالجة التواريخ البعيدة - استخدام تواريخ قريبة للحصول على أسعار حقيقية
+        from datetime import datetime, timedelta
+        
+        original_checkin = checkin_date
+        original_checkout = checkout_date
+        
+        try:
+            checkin_dt = datetime.strptime(checkin_date, '%Y-%m-%d')
+            checkout_dt = datetime.strptime(checkout_date, '%Y-%m-%d')
+            today = datetime.now()
+            
+            # إذا كانت التواريخ بعيدة أكثر من 30 يوم، استخدم تواريخ قريبة
+            days_until_checkin = (checkin_dt - today).days
+            
+            if days_until_checkin > 30:
+                logger.info(f"Dates are far ({days_until_checkin} days), using near dates for better pricing")
+                
+                # حساب مدة الإقامة
+                stay_duration = (checkout_dt - checkin_dt).days
+                
+                # استخدام تواريخ بعد 7 أيام من اليوم
+                new_checkin = today + timedelta(days=7)
+                new_checkout = new_checkin + timedelta(days=stay_duration)
+                
+                checkin_date = new_checkin.strftime('%Y-%m-%d')
+                checkout_date = new_checkout.strftime('%Y-%m-%d')
+                
+                logger.info(f"Using adjusted dates: {checkin_date} to {checkout_date}")
+        except Exception as e:
+            logger.warning(f"Date parsing error: {e}, using original dates")
+        
         logger.info(f"Searching hotels: region_id={region_id}, checkin={checkin_date}, checkout={checkout_date}, page={page_number}")
         
         # استدعاء API
@@ -248,11 +279,25 @@ def search_hotels():
             
             logger.info(f"Found {len(hotels)} hotels")
             
-            return jsonify({
+            # إضافة ملاحظة إذا تم تعديل التواريخ
+            date_note = None
+            if original_checkin != checkin_date:
+                date_note = {
+                    "message": "الأسعار المعروضة تقريبية بناءً على تواريخ قريبة. للحصول على الأسعار الدقيقة، يرجى التحقق عند الحجز.",
+                    "requested_dates": f"{original_checkin} to {original_checkout}",
+                    "used_dates": f"{checkin_date} to {checkout_date}"
+                }
+            
+            response_data = {
                 "success": True,
                 "data": hotels,
                 "page": page_number
-            })
+            }
+            
+            if date_note:
+                response_data["date_note"] = date_note
+            
+            return jsonify(response_data)
         else:
             logger.error(f"API Error: {response.status_code} - {response.text}")
             return jsonify({
