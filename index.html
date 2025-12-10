@@ -572,28 +572,19 @@
             }, 3000);
         }
         
-        // البحث عن المدن من TravelPayouts API
-        async function searchCities(query) {
+        // البحث عن المدن باستخدام Backend
+        async function searchCitiesLocal(query) {
             if (!query || query.length < 2) {
                 suggestionsDiv.style.display = 'none';
                 return;
             }
             
             try {
-                // استدعاء TravelPayouts API للبحث عن المدن
-                const url = `https://engine.hotellook.com/api/v2/lookup.json?query=${encodeURIComponent(query)}&lang=ar&lookFor=city&limit=10&token=0c99883bf40eab32e39bcf9ddd7dc518`;
+                // استدعاء دالة searchCities من config.js
+                const cities = await searchCities(query);
                 
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                if (data.results && data.results.locations && data.results.locations.length > 0) {
-                    const locations = data.results.locations.map(loc => ({
-                        name: loc.fullName || loc.name,
-                        country: loc.countryName || '',
-                        id: loc.id
-                    }));
-                    
-                    displaySuggestions(locations);
+                if (cities && cities.length > 0) {
+                    displaySuggestions(cities);
                 } else {
                     suggestionsDiv.style.display = 'none';
                 }
@@ -657,7 +648,7 @@
             
             // بحث جديد بعد تأخير قصير
             searchTimeout = setTimeout(() => {
-                searchCities(query);
+                searchCitiesLocal(query);
             }, 500);
         });
         
