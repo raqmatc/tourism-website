@@ -523,22 +523,12 @@
         </section>
     </div>
 
-    <!-- تضمين ملف config.js -->
-    <script src="config.js?v=2.0"></script>
-
     <script>
         // عناصر DOM
         const destinationInput = document.getElementById('destination');
-        const suggestionsDiv = document.getElementById('suggestions');
         const searchForm = document.getElementById('searchForm');
-        const searchBtn = document.getElementById('searchBtn');
-        const loading = document.getElementById('loading');
         const errorMessage = document.getElementById('errorMessage');
         const successMessage = document.getElementById('successMessage');
-        
-        // متغيرات عامة
-        let selectedCity = null;
-        let searchTimeout = null;
         
         // تعيين التواريخ الافتراضية
         function setDefaultDates() {
@@ -572,115 +562,27 @@
             }, 3000);
         }
         
-        // البحث عن المدن باستخدام Backend
-        async function searchCitiesLocal(query) {
-            if (!query || query.length < 2) {
-                suggestionsDiv.style.display = 'none';
-                return;
-            }
-            
-            try {
-                // استدعاء دالة searchCities من config.js
-                const cities = await searchCities(query);
-                
-                if (cities && cities.length > 0) {
-                    displaySuggestions(cities);
-                } else {
-                    suggestionsDiv.style.display = 'none';
-                }
-            } catch (error) {
-                console.error('خطأ في البحث عن المدن:', error);
-                suggestionsDiv.style.display = 'none';
-            }
-        }
-        
-        // عرض اقتراحات المدن
-        function displaySuggestions(cities) {
-            if (!cities || cities.length === 0) {
-                suggestionsDiv.style.display = 'none';
-                return;
-            }
-            
-            suggestionsDiv.innerHTML = '';
-            
-            cities.forEach(city => {
-                const suggestionItem = document.createElement('div');
-                suggestionItem.className = 'suggestion-item';
-                suggestionItem.innerHTML = `
-                    <div class="city-name">${city.name}</div>
-                    <div class="country-name">${city.country}</div>
-                `;
-                
-                suggestionItem.addEventListener('click', () => {
-                    selectCity(city);
-                });
-                
-                suggestionsDiv.appendChild(suggestionItem);
-            });
-            
-            suggestionsDiv.style.display = 'block';
-        }
-        
-        // اختيار مدينة
-        function selectCity(city) {
-            selectedCity = city;
-            destinationInput.value = city.country ? `${city.name}, ${city.country}` : city.name;
-            destinationInput.dataset.destId = city.id;
-            suggestionsDiv.style.display = 'none';
-            showSuccess(`تم اختيار ${city.name} بنجاح!`);
-        }
 
-        
-        // معالج البحث في المدن
-        destinationInput.addEventListener('input', (e) => {
-            const query = e.target.value.trim();
-            
-            // إلغاء البحث السابق
-            if (searchTimeout) {
-                clearTimeout(searchTimeout);
-            }
-            
-            // إعادة تعيين المدينة المختارة إذا تغير النص
-            if (selectedCity && !query.includes(selectedCity.name)) {
-                selectedCity = null;
-                destinationInput.removeAttribute('data-dest-id');
-            }
-            
-            // بحث جديد بعد تأخير قصير
-            searchTimeout = setTimeout(() => {
-                searchCitiesLocal(query);
-            }, 500);
-        });
-        
-        // إخفاء الاقتراحات عند النقر خارجها
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.destination-input')) {
-                suggestionsDiv.style.display = 'none';
-            }
-        });
         
         // معالج إرسال النموذج
         searchForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // التحقق من اختيار المدينة
-            if (!selectedCity) {
-                showError('يرجى اختيار وجهة من القائمة المنسدلة');
+            // جمع بيانات البحث
+            const destination = destinationInput.value.trim();
+            const checkin = document.getElementById('checkin').value;
+            const checkout = document.getElementById('checkout').value;
+            const guests = document.getElementById('guests').value;
+            
+            // التحقق من إدخال الوجهة
+            if (!destination) {
+                showError('يرجى إدخال الوجهة');
                 return;
             }
             
-            // جمع بيانات البحث
-            const searchData = {
-                destId: selectedCity.id || selectedCity.dest_id,
-                checkInDate: document.getElementById('checkin').value,
-                checkOutDate: document.getElementById('checkout').value,
-                adults: parseInt(document.getElementById('guests').value),
-                rooms: 1
-            };
-            
             // التحقق من صحة التواريخ
-            const checkIn = new Date(searchData.checkInDate);
-            const checkOut = new Date(searchData.checkOutDate);
+            const checkIn = new Date(checkin);
+            const checkOut = new Date(checkout);
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             
@@ -694,16 +596,21 @@
                 return;
             }
             
-            // حفظ معايير البحث في localStorage
-            localStorage.setItem('searchParams', JSON.stringify({
-                ...searchData,
-                cityName: selectedCity.name,
-                countryName: selectedCity.country
-            }));
+            // إنشاء رابط Booking.com
+            const params = new URLSearchParams({
+                ss: destination,
+                checkin: checkin,
+                checkout: checkout,
+                group_adults: guests,
+                no_rooms: 1,
+                selected_currency: 'SAR'
+            });
             
-            // الانتقال لصفحة النتائج الجديدة مع TravelPayouts
-            const destination = selectedCity.name || destinationInput.value;
-            window.location.href = `results.html?destination=${encodeURIComponent(destination)}&checkin=${searchData.checkInDate}&checkout=${searchData.checkOutDate}&adults=${searchData.adults}`;
+            // فتح Booking.com في نافذة جديدة
+            const bookingUrl = `https://www.booking.com/searchresults.html?${params.toString()}`;
+            window.open(bookingUrl, '_blank');
+            
+            showSuccess('تم فتح Booking.com في نافذة جديدة!');
         });
         
         // تهيئة الصفحة
