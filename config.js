@@ -2,7 +2,7 @@
 const API_CONFIG = {
     // رابط Backend - سيتم تحديثه بعد النشر على Render
     // BACKEND_URL: 'http://localhost:5000',  // للتطوير المحلي
-    BACKEND_URL: 'https://tourism-website-tyis.onrender.com',  // للإنتاج
+    BACKEND_URL: 'https://tourism-backend-hotels-com.onrender.com',  // للإنتاج
     
     // إعدادات الطلبات
     TIMEOUT: 30000,  // 30 ثانية
