@@ -24,29 +24,36 @@
             width: 100vw;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             background: #000;
             z-index: 9999;
         }
 
-        /* حاوية التصميم */
-        .design-wrapper {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: moveUp 3.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        /* الطائرة */
+        .plane-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: planeMove 4s ease-in-out forwards;
         }
 
-        /* الطائرة */
         .plane-image {
             width: 400px;
             height: auto;
-            margin-bottom: 60px;
         }
 
         /* نص PAYGO */
+        .paygo-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: textMove 4s ease-in-out forwards;
+        }
+
         .paygo-text {
             font-size: 120px;
             font-weight: 900;
@@ -60,22 +67,49 @@
             font-family: 'Arial Black', sans-serif;
         }
 
-        /* أنيميشن الحركة من الأسفل للأعلى */
-        @keyframes moveUp {
+        /* أنيميشن الطائرة */
+        @keyframes planeMove {
             0% {
-                transform: translateY(120vh);
+                transform: translate(-50%, 150vh);
                 opacity: 0;
             }
-            20% {
+            30% {
                 opacity: 1;
             }
-            80% {
-                transform: translateY(0);
+            50% {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+            70% {
+                transform: translate(-50%, -50%);
                 opacity: 1;
             }
             100% {
-                transform: translateY(0);
+                transform: translate(-50%, -150vh);
+                opacity: 0;
+            }
+        }
+
+        /* أنيميشن النص */
+        @keyframes textMove {
+            0% {
+                transform: translate(-50%, 150vh);
+                opacity: 0;
+            }
+            30% {
                 opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, 50%);
+                opacity: 1;
+            }
+            70% {
+                transform: translate(-50%, 50%);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, 200vh);
+                opacity: 0;
             }
         }
 
@@ -88,14 +122,13 @@
         }
 
         .splash-container.fade-out {
-            animation: fadeOut 1s ease-out forwards;
+            animation: fadeOut 0.5s ease-out forwards;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .plane-image {
                 width: 300px;
-                margin-bottom: 40px;
             }
 
             .paygo-text {
@@ -107,7 +140,6 @@
         @media (max-width: 480px) {
             .plane-image {
                 width: 220px;
-                margin-bottom: 30px;
             }
 
             .paygo-text {
@@ -119,25 +151,27 @@
 </head>
 <body>
     <div class="splash-container" id="splashScreen">
-        <div class="design-wrapper">
-            <!-- الطائرة من الصورة الأصلية -->
+        <!-- الطائرة -->
+        <div class="plane-container">
             <img src="plane-travel.png" alt="Plane" class="plane-image">
-            
-            <!-- نص PAYGO -->
+        </div>
+
+        <!-- نص PAYGO -->
+        <div class="paygo-container">
             <div class="paygo-text">PAYGO</div>
         </div>
     </div>
 
     <script>
-        // الانتقال للصفحة الرئيسية بعد 5 ثواني
+        // الانتقال للصفحة الرئيسية بعد 4.5 ثانية
         setTimeout(() => {
             const splashScreen = document.getElementById('splashScreen');
             splashScreen.classList.add('fade-out');
             
             setTimeout(() => {
                 window.location.href = 'main.html';
-            }, 1000);
-        }, 5000);
+            }, 500);
+        }, 4500);
     </script>
 </body>
 </html>
