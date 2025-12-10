@@ -585,10 +585,10 @@
                 
                 if (response.success && response.data && response.data.length > 0) {
                     const locations = response.data.map(loc => ({
-                        name: loc.name || loc.dest_id,
+                        name: loc.name || loc.id,
                         country: loc.country || '',
-                        dest_id: loc.dest_id,
-                        dest_type: loc.dest_type || 'city'
+                        id: loc.id,
+                        dest_type: loc.type || 'city'
                     }));
                     
                     displaySuggestions(locations.slice(0, 10));
@@ -632,7 +632,7 @@
         function selectCity(city) {
             selectedCity = city;
             destinationInput.value = city.country ? `${city.name}, ${city.country}` : city.name;
-            destinationInput.dataset.destId = city.dest_id;
+            destinationInput.dataset.destId = city.id;
             suggestionsDiv.style.display = 'none';
             showSuccess(`تم اختيار ${city.name} بنجاح!`);
         }
