@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتائج البحث - Paygo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .search-info {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .loading {
+            background: white;
+            padding: 60px 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hotels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .hotel-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .hotel-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .hotel-content {
+            padding: 20px;
+        }
+
+        .hotel-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .hotel-location {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .hotel-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 18px;
+        }
+
+        .review-score {
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .hotel-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .price-label {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .view-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .view-btn:hover {
+            background: #5568d3;
+        }
+
+        .error {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .error-icon {
+            font-size: 60px;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .retry-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .hotels-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Paygo.com ✈️</div>
+            <div class="search-info" id="searchInfo">جاري البحث عن الفنادق...</div>
+        </div>
+
+        <div id="loadingSection" class="loading">
+            <div class="spinner"></div>
+            <h2>جاري البحث عن أفضل الفنادق...</h2>
+            <p>يرجى الانتظار، نبحث في مئات الفنادق لإيجاد أفضل العروض لك</p>
+        </div>
+
+        <div id="hotelsSection" class="hotels-grid" style="display: none;"></div>
+
+        <div id="errorSection" class="error" style="display: none;">
+            <div class="error-icon">⚠️</div>
+            <div class="error-message" id="errorMessage"></div>
+            <button class="retry-btn" onclick="location.reload()">إعادة المحاولة</button>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        // الحصول على معلومات البحث من URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const destination = urlParams.get('destination');
+        const destId = urlParams.get('dest_id');
+        const checkin = urlParams.get('checkin');
+        const checkout = urlParams.get('checkout');
+        const adults = urlParams.get('adults') || 2;
+        const rooms = urlParams.get('rooms') || 1;
+
+        // تحديث معلومات البحث
+        document.getElementById('searchInfo').textContent = 
+            `البحث عن فنادق في ${destination} | ${checkin} - ${checkout} | ${adults} ضيف | ${rooms} غرفة`;
+
+        // البحث عن الفنادق
+        async function searchHotels() {
+            try {
+                const response = await fetch(`${API_CONFIG.BACKEND_URL}/api/hotels/search`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        dest_id: destId,
+                        checkin: checkin,
+                        checkout: checkout,
+                        adults: parseInt(adults),
+                        rooms: parseInt(rooms),
+                        currency: 'SAR'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('فشل في الاتصال بالخادم');
+                }
+
+                const data = await response.json();
+                
+                if (data.status === 'success' && data.hotels && data.hotels.length > 0) {
+                    displayHotels(data.hotels);
+                } else {
+                    showError('لم يتم العثور على فنادق في هذه المدينة للتواريخ المحددة. جرب تواريخ أخرى.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('حدث خطأ أثناء البحث عن الفنادق. يرجى المحاولة مرة أخرى.');
+            }
+        }
+
+        // عرض الفنادق
+        function displayHotels(hotels) {
+            document.getElementById('loadingSection').style.display = 'none';
+            document.getElementById('hotelsSection').style.display = 'grid';
+
+            const hotelsSection = document.getElementById('hotelsSection');
+            hotelsSection.innerHTML = '';
+
+            hotels.forEach(hotel => {
+                const card = createHotelCard(hotel);
+                hotelsSection.appendChild(card);
+            });
+        }
+
+        // إنشاء بطاقة فندق
+        function createHotelCard(hotel) {
+            const card = document.createElement('div');
+            card.className = 'hotel-card';
+            
+            const stars = '⭐'.repeat(Math.floor(hotel.class || 3));
+            const reviewScore = hotel.review_score || hotel.rating || 8.0;
+            const price = hotel.min_total_price || hotel.price || 500;
+            
+            card.innerHTML = `
+                <img src="${hotel.main_photo_url || hotel.photo || 'https://via.placeholder.com/400x200?text=Hotel'}" 
+                     alt="${hotel.hotel_name || hotel.name}" 
+                     class="hotel-image"
+                     onerror="this.src='https://via.placeholder.com/400x200?text=Hotel+Image'">
+                <div class="hotel-content">
+                    <div class="hotel-name">${hotel.hotel_name || hotel.name}</div>
+                    <div class="hotel-location">📍 ${hotel.city || destination}</div>
+                    <div class="hotel-rating">
+                        <span class="stars">${stars}</span>
+                        <span class="review-score">${reviewScore.toFixed(1)}</span>
+                        <span style="color: #999; font-size: 12px;">(${hotel.review_nr || 0} مراجعة)</span>
+                    </div>
+                    <div class="hotel-price">
+                        <div>
+                            <div class="price">${price.toFixed(0)} ر.س</div>
+                            <div class="price-label">السعر الإجمالي</div>
+                        </div>
+                        <button class="view-btn" onclick="viewHotel('${hotel.hotel_id}')">
+                            عرض التفاصيل
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // عرض تفاصيل الفندق
+        function viewHotel(hotelId) {
+            window.location.href = `hotel-details.html?hotel_id=${hotelId}&checkin=${checkin}&checkout=${checkout}&adults=${adults}&rooms=${rooms}`;
+        }
+
+        // عرض الخطأ
+        function showError(message) {
+            document.getElementById('loadingSection').style.display = 'none';
+            document.getElementById('errorSection').style.display = 'block';
+            document.getElementById('errorMessage').textContent = message;
+        }
+
+        // بدء البحث عند تحميل الصفحة
+        if (destId && checkin && checkout) {
+            searchHotels();
+        } else {
+            showError('معلومات البحث غير مكتملة. يرجى العودة والبحث مرة أخرى.');
+        }
+    </script>
+</body>
+</html>
