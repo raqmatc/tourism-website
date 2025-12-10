@@ -502,16 +502,20 @@
     <!-- تضمين ملف config.js -->
     <script src="config.js?v=2.0"></script>
 
-    <script>
-        // الحصول على معاملات البحث من URL
+    <        // الحصول على معاملات البحث من URL
         const urlParams = new URLSearchParams(window.location.search);
-        let destId = urlParams.get('dest_id');
+        const destId = urlParams.get('dest_id');
         const cityCode = urlParams.get('city');
         const checkin = urlParams.get('checkin');
         const checkout = urlParams.get('checkout');
         const guests = parseInt(urlParams.get('guests')) || 2;
-        
-        // إذا لم يتم توفير dest_id لكن تم توفير city code، استخدم التحويل
+
+        // متغيرات عامة
+        let allHotels = [];
+        let filteredHotels = [];
+        let currentPage = 1;
+        let isLoading = false;
+        let hasMorePages = true;حويل
         if (!destId && cityCode && API_CONFIG.CITY_IDS[cityCode]) {
             destId = API_CONFIG.CITY_IDS[cityCode];
         }
@@ -591,13 +595,20 @@
         }
 
         // تحميل الفنادق من Backend
-        async function loadHotels() {
+        async function loadHotels(pageNumber = 1, append = false) {
+            if (isLoading || (!hasMorePages && pageNumber > 1)) {
+                console.log('⚠️ تخطي التحميل: isLoading=', isLoading, 'hasMorePages=', hasMorePages);
+                return;
+            }
+            
+            isLoading = true;
+            
             try {
-                console.log('🔍 بدء البحث عن الفنادق...');
-                console.log('معاملات البحث:', { destId, checkin, checkout, guests });
+                console.log(`🔍 بدء البحث عن الفنادق - الصفحة ${pageNumber}...`);
+                console.log('معاملات البحث:', { destId, checkin, checkout, guests, pageNumber });
 
                 // استدعاء API من config.js
-                const response = await searchHotels(destId, checkin, checkout, guests, 1);
+                const response = await searchHotels(destId, checkin, checkout, guests, pageNumber);
                 
                 console.log('✅ استجابة API:', response);
 
@@ -618,19 +629,66 @@
                         city: 'دبي'
                     }));
 
-                    filteredHotels = [...allHotels];
-                    displayHotels(filteredHotels);
+                    // إضافة أو استبدال الفنادق
+                    if (append) {
+                        const newHotels = response.data.map(hotel => ({
+                            id: hotel.id,
+                            name: hotel.name,
+                            location: hotel.location || hotel.address || 'دبي',
+                            rating: Math.round(hotel.stars || hotel.rating / 2 || 4),
+                            reviewScore: hotel.rating || 8.0,
+                            reviewCount: hotel.reviews || 100,
+                            image: hotel.images && hotel.images.length > 0 ? hotel.images[0].replace('square60', 'max1024x768') : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+                            amenities: hotel.amenities || [],
+                            price: Math.round(hotel.price || 500),
+                            currency: hotel.currency || 'AED',
+                            url: hotel.booking_url || '#',
+                            distance: hotel.distance_from_center || 'غير متوفر',
+                            city: 'دبي'
+                        }));
+                        allHotels = [...allHotels, ...newHotels];
+                        filteredHotels = [...filteredHotels, ...newHotels];
+                        
+                        // إضافة الفنادق الجديدة فقط
+                        newHotels.forEach(hotel => {
+                            const card = createHotelCard(hotel);
+                            document.getElementById('hotelsGrid').appendChild(card);
+                        });
+                    } else {
+                        filteredHotels = [...allHotels];
+                        displayHotels(filteredHotels);
+                    }
                     
                     document.getElementById('loading').style.display = 'none';
                     document.getElementById('hotelsGrid').style.display = 'grid';
                     
+                    // تحديث عداد النتائج
+                    document.getElementById('resultsCount').textContent = `وجدنا ${allHotels.length} فندق متاح`;
+                    
+                    // التحقق من وجود صفحات أخرى
+                    if (response.data.length < 20) {
+                        hasMorePages = false;
+                        console.log('⚠️ لا توجد صفحات أخرى');
+                    } else {
+                        currentPage = pageNumber;
+                    }
+                    
                     console.log(`✅ تم تحميل ${allHotels.length} فندق بنجاح`);
                 } else {
-                    throw new Error(response.message || 'لم يتم العثور على فنادق');
+                    if (pageNumber === 1) {
+                        throw new Error(response.message || 'لم يتم العثور على فنادق');
+                    } else {
+                        hasMorePages = false;
+                        console.log('⚠️ لا توجد صفحات أخرى');
+                    }
                 }
             } catch (error) {
                 console.error('❌ خطأ في تحميل الفنادق:', error);
-                showError('عذراً، حدث خطأ أثناء البحث عن الفنادق. يرجى المحاولة مرة أخرى.');
+                if (pageNumber === 1) {
+                    showError('عذراً، حدث خطأ أثناء البحث عن الفنادق. يرجى المحاولة مرة أخرى.');
+                }
+            } finally {
+                isLoading = false;
             }
         }
 
@@ -798,10 +856,25 @@
             window.location.href = `hotel-details-enhanced.html?id=${hotel.id}`;
         }
 
+        // Infinite Scroll: تحميل المزيد عند الوصول لنهاية الصفحة
+        function handleScroll() {
+            const scrollPosition = window.innerHeight + window.scrollY;
+            const pageHeight = document.documentElement.scrollHeight;
+            
+            // إذا وصل المستخدم إلى نهاية الصفحة (مع هامش 200px)
+            if (scrollPosition >= pageHeight - 200 && !isLoading && hasMorePages) {
+                console.log('📥 الوصول لنهاية الصفحة - تحميل المزيد...');
+                loadHotels(currentPage + 1, true);
+            }
+        }
+        
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', () => {
             displaySearchSummary();
             loadHotels();
+            
+            // إضافة مستمع للتمرير
+            window.addEventListener('scroll', handleScroll);
         });
     </script>
 </body>

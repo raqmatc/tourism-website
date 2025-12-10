@@ -89,13 +89,14 @@ async function searchLocations(query) {
 }
 
 // البحث عن الفنادق
-async function searchHotels(destId, checkin, checkout, adults = 2, rooms = 1) {
+async function searchHotels(destId, checkin, checkout, adults = 2, rooms = 1, pageNumber = 1) {
     return await apiGet('/api/hotels/search', {
         dest_id: destId,
         checkin,
         checkout,
         adults,
         rooms,
+        page_number: pageNumber,
         currency: API_CONFIG.DEFAULT_CURRENCY
     });
 }
