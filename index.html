@@ -23,38 +23,29 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             background: #000;
             z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* الطائرة */
-        .plane-container {
+        /* الفيديو على كامل الشاشة */
+        .splash-video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: planeMove 4s ease-in-out forwards;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .plane-image {
-            width: 400px;
-            height: auto;
-        }
-
-        /* نص PAYGO */
-        .paygo-container {
+        /* نص PAYGO فوق الفيديو */
+        .paygo-overlay {
             position: absolute;
-            top: 50%;
+            bottom: 35%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            animation: textMove 4s ease-in-out forwards;
-        }
-
-        .paygo-text {
+            transform: translateX(-50%);
             font-size: 120px;
             font-weight: 900;
             letter-spacing: 25px;
@@ -65,113 +56,55 @@
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
             font-family: 'Arial Black', sans-serif;
+            z-index: 10;
         }
 
-        /* أنيميشن الطائرة */
-        @keyframes planeMove {
-            0% {
-                transform: translate(-50%, 150vh);
-                opacity: 0;
-            }
-            30% {
-                opacity: 1;
-            }
-            50% {
-                transform: translate(-50%, -50%);
-                opacity: 1;
-            }
-            70% {
-                transform: translate(-50%, -50%);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -150vh);
-                opacity: 0;
-            }
-        }
-
-        /* أنيميشن النص */
-        @keyframes textMove {
-            0% {
-                transform: translate(-50%, 150vh);
-                opacity: 0;
-            }
-            30% {
-                opacity: 1;
-            }
-            50% {
-                transform: translate(-50%, 50%);
-                opacity: 1;
-            }
-            70% {
-                transform: translate(-50%, 50%);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, 200vh);
-                opacity: 0;
-            }
-        }
-
-        /* أنيميشن التلاشي للخروج */
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-
-        .splash-container.fade-out {
-            animation: fadeOut 0.5s ease-out forwards;
+        /* إخفاء كلمة TRAVEL الأصلية */
+        .splash-video {
+            filter: brightness(1);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .plane-image {
-                width: 300px;
-            }
-
-            .paygo-text {
+            .paygo-overlay {
                 font-size: 80px;
                 letter-spacing: 18px;
+                bottom: 30%;
             }
         }
 
         @media (max-width: 480px) {
-            .plane-image {
-                width: 220px;
-            }
-
-            .paygo-text {
+            .paygo-overlay {
                 font-size: 55px;
                 letter-spacing: 12px;
+                bottom: 28%;
             }
         }
     </style>
 </head>
 <body>
     <div class="splash-container" id="splashScreen">
-        <!-- الطائرة -->
-        <div class="plane-container">
-            <img src="plane-travel.png" alt="Plane" class="plane-image">
-        </div>
+        <!-- الفيديو -->
+        <video class="splash-video" autoplay muted playsinline id="splashVideo">
+            <source src="splash-video.mp4" type="video/mp4">
+        </video>
 
-        <!-- نص PAYGO -->
-        <div class="paygo-container">
-            <div class="paygo-text">PAYGO</div>
-        </div>
+        <!-- نص PAYGO فوق الفيديو -->
+        <div class="paygo-overlay">PAYGO</div>
     </div>
 
     <script>
-        // الانتقال للصفحة الرئيسية بعد 4.5 ثانية
+        const video = document.getElementById('splashVideo');
+        
+        // عند انتهاء الفيديو، الانتقال للصفحة الرئيسية
+        video.addEventListener('ended', () => {
+            window.location.href = 'main.html';
+        });
+
+        // أو بعد 5 ثواني كحد أقصى
         setTimeout(() => {
-            const splashScreen = document.getElementById('splashScreen');
-            splashScreen.classList.add('fade-out');
-            
-            setTimeout(() => {
-                window.location.href = 'main.html';
-            }, 500);
-        }, 4500);
+            window.location.href = 'main.html';
+        }, 5000);
     </script>
 </body>
 </html>
