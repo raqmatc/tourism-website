@@ -30,12 +30,34 @@
             z-index: 9999;
         }
 
-        /* الصورة الكاملة */
-        .splash-image {
-            max-width: 90vw;
-            max-height: 90vh;
-            object-fit: contain;
+        /* حاوية التصميم */
+        .design-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             animation: moveUp 3.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        /* الطائرة */
+        .plane-image {
+            width: 400px;
+            height: auto;
+            margin-bottom: 60px;
+        }
+
+        /* نص PAYGO */
+        .paygo-text {
+            font-size: 120px;
+            font-weight: 900;
+            letter-spacing: 25px;
+            color: transparent;
+            background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80') center/cover;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            font-family: 'Arial Black', sans-serif;
         }
 
         /* أنيميشن الحركة من الأسفل للأعلى */
@@ -71,23 +93,39 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .splash-image {
-                max-width: 85vw;
-                max-height: 85vh;
+            .plane-image {
+                width: 300px;
+                margin-bottom: 40px;
+            }
+
+            .paygo-text {
+                font-size: 80px;
+                letter-spacing: 18px;
             }
         }
 
         @media (max-width: 480px) {
-            .splash-image {
-                max-width: 80vw;
-                max-height: 80vh;
+            .plane-image {
+                width: 220px;
+                margin-bottom: 30px;
+            }
+
+            .paygo-text {
+                font-size: 55px;
+                letter-spacing: 12px;
             }
         }
     </style>
 </head>
 <body>
     <div class="splash-container" id="splashScreen">
-        <img src="splash-design.png" alt="PAYGO" class="splash-image">
+        <div class="design-wrapper">
+            <!-- الطائرة من الصورة الأصلية -->
+            <img src="plane-travel.png" alt="Plane" class="plane-image">
+            
+            <!-- نص PAYGO -->
+            <div class="paygo-text">PAYGO</div>
+        </div>
     </div>
 
     <script>
