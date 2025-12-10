@@ -603,19 +603,19 @@
 
                 if (response.success && response.data && response.data.length > 0) {
                     allHotels = response.data.map(hotel => ({
-                        id: hotel.hotel_id,
-                        name: hotel.hotel_name,
-                        location: hotel.address || hotel.city_name || cities[cityCode]?.name || cityCode,
-                        rating: Math.round(hotel.class || 4),
-                        reviewScore: hotel.review_score || 8.0,
-                        reviewCount: hotel.review_nr || 100,
-                        image: hotel.main_photo_url || hotel.max_photo_url || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
-                        amenities: parseAmenities(hotel.hotel_facilities || ''),
-                        price: Math.round(hotel.min_total_price || hotel.composite_price_breakdown?.gross_amount_per_night?.value || 500),
-                        currency: hotel.currency_code || 'SAR',
-                        url: hotel.url || '#',
-                        distance: hotel.distance || 'غير متوفر',
-                        city: hotel.city_name || cities[cityCode]?.name || cityCode
+                        id: hotel.id,
+                        name: hotel.name,
+                        location: hotel.location || hotel.address || 'دبي',
+                        rating: Math.round(hotel.stars || hotel.rating / 2 || 4),
+                        reviewScore: hotel.rating || 8.0,
+                        reviewCount: hotel.reviews || 100,
+                        image: hotel.images && hotel.images.length > 0 ? hotel.images[0].replace('square60', 'max1024x768') : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+                        amenities: hotel.amenities || [],
+                        price: Math.round(hotel.price || 500),
+                        currency: hotel.currency || 'AED',
+                        url: hotel.booking_url || '#',
+                        distance: hotel.distance_from_center || 'غير متوفر',
+                        city: 'دبي'
                     }));
 
                     filteredHotels = [...allHotels];
