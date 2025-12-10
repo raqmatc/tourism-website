@@ -678,7 +678,7 @@
             
             // جمع بيانات البحث
             const searchData = {
-                destId: selectedCity.dest_id,
+                destId: selectedCity.id || selectedCity.dest_id,
                 checkInDate: document.getElementById('checkin').value,
                 checkOutDate: document.getElementById('checkout').value,
                 adults: parseInt(document.getElementById('guests').value),
@@ -709,7 +709,7 @@
             }));
             
             // الانتقال مباشرة لصفحة النتائج المحسّنة
-            window.location.href = `results-enhanced.html?dest_id=${selectedCity.dest_id}&checkin=${searchData.checkInDate}&checkout=${searchData.checkOutDate}&guests=${searchData.adults}`;
+            window.location.href = `results-enhanced.html?dest_id=${selectedCity.id || selectedCity.dest_id}&checkin=${searchData.checkInDate}&checkout=${searchData.checkOutDate}&guests=${searchData.adults}`;
         });
         
         // تهيئة الصفحة
