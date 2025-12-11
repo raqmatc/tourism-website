@@ -47,87 +47,103 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Cities Slider Styles */
-        .cities-slider-section {
-            background: rgba(255, 255, 255, 0.95);
+        /* السلايدر الجديد */
+        .slider-section {
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 25px;
-            padding: 40px 20px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            padding: 50px 0;
             margin-bottom: 40px;
             overflow: hidden;
         }
 
         .slider-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            margin-bottom: 40px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: white;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .cities-slider-container {
+        .slider-container {
+            width: 100%;
             overflow: hidden;
             position: relative;
-            padding: 20px 0;
         }
 
-        .cities-slider {
+        .slider-wrapper {
             display: flex;
-            gap: 30px;
-            animation: scroll 50s linear infinite;
-            will-change: transform;
+            animation: slideRight 60s linear infinite;
+            width: fit-content;
         }
 
-        @keyframes scroll {
+        .slider-wrapper:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes slideRight {
             0% {
-                transform: translateX(0);
+                transform: translateX(-50%);
             }
             100% {
-                transform: translateX(calc(-380px * 10));
+                transform: translateX(0%);
             }
         }
 
-        .city-card {
-            flex: 0 0 350px;
-            background: white;
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        .card {
+            background: #FDB913;
+            border-radius: 40px;
+            width: 380px;
+            margin: 0 20px;
+            padding: 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
         }
 
-        .city-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
         }
 
-        .city-image {
+        .card-image {
             width: 100%;
-            height: 400px;
+            height: 420px;
             object-fit: cover;
+            border-radius: 40px 40px 0 0;
         }
 
-        .city-info {
-            padding: 25px;
-            background: linear-gradient(135deg, #FDB813 0%, #F59E0B 100%);
+        .card-content {
+            padding: 35px;
             text-align: center;
         }
 
-        .city-name {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1e3a8a;
+        .card-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #003D82;
             margin-bottom: 15px;
         }
 
-        .city-description {
-            font-size: 1rem;
-            color: #1e3a8a;
-            line-height: 1.6;
+        .card-subtitle {
+            font-size: 1.5rem;
+            color: #003D82;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .card-divider {
+            width: 80%;
+            height: 3px;
+            background: #003D82;
+            margin: 25px auto;
+        }
+
+        .card-description {
+            font-size: 1.15rem;
+            color: #003D82;
+            line-height: 1.7;
             font-weight: 500;
         }
 
@@ -177,82 +193,76 @@
             }
             
             .slider-title {
-                font-size: 1.8rem;
+                font-size: 2rem;
                 margin-bottom: 30px;
             }
             
-            .city-card {
-                flex: 0 0 280px;
+            .card {
+                width: 320px;
             }
             
-            .city-image {
-                height: 320px;
+            .card-image {
+                height: 350px;
             }
             
-            .city-name {
-                font-size: 1.5rem;
+            .card-content {
+                padding: 25px;
             }
             
-            .city-description {
-                font-size: 0.9rem;
+            .card-title {
+                font-size: 2rem;
+            }
+
+            .card-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .card-description {
+                font-size: 1rem;
             }
             
             .header {
-                flex-direction: column;
-                gap: 12px;
-                text-align: center;
+                height: 120px;
                 padding: 15px 20px;
-            }
-            
-            .logo {
-                font-size: 1.5rem;
             }
             
             .features {
                 grid-template-columns: 1fr;
                 gap: 20px;
-                margin-top: 30px;
-            }
-            
-            .feature-card {
-                padding: 25px;
-            }
-            
-            .feature-icon {
-                font-size: 2.5rem;
-                margin-bottom: 15px;
-            }
-            
-            .feature-title {
-                font-size: 1.2rem;
             }
         }
         
         @media (max-width: 480px) {
-            .cities-slider-section {
-                padding: 30px 15px;
-                border-radius: 20px;
+            .slider-section {
+                padding: 30px 0;
             }
             
-            .city-card {
-                flex: 0 0 250px;
+            .slider-title {
+                font-size: 1.6rem;
             }
             
-            .city-image {
-                height: 280px;
+            .card {
+                width: 280px;
             }
             
-            .city-info {
+            .card-image {
+                height: 300px;
+            }
+            
+            .card-content {
                 padding: 20px;
             }
             
-            .city-name {
-                font-size: 1.3rem;
-                margin-bottom: 10px;
+            .card-title {
+                font-size: 1.7rem;
+            }
+
+            .card-subtitle {
+                font-size: 1.1rem;
             }
             
-            .city-description {
-                font-size: 0.85rem;
+            .card-description {
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -263,178 +273,219 @@
             <img src="paygo-logo.png" alt="PAYGO" style="max-width: 100%; height: 100%; object-fit: contain;">
         </header>
 
-        <section class="cities-slider-section">
-            <h2 class="slider-title">اكتشف أجمل المدن السياحية حول العالم</h2>
-            <div class="cities-slider-container">
-                <div class="cities-slider">
-                    <!-- Dubai -->
-                    <div class="city-card">
-                        <img src="assets/cities/dubai.jpg" alt="دبي" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">دبي</h3>
-                            <p class="city-description">مدينة المستقبل والفخامة، حيث ناطحات السحاب الشاهقة والمراكز التجارية العالمية والشواطئ الذهبية تلتقي مع التراث العربي الأصيل</p>
+        <section class="slider-section">
+            <h2 class="slider-title">وجهاتنا السياحية المميزة حول العالم</h2>
+            
+            <div class="slider-container">
+                <div class="slider-wrapper">
+                    <!-- البطاقة 1 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1513581166391-887a96ddeafd?w=800" alt="سانتوريني" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">سانتوريني</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جزيرة يونانية ساحرة بمبانيها البيضاء والزرقاء، شواطئ رائعة وغروب شمس خلاب على بحر إيجه</p>
                         </div>
                     </div>
 
-                    <!-- Paris -->
-                    <div class="city-card">
-                        <img src="assets/cities/paris.jpg" alt="باريس" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">باريس</h3>
-                            <p class="city-description">عاصمة الرومانسية والفن، موطن برج إيفل ومتحف اللوفر، حيث تنتشر المقاهي الساحرة والمعالم التاريخية في كل زاوية</p>
+                    <!-- البطاقة 2 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800" alt="دبي" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">دبي</h3>
+                            <p class="card-subtitle">4 أيام و 3 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة المستقبل بناطحات سحابها الشاهقة، تسوق فاخر ومغامرات صحراوية مثيرة</p>
                         </div>
                     </div>
 
-                    <!-- London -->
-                    <div class="city-card">
-                        <img src="assets/cities/london.jpg" alt="لندن" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">لندن</h3>
-                            <p class="city-description">عاصمة التاريخ والثقافة، تجمع بين العراقة البريطانية والحداثة العصرية، من قصر باكنغهام إلى عين لندن الشهيرة</p>
+                    <!-- البطاقة 3 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800" alt="بالي" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">بالي</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جنة استوائية بشواطئها الذهبية، معابد تاريخية وطبيعة خضراء ساحرة تأسر القلوب</p>
                         </div>
                     </div>
 
-                    <!-- New York -->
-                    <div class="city-card">
-                        <img src="assets/cities/newyork.jpg" alt="نيويورك" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">نيويورك</h3>
-                            <p class="city-description">المدينة التي لا تنام، قلب العالم النابض بالحياة والطاقة، موطن تمثال الحرية وتايمز سكوير والمتاحف العالمية</p>
+                    <!-- البطاقة 4 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800" alt="باريس" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">باريس</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة الأنوار والرومانسية، برج إيفل، متاحف عالمية وثقافة فرنسية أصيلة</p>
                         </div>
                     </div>
 
-                    <!-- Tokyo -->
-                    <div class="city-card">
-                        <img src="assets/cities/tokyo.jpg" alt="طوكيو" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">طوكيو</h3>
-                            <p class="city-description">عاصمة التكنولوجيا والتقاليد اليابانية، حيث المعابد القديمة تتجاور مع ناطحات السحاب الحديثة والأحياء المضيئة بالنيون</p>
+                    <!-- البطاقة 5 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=800" alt="سويسرا" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">سويسرا</h3>
+                            <p class="card-subtitle">7 أيام و 6 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جبال الألب الساحرة، بحيرات صافية وطبيعة خلابة تخطف الأنفاس على مدار السنة</p>
                         </div>
                     </div>
 
-                    <!-- Rome -->
-                    <div class="city-card">
-                        <img src="assets/cities/rome.jpg" alt="روما" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">روما</h3>
-                            <p class="city-description">المدينة الخالدة، متحف مفتوح يحكي قصة الحضارة الرومانية العظيمة من الكولوسيوم إلى نافورة تريفي الساحرة</p>
+                    <!-- البطاقة 6 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800" alt="المالديف" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">المالديف</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جزر استوائية فاخرة، مياه فيروزية صافية ومنتجعات على الماء في أجواء استثنائية</p>
                         </div>
                     </div>
 
-                    <!-- Barcelona -->
-                    <div class="city-card">
-                        <img src="assets/cities/barcelona.jpg" alt="برشلونة" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">برشلونة</h3>
-                            <p class="city-description">جوهرة البحر المتوسط، مدينة غاودي الفنية حيث العمارة الفريدة والشواطئ الرائعة والحياة الليلية النابضة بالحيوية</p>
+                    <!-- البطاقة 7 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800" alt="طوكيو" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">طوكيو</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">عاصمة اليابان النابضة، تقنية متقدمة، ثقافة يابانية عريقة ومأكولات شهية رائعة</p>
                         </div>
                     </div>
 
-                    <!-- Istanbul -->
-                    <div class="city-card">
-                        <img src="assets/cities/istanbul.jpg" alt="إسطنبول" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">إسطنبول</h3>
-                            <p class="city-description">جسر بين الشرق والغرب، مدينة المآذن والقصور العثمانية، حيث يلتقي البوسفور بالتاريخ العريق والأسواق التقليدية</p>
+                    <!-- البطاقة 8 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800" alt="اسطنبول" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">اسطنبول</h3>
+                            <p class="card-subtitle">4 أيام و 3 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة تجمع بين الشرق والغرب، تاريخ عريق، أسواق تقليدية ومضيق البوسفور الخلاب</p>
                         </div>
                     </div>
 
-                    <!-- Sydney -->
-                    <div class="city-card">
-                        <img src="assets/cities/sydney.jpg" alt="سيدني" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">سيدني</h3>
-                            <p class="city-description">لؤلؤة أستراليا، مدينة دار الأوبرا الشهيرة والشواطئ الذهبية والحياة البحرية الساحرة تحت سماء زرقاء صافية</p>
+                    <!-- البطاقة 9 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800" alt="روما" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">روما</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">المدينة الخالدة، الكولوسيوم، الفاتيكان وآثار الإمبراطورية الرومانية العظيمة</p>
                         </div>
                     </div>
 
-                    <!-- Cairo -->
-                    <div class="city-card">
-                        <img src="assets/cities/cairo.jpg" alt="القاهرة" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">القاهرة</h3>
-                            <p class="city-description">عاصمة الحضارة الفرعونية، موطن الأهرامات وأبو الهول، مدينة الألف مئذنة حيث يمتزج التاريخ القديم بالحياة المعاصرة</p>
+                    <!-- البطاقة 10 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800" alt="لندن" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">لندن</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">العاصمة البريطانية العريقة، قصر باكنغهام، بيغ بن ومتاحف عالمية مجانية رائعة</p>
                         </div>
                     </div>
 
-                    <!-- Duplicate cards for seamless loop -->
-                    <div class="city-card">
-                        <img src="assets/cities/dubai.jpg" alt="دبي" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">دبي</h3>
-                            <p class="city-description">مدينة المستقبل والفخامة، حيث ناطحات السحاب الشاهقة والمراكز التجارية العالمية والشواطئ الذهبية تلتقي مع التراث العربي الأصيل</p>
+                    <!-- نسخة مكررة للحركة المستمرة -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1513581166391-887a96ddeafd?w=800" alt="سانتوريني" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">سانتوريني</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جزيرة يونانية ساحرة بمبانيها البيضاء والزرقاء، شواطئ رائعة وغروب شمس خلاب على بحر إيجه</p>
                         </div>
                     </div>
 
-                    <div class="city-card">
-                        <img src="assets/cities/paris.jpg" alt="باريس" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">باريس</h3>
-                            <p class="city-description">عاصمة الرومانسية والفن، موطن برج إيفل ومتحف اللوفر، حيث تنتشر المقاهي الساحرة والمعالم التاريخية في كل زاوية</p>
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800" alt="دبي" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">دبي</h3>
+                            <p class="card-subtitle">4 أيام و 3 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة المستقبل بناطحات سحابها الشاهقة، تسوق فاخر ومغامرات صحراوية مثيرة</p>
                         </div>
                     </div>
 
-                    <div class="city-card">
-                        <img src="assets/cities/london.jpg" alt="لندن" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">لندن</h3>
-                            <p class="city-description">عاصمة التاريخ والثقافة، تجمع بين العراقة البريطانية والحداثة العصرية، من قصر باكنغهام إلى عين لندن الشهيرة</p>
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800" alt="بالي" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">بالي</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جنة استوائية بشواطئها الذهبية، معابد تاريخية وطبيعة خضراء ساحرة تأسر القلوب</p>
                         </div>
                     </div>
 
-                    <div class="city-card">
-                        <img src="assets/cities/newyork.jpg" alt="نيويورك" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">نيويورك</h3>
-                            <p class="city-description">المدينة التي لا تنام، قلب العالم النابض بالحياة والطاقة، موطن تمثال الحرية وتايمز سكوير والمتاحف العالمية</p>
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800" alt="باريس" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">باريس</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة الأنوار والرومانسية، برج إيفل، متاحف عالمية وثقافة فرنسية أصيلة</p>
                         </div>
                     </div>
 
-                    <div class="city-card">
-                        <img src="assets/cities/tokyo.jpg" alt="طوكيو" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">طوكيو</h3>
-                            <p class="city-description">عاصمة التكنولوجيا والتقاليد اليابانية، حيث المعابد القديمة تتجاور مع ناطحات السحاب الحديثة والأحياء المضيئة بالنيون</p>
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=800" alt="سويسرا" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">سويسرا</h3>
+                            <p class="card-subtitle">7 أيام و 6 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جبال الألب الساحرة، بحيرات صافية وطبيعة خلابة تخطف الأنفاس على مدار السنة</p>
                         </div>
                     </div>
 
-                    <div class="city-card">
-                        <img src="assets/cities/rome.jpg" alt="روما" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">روما</h3>
-                            <p class="city-description">المدينة الخالدة، متحف مفتوح يحكي قصة الحضارة الرومانية العظيمة من الكولوسيوم إلى نافورة تريفي الساحرة</p>
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800" alt="المالديف" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">المالديف</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جزر استوائية فاخرة، مياه فيروزية صافية ومنتجعات على الماء في أجواء استثنائية</p>
                         </div>
                     </div>
 
-                    <div class="city-card">
-                        <img src="assets/cities/barcelona.jpg" alt="برشلونة" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">برشلونة</h3>
-                            <p class="city-description">جوهرة البحر المتوسط، مدينة غاودي الفنية حيث العمارة الفريدة والشواطئ الرائعة والحياة الليلية النابضة بالحيوية</p>
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800" alt="طوكيو" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">طوكيو</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">عاصمة اليابان النابضة، تقنية متقدمة، ثقافة يابانية عريقة ومأكولات شهية رائعة</p>
                         </div>
                     </div>
 
-                    <div class="city-card">
-                        <img src="assets/cities/istanbul.jpg" alt="إسطنبول" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">إسطنبول</h3>
-                            <p class="city-description">جسر بين الشرق والغرب، مدينة المآذن والقصور العثمانية، حيث يلتقي البوسفور بالتاريخ العريق والأسواق التقليدية</p>
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800" alt="اسطنبول" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">اسطنبول</h3>
+                            <p class="card-subtitle">4 أيام و 3 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة تجمع بين الشرق والغرب، تاريخ عريق، أسواق تقليدية ومضيق البوسفور الخلاب</p>
                         </div>
                     </div>
 
-                    <div class="city-card">
-                        <img src="assets/cities/sydney.jpg" alt="سيدني" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">سيدني</h3>
-                            <p class="city-description">لؤلؤة أستراليا، مدينة دار الأوبرا الشهيرة والشواطئ الذهبية والحياة البحرية الساحرة تحت سماء زرقاء صافية</p>
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800" alt="روما" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">روما</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">المدينة الخالدة، الكولوسيوم، الفاتيكان وآثار الإمبراطورية الرومانية العظيمة</p>
                         </div>
                     </div>
 
-                    <div class="city-card">
-                        <img src="assets/cities/cairo.jpg" alt="القاهرة" class="city-image">
-                        <div class="city-info">
-                            <h3 class="city-name">القاهرة</h3>
-                            <p class="city-description">عاصمة الحضارة الفرعونية، موطن الأهرامات وأبو الهول، مدينة الألف مئذنة حيث يمتزج التاريخ القديم بالحياة المعاصرة</p>
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800" alt="لندن" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">لندن</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">العاصمة البريطانية العريقة، قصر باكنغهام، بيغ بن ومتاحف عالمية مجانية رائعة</p>
                         </div>
                     </div>
                 </div>
