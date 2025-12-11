@@ -534,5 +534,33 @@
             </div>
         </section>
     </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const sliderWrapper = document.querySelector(".slider-wrapper");
+  const card = sliderWrapper.querySelector(".card");
+  const totalCards = sliderWrapper.children.length;
+
+  // حساب العرض الحقيقي لجميع البطاقات
+  const cardStyle = window.getComputedStyle(card);
+  const cardWidth = card.offsetWidth + parseFloat(cardStyle.marginLeft) + parseFloat(cardStyle.marginRight);
+
+  // إجمالي عرض السلايدر (مجموع عرض كل البطاقات)
+  const totalWidth = cardWidth * totalCards;
+
+  // ضبط طول السلايدر من خلال الأنميشن
+  sliderWrapper.style.width = totalWidth + "px";
+  sliderWrapper.style.animation = `slideRight ${(totalCards * 3)}s linear infinite`;
+
+  // إنشاء keyframes ديناميكي حسب عرض السلايدر
+  const styleSheet = document.createElement("style");
+  styleSheet.innerHTML = `
+    @keyframes slideRight {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-${totalWidth/2}px); }
+    }
+  `;
+  document.head.appendChild(styleSheet);
+});
+</script>
 </body>
 </html>
