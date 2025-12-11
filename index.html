@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAYGO</title>
+    <title>PAYGO - حجز الفنادق</title>
     <style>
         * {
             margin: 0;
@@ -17,7 +17,8 @@
             background: #000;
         }
 
-        .splash-container {
+        /* صفحة الافتتاح */
+        .intro-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -28,39 +29,55 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            opacity: 1;
+            transition: opacity 1.5s ease-out;
+        }
+
+        .intro-container.fade-out {
+            opacity: 0;
+            pointer-events: none;
         }
 
         /* الفيديو على كامل الشاشة */
-        .splash-video {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .intro-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+
+        /* إخفاء صفحة الافتتاح بعد التلاشي */
+        .intro-container.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div class="splash-container" id="splashScreen">
-        <!-- الفيديو المعدل -->
-        <video class="splash-video" autoplay muted playsinline id="splashVideo">
-            <source src="splash-paygo.mp4" type="video/mp4">
+    <!-- صفحة الافتتاح -->
+    <div class="intro-container" id="introContainer">
+        <video class="intro-video" autoplay muted playsinline id="introVideo">
+            <source src="paygo-intro.mp4" type="video/mp4">
         </video>
     </div>
 
     <script>
-        const video = document.getElementById('splashVideo');
-        
-        // عند انتهاء الفيديو، الانتقال للصفحة الرئيسية
-        video.addEventListener('ended', () => {
-            window.location.href = 'main.html';
+        const introContainer = document.getElementById('introContainer');
+        const introVideo = document.getElementById('introVideo');
+
+        // عند انتهاء الفيديو، تلاشي بطيء ثم الانتقال للصفحة الرئيسية
+        introVideo.addEventListener('ended', () => {
+            // بدء التلاشي
+            introContainer.classList.add('fade-out');
+            
+            // بعد انتهاء التلاشي (1.5 ثانية)، الانتقال للصفحة الرئيسية
+            setTimeout(() => {
+                window.location.href = 'main.html';
+            }, 1500);
         });
 
-        // أو بعد 5 ثواني كحد أقصى
-        setTimeout(() => {
+        // في حالة فشل تحميل الفيديو، الانتقال مباشرة
+        introVideo.addEventListener('error', () => {
             window.location.href = 'main.html';
-        }, 5000);
+        });
     </script>
 </body>
 </html>
