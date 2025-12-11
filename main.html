@@ -74,20 +74,16 @@
 
         .slider-wrapper {
             display: flex;
-            animation: slideRight 60s linear infinite;
+            animation: slideLeft 50s linear infinite;
             width: fit-content;
         }
 
-        .slider-wrapper:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes slideRight {
+        @keyframes slideLeft {
             0% {
-                transform: translateX(-50%);
+                transform: translateX(0%);
             }
             100% {
-                transform: translateX(0%);
+                transform: translateX(-50%);
             }
         }
 
@@ -274,7 +270,6 @@
         </header>
 
         <section class="slider-section">
-            <h2 class="slider-title">وجهاتنا السياحية المميزة حول العالم</h2>
             
             <div class="slider-container">
                 <div class="slider-wrapper">
