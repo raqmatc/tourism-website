@@ -409,70 +409,7 @@
             <img src="paygo-logo.png" alt="PAYGO" style="max-width: 100%; height: 100%; object-fit: contain;">
         </header>
 
-        <main class="main-card">
-            <h1 class="main-title">احجز رحلتك</h1>
-            <p class="subtitle">
-                اكتشف أفضل الفنادق حول العالم مع Booking.com<br>
-                أكثر من 28 مليون عقار في أكثر من 150,000 وجهة
-            </p>
 
-            <div class="error-message" id="errorMessage"></div>
-            <div class="success-message" id="successMessage"></div>
-
-            <form class="search-form" id="searchForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="destination">الوجهة</label>
-                        <div class="destination-input">
-                            <input type="text" 
-                                   id="destination" 
-                                   class="form-control" 
-                                   placeholder="أين تريد الذهاب؟" 
-                                   autocomplete="off"
-                                   required>
-                            <div class="suggestions" id="suggestions"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="checkin">تاريخ الوصول</label>
-                        <input type="date" 
-                               id="checkin" 
-                               class="form-control" 
-                               required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="checkout">تاريخ المغادرة</label>
-                        <input type="date" 
-                               id="checkout" 
-                               class="form-control" 
-                               required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="guests">عدد الضيوف</label>
-                        <select id="guests" class="form-control" required>
-                            <option value="1">ضيف واحد</option>
-                            <option value="2" selected>ضيفان</option>
-                            <option value="3">3 ضيوف</option>
-                            <option value="4">4 ضيوف</option>
-                            <option value="5">5 ضيوف</option>
-                            <option value="6">6 ضيوف</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <p>جاري البحث عن أفضل الفنادق...</p>
-                </div>
-                
-                <button type="submit" class="search-btn" id="searchBtn">
-                    <i class="fas fa-search"></i> ابحث عن الفنادق
-                </button>
-            </form>
-        </main>
 
         <section class="features">
             <div class="feature-card">
