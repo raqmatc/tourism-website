@@ -35,7 +35,6 @@
 
         .intro-container.fade-out {
             opacity: 0;
-            pointer-events: none;
         }
 
         /* الفيديو على كامل الشاشة */
@@ -45,9 +44,27 @@
             object-fit: cover;
         }
 
-        /* إخفاء صفحة الافتتاح بعد التلاشي */
-        .intro-container.hidden {
-            display: none;
+        /* الصفحة الرئيسية */
+        .main-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
+            z-index: 1;
+        }
+
+        .main-page.fade-in {
+            opacity: 1;
+        }
+
+        /* iframe للصفحة الرئيسية */
+        .main-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
@@ -59,24 +76,36 @@
         </video>
     </div>
 
+    <!-- الصفحة الرئيسية -->
+    <div class="main-page" id="mainPage">
+        <iframe src="main.html" class="main-iframe" id="mainIframe"></iframe>
+    </div>
+
     <script>
         const introContainer = document.getElementById('introContainer');
+        const mainPage = document.getElementById('mainPage');
         const introVideo = document.getElementById('introVideo');
 
-        // عند انتهاء الفيديو، تلاشي بطيء ثم الانتقال للصفحة الرئيسية
-        introVideo.addEventListener('ended', () => {
-            // بدء التلاشي
+        // بعد 5 ثواني، تلاشي متزامن
+        setTimeout(() => {
+            // تلاشي الفيديو للخارج
             introContainer.classList.add('fade-out');
             
-            // بعد انتهاء التلاشي (1.5 ثانية)، الانتقال للصفحة الرئيسية
+            // تلاشي الصفحة الرئيسية للداخل في نفس الوقت
+            mainPage.classList.add('fade-in');
+            
+            // بعد انتهاء التلاشي، إخفاء صفحة الافتتاح تماماً
             setTimeout(() => {
-                window.location.href = 'main.html';
+                introContainer.style.display = 'none';
+                document.body.style.overflow = 'auto';
             }, 1500);
-        });
+        }, 5000);
 
         // في حالة فشل تحميل الفيديو، الانتقال مباشرة
         introVideo.addEventListener('error', () => {
-            window.location.href = 'main.html';
+            introContainer.style.display = 'none';
+            mainPage.classList.add('fade-in');
+            document.body.style.overflow = 'auto';
         });
     </script>
 </body>
