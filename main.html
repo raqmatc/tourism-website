@@ -77,16 +77,16 @@
         .cities-slider {
             display: flex;
             gap: 30px;
-            animation: slideRight 40s linear infinite;
+            animation: scroll 50s linear infinite;
             will-change: transform;
         }
 
-        @keyframes slideRight {
-            from {
+        @keyframes scroll {
+            0% {
                 transform: translateX(0);
             }
-            to {
-                transform: translateX(calc(-350px * 10 - 300px));
+            100% {
+                transform: translateX(calc(-380px * 10));
             }
         }
 
