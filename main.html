@@ -1,101 +1,155 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paygo.com - اكتشف أجمل المدن السياحية</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paygo.com - اكتشف أجمل المدن السياحية</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-        .header {
-            background: white;
-            border-radius: 20px;
-            padding: 15px 30px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 150px;
-        }
+    .header {
+      background: white;
+      border-radius: 20px;
+      padding: 15px 30px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 150px;
+    }
 
-        .slider-section {
-            padding: 40px 0;
-        }
+    .slider-section {
+      padding: 40px 0;
+    }
 
-        .slider-container {
-            overflow: hidden;
-            position: relative;
-        }
+    .slider-container {
+      overflow: hidden;
+      position: relative;
+      cursor: grab;
+    }
 
-        .slider-wrapper {
-            display: flex;
-            width: max-content;
-            animation: scroll 40s linear infinite;
-        }
+    .slider-container:active {
+      cursor: grabbing;
+    }
 
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
+    .slider-track {
+      display: flex;
+      width: fit-content;
+      animation: scroll 40s linear infinite;
+    }
 
-        .slide-image {
-            width: 400px;
-            height: auto;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            flex-shrink: 0;
-        }
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
 
-        @media (max-width: 768px) {
-            .slide-image {
-                width: 300px;
-            }
-        }
-    </style>
+    .slide-image {
+      width: 400px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .slide-image {
+        width: 300px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <img src="paygo-logo.png" alt="PAYGO" style="max-width: 100%; height: 100%; object-fit: contain;">
-        </header>
+  <div class="container">
+    <header class="header">
+      <img src="paygo-logo.png" alt="PAYGO" style="max-width: 100%; height: 100%; object-fit: contain;" />
+    </header>
 
-        <section class="slider-section">
-            <div class="slider-container">
-                <div class="slider-wrapper">
-                    <!-- النسخة الأولى -->
-                    <img src="assets/amsterdam.png" alt="أمستردام" class="slide-image">
-                    <img src="assets/vienna.png" alt="فيينا" class="slide-image">
-                    <img src="assets/paris-new.png" alt="باريس" class="slide-image">
-                    <img src="assets/rome-new.png" alt="روما" class="slide-image">
+    <section class="slider-section">
+      <div class="slider-container" id="slider">
+        <div class="slider-track">
+          <!-- النسخة الأولى -->
+          <img src="assets/amsterdam.png" alt="أمستردام" class="slide-image" />
+          <img src="assets/vienna.png" alt="فيينا" class="slide-image" />
+          <img src="assets/paris-new.png" alt="باريس" class="slide-image" />
+          <img src="assets/rome-new.png" alt="روما" class="slide-image" />
 
-                    <!-- النسخة الثانية للتكرار المستمر -->
-                    <img src="assets/amsterdam.png" alt="أمستردام" class="slide-image">
-                    <img src="assets/vienna.png" alt="فيينا" class="slide-image">
-                    <img src="assets/paris-new.png" alt="باريس" class="slide-image">
-                    <img src="assets/rome-new.png" alt="روما" class="slide-image">
-                </div>
-            </div>
-        </section>
-    </div>
+          <!-- النسخة الثانية للتكرار المستمر -->
+          <img src="assets/amsterdam.png" alt="أمستردام" class="slide-image" />
+          <img src="assets/vienna.png" alt="فيينا" class="slide-image" />
+          <img src="assets/paris-new.png" alt="باريس" class="slide-image" />
+          <img src="assets/rome-new.png" alt="روما" class="slide-image" />
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ✅ سكربت التحكم اليدوي بالسحب -->
+  <script>
+    const slider = document.getElementById('slider');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    // ماوس
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+      isDown = false;
+    });
+
+    slider.addEventListener('mouseup', () => {
+      isDown = false;
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 2; // سرعة السحب
+      slider.scrollLeft = scrollLeft - walk;
+    });
+
+    // لمس للموبايل
+    slider.addEventListener('touchstart', (e) => {
+      isDown = true;
+      startX = e.touches[0].pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('touchend', () => {
+      isDown = false;
+    });
+
+    slider.addEventListener('touchmove', (e) => {
+      if (!isDown) return;
+      const x = e.touches[0].pageX - slider.offsetLeft;
+      const walk = (x - startX) * 2;
+      slider.scrollLeft = scrollLeft - walk;
+    });
+  </script>
 </body>
 </html>
