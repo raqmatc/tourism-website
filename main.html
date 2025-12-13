@@ -40,15 +40,16 @@
 
         .slider-container {
             overflow: hidden;
+            position: relative;
         }
 
         .slider-wrapper {
             display: flex;
-            gap: 20px;
-            animation: slide 30s linear infinite;
+            width: max-content;
+            animation: scroll 40s linear infinite;
         }
 
-        @keyframes slide {
+        @keyframes scroll {
             0% {
                 transform: translateX(0);
             }
@@ -81,12 +82,13 @@
         <section class="slider-section">
             <div class="slider-container">
                 <div class="slider-wrapper">
+                    <!-- النسخة الأولى -->
                     <img src="assets/amsterdam.png" alt="أمستردام" class="slide-image">
                     <img src="assets/vienna.png" alt="فيينا" class="slide-image">
                     <img src="assets/paris-new.png" alt="باريس" class="slide-image">
                     <img src="assets/rome-new.png" alt="روما" class="slide-image">
-                    
-                    <!-- نسخة ثانية للحركة المستمرة -->
+
+                    <!-- النسخة الثانية للتكرار المستمر -->
                     <img src="assets/amsterdam.png" alt="أمستردام" class="slide-image">
                     <img src="assets/vienna.png" alt="فيينا" class="slide-image">
                     <img src="assets/paris-new.png" alt="باريس" class="slide-image">
