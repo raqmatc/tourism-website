@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paygo.com - اكتشف أجمل المدن السياحية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 15px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* السلايدر الجديد */
+        .slider-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 50px 0;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .slider-title {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .slider-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            animation: slideLeft 50s linear infinite;
+            width: fit-content;
+        }
+
+        @keyframes slideLeft {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .card {
+            background: #FDB913;
+            border-radius: 40px;
+            width: 380px;
+            margin: 0 20px;
+            padding: 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            border-radius: 40px 40px 0 0;
+        }
+
+        .card-content {
+            padding: 35px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #003D82;
+            margin-bottom: 15px;
+        }
+
+        .card-subtitle {
+            font-size: 1.5rem;
+            color: #003D82;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .card-divider {
+            width: 80%;
+            height: 3px;
+            background: #003D82;
+            margin: 25px auto;
+        }
+
+        .card-description {
+            font-size: 1.15rem;
+            color: #003D82;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature-desc {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .slider-title {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            
+            .card {
+                width: 320px;
+            }
+            
+            .card-image {
+                height: 350px;
+            }
+            
+            .card-content {
+                padding: 25px;
+            }
+            
+            .card-title {
+                font-size: 2rem;
+            }
+
+            .card-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .card-description {
+                font-size: 1rem;
+            }
+            
+            .header {
+                height: 120px;
+                padding: 15px 20px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .slider-section {
+                padding: 30px 0;
+            }
+            
+            .slider-title {
+                font-size: 1.6rem;
+            }
+            
+            .card {
+                width: 280px;
+            }
+            
+            .card-image {
+                height: 300px;
+            }
+            
+            .card-content {
+                padding: 20px;
+            }
+            
+            .card-title {
+                font-size: 1.7rem;
+            }
+
+            .card-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .card-description {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="paygo-logo.png" alt="PAYGO" style="max-width: 100%; height: 100%; object-fit: contain;">
+        </header>
+
+        <section class="slider-section">
+            
+            <div class="slider-container">
+                <div class="slider-wrapper">
+                    <!-- البطاقة 1 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1513581166391-887a96ddeafd?w=800" alt="سانتوريني" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">سانتوريني</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جزيرة يونانية ساحرة بمبانيها البيضاء والزرقاء، شواطئ رائعة وغروب شمس خلاب على بحر إيجه</p>
+                        </div>
+                    </div>
+
+                    <!-- البطاقة 2 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800" alt="دبي" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">دبي</h3>
+                            <p class="card-subtitle">4 أيام و 3 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة المستقبل بناطحات سحابها الشاهقة، تسوق فاخر ومغامرات صحراوية مثيرة</p>
+                        </div>
+                    </div>
+
+                    <!-- البطاقة 3 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800" alt="بالي" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">بالي</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جنة استوائية بشواطئها الذهبية، معابد تاريخية وطبيعة خضراء ساحرة تأسر القلوب</p>
+                        </div>
+                    </div>
+
+                    <!-- البطاقة 4 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800" alt="باريس" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">باريس</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة الأنوار والرومانسية، برج إيفل، متاحف عالمية وثقافة فرنسية أصيلة</p>
+                        </div>
+                    </div>
+
+                    <!-- البطاقة 5 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=800" alt="سويسرا" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">سويسرا</h3>
+                            <p class="card-subtitle">7 أيام و 6 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جبال الألب الساحرة، بحيرات صافية وطبيعة خلابة تخطف الأنفاس على مدار السنة</p>
+                        </div>
+                    </div>
+
+                    <!-- البطاقة 6 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800" alt="المالديف" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">المالديف</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جزر استوائية فاخرة، مياه فيروزية صافية ومنتجعات على الماء في أجواء استثنائية</p>
+                        </div>
+                    </div>
+
+                    <!-- البطاقة 7 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800" alt="طوكيو" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">طوكيو</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">عاصمة اليابان النابضة، تقنية متقدمة، ثقافة يابانية عريقة ومأكولات شهية رائعة</p>
+                        </div>
+                    </div>
+
+                    <!-- البطاقة 8 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800" alt="اسطنبول" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">اسطنبول</h3>
+                            <p class="card-subtitle">4 أيام و 3 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة تجمع بين الشرق والغرب، تاريخ عريق، أسواق تقليدية ومضيق البوسفور الخلاب</p>
+                        </div>
+                    </div>
+
+                    <!-- البطاقة 9 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800" alt="روما" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">روما</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">المدينة الخالدة، الكولوسيوم، الفاتيكان وآثار الإمبراطورية الرومانية العظيمة</p>
+                        </div>
+                    </div>
+
+                    <!-- البطاقة 10 -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800" alt="لندن" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">لندن</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">العاصمة البريطانية العريقة، قصر باكنغهام، بيغ بن ومتاحف عالمية مجانية رائعة</p>
+                        </div>
+                    </div>
+
+                    <!-- نسخة مكررة للحركة المستمرة -->
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1513581166391-887a96ddeafd?w=800" alt="سانتوريني" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">سانتوريني</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جزيرة يونانية ساحرة بمبانيها البيضاء والزرقاء، شواطئ رائعة وغروب شمس خلاب على بحر إيجه</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800" alt="دبي" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">دبي</h3>
+                            <p class="card-subtitle">4 أيام و 3 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة المستقبل بناطحات سحابها الشاهقة، تسوق فاخر ومغامرات صحراوية مثيرة</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800" alt="بالي" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">بالي</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جنة استوائية بشواطئها الذهبية، معابد تاريخية وطبيعة خضراء ساحرة تأسر القلوب</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800" alt="باريس" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">باريس</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة الأنوار والرومانسية، برج إيفل، متاحف عالمية وثقافة فرنسية أصيلة</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=800" alt="سويسرا" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">سويسرا</h3>
+                            <p class="card-subtitle">7 أيام و 6 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جبال الألب الساحرة، بحيرات صافية وطبيعة خلابة تخطف الأنفاس على مدار السنة</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800" alt="المالديف" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">المالديف</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">جزر استوائية فاخرة، مياه فيروزية صافية ومنتجعات على الماء في أجواء استثنائية</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800" alt="طوكيو" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">طوكيو</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">عاصمة اليابان النابضة، تقنية متقدمة، ثقافة يابانية عريقة ومأكولات شهية رائعة</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800" alt="اسطنبول" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">اسطنبول</h3>
+                            <p class="card-subtitle">4 أيام و 3 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">مدينة تجمع بين الشرق والغرب، تاريخ عريق، أسواق تقليدية ومضيق البوسفور الخلاب</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800" alt="روما" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">روما</h3>
+                            <p class="card-subtitle">5 أيام و 4 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">المدينة الخالدة، الكولوسيوم، الفاتيكان وآثار الإمبراطورية الرومانية العظيمة</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800" alt="لندن" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">لندن</h3>
+                            <p class="card-subtitle">6 أيام و 5 ليالي</p>
+                            <div class="card-divider"></div>
+                            <p class="card-description">العاصمة البريطانية العريقة، قصر باكنغهام، بيغ بن ومتاحف عالمية مجانية رائعة</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-globe-americas"></i>
+                </div>
+                <h3 class="feature-title">شبكة عالمية</h3>
+                <p class="feature-desc">
+                    الوصول إلى أكثر من 28 مليون عقار في جميع أنحاء العالم عبر Booking.com
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">حجز آمن</h3>
+                <p class="feature-desc">
+                    نظام حجز آمن ومضمون مع حماية كاملة لبياناتك الشخصية والمالية
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <h3 class="feature-title">أفضل الأسعار</h3>
+                <p class="feature-desc">
+                    أسعار تنافسية مع ضمان أفضل سعر وعروض حصرية لعملائنا
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3 class="feature-title">دعم 24/7</h3>
+                <p class="feature-desc">
+                    فريق دعم متاح على مدار الساعة لمساعدتك في أي وقت تحتاجه
+                </p>
+            </div>
+        </section>
+    </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const sliderWrapper = document.querySelector(".slider-wrapper");
+  const card = sliderWrapper.querySelector(".card");
+  const totalCards = sliderWrapper.children.length;
+
+  // حساب العرض الحقيقي لجميع البطاقات
+  const cardStyle = window.getComputedStyle(card);
+  const cardWidth = card.offsetWidth + parseFloat(cardStyle.marginLeft) + parseFloat(cardStyle.marginRight);
+
+  // إجمالي عرض السلايدر (مجموع عرض كل البطاقات)
+  const totalWidth = cardWidth * totalCards;
+
+  // ضبط طول السلايدر من خلال الأنميشن
+  sliderWrapper.style.width = totalWidth + "px";
+  sliderWrapper.style.animation = `slideRight ${(totalCards * 3)}s linear infinite`;
+
+  // إنشاء keyframes ديناميكي حسب عرض السلايدر
+  const styleSheet = document.createElement("style");
+  styleSheet.innerHTML = `
+    @keyframes slideRight {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-${totalWidth/2}px); }
+    }
+  `;
+  document.head.appendChild(styleSheet);
+});
+</script>
+</body>
+</html>
