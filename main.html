@@ -44,7 +44,8 @@
 
         .slider-wrapper {
             display: flex;
-            animation: slide 50s linear infinite;
+            gap: 20px;
+            animation: slide 30s linear infinite;
         }
 
         @keyframes slide {
@@ -57,9 +58,8 @@
         }
 
         .slide-image {
-            width: 600px;
+            width: 400px;
             height: auto;
-            margin: 0 15px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             flex-shrink: 0;
@@ -67,7 +67,7 @@
 
         @media (max-width: 768px) {
             .slide-image {
-                width: 350px;
+                width: 300px;
             }
         }
     </style>
