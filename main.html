@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paygo.com - اكتشف أجمل المدن السياحية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,10 +12,9 @@
         }
 
         body {
-            font-family: 'Cairo', sans-serif;
+            font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            direction: rtl;
         }
 
         .container {
@@ -26,12 +24,10 @@
         }
 
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: white;
             border-radius: 20px;
             padding: 15px 30px;
             margin-bottom: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -39,100 +35,39 @@
         }
 
         .slider-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
             padding: 40px 0;
-            margin-bottom: 30px;
         }
 
         .slider-container {
             overflow: hidden;
-            position: relative;
         }
 
         .slider-wrapper {
             display: flex;
-            animation: slideLeft 60s linear infinite;
-            width: fit-content;
+            animation: slide 50s linear infinite;
         }
 
-        @keyframes slideLeft {
+        @keyframes slide {
             0% {
-                transform: translateX(0%);
+                transform: translateX(0);
             }
             100% {
                 transform: translateX(-50%);
             }
         }
 
-        .card {
-            background: white;
-            border-radius: 25px;
-            width: 500px;
-            height: 650px;
-            margin: 0 20px;
-            padding: 0;
+        .slide-image {
+            width: 600px;
+            height: auto;
+            margin: 0 15px;
+            border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             flex-shrink: 0;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .card-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .card-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(52, 152, 219, 0.9);
-            padding: 40px 30px;
-            text-align: center;
-        }
-
-        .card-title {
-            font-size: 4rem;
-            font-weight: 900;
-            color: white;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-description {
-            font-size: 1.3rem;
-            color: white;
-            line-height: 1.8;
-            font-weight: 500;
         }
 
         @media (max-width: 768px) {
-            .card {
+            .slide-image {
                 width: 350px;
-                height: 500px;
-            }
-
-            .card-title {
-                font-size: 2.5rem;
-            }
-
-            .card-description {
-                font-size: 1rem;
-            }
-
-            .card-content {
-                padding: 25px 20px;
             }
         }
     </style>
@@ -146,78 +81,16 @@
         <section class="slider-section">
             <div class="slider-container">
                 <div class="slider-wrapper">
-                    <!-- أمستردام -->
-                    <div class="card">
-                        <img src="assets/amsterdam.png" alt="أمستردام" class="card-image">
-                        <div class="card-content">
-                            <h3 class="card-title">أمستردام</h3>
-                            <p class="card-description">مدينة القنوات؛ ثقافة منفتحة، متاحف عالمية، دراجات، عمارة تاريخية، حياة ليلية نابضة، وتجربة أوروبية فريدة طوال العام بسحر خاص.</p>
-                        </div>
-                    </div>
-
-                    <!-- فيينا -->
-                    <div class="card">
-                        <img src="assets/vienna.png" alt="فيينا" class="card-image">
-                        <div class="card-content">
-                            <h3 class="card-title">فيينا</h3>
-                            <p class="card-description">فيينا مدينة الموسيقى الإمبراطورية؛ قصور فخمة، تاريخ عريق، مقاهي كلاسيكية، فن راقٍ، ونمط حياة أوروبي هادئ، وثقافة ملهمة طوال العام.</p>
-                        </div>
-                    </div>
-
-                    <!-- باريس -->
-                    <div class="card">
-                        <img src="assets/paris-new.png" alt="باريس" class="card-image">
-                        <div class="card-content">
-                            <h3 class="card-title">باريس</h3>
-                            <p class="card-description">مدينة تجمع التاريخ والفن والرومانسية؛ معالم عالمية، مطبخ راقٍ، تسوق فاخر، وتجارب ثقافية لا تُنسى.</p>
-                        </div>
-                    </div>
-
-                    <!-- روما -->
-                    <div class="card">
-                        <img src="assets/rome-new.png" alt="روما" class="card-image">
-                        <div class="card-content">
-                            <h3 class="card-title">روما</h3>
-                            <p class="card-description">روما مدينة التاريخ الخالد؛ آثار إمبراطورية، فن معماري مهيب، مطبخ إيطالي أصيل، وتجربة ثقافية غنية في كل زاوية.</p>
-                        </div>
-                    </div>
-
+                    <img src="assets/amsterdam.png" alt="أمستردام" class="slide-image">
+                    <img src="assets/vienna.png" alt="فيينا" class="slide-image">
+                    <img src="assets/paris-new.png" alt="باريس" class="slide-image">
+                    <img src="assets/rome-new.png" alt="روما" class="slide-image">
+                    
                     <!-- نسخة ثانية للحركة المستمرة -->
-                    <!-- أمستردام -->
-                    <div class="card">
-                        <img src="assets/amsterdam.png" alt="أمستردام" class="card-image">
-                        <div class="card-content">
-                            <h3 class="card-title">أمستردام</h3>
-                            <p class="card-description">مدينة القنوات؛ ثقافة منفتحة، متاحف عالمية، دراجات، عمارة تاريخية، حياة ليلية نابضة، وتجربة أوروبية فريدة طوال العام بسحر خاص.</p>
-                        </div>
-                    </div>
-
-                    <!-- فيينا -->
-                    <div class="card">
-                        <img src="assets/vienna.png" alt="فيينا" class="card-image">
-                        <div class="card-content">
-                            <h3 class="card-title">فيينا</h3>
-                            <p class="card-description">فيينا مدينة الموسيقى الإمبراطورية؛ قصور فخمة، تاريخ عريق، مقاهي كلاسيكية، فن راقٍ، ونمط حياة أوروبي هادئ، وثقافة ملهمة طوال العام.</p>
-                        </div>
-                    </div>
-
-                    <!-- باريس -->
-                    <div class="card">
-                        <img src="assets/paris-new.png" alt="باريس" class="card-image">
-                        <div class="card-content">
-                            <h3 class="card-title">باريس</h3>
-                            <p class="card-description">مدينة تجمع التاريخ والفن والرومانسية؛ معالم عالمية، مطبخ راقٍ، تسوق فاخر، وتجارب ثقافية لا تُنسى.</p>
-                        </div>
-                    </div>
-
-                    <!-- روما -->
-                    <div class="card">
-                        <img src="assets/rome-new.png" alt="روما" class="card-image">
-                        <div class="card-content">
-                            <h3 class="card-title">روما</h3>
-                            <p class="card-description">روما مدينة التاريخ الخالد؛ آثار إمبراطورية، فن معماري مهيب، مطبخ إيطالي أصيل، وتجربة ثقافية غنية في كل زاوية.</p>
-                        </div>
-                    </div>
+                    <img src="assets/amsterdam.png" alt="أمستردام" class="slide-image">
+                    <img src="assets/vienna.png" alt="فيينا" class="slide-image">
+                    <img src="assets/paris-new.png" alt="باريس" class="slide-image">
+                    <img src="assets/rome-new.png" alt="روما" class="slide-image">
                 </div>
             </div>
         </section>
